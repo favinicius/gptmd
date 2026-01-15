@@ -1,0 +1,64 @@
+{
+    "client_name": "OFI - OLAM Foods Ingredients S.A.",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Consultoria, Fornecimento e Implementação de IODC e Disaster Recovery - Unidade Ilhéus",
+    "scope_items": [
+        {
+            "name": "Fase de Planejamento, Planbook e Cronograma",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Fase mandatória de 30 dias dedicada à definição técnica, reuniões de validação e aprovação da diretoria."
+        },
+        {
+            "name": "Servidores Host para Cluster Hyper-V",
+            "detected_quantity": 3,
+            "action_type": "turnkey",
+            "context_note": "Inclusão de um terceiro host para a nova sala de Disaster Recovery (DR) conforme instrução do usuário."
+        },
+        {
+            "name": "Switches Cisco de Alto Desempenho",
+            "detected_quantity": 3,
+            "action_type": "turnkey",
+            "context_note": "Inclusão de um terceiro switch para suporte à infraestrutura de DR."
+        },
+        {
+            "name": "Storage de Alto Desempenho",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Item extraído da seção 6.2 do contexto técnico para composição do cluster."
+        },
+        {
+            "name": "Servidor de Backup e Repositório NAS Imutável",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Estrutura completa de proteção de dados conforme itens 6.4.1 e 6.4.2 do PDF."
+        },
+        {
+            "name": "Implementação e Configuração de Sala de Disaster Recovery",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Configuração lógica e física da redundância geográfica/sala de DR decidida pelo cliente."
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            10,
+            10
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": true,
+        "hotel_tier": "hotel_tier_interior"
+    },
+    "estimated_duration_weeks": 8,
+    "governance_level": "intensive"
+}

@@ -1,0 +1,87 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "D25030470 B - OFI ILHÉUS - PRÉ PROJETO IODC",
+    "scope_items": [
+        {
+            "name": "Elaboração de Projeto Detalhado",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Etapa de planejamento de 30 dias incluindo definição de equipamentos, planbook e cronograma",
+            "visibility": "internal",
+            "explicit_total_hours": 240,
+            "is_weekend": false
+        },
+        {
+            "name": "Consultoria e Instalação de Hardware",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Execução presencial em 5 etapas para instalação do hardware fornecido pelo cliente",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Cluster de Virtualização",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Configuração do cluster de servidores conforme arquitetura do pré-projeto",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Storage de Alto Desempenho",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Configuração e integração de storage centralizado",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Switches de Rede IACS",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Configuração de switches dedicados para interconexão da rede industrial",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Estrutura de Backup e Repositório Imutável",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Implementação de servidor de backup e políticas de continuidade",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        }
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_s_se",
+        "requires_car_rental": true,
+        "estimated_daily_km": 50.0,
+        "requires_freight": false,
+        "hotel_tier": "hotel_tier_capital",
+        "origin_mobilization_km": 0.0
+    },
+    "estimated_duration_weeks": 13,
+    "governance_level": "standard",
+    "work_on_weekends": false
+}

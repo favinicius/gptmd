@@ -1,0 +1,102 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Consultoria, Fornecimento e Instalação de Datacenter e Disaster Recovery - Unidade Ilhéus",
+    "scope_items": [
+        {
+            "name": "Planejamento Técnico, Planbook e Cronograma",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Fase de 30 dias dedicada ao planejamento e definições técnicas antes da execução.",
+            "visibility": "internal",
+            "explicit_total_hours": 240,
+            "is_weekend": false
+        },
+        {
+            "name": "Capacitação Técnica em Hyper-V (Curso e Testes)",
+            "detected_quantity": 2,
+            "action_type": "design",
+            "context_note": "Treinamento interno de 80 horas para 2 analistas devido ao uso de Hyper-V.",
+            "visibility": "internal",
+            "explicit_total_hours": 80,
+            "is_weekend": false
+        },
+        {
+            "name": "Implementação de Cluster de Virtualização (Microsoft Hyper-V)",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro host para a nova sala de Disaster Recovery conforme instrução.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Configuração de Switches de Rede (Cisco)",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro switch Cisco para o cenário de DR.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação de Storage de Alto Desempenho",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Item extraído do contexto técnico para infraestrutura do cluster.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Estrutura de Backup e Repositório Imutável",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Configuração de servidor de backup e NAS conforme especificações técnicas.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Execução Técnica Presencial - Etapa 1",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Primeira mobilização em Ilhéus para instalação física e lógica.",
+            "visibility": "public",
+            "explicit_total_hours": 80,
+            "is_weekend": true
+        },
+        {
+            "name": "Execução Técnica Presencial - Etapa 2",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Segunda mobilização em Ilhéus para finalização e handover.",
+            "visibility": "public",
+            "explicit_total_hours": 80,
+            "is_weekend": true
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            10,
+            10
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": true,
+        "hotel_tier": "hotel_tier_interior",
+        "origin_mobilization_km": 50.0
+    },
+    "estimated_duration_weeks": 8,
+    "governance_level": "intensive",
+    "work_on_weekends": true
+}

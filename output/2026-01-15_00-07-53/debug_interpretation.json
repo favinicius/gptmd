@@ -1,0 +1,89 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Implantação de IODC - OFI Ilhéus",
+    "scope_items": [
+        {
+            "name": "Elaboração de Projeto Detalhado (Planbook e Cronograma)",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Etapa de planejamento de 30 dias contemplando definição de equipamentos e reuniões de validação."
+        },
+        {
+            "name": "Consultoria e Refinamento Técnico",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Necessário refinamento de como cada item será implantado devido à ausência de projeto detalhado prévio."
+        },
+        {
+            "name": "Servidores para Cluster de Virtualização",
+            "detected_quantity": 3,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de hardware para o cluster de virtualização conforme especificações técnicas."
+        },
+        {
+            "name": "Storage de Alto Desempenho",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de storage centralizado para o ambiente virtualizado."
+        },
+        {
+            "name": "Switches de Interconexão IACS/IODC",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de switches de alta performance para rede industrial."
+        },
+        {
+            "name": "Estrutura de Backup e Repositório Imutável (Servidor + NAS)",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de servidor de backup e NAS para imutabilidade de dados."
+        },
+        {
+            "name": "Instalação de Aplicações de Infraestrutura",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Configuração de serviços base como AD, DNS e NTP conforme seção 5.1.1."
+        },
+        {
+            "name": "Instalação de Sistemas Industriais (SCADA/Historian)",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Implementação das VMs de aplicações industriais conforme seção 5.1.2."
+        },
+        {
+            "name": "Instalação de Aplicações de Suporte e Continuidade",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Configuração de ferramentas de suporte como antivírus e gestão de patches conforme 5.1.3."
+        },
+        {
+            "name": "Migração de Cargas de Trabalho (P2V/Migração)",
+            "detected_quantity": 1,
+            "action_type": "migrate_p2v",
+            "context_note": "Atividades de migração conforme diretrizes de migração do item 3.5.2."
+        },
+        {
+            "name": "Comissionamento e Ativação em Campo",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Atividades presenciais de entrega e teste final do Datacenter em Ilhéus."
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "estimated_duration_weeks": 12,
+    "governance_level": "intensive"
+}

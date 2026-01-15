@@ -1,0 +1,189 @@
+[
+  {
+    "role": "Auxiliar",
+    "phase": "Execução",
+    "activity": "Apoio Logístico, Limpeza e Montagem Física",
+    "complexity": "Baixa",
+    "hours_min": 4,
+    "hours_max": 8,
+    "cost_unit": 25.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Auxiliar",
+    "phase": "Execução",
+    "activity": "Organização de Infraestrutura e Identificação",
+    "complexity": "Baixa",
+    "hours_min": 4,
+    "hours_max": 8,
+    "cost_unit": 25.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Técnico",
+    "phase": "Execução",
+    "activity": "Fusão Óptica e Recuperação de Anel",
+    "complexity": "Alta",
+    "hours_min": 14,
+    "hours_max": 16,
+    "cost_unit": 50.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Técnico",
+    "phase": "Execução",
+    "activity": "Organização de Rack (Zero U / Cabling)",
+    "complexity": "Média",
+    "hours_min": 8,
+    "hours_max": 12,
+    "cost_unit": 50.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Técnico",
+    "phase": "Execução",
+    "activity": "Cabeamento Estruturado (Passagem/Conectorização)",
+    "complexity": "Média",
+    "hours_min": 4,
+    "hours_max": 8,
+    "cost_unit": 50.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Técnico",
+    "phase": "Execução",
+    "activity": "Higienização Técnica de Rack (Ativos Ligados)",
+    "complexity": "Alta",
+    "hours_min": 4,
+    "hours_max": 8,
+    "cost_unit": 50.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Técnico",
+    "phase": "Execução",
+    "activity": "Identificação e Etiquetagem (Tags/Anilhas)",
+    "complexity": "Baixa",
+    "hours_min": 2,
+    "hours_max": 4,
+    "cost_unit": 50.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Analista",
+    "phase": "Homologação",
+    "activity": "Certificação Lógica / Performance (RFC 2544)",
+    "complexity": "Alta",
+    "hours_min": 8,
+    "hours_max": 8,
+    "cost_unit": 85.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Analista",
+    "phase": "Homologação",
+    "activity": "Validação de Conectividade e Port Security",
+    "complexity": "Média",
+    "hours_min": 2,
+    "hours_max": 4,
+    "cost_unit": 85.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Analista",
+    "phase": "Documentação",
+    "activity": "Elaboração de As-Built e Databook",
+    "complexity": "Média",
+    "hours_min": 4,
+    "hours_max": 8,
+    "cost_unit": 85.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Engenheiro",
+    "phase": "Execução",
+    "activity": "Configuração Switch Core/Distribuição (L3)",
+    "complexity": "Alta",
+    "hours_min": 10,
+    "hours_max": 16,
+    "cost_unit": 120.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Engenheiro",
+    "phase": "Execução",
+    "activity": "Configuração Switch de Acesso (L2)",
+    "complexity": "Média",
+    "hours_min": 4,
+    "hours_max": 8,
+    "cost_unit": 120.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Engenheiro",
+    "phase": "Execução",
+    "activity": "Correção Topologia / Fechamento Anel (REP/DLR)",
+    "complexity": "Alta",
+    "hours_min": 8,
+    "hours_max": 8,
+    "cost_unit": 120.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Arquiteto",
+    "phase": "Planejamento",
+    "activity": "Desenho de Solução e Topologia Segura",
+    "complexity": "Alta",
+    "hours_min": 8,
+    "hours_max": 16,
+    "cost_unit": 150.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Gestor",
+    "phase": "Planejamento",
+    "activity": "Gestão de Projeto Crítico (Backbone/Core)",
+    "complexity": "Alta",
+    "hours_min": 16,
+    "hours_max": 22,
+    "cost_unit": 100.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Gestor",
+    "phase": "Planejamento",
+    "activity": "Coordenação de Campo (Por Painel/Rack)",
+    "complexity": "Média",
+    "hours_min": 8,
+    "hours_max": 8,
+    "cost_unit": 100.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  },
+  {
+    "role": "Gestor",
+    "phase": "Planejamento",
+    "activity": "Gestão de Pequenas Intervenções (Fotografia/PT)",
+    "complexity": "Baixa",
+    "hours_min": 2,
+    "hours_max": 4,
+    "cost_unit": 100.00,
+    "block_rule": 2,
+    "requires_contingency": true
+  }
+]

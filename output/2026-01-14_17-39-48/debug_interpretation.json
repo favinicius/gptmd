@@ -1,0 +1,33 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Implantação de Data Center de Operações Industriais (IODC)",
+    "scope_items": [
+        "Elaboração de Projeto Detalhado",
+        "Consultoria",
+        "Instalação e Comissionamento",
+        "Rede de Automação",
+        "Infraestrutura de Servidores",
+        "Cluster de Virtualização",
+        "Interconexão com a Rede IACS",
+        "Storage de Alto Desempenho",
+        "Switches Dedicados de Alto Desempenho",
+        "Estrutura de Backup e Repositório Imutável",
+        "Servidor de Backup",
+        "NAS Imutabilidade"
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    }
+}

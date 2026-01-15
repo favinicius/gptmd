@@ -1,0 +1,59 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Implantação de Datacenter de Operações Industriais (IODC) - OFI Ilhéus",
+    "scope_items": [
+        {
+            "name": "Elaboração de Projeto Detalhado e Planbook",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Definição de equipamentos, cronograma e reuniões de validação em 30 dias conforme instrução"
+        },
+        {
+            "name": "Consultoria Técnica e Refinamento de Projeto",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Consultoria necessária para refinamento da implantação devido à falta de projeto inicial"
+        },
+        {
+            "name": "Fornecimento de Infraestrutura de Datacenter (Turnkey)",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento completo de servidores, storage, switches e backup conforme solicitado na instrução"
+        },
+        {
+            "name": "Instalação e Comissionamento Presencial",
+            "detected_quantity": 5,
+            "action_type": "install",
+            "context_note": "Execução dividida em 5 etapas presenciais em Ilhéus conforme planejamento logístico"
+        },
+        {
+            "name": "Migração de Servidores e Aplicações Industriais",
+            "detected_quantity": 1,
+            "action_type": "migrate_p2v",
+            "context_note": "Migração de sistemas conforme diretrizes de migração e arquitetura do cluster no PDF"
+        },
+        {
+            "name": "Reuniões de Revisão e Aprovação com Diretoria",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Governança dedicada com reuniões online e aprovação executiva"
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "estimated_duration_weeks": 11,
+    "governance_level": "intensive"
+}

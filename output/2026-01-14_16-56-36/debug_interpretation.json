@@ -1,0 +1,30 @@
+{
+    "client_name": "João",
+    "company_name": "Máquinas Agrícolas",
+    "project_name": "Pré-Projeto IODC - DataCenter de Operações Industriais",
+    "scope_items": [
+        "Cluster de Virtualização",
+        "Interconexão com a rede IACS",
+        "Organização funcional dos servidores e VMs",
+        "Servidores do cluster de virtualização",
+        "Storage de alto desempenho",
+        "Switch(es) dedicado(s) de alto desempenho",
+        "Estrutura de Backup e Repositório Imutável",
+        "Servidor de Backup"
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": false,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 1,
+        "stay_duration_days": []
+    }
+}

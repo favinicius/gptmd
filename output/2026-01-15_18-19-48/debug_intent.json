@@ -1,0 +1,111 @@
+{
+    "client_name": "OFI - OLAM Foods Ingredients S.A.",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "OFI Ilhéus Project",
+    "scope_items": [
+        {
+            "name": "Planejamento e Definição de Arquitetura",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Fase inicial de 30 dias dedicada ao planejamento (definição de equipamentos, planbook e cronograma).",
+            "visibility": "internal",
+            "explicit_total_hours": 240,
+            "is_weekend": false
+        },
+        {
+            "name": "Implementação de Sala de Disaster Recovery (DR)",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Inclusão de uma sala de Disaster Recovery conforme nova decisão do cliente.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação de Host Microsoft Hyper-V (DR)",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro host rodando Microsoft Hyper-V para a sala de DR.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação de Switch de Rede (DR)",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro switch para a sala de DR.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Consultoria e Acompanhamento Técnico do Projeto",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Escopo completo de consultoria e acompanhamento técnico.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Execução e Instalação Presencial - Etapa 1",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Primeira etapa presencial de 10 dias úteis para execução e instalação.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": true
+        },
+        {
+            "name": "Execução e Instalação Presencial - Etapa 2",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Segunda etapa presencial de 10 dias úteis para execução e instalação.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": true
+        },
+        {
+            "name": "Aquisição de Curso Microsoft Hyper-V",
+            "detected_quantity": 1,
+            "action_type": "supply_only",
+            "context_note": "Compra de curso para capacitação interna da equipe em Hyper-V.",
+            "visibility": "internal",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Estudo e Prática Microsoft Hyper-V para Analistas",
+            "detected_quantity": 2,
+            "action_type": "design",
+            "context_note": "80 horas de curso online e tempo estimado de estudo e testes para 2 analistas.",
+            "visibility": "internal",
+            "explicit_total_hours": 160,
+            "is_weekend": false
+        }
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            10,
+            10
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": false,
+        "hotel_tier": "hotel_tier_interior",
+        "origin_mobilization_km": 50.0
+    },
+    "estimated_duration_weeks": 10,
+    "governance_level": "standard",
+    "work_on_weekends": true
+}

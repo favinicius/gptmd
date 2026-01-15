@@ -1,0 +1,73 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Consultoria, Fornecimento e Implementação de IODC e Disaster Recovery - Unidade Ilhéus",
+    "scope_items": [
+        {
+            "name": "Fase de Planejamento (Definição, Planbook e Cronograma)",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Fase inicial mandatória de 30 dias para detalhamento técnico e validação com diretoria."
+        },
+        {
+            "name": "Servidores (Hosts) do Cluster de Virtualização e DR",
+            "detected_quantity": 3,
+            "action_type": "turnkey",
+            "context_note": "Inclusão de um terceiro host para a sala de Disaster Recovery (Hyper-V) conforme instrução do usuário."
+        },
+        {
+            "name": "Storage de Alto Desempenho",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de storage conforme seção 6.2 do pré-projeto."
+        },
+        {
+            "name": "Switches de Rede Dedicados",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Interconexão com a rede IACS e cluster conforme seções 4.3 e 6.3."
+        },
+        {
+            "name": "Servidor de Backup e NAS para Repositório Imutável",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de infraestrutura de backup conforme seções 6.4.1 e 6.4.2."
+        },
+        {
+            "name": "Implementação de Cluster Microsoft Hyper-V",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Configuração do ambiente de virtualização nos hosts solicitados."
+        },
+        {
+            "name": "Aplicações de Infraestrutura, Sistemas Industriais e Suporte (VMs)",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Instalação dos grupos de aplicações funcionais descritos nas seções 5.1.1, 5.1.2 e 5.1.3."
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": true,
+        "hotel_tier": "hotel_tier_interior"
+    },
+    "estimated_duration_weeks": 13,
+    "governance_level": "intensive"
+}

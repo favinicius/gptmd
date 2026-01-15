@@ -1,0 +1,35 @@
+{
+    "client_name": "Gilmar",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Pré-Projeto IODC - Datacenter de Operações Industriais",
+    "scope_items": [
+        "Consultoria e Instalação",
+        "Rede de Automação",
+        "Infraestrutura de Servidores",
+        "Cluster de Virtualização",
+        "Interconexão com a Rede IACS",
+        "Aplicações de Infraestrutura",
+        "Aplicações de Sistemas Industriais",
+        "Aplicações de Suporte e Continuidade",
+        "Servidores do Cluster de Virtualização",
+        "Storage de Alto Desempenho",
+        "Switch(es) Dedicado(s) de Alto Desempenho",
+        "Estrutura de Backup e Repositório Imutável",
+        "Servidor de Backup",
+        "NAS Imutabilidade"
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    }
+}

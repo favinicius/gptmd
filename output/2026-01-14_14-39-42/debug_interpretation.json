@@ -1,0 +1,16 @@
+{
+    "client_name": "Gilmar",
+    "company_name": "OFI",
+    "project_name": "Entrega OFI",
+    "scope_items": [],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": false,
+        "travel_segments": [
+            35
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    }
+}

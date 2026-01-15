@@ -1,0 +1,26 @@
+{
+  "policies": {
+    "meal_weekday": 80.00,
+    "meal_weekend_holiday": 120.00,
+    "hotel_tier_capital": 350.00,
+    "hotel_tier_interior": 180.00,
+    "km_reimbursement": 1.80,
+    "car_rental_suv": 300.00,
+    "fuel_avg_price": 7.00,
+    "fuel_efficiency_km_l": 8.0
+  },
+  "logistics_bundles": {
+    "flight_ne": {
+      "desc": "Passagem Aérea (SP -> Nordeste)",
+      "est_cost": 2500.00
+    },
+    "flight_s_se": {
+      "desc": "Passagem Aérea (SP -> Sul/Sudeste)",
+      "est_cost": 1200.00
+    },
+    "freight_heavy": {
+      "desc": "Frete/Transporte de Equipamentos",
+      "est_cost": 5000.00
+    }
+  }
+}

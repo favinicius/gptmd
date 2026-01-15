@@ -1,0 +1,29 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Implantação e Projeto Detalhado - IODC",
+    "scope_items": [
+        "Elaboração de Projeto Detalhado",
+        "Cluster de Virtualização",
+        "Interconexão com rede IACS",
+        "Servidores do Cluster de Virtualização",
+        "Storage de Alto Desempenho",
+        "Switch(es) Dedicado(s) de Alto Desempenho",
+        "Estrutura de Backup e Repositório Imutável",
+        "NAS Imutabilidade"
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    }
+}

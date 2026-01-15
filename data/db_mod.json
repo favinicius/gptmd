@@ -1,0 +1,549 @@
+{
+  "meta_info": {
+    "version": "3.1",
+    "description": "Base de Conhecimento de Estimativa Técnica - Normalizada para Motor de Cálculo",
+    "philosophy": "Micro-activities with Setup+Unit logic"
+  },
+  "roles": [
+    {
+      "role": "Auxiliar",
+      "cost_unit": 50.0,
+      "level": "entry"
+    },
+    {
+      "role": "Técnico",
+      "cost_unit": 65.0,
+      "level": "mid"
+    },
+    {
+      "role": "Analista",
+      "cost_unit": 65.0,
+      "level": "senior"
+    },
+    {
+      "role": "Engenheiro",
+      "cost_unit": 130.0,
+      "level": "expert"
+    },
+    {
+      "role": "Gestor",
+      "cost_unit": 120.0,
+      "level": "management"
+    },
+    {
+      "role": "Arquiteto",
+      "cost_unit": 130.0,
+      "level": "expert"
+    }
+  ],
+  "categories": {
+    "PHASE_1": "Planejamento e Design (Pre-Work)",
+    "PHASE_2": "Logística e Físico (Layer 1)",
+    "PHASE_3": "Infraestrutura de Rede (Layer 2/3)",
+    "PHASE_4": "Computação e Armazenamento (Hardware)",
+    "PHASE_5": "Virtualização e SO (Software Infra)",
+    "PHASE_6": "Backup e Segurança (Protection)",
+    "PHASE_7": "Validação e Encerramento (Handover)"
+  },
+  "activity_library": [
+    {
+      "id": "PLAN_001",
+      "category": "PHASE_1",
+      "name": "Levantamento de Dados (Site Survey Físico/Lógico)",
+      "description": "Vistoria local para validar energia, espaço, climatização e mapeamento de rede atual.",
+      "role": "Engenheiro",
+      "setup_hours": 4.0,
+      "unit_hours": 2.0,
+      "unit_measure": "site/sala",
+      "tags": [
+        "planning",
+        "mandatory"
+      ]
+    },
+    {
+      "id": "PLAN_002",
+      "category": "PHASE_1",
+      "name": "Elaboração de Planbook e LLD (Low Level Design)",
+      "description": "Criação de documento técnico com IPs, VLANs, Nomes, Topologia e Plano de Migração.",
+      "role": "Arquiteto",
+      "setup_hours": 16.0,
+      "unit_hours": 0.0,
+      "unit_measure": "projeto",
+      "tags": [
+        "planning",
+        "design",
+        "mandatory"
+      ]
+    },
+    {
+      "id": "PLAN_003",
+      "category": "PHASE_1",
+      "name": "Reunião de Kick-off e Alinhamento Técnico",
+      "description": "Reunião formal de início com stakeholders e equipe técnica.",
+      "role": "Gestor",
+      "setup_hours": 4.0,
+      "unit_hours": 0.0,
+      "unit_measure": "evento",
+      "tags": [
+        "management"
+      ]
+    },
+    {
+      "id": "PHYS_001",
+      "category": "PHASE_2",
+      "name": "Recebimento, Conferência e Inventário",
+      "description": "Desembalar, conferir Serial Numbers, validar contra NF e reportar danos.",
+      "role": "Auxiliar",
+      "setup_hours": 2.0,
+      "unit_hours": 0.5,
+      "unit_measure": "equipamento",
+      "tags": [
+        "logistics",
+        "physical"
+      ]
+    },
+    {
+      "id": "PHYS_002",
+      "category": "PHASE_2",
+      "name": "Montagem em Rack (Rack & Stack) - Ativos",
+      "description": "Fixação de trilhos, porcas gaiola e montagem de servidores/switches/storage.",
+      "role": "Técnico",
+      "setup_hours": 1.0,
+      "unit_hours": 2.0,
+      "unit_measure": "equipamento",
+      "tags": [
+        "physical",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "PHYS_003",
+      "category": "PHASE_2",
+      "name": "Cabeamento Estruturado e Organização (Patching)",
+      "description": "Lançamento de patch cords, organização em guias verticais/horizontais e velcros.",
+      "role": "Técnico",
+      "setup_hours": 1.0,
+      "unit_hours": 0.5,
+      "unit_measure": "cabo/ponto",
+      "tags": [
+        "physical",
+        "cabling"
+      ]
+    },
+    {
+      "id": "PHYS_004",
+      "category": "PHASE_2",
+      "name": "Etiquetagem e Identificação Física",
+      "description": "Impressão e colagem de etiquetas em cabos (pontas) e ativos (frente/trás).",
+      "role": "Auxiliar",
+      "setup_hours": 1.0,
+      "unit_hours": 0.25,
+      "unit_measure": "etiqueta",
+      "tags": [
+        "physical",
+        "documentation"
+      ]
+    },
+    {
+      "id": "NET_001",
+      "category": "PHASE_3",
+      "name": "Atualização de Firmware (Switch/Firewall)",
+      "description": "Download, validação de checksum, upload e reboot de ativos de rede.",
+      "role": "Analista",
+      "setup_hours": 2.0,
+      "unit_hours": 1.5,
+      "unit_measure": "device",
+      "tags": [
+        "network",
+        "hardening"
+      ]
+    },
+    {
+      "id": "NET_002",
+      "category": "PHASE_3",
+      "name": "Configuração L2 Base (VLANs/STP/LACP)",
+      "description": "Criação de VLANs, Trunks, Spanning Tree e Agregação de Links.",
+      "role": "Analista",
+      "setup_hours": 4.0,
+      "unit_hours": 2.0,
+      "unit_measure": "switch",
+      "tags": [
+        "network",
+        "switching"
+      ]
+    },
+    {
+      "id": "NET_003",
+      "category": "PHASE_3",
+      "name": "Configuração L3 Core (Roteamento/OSPF/VRRP)",
+      "description": "Configuração de interfaces SVI, protocolos de roteamento e redundância de gateway.",
+      "role": "Engenheiro",
+      "setup_hours": 8.0,
+      "unit_hours": 4.0,
+      "unit_measure": "core_switch",
+      "tags": [
+        "network",
+        "core"
+      ]
+    },
+    {
+      "id": "NET_004",
+      "category": "PHASE_3",
+      "name": "Configuração de Firewall (Políticas/NAT/VPN)",
+      "description": "Criação de objetos, regras de acesso, NATs e túneis VPN Site-to-Site.",
+      "role": "Engenheiro",
+      "setup_hours": 8.0,
+      "unit_hours": 0.5,
+      "unit_measure": "regra_complexa",
+      "tags": [
+        "network",
+        "security"
+      ]
+    },
+    {
+      "id": "COMP_001",
+      "category": "PHASE_4",
+      "name": "Setup de Hardware Servidor (BIOS/RAID/OOB)",
+      "description": "Configuração de iDRAC/iLO, atualização de BIOS, criação de Arrays RAID.",
+      "role": "Analista",
+      "setup_hours": 1.0,
+      "unit_hours": 3.0,
+      "unit_measure": "servidor",
+      "tags": [
+        "server",
+        "hardware"
+      ]
+    },
+    {
+      "id": "COMP_002",
+      "category": "PHASE_4",
+      "name": "Configuração de Storage (Pools/LUNs/Zoning)",
+      "description": "Inicialização de Storage, criação de Pools, LUNs e Zoneamento FC/iSCSI.",
+      "role": "Engenheiro",
+      "setup_hours": 4.0,
+      "unit_hours": 4.0,
+      "unit_measure": "storage_array",
+      "tags": [
+        "storage",
+        "san"
+      ]
+    },
+    {
+      "id": "VIRT_001",
+      "category": "PHASE_5",
+      "name": "Instalação de Hypervisor (ESXi/Hyper-V)",
+      "description": "Instalação do SO base de virtualização, IPs de gestão e drivers.",
+      "role": "Analista",
+      "setup_hours": 1.0,
+      "unit_hours": 2.0,
+      "unit_measure": "host",
+      "tags": [
+        "virtualization",
+        "install"
+      ]
+    },
+    {
+      "id": "VIRT_002",
+      "category": "PHASE_5",
+      "name": "Configuração de Cluster de Virtualização (HA/DRS)",
+      "description": "Criação do Cluster, Datastores compartilhados, vMotion e regras de HA.",
+      "role": "Engenheiro",
+      "setup_hours": 4.0,
+      "unit_hours": 4.0,
+      "unit_measure": "cluster",
+      "tags": [
+        "virtualization",
+        "cluster"
+      ]
+    },
+    {
+      "id": "VIRT_003",
+      "category": "PHASE_5",
+      "name": "Provisionamento de VM (Windows/Linux)",
+      "description": "Deploy de template, sysprep, ingresso no domínio e install de tools.",
+      "role": "Analista",
+      "setup_hours": 2.0,
+      "unit_hours": 1.0,
+      "unit_measure": "vm",
+      "tags": [
+        "virtualization",
+        "vm"
+      ]
+    },
+    {
+      "id": "VIRT_004",
+      "category": "PHASE_5",
+      "name": "Migração de Cargas (P2V ou V2V)",
+      "description": "Conversão, cópia de dados, ajuste de drivers e validação pós-migração.",
+      "role": "Analista",
+      "setup_hours": 2.0,
+      "unit_hours": 4.0,
+      "unit_measure": "vm_migrada",
+      "tags": [
+        "migration",
+        "risk"
+      ]
+    },
+    {
+      "id": "BK_001",
+      "category": "PHASE_6",
+      "name": "Instalação de Servidor de Backup (Veeam/Outros)",
+      "description": "Instalação do software de backup, proxies e repositórios.",
+      "role": "Analista",
+      "setup_hours": 4.0,
+      "unit_hours": 2.0,
+      "unit_measure": "servidor_backup",
+      "tags": [
+        "backup",
+        "security"
+      ]
+    },
+    {
+      "id": "BK_002",
+      "category": "PHASE_6",
+      "name": "Criação de Jobs e Políticas de Backup",
+      "description": "Configuração de jobs, retenção, GFS e janela de backup.",
+      "role": "Analista",
+      "setup_hours": 2.0,
+      "unit_hours": 0.5,
+      "unit_measure": "job",
+      "tags": [
+        "backup",
+        "config"
+      ]
+    },
+    {
+      "id": "BK_003",
+      "category": "PHASE_6",
+      "name": "Teste de Restore (Validação)",
+      "description": "Execução mandatória de testes de restauração de VMs e Arquivos.",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "teste",
+      "tags": [
+        "backup",
+        "validation"
+      ]
+    },
+    {
+      "id": "VAL_001",
+      "category": "PHASE_7",
+      "name": "Testes de Failover (HA) e Resiliência",
+      "description": "Desligamento forçado de nós, remoção de cabos para validar redundância.",
+      "role": "Engenheiro",
+      "setup_hours": 2.0,
+      "unit_hours": 4.0,
+      "unit_measure": "cenario_teste",
+      "tags": [
+        "validation",
+        "quality"
+      ]
+    },
+    {
+      "id": "VAL_002",
+      "category": "PHASE_7",
+      "name": "Documentação As-Built e Databook",
+      "description": "Compilação de diagramas, senhas, configurações finais e manuais.",
+      "role": "Analista",
+      "setup_hours": 8.0,
+      "unit_hours": 0.0,
+      "unit_measure": "projeto",
+      "tags": [
+        "documentation",
+        "mandatory"
+      ]
+    },
+    {
+      "id": "VAL_003",
+      "category": "PHASE_7",
+      "name": "Operação Assistida (Post-Go-Live)",
+      "description": "Acompanhamento remoto ou presencial após virada de chave.",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 8.0,
+      "unit_measure": "dia",
+      "tags": [
+        "support",
+        "handover"
+      ]
+    },
+    {
+      "id": "SHE_001",
+      "category": "PHASE_2",
+      "name": "Ineficiência SHE/Permissões de Trabalho",
+      "description": "Tempo parado aguardando liberação de área, DDS, integração.",
+      "role": "Técnico",
+      "setup_hours": 2.0,
+      "unit_hours": 1.0,
+      "unit_measure": "dia_campo",
+      "tags": [
+        "inefficiency",
+        "she"
+      ]
+    },
+    {
+      "id": "GOV_001",
+      "category": "PHASE_1",
+      "name": "Acompanhamento Semanal de Projeto",
+      "description": "Reunião de status e atualização de cronograma.",
+      "role": "Gestor",
+      "setup_hours": 2.0,
+      "unit_hours": 0.0,
+      "unit_measure": "semana",
+      "tags": [
+        "management",
+        "governance"
+      ]
+    },
+    {
+      "id": "GOV_002",
+      "category": "PHASE_1",
+      "name": "Daily Meeting (Gestão Intensiva)",
+      "description": "Sincronização diária de 15-30min.",
+      "role": "Gestor",
+      "setup_hours": 0.5,
+      "unit_hours": 0.0,
+      "unit_measure": "dia",
+      "tags": [
+        "management",
+        "governance"
+      ]
+    }
+  ],
+  "bundle_logic": [
+    {
+      "trigger_keyword": "Switch",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "PHYS_004",
+        "NET_001",
+        "NET_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Cisco",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "PHYS_004",
+        "NET_001",
+        "NET_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Rede",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "PHYS_004",
+        "NET_001",
+        "NET_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Network",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "PHYS_004",
+        "NET_001",
+        "NET_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Server",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "PHYS_003",
+        "PHYS_004",
+        "COMP_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Storage",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "COMP_002"
+      ]
+    },
+    {
+      "trigger_keyword": "SAN",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "COMP_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Armazenamento",
+      "required_activities": [
+        "PHYS_001",
+        "PHYS_002",
+        "COMP_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Migração",
+      "required_activities": [
+        "VIRT_004",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Migration",
+      "required_activities": [
+        "VIRT_004",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "P2V",
+      "required_activities": [
+        "VIRT_004",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "V2V",
+      "required_activities": [
+        "VIRT_004",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Hyper-V",
+      "required_activities": [
+        "VIRT_001",
+        "VIRT_002",
+        "VIRT_003"
+      ]
+    },
+    {
+      "trigger_keyword": "Backup",
+      "required_activities": [
+        "BK_001",
+        "BK_002",
+        "BK_003"
+      ]
+    },
+    {
+      "trigger_keyword": "Project_Start",
+      "required_activities": [
+        "PLAN_001",
+        "PLAN_002",
+        "PLAN_003"
+      ]
+    },
+    {
+      "trigger_keyword": "Project_End",
+      "required_activities": [
+        "VAL_002",
+        "VAL_003"
+      ]
+    }
+  ]
+}

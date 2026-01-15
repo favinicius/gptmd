@@ -1,0 +1,82 @@
+[
+  {
+    "item": "KM Rodado",
+    "city_ref": "Padrão",
+    "vendor": "Interno (Frota)",
+    "details": "Combustível + Depreciação",
+    "unit": "km",
+    "cost_unit": 2.50
+  },
+  {
+    "item": "Hospedagem",
+    "city_ref": "Piumhi",
+    "type": "Econômico",
+    "vendor": "Ribs",
+    "details": "Hotel Executivo (Diária c/ Café)",
+    "unit": "Diária",
+    "cost_unit": 135.00
+  },
+  {
+    "item": "Hospedagem",
+    "city_ref": "Piumhi",
+    "type": "Padrão",
+    "vendor": "Serra Vita",
+    "details": "Hotel Executivo (Diária c/ Café)",
+    "unit": "Diária",
+    "cost_unit": 150.00
+  },
+  {
+    "item": "Hospedagem",
+    "city_ref": "Salvador",
+    "type": "Padrão",
+    "vendor": "Ibis",
+    "details": "Hotel Executivo (Diária c/ Café)",
+    "unit": "Diária",
+    "cost_unit": 350.00
+  },
+  {
+    "item": "Alimentação",
+    "city_ref": "Padrão",
+    "type": "Diária Completa",
+    "vendor": "Diversos",
+    "details": "Café/Almoço/Jantar (Dia)",
+    "unit": "Dia",
+    "cost_unit": 80.00
+  },
+  {
+    "item": "Pedágio",
+    "city_ref": "Padrão",
+    "type": "Estimativa",
+    "vendor": "Sem Parar",
+    "details": "Custo Médio a cada 100km",
+    "unit": "un",
+    "cost_unit": 22.00
+  },
+  {
+    "item": "Combustível",
+    "city_ref": "Padrão",
+    "type": "Gasolina",
+    "vendor": "Posto",
+    "details": "Gasolina (Ref. 10km/l para locados)",
+    "unit": "Litro",
+    "cost_unit": 7.00
+  },
+  {
+    "item": "Locação Veículo",
+    "city_ref": "Padrão",
+    "type": "SUV",
+    "vendor": "Localiza",
+    "details": "Grupo SUV (Duster/Creta)",
+    "unit": "Diária",
+    "cost_unit": 250.00
+  },
+  {
+    "item": "Locação Veículo",
+    "city_ref": "Padrão",
+    "type": "Compacto",
+    "vendor": "Movida",
+    "details": "Grupo Compacto (Gol/Onix)",
+    "unit": "Diária",
+    "cost_unit": 140.00
+  }
+]

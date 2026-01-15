@@ -1,0 +1,120 @@
+{
+    "client_name": "OFI - OLAM Foods Ingredients S.A.",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Proposta Técnica OFI Ilhéus - IODC",
+    "scope_items": [
+        {
+            "name": "Consultoria e Acompanhamento Técnico",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Escopo completo de consultoria e acompanhamento na unidade de Ilhéus",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Planejamento e Definição de Projeto",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Fase de 30 dias dedicada ao planejamento (definição de equipamentos, planbook e cronograma)",
+            "visibility": "internal",
+            "explicit_total_hours": 240,
+            "is_weekend": false
+        },
+        {
+            "name": "Detalhamento de Dedicação Técnica (Planejamento)",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Detalhamento dos dias de dedicação técnica para a fase de planejamento (MOD)",
+            "visibility": "internal",
+            "explicit_total_hours": 240,
+            "is_weekend": false
+        },
+        {
+            "name": "Implementação de Sala de Disaster Recovery (DR)",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Inclusão de sala de Disaster Recovery no escopo do projeto",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Host Microsoft Hyper-V",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro host para DR, totalizando 3 hosts Hyper-V",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Switch de Rede",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro switch para DR, totalizando 3 switches",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Infraestrutura (Escopo Geral)",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Fase de execução da instalação completa da infraestrutura",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Migração de Servidores Físicos para Virtuais (P2V)",
+            "detected_quantity": 15,
+            "action_type": "migrate_p2v",
+            "context_note": "Migração de aplicações de infraestrutura e sistemas industriais para o novo cluster virtualizado",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Compra de Curso Microsoft Hyper-V",
+            "detected_quantity": 1,
+            "action_type": "supply_only",
+            "context_note": "Custo de R$ 1.000,00 para capacitação da equipe em Hyper-V",
+            "visibility": "internal",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Estudo e Prática Microsoft Hyper-V (Analistas)",
+            "detected_quantity": 2,
+            "action_type": "design",
+            "context_note": "80 horas de curso online e tempo de estudo/testes para 2 analistas",
+            "visibility": "internal",
+            "explicit_total_hours": 160,
+            "is_weekend": false
+        }
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            10,
+            10
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": false,
+        "hotel_tier": "hotel_tier_interior",
+        "origin_mobilization_km": 50.0
+    },
+    "estimated_duration_weeks": 10,
+    "governance_level": "standard",
+    "work_on_weekends": true
+}

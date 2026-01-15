@@ -1,0 +1,23 @@
+{
+    "client_name": "OFI",
+    "company_name": "OFI",
+    "project_name": "Projeto de automação para a fábrica em Itaboraí",
+    "scope_items": [
+        "Cluster de Virtualização de Servidores",
+        "Storage de Alto Desempenho",
+        "Switches Dedicados de Alto Desempenho",
+        "Servidor de Backup e Repositório Imutável",
+        "Interconexão com a Rede IACS",
+        "Datacenter de Operações Industriais IODC"
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": false,
+        "travel_segments": [
+            5
+        ],
+        "team_size": 2,
+        "stay_duration_days": []
+    }
+}

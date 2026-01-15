@@ -1,0 +1,29 @@
+[
+  {
+    "category": "Instrumentação",
+    "description": "Certificador de Redes - Kit Cobre (Fluke DSX-5000)",
+    "details": "Cat 5e/6/6A",
+    "vendor": "Powertronics",
+    "unit": "Diária",
+    "cost_unit": 1350.00,
+    "requires_logistics": true
+  },
+  {
+    "category": "Instrumentação",
+    "description": "Certificador de Redes - Kit Fibra (Fluke DSX-5000)",
+    "details": "SM e MM (OTDR/OLTS)",
+    "vendor": "Powertronics",
+    "unit": "Diária",
+    "cost_unit": 2400.00,
+    "requires_logistics": true
+  },
+  {
+    "category": "Logística Específica",
+    "description": "Frete/Logística de Retirada e Devolução (Instrumentação)",
+    "details": "Retirada/Devolução Tatuapé - SP",
+    "vendor": "Transportadora/Motoboy",
+    "unit": "Verba",
+    "cost_unit": 450.00,
+    "requires_logistics": false
+  }
+]

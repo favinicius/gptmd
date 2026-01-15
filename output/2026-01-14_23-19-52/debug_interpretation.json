@@ -1,0 +1,29 @@
+{
+    "client_name": "Coca-Cola",
+    "company_name": "Coca-Cola",
+    "project_name": "Migração",
+    "scope_items": [
+        {
+            "name": "VMs",
+            "detected_quantity": 26,
+            "action_type": "migrate_p2v",
+            "context_note": "Migração de 26 VMs utilizando o método Physical-to-Virtual (P2V) conforme instrução direta."
+        },
+        {
+            "name": "Switches Core",
+            "detected_quantity": 5,
+            "action_type": "install",
+            "context_note": "Instalação de 5 Switches Core conforme definido no escopo da instrução."
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5
+        ],
+        "team_size": 1,
+        "stay_duration_days": []
+    }
+}

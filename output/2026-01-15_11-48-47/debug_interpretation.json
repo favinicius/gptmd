@@ -1,0 +1,64 @@
+{
+    "client_name": "OFI ILHÉUS",
+    "company_name": "OFI ILHÉUS",
+    "project_name": "PRÉ PROJETO IODC",
+    "scope_items": [
+        {
+            "name": "Planejamento Interno",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "30 dias de planejamento interno conforme instrução do usuário",
+            "visibility": "internal",
+            "explicit_total_hours": 240,
+            "is_weekend": false
+        },
+        {
+            "name": "Curso Hyper-V",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "80h de curso Hyper-V conforme instrução do usuário",
+            "visibility": "internal",
+            "explicit_total_hours": 80,
+            "is_weekend": false
+        },
+        {
+            "name": "Mobilização Jundiaí",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Mobilização de Jundiaí (50km) para início das atividades",
+            "visibility": "internal",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação de Servidores",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Instalação de 3 servidores físicos no final de semana conforme instrução prioritária",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": true
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": false,
+        "travel_segments": [
+            5
+        ],
+        "team_size": 1,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": false,
+        "flight_region": "flight_s_se",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": true,
+        "hotel_tier": "hotel_tier_capital",
+        "origin_mobilization_km": 50.0
+    },
+    "estimated_duration_weeks": 6,
+    "governance_level": "standard"
+}

@@ -1,0 +1,67 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Consultoria, Fornecimento e Instalação de Datacenter e Disaster Recovery - Ilhéus",
+    "scope_items": [
+        {
+            "name": "Fase de Planejamento e Design Técnico (Planbook)",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Fase inicial de 30 dias para definição de equipamentos e cronograma com validação da diretoria."
+        },
+        {
+            "name": "Servidores Host (Cluster Principal + DR)",
+            "detected_quantity": 3,
+            "action_type": "turnkey",
+            "context_note": "Inclusão de um terceiro host rodando Microsoft Hyper-V para sala de DR somado ao cluster base."
+        },
+        {
+            "name": "Storage de Alto Desempenho",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de unidade de storage de alto desempenho conforme pré-projeto."
+        },
+        {
+            "name": "Switches Dedicados de Alto Desempenho",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Par de switches para redundância e performance do cluster de virtualização."
+        },
+        {
+            "name": "Estrutura de Backup e NAS Imutável",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Conjunto composto por servidor de backup e repositório NAS com imutabilidade."
+        },
+        {
+            "name": "Implementação de Grupos de Aplicações/VMs",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Instalação e configuração das camadas de Infraestrutura, Sistemas Industriais e Suporte/Continuidade."
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": true,
+        "hotel_tier": "hotel_tier_interior"
+    },
+    "estimated_duration_weeks": 13,
+    "governance_level": "intensive"
+}

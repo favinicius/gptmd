@@ -1,0 +1,183 @@
+{
+    "client_name": "OFI - OLAM Foods Ingredients S.A.",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "OFI Ilhéus IODC Project",
+    "scope_items": [
+        {
+            "name": "Fase de Planejamento Técnico e Cronograma",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Fase de 30 dias dedicada ao planejamento (definição de equipamentos, planbook e cronograma)",
+            "visibility": "internal",
+            "explicit_total_hours": 240,
+            "is_weekend": false
+        },
+        {
+            "name": "Implementação de Infraestrutura para Sala de Disaster Recovery",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Inclusão de sala de Disaster Recovery no escopo",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Host Microsoft Hyper-V",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro host rodando Microsoft Hyper-V",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Switch de Rede",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Inclusão de um terceiro switch já tratado",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Aquisição de Curso Online Microsoft Hyper-V",
+            "detected_quantity": 1,
+            "action_type": "supply_only",
+            "context_note": "Compra de curso para capacitação da equipe",
+            "visibility": "internal",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Capacitação e Estudo Microsoft Hyper-V para Analistas",
+            "detected_quantity": 2,
+            "action_type": "design",
+            "context_note": "2 analistas farão curso online (80 horas) com tempo de estudo e testes",
+            "visibility": "internal",
+            "explicit_total_hours": 80,
+            "is_weekend": false
+        },
+        {
+            "name": "Mobilização Presencial para Execução - Etapa 1",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Primeira das duas etapas presenciais de 10 dias úteis",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Mobilização Presencial para Execução - Etapa 2",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Segunda das duas etapas presenciais de 10 dias úteis",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Serviços de Consultoria e Acompanhamento Técnico",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Escopo completo de consultoria e acompanhamento",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Serviços de Instalação e Configuração Geral",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Escopo completo de instalação na unidade de Ilhéus",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Elaboração de Proposta Separada para Detalhes de Conectividade",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Detalhes de conectividade serão tratados em proposta separada",
+            "visibility": "internal",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Servidores para Cluster de Virtualização",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Cluster de virtualização (2 hosts implícitos no pré-projeto) + 1 host Hyper-V adicional conforme instrução.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Storage de Alto Desempenho",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Storage de alto desempenho conforme pré-projeto.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Switches Dedicados de Alto Desempenho",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Switches dedicados (2 implícitos no pré-projeto) + 1 switch adicional conforme instrução.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de Servidor de Backup",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "Servidor de backup conforme pré-projeto.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Instalação e Configuração de NAS para Repositório Imutável",
+            "detected_quantity": 1,
+            "action_type": "install",
+            "context_note": "NAS para repositório imutável conforme pré-projeto.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        },
+        {
+            "name": "Migração e Configuração de Máquinas Virtuais",
+            "detected_quantity": 17,
+            "action_type": "migrate_p2v",
+            "context_note": "Migração/instalação de 17 VMs conforme dimensionamento do pré-projeto.",
+            "visibility": "public",
+            "explicit_total_hours": 0,
+            "is_weekend": false
+        }
+    ],
+    "hardware_supply_by_client": true,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            10,
+            10
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": false,
+        "hotel_tier": "hotel_tier_interior",
+        "origin_mobilization_km": 50.0
+    },
+    "estimated_duration_weeks": 9,
+    "governance_level": "standard",
+    "work_on_weekends": true
+}

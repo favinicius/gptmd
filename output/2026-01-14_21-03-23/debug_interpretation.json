@@ -1,0 +1,34 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Implantação de Datacenter de Operações Industriais (IODC) - OFI Ilhéus",
+    "scope_items": [
+        "Consultoria e Refinamento Técnico",
+        "Elaboração de Projeto Detalhado",
+        "Fornecimento de Equipamentos",
+        "Instalação e Comissionamento",
+        "Definição de Planbook e Cronograma",
+        "Rede de Automação",
+        "Infraestrutura de Servidores",
+        "Cluster de Virtualização",
+        "Interconexão com Rede IACS",
+        "Storage de Alto Desempenho",
+        "Switches Dedicados de Alto Desempenho",
+        "Estrutura de Backup e Repositório Imutável",
+        "NAS Imutabilidade"
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    }
+}

@@ -1,0 +1,67 @@
+{
+    "client_name": "Gilmar Corrêa",
+    "company_name": "OFI - OLAM Foods Ingredients S.A.",
+    "project_name": "Implantação de Datacenter de Operações Industriais (IODC) - Ilhéus",
+    "scope_items": [
+        {
+            "name": "Elaboração de Projeto Detalhado e Planbook",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Planejamento de 30 dias incluindo cronograma, definição de equipamentos e reuniões de validação/diretoria."
+        },
+        {
+            "name": "Fornecimento de Infraestrutura de Hardware (Cluster, Storage, Switches)",
+            "detected_quantity": 3,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de servidores, storage e switches conforme itens 6.1 a 6.3 do pré-projeto."
+        },
+        {
+            "name": "Fornecimento de Estrutura de Backup e NAS Imutável",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento de servidor de backup e unidade NAS para imutabilidade."
+        },
+        {
+            "name": "Instalação de Aplicações Críticas (Infra, Industrial, Suporte)",
+            "detected_quantity": 3,
+            "action_type": "install",
+            "context_note": "Configuração das categorias de aplicações listadas na classificação funcional do projeto."
+        },
+        {
+            "name": "Execução Presencial: Instalação e Comissionamento",
+            "detected_quantity": 5,
+            "action_type": "install",
+            "context_note": "Execução dividida em 5 etapas presenciais em Ilhéus com 3 profissionais."
+        },
+        {
+            "name": "Consultoria e Refinamento Técnico",
+            "detected_quantity": 1,
+            "action_type": "design",
+            "context_note": "Apoio técnico para detalhamento da implantação e dimensionamento de horas."
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": true,
+        "travel_segments": [
+            5,
+            5,
+            5,
+            5,
+            15
+        ],
+        "team_size": 3,
+        "stay_duration_days": []
+    },
+    "detailed_logistics": {
+        "requires_flight": true,
+        "flight_region": "flight_ne",
+        "requires_car_rental": true,
+        "estimated_daily_km": 60.0,
+        "requires_freight": true,
+        "hotel_tier": "hotel_tier_interior"
+    },
+    "estimated_duration_weeks": 11,
+    "governance_level": "intensive"
+}

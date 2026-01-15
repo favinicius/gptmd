@@ -1,0 +1,50 @@
+{
+    "client_name": "Teste de Engenharia",
+    "company_name": "Industrial Tech S.A.",
+    "project_name": "Implementação de Datacenter e Rede Industrial",
+    "scope_items": [
+        {
+            "name": "Cluster de Virtualização (Hosts e Storage SAS)",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento e configuração de 1 cluster composto por 3 hosts e 1 storage SAS conforme instrução."
+        },
+        {
+            "name": "Migração de Máquinas Virtuais (VMs)",
+            "detected_quantity": 26,
+            "action_type": "migrate_p2v",
+            "context_note": "Migração de 26 VMs Windows e Linux via P2V conforme prioridade da instrução do usuário."
+        },
+        {
+            "name": "Switches Core L3",
+            "detected_quantity": 2,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento e configuração de rede industrial core."
+        },
+        {
+            "name": "Switches de Acesso L2",
+            "detected_quantity": 8,
+            "action_type": "turnkey",
+            "context_note": "Fornecimento e configuração de switches de acesso para rede industrial."
+        },
+        {
+            "name": "Execução Turnkey (Montagem, FAT/SAT)",
+            "detected_quantity": 1,
+            "action_type": "turnkey",
+            "context_note": "Serviços de inspeção, montagem, atualização de firmware e testes finais inclusos."
+        }
+    ],
+    "hardware_supply_by_client": false,
+    "logistics_override": {
+        "transport_provider": "provider",
+        "consulting": false,
+        "travel_segments": [
+            10,
+            10
+        ],
+        "team_size": 2,
+        "stay_duration_days": []
+    },
+    "estimated_duration_weeks": 8,
+    "governance_level": "intensive"
+}
