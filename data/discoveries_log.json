@@ -965,5 +965,143 @@
             }
         ],
         "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-17T12:23:16.486538",
+        "trigger_term": "Pontos de Cabeamento Estruturado",
+        "context": "Conforme instrução do usuário",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Vistoria Técnica",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Checklist: [Entender necessidade do usuário/cliente, verificar layout físico do ambiente, identificar pontos de rede existentes e potenciais, avaliar infraestrutura de passagem (eletrocalhas, conduítes), registrar fotos e observações, coletar dados para o projeto, interagir com stakeholders para validação inicial.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Projeto Lógico e Físico de Cabeamento",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Checklist: [Desenhar layout detalhado dos novos pontos de cabeamento, definir tipo e categoria de cabo (ex: Cat6A, fibra óptica), especificar todos os materiais necessários (keystones, patch panels, racks, espelhos, conectores), calcular metragem estimada de cabos, criar lista de materiais detalhada, validar conformidade com normas técnicas (TIA/EIA, NBR), elaborar diagramas de conexão e topologia.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Planejamento e Logística de Materiais",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Checklist: [Revisar e aprovar o projeto e orçamento final, solicitar cotações e efetuar a compra dos materiais especificados, coordenar a entrega dos materiais no local da instalação, agendar a equipe técnica para a execução, comunicar prazos e expectativas aos envolvidos.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Preparação do Ambiente e Ferramentas",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Checklist: [Organizar e verificar a disponibilidade e funcionalidade das ferramentas necessárias, preparar e vestir os EPIs (Equipamentos de Proteção Individual), isolar a área de trabalho para segurança, limpar o local antes e depois da intervenção, auxiliar na movimentação de móveis ou equipamentos que possam obstruir o acesso.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Lançamento de Cabos (por lote de 4-8 pontos)",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Checklist: [Desbobinar cabos de forma controlada para evitar torções e danos, passar cabos por eletrocalhas, conduítes ou tubulações existentes, fixar cabos conforme normas de instalação e boas práticas, organizar rotas para evitar emaranhados e interferências eletromagnéticas, garantir raio de curvatura adequado dos cabos.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Montagem de Rack/Patch Panel e Tomadas",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Checklist: [Instalar rack de telecomunicações (se necessário) e organizar o espaço interno, montar e fixar patch panel no rack, crimpar e organizar cabos no patch panel (padrão T568A/B), instalar keystones em espelhos de parede nos pontos de usuário, realizar testes de continuidade básica com testador simples.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Certificação e Testes de Performance",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Checklist: [Realizar testes de certificação com equipamento especializado (ex: certificador de cabos Fluke Networks), verificar parâmetros como continuidade, atenuação, NEXT, FEXT, perda de retorno, comprimento do cabo, gerar relatórios de teste detalhados, identificar e corrigir falhas de performance ou instalação.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Identificação e Rotulagem",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Checklist: [Rotular cabos nas duas extremidades (patch panel e ponto de usuário) com identificação única, rotular portas no patch panel e nos espelhos de parede, atualizar diagramas de identificação física, garantir padronização e clareza da rotulagem conforme o projeto.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Documentação As-Built e Inventário",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Checklist: [Atualizar plantas baixas com a localização exata dos novos pontos de rede, registrar numeração de cabos e portas no sistema de inventário, criar ou atualizar inventário de ativos de rede, anexar relatórios de certificação ao projeto, organizar toda a documentação em repositório centralizado.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Validação e Encerramento do Projeto",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Checklist: [Revisar toda a documentação final e relatórios de certificação, verificar conformidade da entrega com o escopo e requisitos iniciais, obter aprovação formal do cliente/usuário (termo de aceite), realizar reunião de encerramento do projeto, fechar ordens de serviço e registros de projeto.]",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
     }
 ]

@@ -1,0 +1,6 @@
+| Item | Fabricante | Partnumber | Descrição | Qtd | Valor Unit. | Total |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+{% for item in proposal.hardware_table %}
+| {{ loop.index }} | {{ item.vendor }} | `{{ item.partnumber }}` | {{ item.description }} | {{ item.qty }} | R$ {{ item.unit_price | brl }} | R$ {{ item.total_price | brl }} |
+{% endfor %}
+| | | | **TOTAL HARDWARE** | | | **R$ {{ proposal.total_hardware | brl }}** |

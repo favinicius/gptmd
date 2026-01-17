@@ -1,0 +1,8 @@
+Para cada item identificado no escopo, detalhamos abaixo a estratégia de atuação:
+
+{% for item in intent.scope_items %}
+### {{ loop.index }}. {{ item.name }}
+- **Tipo de Ação:** {{ item.action_type | upper }}
+- **Quantidade:** {{ item.detected_quantity }}
+- **Nota Técnica:** {{ item.context_note }}
+{% endfor %}

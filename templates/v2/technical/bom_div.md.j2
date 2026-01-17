@@ -1,0 +1,6 @@
+| Item | Detalhe | Qtd | Valor Unit. | Total |
+| :--- | :--- | :--- | :--- | :--- |
+{% for item in proposal.expense_table %}
+| {{ item.description }} | {{ item.topic }} | {{ item.qty }} | R$ {{ item.unit_price | brl }} | R$ {{ item.total_price | brl }} |
+{% endfor %}
+| | | | **TOTAL LOGÍSTICA** | **R$ {{ proposal.total_expenses | brl }}** |

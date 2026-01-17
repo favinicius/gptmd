@@ -1,0 +1,6 @@
+| Perfil | Atividade | Qtd | Dias | H/Dia | Total H | Taxa | Total |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- | :--- |
+{% for item in proposal.labor_table %}
+| {{ item.role | role_short }} | {{ item.activity }} | {{ item.qty_professionals }} | {{ item.days }} | {{ item.daily_hours }} | {{ item.hours }} | {{ item.hourly_rate | brl }} | {{ item.total_price | brl }} |
+{% endfor %}
+| | | | | | **TOTAL** | | **R$ {{ proposal.total_labor | brl }}** |

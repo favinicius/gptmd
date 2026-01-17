@@ -48,3 +48,13 @@ Para cada ativo de Hardware ou Software detectado (ex: "Cluster Hyper-V", "Switc
    *   Definição de Hardware e Validação de BOM.
    *   Design de Baixo Nível (LLD) e Criação de Planbook.
    *   Reuniões de Aprovação Executiva.
+
+## 6. INFRAESTRUTURA & AMBIENTE (Regra "Venv Externa")
+**Conceito:** Performance de indexação e leveza do repositório.
+**Diretriz:** ESTE PROJETO UTILIZA UM AMBIENTE VIRTUAL EXTERNO.
+**Execução:**
+   *   **Localização:** `../venvs/gptmd`
+   *   **Caminho Absoluto:** `/Users/fabiobezerra/Desenvolvimento/venvs/gptmd`
+   *   **Comando Python:** `/Users/fabiobezerra/Desenvolvimento/venvs/gptmd/bin/python`
+   *   **Regra:** NUNCA crie uma pasta `venv` dentro da raiz deste projeto.
+

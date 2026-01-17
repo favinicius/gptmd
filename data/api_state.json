@@ -32,11 +32,11 @@
         "tier": "free"
     },
     "AIzaSyBkmTSLck2fYVPOf8bNPHyoH4N7OT0MSKc": {
-        "last_used": "2026-01-16T20:58:01.796170",
-        "cooldown_until": "2026-01-17T00:24:20.702903",
+        "last_used": "2026-01-17T12:23:16.484918",
+        "cooldown_until": null,
         "status": "active",
-        "total_calls": 11,
-        "total_tokens": 57516,
+        "total_calls": 14,
+        "total_tokens": 70430,
         "tier": "free"
     },
     "AIzaSyDEsLNGZ2WQ3574TmXbcI8eNZOAtX2W17E": {

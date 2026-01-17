@@ -92,6 +92,7 @@ def main():
     parser.add_argument("--help-metrics", action="store_true", help="Show detailed metrics table and exit")
     parser.add_argument("--debug", action="store_true", help="Enable verbose debug and save raw AI responses")
     parser.add_argument("--use-docs", action="store_true", help="Load and use technical documents from --tech_ref")
+    parser.add_argument("--legacy-assembler", action="store_true", help="Use old non-Jinja assembler")
     
     args = parser.parse_args()
 
@@ -137,7 +138,16 @@ def main():
     labor_engine = LaborEngine(db, research_engine)
     logistics_engine = LogisticsEngine(db)
     material_engine = MaterialEngine(db)
-    proposal_assembler = ProposalAssembler(agent)
+    material_engine = MaterialEngine(db)
+    
+    # Seleção de Assembler (v8.0: Suporte Híbrido)
+    if args.legacy_assembler:
+        print("[*] Usando Assembler V1 (Legado/Estático)")
+        proposal_assembler = ProposalAssembler(agent)
+    else:
+        print("[*] Usando Assembler V2 (Jinja2/Fidelidade)")
+        from src.engines import ProposalAssemblerV2
+        proposal_assembler = ProposalAssemblerV2(template_dir=str(Path(args.template_dir) / "v2"))
 
     # --- 1. Instruction Processing ---
     instruction_text = ""
@@ -260,7 +270,12 @@ def main():
     
     print(f"  - Visibilidade: {len(intent.scope_items)} itens totais -> {len(public_intent.scope_items)} itens públicos.")
     
-    proposal_outputs = proposal_assembler.assemble_proposal(proposal, public_intent, template_dir=args.template_dir)
+    if hasattr(proposal_assembler, 'assemble'):
+        # V2
+        proposal_outputs = proposal_assembler.assemble(proposal, public_intent, output_path=str(output_dir))
+    else:
+        # V1 (Legacy)
+        proposal_outputs = proposal_assembler.assemble_proposal(proposal, public_intent, template_dir=args.template_dir)
     
     # Add Footer and Save Artifacts
     footer = f"\n\n---\n*Gerado automaticamente pelo GPT-Md v5.0 (Engines) via {agent.model_name} em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"
