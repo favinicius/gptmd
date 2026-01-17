@@ -1,5 +1,18 @@
-from typing import List, Optional, Literal, Dict
+from typing import List, Optional, Literal, Dict, Any
+from enum import Enum
 from pydantic import BaseModel, Field
+
+def format_br_currency(value: float) -> str:
+    """Formata um float para o padrão brasileiro: 1.234,56"""
+    if value is None: return "0,00"
+    return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+def format_excel_number(value: float):
+    """Regra: Se o número for um inteiro (ex: 8.0), remova o decimal (8). 
+    Se for fracionado, mantenha 1 casa."""
+    if value == int(value):
+        return int(value)
+    return round(value, 1)
 
 # --- Database Models ---
 
@@ -87,6 +100,7 @@ class LogisticsPlan(BaseModel):
     requires_freight: bool = False
     hotel_tier: Literal["hotel_tier_capital", "hotel_tier_interior"] = "hotel_tier_interior"
     origin_mobilization_km: float = 0.0 # New field for initial mobilization
+    flight_cost_override: Optional[float] = None # Manual override for flight cost
 
 class LogisticsOverride(BaseModel):
     transport_provider: Literal["client", "provider"] = "provider"
@@ -103,11 +117,22 @@ class TopicMapping(BaseModel):
 class ScopeItem(BaseModel):
     name: str
     detected_quantity: int = 1
-    action_type: Literal["install", "migrate_p2v", "supply_only", "turnkey", "design"]
-    context_note: str
+    action_type: Literal["install", "migrate_p2v", "supply_only", "turnkey", "design", "infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "training", "consulting", "logistics", "other"]
+    context_note: Optional[str] = ""
     visibility: Literal["public", "internal"] = "public" # New field
-    explicit_total_hours: int = 0 # New field for overrides
+    explicit_total_hours: Optional[int] = 0 # New field for overrides, defaulting to 0 if None
     is_weekend: bool = False # New field for weekend work factor
+
+class SizingMode(str, Enum):
+    AGGRESSIVE = "aggressive"  # 0.85x
+    STANDARD = "standard"      # 1.00x
+    SECURE = "secure"          # 1.25x
+
+class ContingencyLevel(str, Enum):
+    NONE = "none"              # 0.0h
+    LOW = "low"                # 1.0h/dia
+    STANDARD = "standard"      # 1.5h/dia
+    HIGH = "high"             # 2.0h/dia + 10% buff
 
 class Intent(BaseModel):
     client_name: str
@@ -115,11 +140,23 @@ class Intent(BaseModel):
     project_name: str
     scope_items: List[ScopeItem]
     hardware_supply_by_client: bool = False
-    logistics_override: LogisticsOverride
+    logistics_override: Optional[LogisticsOverride] = None
     detailed_logistics: Optional[LogisticsPlan] = None
     estimated_duration_weeks: int = 1
     governance_level: Literal["standard", "intensive"] = "standard"
     work_on_weekends: bool = False
+    requires_training: bool = False # Flag for training/course requirement
+    
+    # --- New Template Routing Fields (v5.0) ---
+    selected_tech_template: str = "iodc_full.md"
+    selected_comm_template: str = "capex_only.md"
+    split_proposal: bool = False # If True, generate separate files
+
+    # --- Sizing Thermometers (v6.0) ---
+    sizing_mode: SizingMode = SizingMode.STANDARD
+    contingency_level: ContingencyLevel = ContingencyLevel.STANDARD
+
+
 
 
 
@@ -138,9 +175,10 @@ class CalculatedLabor(BaseModel):
     topic: str
     role: str
     activity: str
+    executions: float = 1.0 # Volume de itens (v7.2+)
     qty_professionals: int
     daily_hours: float = 8.0
-    days: float
+    days: int
     hours: float
     hourly_rate: float
     total_price: float
@@ -158,7 +196,7 @@ class CalculatedService(BaseModel):
 class CalculatedExpense(BaseModel):
     topic: str = "T-00"
     description: str
-    qty: int
+    qty: Any
     unit_price: float
     total_price: float
 

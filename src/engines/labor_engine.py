@@ -1,395 +1,237 @@
 import math
+import collections
 from typing import List, Dict, Optional
 from src.models import (
-    Intent, ProposalData, CalculatedLabor, ProposalData
+    Intent, ProposalData, CalculatedLabor, format_excel_number, ScopeItem
 )
 from src.database import Database
+from src.engines.research_engine import ResearchEngine
 
 class LaborEngine:
-    def __init__(self, database: Database):
+    def __init__(self, database: Database, research_engine: Optional[ResearchEngine] = None):
         self.db = database
+        self.research = research_engine
         self.item_counter = 1
 
-    def _find_bundle_with_synonyms(self, item_name: str):
+    CONFIG_SIZING = {
+        "aggressive": 0.85,
+        "standard": 1.00,
+        "secure": 1.25
+    }
+
+    CONFIG_CONTINGENCY = {
+        "none": 0.0,
+        "low": 0.10, 
+        "standard": 0.15,
+        "high": 0.20
+    }
+
+    def calculate_labor(self, intent: Intent, proposal: ProposalData, requires_certification: bool = False):
         """
-        Busca por bundles usando sinônimos e keywords aprimoradas (v2.1).
-        Ex: 'Planejamento' -> 'Project_Start'
-        """
-        item_name_lower = item_name.lower()
-        synonyms = {
-            "planejamento": "Project_Start",
-            "projeto": "Project_Start",
-            "encerramento": "Project_End",
-            "finalização": "Project_End",
-            "migração": "Migration",
-            "migracao": "Migration",
-            "servidor": "Server",
-            "rede": "Rede",
-            "switch": "Switch",
-            "armazenamento": "Storage",
-            "backup": "Backup",
-            "virtualização": "Hyper-V",
-            "virtualizacao": "Hyper-V",
-            "hyper-v": "Hyper-V",
-            "vmware": "Hyper-V" # Usando Hyper-V como bundle genérico de virtualização
-        }
-        
-        # 1. Busca por sinônimos manuais
-        for key, target in synonyms.items():
-            if key in item_name_lower:
-                bundle = self.db.get_scope_bundle(target)
-                if bundle: return bundle
-        
-        # 2. Busca padrão no banco (substring match)
-        return self.db.get_scope_bundle(item_name)
-
-    def _get_role_cost(self, role: str) -> float:
-        return self.db.get_role_cost(role)
-
-    def _calculate_hours(self, hours: float) -> int:
-        return math.ceil(hours)
-
-    def _calculate_days(self, hours: float, team_size: int) -> int:
-        return math.ceil(hours / (team_size * 8))
-
-    def calculate_labor(self, intent: Intent, proposal: ProposalData, requires_certification: bool):
-        """
-        Calcula a tabela de Mão de Obra (MOD) com lógica de Bundle Explosion v2.0.
+        Calcula Tabela de Mão de Obra (MOD) - Versão v8.0 (Aprendizado e Consolidação)
+        Fórmula: Execs * Qtde * Horas_Dia * Dias = Total_H
+        Regra: VMs agora consolidadas por tipo.
         """
         self.item_counter = 1
         
-        # --- 1. Heurística de Complexidade e Multiplicadores (v2.0) ---
-        complex_keywords = ["disaster recovery", "dr", "hyper-v", "brownfield", "migração", "migration", "nova tecnologia"]
-        context_text = (intent.project_name + " " + " ".join([i.name for i in intent.scope_items])).lower()
-        
-        is_complex = any(kw in context_text for kw in complex_keywords)
-        complexity_multiplier = 1.5 if is_complex else 1.0
-        
-        global_complexity = "Alta (Complexa)" if is_complex else "Média"
-        if requires_certification:
-            global_complexity = "Alta (Certificação)"
-            
-        team_size = max(1, intent.logistics_override.team_size)
+        # Fatores
+        s_mode = str(intent.sizing_mode.value) if hasattr(intent.sizing_mode, 'value') else intent.sizing_mode
+        c_level = str(intent.contingency_level.value) if hasattr(intent.contingency_level, 'value') else intent.contingency_level
+        sizing_factor = self.CONFIG_SIZING.get(s_mode, 1.0)
+        she_factor = self.CONFIG_CONTINGENCY.get(c_level, 0.15)
 
-        # 1. Governança e Planejamento Decomposto (T-00)
-        self._calculate_governance(intent, proposal, team_size)
-        
-        # 2. Espelhamento de Logística (Viagem é Trabalho) - v2.0
+        # 1. Mobilização
         self._calculate_logistics_mirroring(intent, proposal)
-
-        # 3. Atividades por Item de Escopo (Bundle Explosion)
+        
+        # 2. Governança e Transverais
+        self._calculate_governance(intent, proposal, sizing_factor)
+        
+        # 3. Escopo Técnico
         total_tech_hours = 0.0
+        global_complexity = intent.logistics_override.consulting if intent.logistics_override else False
+        complexity_multiplier = 1.3
+        
+        topic_tech_effort = collections.defaultdict(float)
+        topic_team_size = {}
+
+        vm_profiles = {
+            "infra_vm": "VIRT_VM_INFRA",
+            "heavy_app_vm": "VIRT_VM_HEAVY",
+            "db_vm": "VIRT_VM_DB",
+            "vdi_vm": "VIRT_VM_VDI"
+        }
 
         for i, scope_item in enumerate(intent.scope_items):
             topic_id = f"T-{i+1:02d}"
+            team_size = max(1, intent.logistics_override.team_size) if intent.logistics_override else 1
+            is_complex = any(kw in scope_item.name.lower() or kw in scope_item.context_note.lower() 
+                           for kw in ["migração", "crítico", "complexo", "cluster"])
             
-            # --- Melhoria do Matching (v2.1) ---
-            bundle = self._find_bundle_with_synonyms(scope_item.name)
+            qty_items = scope_item.detected_quantity
+            phase_groups = collections.defaultdict(list)
+
+            # Lógica Especial para VMs (Consolidação v8.0)
+            if scope_item.action_type in vm_profiles:
+                # 1. Provisionamento Base
+                base_tpl = self.db.get_activity_template("VIRT_003")
+                if base_tpl:
+                    eff = (base_tpl.setup_hours / qty_items if qty_items > 0 else 0) + base_tpl.unit_hours
+                    eff *= sizing_factor
+                    phase_groups[base_tpl.category].append({"template": base_tpl, "eff": eff})
+                
+                # 2. Configuração Específica do Perfil
+                prof_tpl = self.db.get_activity_template(vm_profiles[scope_item.action_type])
+                if prof_tpl:
+                    eff = prof_tpl.unit_hours * sizing_factor
+                    if is_complex: eff *= complexity_multiplier
+                    phase_groups[prof_tpl.category].append({"template": prof_tpl, "eff": eff})
+                
+                # 3. Validação
+                val_tpl = self.db.get_activity_template("VAL_001")
+                if val_tpl:
+                    eff = 1.0 * sizing_factor # Reduzido para 1h por unidade em VM
+                    phase_groups[val_tpl.category].append({"template": val_tpl, "eff": eff})
             
-            if not bundle or not bundle.required_activities:
-                self._create_fallback_activity(topic_id, scope_item, proposal, team_size, global_complexity, complexity_multiplier)
-                continue
+            else:
+                # Lógica de Bundle para Hardware/Outros
+                bundle = self.db.get_scope_bundle(scope_item.name)
+                if not bundle or not bundle.required_activities:
+                    # Tenta Pesquisa se não houver Bundle (v8.0)
+                    if self.research:
+                        researched_wbs = self.research.estimate_unknown_activity(scope_item.name, scope_item.context_note)
+                        if researched_wbs:
+                            for res_act in researched_wbs:
+                                eff = res_act["unit_hours"] * sizing_factor
+                                if is_complex and res_act["role"] in ["Engenheiro", "Arquiteto"]:
+                                    eff *= complexity_multiplier
+                                
+                                self._add_labor_line_from_raw_generic(
+                                    proposal, topic_id, res_act["role"], f"{res_act['name']} ({scope_item.name})",
+                                    qty_items, team_size, eff, self.db.get_role_cost(res_act["role"]), res_act["category"]
+                                )
+                                act_total_h = eff * qty_items
+                                topic_tech_effort[topic_id] += act_total_h
+                                total_tech_hours += act_total_h
+                            topic_team_size[topic_id] = team_size
+                            continue
 
-            # --- Lógica de Explosão v3.1 (WBS Rígido e Proporcional) ---
-            topic_physical_days = 0 
+                    self._create_fallback_with_coalescence(topic_id, scope_item, proposal, team_size, sizing_factor)
+                    continue
+
+                for act_id in bundle.required_activities:
+                    template = self.db.get_activity_template(act_id)
+                    if not template: continue
+                    
+                    unit_eff = template.unit_hours
+                    setup_part = template.setup_hours / qty_items if qty_items > 0 else 0
+                    eff = unit_eff + setup_part
+                    
+                    if is_complex and any(tag in ["config", "logic", "migration", "virtualization", "network"] for tag in template.tags):
+                        eff *= complexity_multiplier
+                    if any(t in ["migration", "config", "logic"] for t in template.tags):
+                        eff *= 1.15
+                    
+                    eff *= sizing_factor
+                    phase_groups[template.category].append({"template": template, "eff": eff})
+
+            # Processa e Consolida fases
+            for category, acts in phase_groups.items():
+                total_phase_unit_eff = sum(a["eff"] for a in acts)
+                
+                if len(acts) > 1:
+                    main_names = [a["template"].name.split('(')[0].strip() for a in acts]
+                    unique_names = []
+                    for name in main_names:
+                        if name not in unique_names: unique_names.append(name)
+                    combined_name = " / ".join(unique_names)
+                else:
+                    combined_name = acts[0]["template"].name
+
+                # Regra OFI: Mínimo 1h por bloco consolidado
+                final_unit_eff = max(1.0, total_phase_unit_eff)
+                main_role = acts[0]["template"].role
+                
+                self._add_labor_line_from_raw_generic(
+                    proposal, topic_id, main_role, f"{combined_name} ({scope_item.name})",
+                    qty_items, team_size, final_unit_eff, self.db.get_role_cost(main_role), category
+                )
+                
+                act_total_h = final_unit_eff * qty_items
+                topic_tech_effort[topic_id] += act_total_h
+                total_tech_hours += act_total_h
             
-            # 1. Primeiro cálculo para obter o esforço base total do bundle
-            base_efforts = []
-            total_bundle_base_hours = 0.0
-            
-            for act_id in bundle.required_activities:
-                template = self.db.get_activity_template(act_id)
-                if not template: continue
-                
-                # FÓRMULA v3.0: horas = setup + (unit_hours * Qtd)
-                act_base_effort = template.setup_hours + (template.unit_hours * scope_item.detected_quantity)
-                
-                # Multiplicador de Complexidade v2.0
-                if is_complex and any(tag in ["config", "logic", "migration", "virtualization", "network"] for tag in template.tags):
-                    act_base_effort *= complexity_multiplier
-                
-                # Regras Legadas de Safety Factor (1.15x)
-                if any(t in ["migration", "config", "logic"] for t in template.tags):
-                    act_base_effort = math.ceil(act_base_effort * 1.15)
-                
-                # Forçar mínimo de 1h se a atividade existe no bundle (Fim das Linhas Genéricas)
-                act_base_effort = max(1.0, act_base_effort)
-                
-                base_efforts.append((template, act_base_effort))
-                total_bundle_base_hours += act_base_effort
+            topic_team_size[topic_id] = team_size
 
-            # 2. Cálculo do Fator de Distribuição se houver horas explícitas
-            distribution_factor = 1.0
-            if scope_item.explicit_total_hours > 0 and total_bundle_base_hours > 0:
-                distribution_factor = scope_item.explicit_total_hours / total_bundle_base_hours
+        # 4. SHE (Ineficiência)
+        for topic_id, tech_effort in topic_tech_effort.items():
+            team_size = topic_team_size.get(topic_id, 1)
+            self._calculate_she(tech_effort, topic_id, team_size, proposal, she_factor)
 
-            # 3. Geração das linhas da MOD
-            for template, act_base_effort in base_efforts:
-                # Aplicar a distribuição proporcional
-                act_effort = act_base_effort * distribution_factor
-                
-                # Regras de Fim de Semana (Global Factor)
-                weekend_factor = 1.2 if scope_item.is_weekend else 1.0
-                complexity_suffix = " (FDS)" if scope_item.is_weekend else ""
-                
-                role = template.role
-                role_cost = self._get_role_cost(role)
-                qty_profs = team_size if any(tag in template.tags for tag in ["execution", "physical", "testing"]) else 1
-                
-                days = self._calculate_days(act_effort, qty_profs)
-                allocated_hours = round(act_effort)
-                total_price = allocated_hours * role_cost * weekend_factor
-                
-                if any(tag in ["execution", "physical", "infrastructure"] for tag in template.tags):
-                    topic_physical_days += days
-                
-                total_tech_hours += allocated_hours
-
-                proposal.labor_table.append(CalculatedLabor(
-                    item_id=self.item_counter,
-                    topic=topic_id,
-                    role=role,
-                    activity=f"{template.name} ({scope_item.name})",
-                    qty_professionals=qty_profs,
-                    daily_hours=8,
-                    days=days,
-                    hours=allocated_hours,
-                    hourly_rate=role_cost,
-                    total_price=total_price,
-                    activity_type=template.tags[0] if template.tags else "Técnica",
-                    complexity=f"{global_complexity}{complexity_suffix}",
-                    source_ref="DB_BUNDLE" if scope_item.explicit_total_hours == 0 else "EXPLICIT_DIST"
-                ))
-                self.item_counter += 1
-
-            # Ineficiência de Campo
-            if topic_physical_days > 0:
-                self._calculate_she(topic_physical_days, topic_id, team_size, proposal)
-
-        # 4. Itens Transversais Finais
-        self._calculate_transversals(intent, proposal, global_complexity, total_tech_hours)
-
+        self._calculate_transversals(intent, proposal, global_complexity, sizing_factor)
         proposal.total_labor = sum(i.total_price for i in proposal.labor_table)
 
-    def _calculate_logistics_mirroring(self, intent: Intent, proposal: ProposalData):
-        """
-        Injeta horas de mobilização no MOD baseadas nas viagens.
-        """
-        segments = intent.logistics_override.travel_segments
-        if not segments: return
-
-        team_size = max(1, intent.logistics_override.team_size)
-        role = "Engenheiro" # Aplicar a todos os envolvidos? Constituição diz 'Engineers + Analysts'
-        role_analista = "Analista"
+    def _add_labor_line_from_raw_generic(self, proposal, topic_id, role, activity, total_items, team_size, unit_effort, cost, category):
+        qty_profs = max(1, team_size)
+        execs_per_prof = total_items / qty_profs
         
-        cost_eng = self._get_role_cost(role)
-        cost_ana = self._get_role_cost(role_analista)
-
-        for i, days in enumerate(segments):
-            trip_id = i + 1
-            # Ida e Volta por viagem - v2.0: 5h por perna (sugestão do usuário)
-            perna_hours = 5.0
-            total_mob_hours = perna_hours * 2 # Ida + Volta
+        if unit_effort > 8:
+            dias = math.ceil(unit_effort / 8)
+            h_dia = round(unit_effort / dias, 2)
+        else:
+            dias = 1
+            h_dia = round(unit_effort, 2)
             
-            # Adicionar para Engenheiro
-            proposal.labor_table.append(CalculatedLabor(
-                item_id=self.item_counter, topic="LOG-MOB", role=role,
-                activity=f"Mobilização/Deslocamento Técnico Viagem {trip_id:02d} (Ida/Volta)",
-                qty_professionals=1, daily_hours=perna_hours, days=2, hours=total_mob_hours,
-                hourly_rate=cost_eng, total_price=total_mob_hours * cost_eng,
-                activity_type="Logística", complexity="Transversal", source_ref="ESTIMATE"
-            ))
-            self.item_counter += 1
-
-            # Adicionar para Analista (se equipe > 1)
-            if team_size > 1:
-                proposal.labor_table.append(CalculatedLabor(
-                    item_id=self.item_counter, topic="LOG-MOB", role=role_analista,
-                    activity=f"Mobilização/Deslocamento Técnico Viagem {trip_id:02d} (Ida/Volta)",
-                    qty_professionals=team_size - 1, daily_hours=perna_hours, days=2, 
-                    hours=total_mob_hours * (team_size - 1),
-                    hourly_rate=cost_ana, total_price=total_mob_hours * (team_size - 1) * cost_ana,
-                    activity_type="Logística", complexity="Transversal", source_ref="ESTIMATE"
-                ))
-                self.item_counter += 1
-
-        proposal.total_labor = sum(i.total_price for i in proposal.labor_table)
-
-    def _calculate_governance(self, intent: Intent, proposal: ProposalData, team_size: int):
-        # T-00 Activities - Decomposição Mandatória v2.0
-        duration_weeks = intent.estimated_duration_weeks
-        role_gestor = "Gestor"
-        role_arquiteto = "Arquiteto"
-        cost_gestor = self._get_role_cost(role_gestor)
-        cost_arq = self._get_role_cost(role_arquiteto)
-        
-        # 1. Kick-off e Levantamento de Requisitos
-        proposal.labor_table.append(CalculatedLabor(
-            item_id=self.item_counter, topic="T-00", role=role_gestor,
-            activity="Kick-off e Levantamento de Requisitos", qty_professionals=1,
-            daily_hours=8, days=1, hours=8,
-            hourly_rate=cost_gestor, total_price=8*cost_gestor,
-            activity_type="Governança", complexity="Fixa", source_ref="DB_CALC"
-        ))
-        self.item_counter += 1
-
-        # 2. Definição de Hardware e Validação de BOM
-        proposal.labor_table.append(CalculatedLabor(
-            item_id=self.item_counter, topic="T-00", role=role_arquiteto,
-            activity="Definição de Hardware e Validação de BOM", qty_professionals=1,
-            daily_hours=4, days=1, hours=4,
-            hourly_rate=cost_arq, total_price=4*cost_arq,
-            activity_type="Planejamento", complexity="Fixa", source_ref="ESTIMATE"
-        ))
-        self.item_counter += 1
-
-        # 3. Low-Level Design (LLD) e Plano de Trabalho (Planbook)
-        lld_hours = 16 # Mínimo sugerido pela v2.0
-        proposal.labor_table.append(CalculatedLabor(
-            item_id=self.item_counter, topic="T-00", role=role_arquiteto,
-            activity="Design de Baixível e Criação de Planbook (LLD)", qty_professionals=1,
-            daily_hours=8, days=int(lld_hours/8), hours=lld_hours,
-            hourly_rate=cost_arq, total_price=lld_hours*cost_arq,
-            activity_type="Planejamento", complexity="Técnica", source_ref="DB_STD"
-        ))
-        self.item_counter += 1
-
-        # 4. Reuniões de Aprovação Executiva
-        proposal.labor_table.append(CalculatedLabor(
-            item_id=self.item_counter, topic="T-00", role=role_gestor,
-            activity="Reuniões de Aprovação Executiva e Stakeholders", qty_professionals=1,
-            daily_hours=2, days=2, hours=4,
-            hourly_rate=cost_gestor, total_price=4*cost_gestor,
-            activity_type="Governança", complexity="Fixa", source_ref="ESTIMATE"
-        ))
-        self.item_counter += 1
-            
-        # 5. Acompanhamento Semanal (Recorrente)
-        t_weekly = self.db.get_activity_template("act_gov_weekly")
-        if t_weekly:
-            total_hours = t_weekly.min_hours_day * duration_weeks
-            proposal.labor_table.append(CalculatedLabor(
-                item_id=self.item_counter, topic="T-00", role=role_gestor,
-                activity=t_weekly.activity_name, qty_professionals=1,
-                daily_hours=t_weekly.min_hours_day, days=duration_weeks, hours=int(total_hours),
-                hourly_rate=cost_gestor, total_price=total_hours*cost_gestor,
-                activity_type="Governança", complexity=f"Recorrente ({duration_weeks} sem)",
-                source_ref="DB_CALC"
-            ))
-            self.item_counter += 1
-            
-        # 6. Dailies (Intensive only)
-        if intent.governance_level == "intensive":
-            t_daily = self.db.get_activity_template("act_gov_daily")
-            if t_daily:
-                total_days_gov = duration_weeks * 5
-                total_hours = t_daily.min_hours_day * total_days_gov
-                proposal.labor_table.append(CalculatedLabor(
-                     item_id=self.item_counter, topic="T-00", role=role_gestor,
-                    activity=t_daily.activity_name, qty_professionals=1,
-                    daily_hours=t_daily.min_hours_day, days=total_days_gov, hours=int(total_hours),
-                    hourly_rate=cost_gestor, total_price=total_hours*cost_gestor,
-                    activity_type="Governança", complexity="Intensiva (Diária)",
-                    source_ref="DB_CALC"
-                ))
-                self.item_counter += 1
-
-        # 7. Encerramento
-        t_close = self.db.get_activity_template("act_gov_close")
-        if t_close:
-             proposal.labor_table.append(CalculatedLabor(
-                item_id=self.item_counter, topic="T-00", role=role_gestor,
-                activity=t_close.activity_name, qty_professionals=1,
-                daily_hours=t_close.min_hours_day, days=1, hours=t_close.min_hours_day,
-                hourly_rate=cost_gestor, total_price=t_close.min_hours_day*cost_gestor,
-                activity_type="Governança", complexity="Fixa",
-                source_ref="DB_STD"
-            ))
-             self.item_counter += 1
-
-    def _create_fallback_activity(self, topic_id, scope_item, proposal, team_size, global_complexity, multiplier):
-        # Fallback genérico
-        effort = 8 * scope_item.detected_quantity * multiplier
-        if scope_item.explicit_total_hours > 0:
-            effort = scope_item.explicit_total_hours
-            
-        role = "Técnico"
-        cost = self._get_role_cost(role)
-        days = math.ceil(effort / (team_size * 8))
-        
-        weekend_factor = 1.2 if scope_item.is_weekend else 1.0
+        total_h = round(execs_per_prof * qty_profs * h_dia * dias, 2)
         
         proposal.labor_table.append(CalculatedLabor(
             item_id=self.item_counter, topic=topic_id, role=role,
-            activity=f"Execução Genérica ({scope_item.name})",
-            qty_professionals=team_size, daily_hours=8, days=days, hours=int(effort),
-            hourly_rate=cost, total_price=effort*cost*weekend_factor,
-            activity_type="Execução", complexity=global_complexity, source_ref="ESTIMATE"
+            activity=activity,
+            executions=round(execs_per_prof, 2),
+            qty_professionals=qty_profs,
+            daily_hours=h_dia,
+            days=dias, 
+            hours=total_h,
+            hourly_rate=cost,
+            total_price=total_h * cost,
+            activity_type=category,
+            complexity="V8.0 - Consolidated",
+            source_ref="DB" if "fallback" not in activity.lower() else "FALLBACK"
         ))
         self.item_counter += 1
 
-    def _calculate_she(self, physical_days, topic_id, team_size, proposal):
-        she_template = self.db.get_activity_template("act_she_admission")
-        if not she_template: return
+    def _calculate_logistics_mirroring(self, intent: Intent, proposal: ProposalData):
+        if not intent.logistics_override or not intent.logistics_override.travel_segments: return
+        team_size = max(1, intent.logistics_override.team_size)
+        cost_eng = self.db.get_role_cost("Engenheiro")
+        cost_ana = self.db.get_role_cost("Analista")
         
-        # 1.5h per physical day (Legado) mantido como 'Admissão/Integração' por Tópico
-        she_hours_total = math.ceil(physical_days * 1.5)
-        days = math.ceil(she_hours_total / 8)
-        
-        cost = self._get_role_cost(she_template.default_role)
-        
-        proposal.labor_table.append(CalculatedLabor(
-            item_id=self.item_counter, topic=topic_id, role=she_template.default_role,
-            activity=f"{she_template.activity_name} (Integração Local)",
-            qty_professionals=team_size, daily_hours=int(she_hours_total/days) if days else 2,
-            days=days, hours=int(she_hours_total * team_size),
-            hourly_rate=cost, total_price=(she_hours_total * team_size) * cost,
-            activity_type="Ineficiência/SHE", complexity="Mandatório", source_ref="DB_CALC"
-        ))
-        self.item_counter += 1
+        for idx, _ in enumerate(intent.logistics_override.travel_segments):
+            label = f"Mobilização Técnico Viagem {idx+1:02d}"
+            self._add_labor_line_from_raw_generic(proposal, "LOG-MOB", "Engenheiro", label, 1, 1, 10.0, cost_eng, "Logística")
+            if team_size > 1:
+                self._add_labor_line_from_raw_generic(proposal, "LOG-MOB", "Analista", label, 1, team_size-1, 10.0, cost_ana, "Logística")
 
-    def _calculate_transversals(self, intent: Intent, proposal: ProposalData, global_complexity: str, total_tech_hours: float):
-         # 1. Documentação
-        doc_template = self.db.get_activity_template("act_doc")
-        if doc_template:
-            doc_hours = max(4, len(intent.scope_items) * 2)
-            days = math.ceil(doc_hours/8)
-            cost = self._get_role_cost(doc_template.default_role)
-            proposal.labor_table.append(CalculatedLabor(
-                 item_id=self.item_counter, topic="T-00", role=doc_template.default_role,
-                 activity=doc_template.activity_name, qty_professionals=1,
-                 daily_hours=8, days=days, hours=doc_hours, hourly_rate=cost,
-                 total_price=doc_hours*cost, activity_type="Documentação", complexity=global_complexity,
-                 source_ref="DB_CALC"
-            ))
-            self.item_counter += 1
-            
-        # 2. Ineficiência de Campo / SHE (Buffer 5-10% v2.0)
-        # Aplicamos 7% como média do range solicitado
-        buffer_hours = math.ceil(total_tech_hours * 0.07)
-        if buffer_hours > 0:
-            role_she = "Técnico"
-            cost_she = self._get_role_cost(role_she)
-            proposal.labor_table.append(CalculatedLabor(
-                item_id=self.item_counter, topic="T-00", role=role_she,
-                activity="Buffer de Ineficiência Operacional / SHE (Fator 7%)",
-                qty_professionals=1, daily_hours=8, days=math.ceil(buffer_hours/8), hours=buffer_hours,
-                hourly_rate=cost_she, total_price=buffer_hours * cost_she,
-                activity_type="Ineficiência/SHE", complexity="Buffer", source_ref="EXPLICIT"
-            ))
-            self.item_counter += 1
+    def _calculate_governance(self, intent: Intent, proposal: ProposalData, sizing_factor: float = 1.0):
+        c_gestor = self.db.get_role_cost("Gestor")
+        c_arq = self.db.get_role_cost("Arquiteto")
+        self._add_labor_line_from_raw_generic(proposal, "T-00", "Gestor", "Kick-off e Gestão de Stakeholders", 1, 1, 12.0 * sizing_factor, c_gestor, "Governança")
+        self._add_labor_line_from_raw_generic(proposal, "T-00", "Arquiteto", "Planejamento Técnico e Design LLD", 1, 1, 20.0 * sizing_factor, c_arq, "Planejamento")
 
-        # 3. Consultoria de Compras (Acompanhamento Supply)
-        if intent.hardware_supply_by_client:
-            consulting_hours = max(16, int(total_tech_hours * 0.10))
-            days = math.ceil(consulting_hours/8)
-            cost = self._get_role_cost("Engenheiro")
-            proposal.labor_table.append(CalculatedLabor(
-                item_id=self.item_counter, topic="T-00", role="Engenheiro",
-                activity="Consultoria Técnica (Acompanhamento Supply)",
-                qty_professionals=1, daily_hours=8, days=days, hours=consulting_hours,
-                hourly_rate=cost, total_price=consulting_hours*cost,
-                activity_type="Consultoria", complexity=global_complexity,
-                source_ref="DB_CALC"
-            ))
-            self.item_counter += 1
+    def _calculate_transversals(self, intent: Intent, proposal: ProposalData, global_complexity: bool, sizing_factor: float = 1.0):
+        if global_complexity:
+             c_eng = self.db.get_role_cost("Engenheiro")
+             self._add_labor_line_from_raw_generic(proposal, "T-00", "Engenheiro", "Consultoria Técnica (Acompanhamento)", 1, 1, 16.0 * sizing_factor, c_eng, "Consultoria")
+
+    def _calculate_she(self, tech_effort, topic_id, team_size, proposal, she_factor: float = 0.15):
+        if she_factor <= 0: return
+        she_cost = self.db.get_role_cost("Técnico")
+        she_total_unit = max(1.0, (tech_effort * she_factor))
+        self._add_labor_line_from_raw_generic(proposal, topic_id, "Técnico", "Ineficiência SHE / Permissões", 1, team_size, she_total_unit, she_cost, "Ineficiência/SHE")
+
+    def _create_fallback_with_coalescence(self, topic_id: str, scope_item: ScopeItem, proposal: ProposalData, team_size: int, sizing_factor: float):
+        role = "Analista"
+        cost = self.db.get_role_cost(role)
+        unit_h = 16.0 * sizing_factor
+        if (scope_item.explicit_total_hours or 0) > 0:
+            unit_h = scope_item.explicit_total_hours / scope_item.detected_quantity
+        self._add_labor_line_from_raw_generic(proposal, topic_id, role, f"Execução Técnica: {scope_item.name}", scope_item.detected_quantity, team_size, max(1.0, unit_h), cost, "Execução")

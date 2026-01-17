@@ -48,7 +48,7 @@ class MaterialEngine:
 
         proposal.total_hardware = sum(h.total_price for h in proposal.hardware_table)
 
-    def calculate_services(self, proposal: ProposalData, requires_certification: bool):
+    def calculate_services(self, proposal: ProposalData, intent: Intent, requires_certification: bool):
         """
         Calcula Serviços de Terceiros (SET)
         """
@@ -61,5 +61,14 @@ class MaterialEngine:
             proposal.expense_table.append(CalculatedExpense(
                 topic="T-00", # Usually generic expense
                 description="Logística Reversa (Instrumentação)", qty=1, unit_price=450.0, total_price=450.0
+            ))
+            
+        # Add Training Course Cost (v2.6)
+        if intent.requires_training:
+             proposal.service_table.append(CalculatedService(
+                description="Investimento em Capacitação Técnica Hyper-V", 
+                qty=1, 
+                unit_price=1000.00, 
+                total_price=1000.00
             ))
         proposal.total_services = sum(i.total_price for i in proposal.service_table)

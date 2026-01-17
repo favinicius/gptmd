@@ -1,199 +1,150 @@
-import math
 from typing import List, Dict, Optional
+import math
 from src.models import (
-    Intent, ProposalData, CalculatedExpense, LogisticsPlan
+    Intent, ProposalData, CalculatedExpense, format_br_currency, format_excel_number
 )
 from src.database import Database
 
 class LogisticsEngine:
     def __init__(self, database: Database):
         self.db = database
+        self.audit_log = []
+
+    def get_audit_report(self) -> str:
+        return "# AUDITORIA DE LOGÍSTICA v2.6\n\n" + "\n".join(self.audit_log)
 
     def calculate_logistics(self, intent: Intent, proposal: ProposalData):
         """
-        Calcula despesas de logística baseadas no plano detalhado (LogisticsPlan)
-        e nas políticas definidas em db_div.json.
+        Calcula as despesas de viagem (DIV) baseadas no plano da IA ou manual override.
         """
-        override = intent.logistics_override
+        self.audit_log = []
         plan = intent.detailed_logistics
-        
-        # Fallback se não houver plano (safety net)
         if not plan:
-            plan = LogisticsPlan(
-                requires_flight=(override.transport_provider == "provider"), 
-                flight_region="flight_s_se",
-                requires_car_rental=True,
-                estimated_daily_km=50,
-                hotel_tier="hotel_tier_capital"
-            )
-
-        travel_segments = override.travel_segments
-        if not travel_segments:
-            travel_segments = [5] # Padrão
-            
-        team_size = override.team_size if override.team_size > 0 else 1
-        
-        # Acesso ao DB de Logística
-        log_db = self.db.logistics_db
-        if not log_db:
+            self.audit_log.append("- [WARN] Nenhum plano logístico disponível.")
             return
 
-        policies = log_db.policies
-        bundles = log_db.logistics_bundles
-        
-        # Iterar sobre CADA VIAGEM (Segmento)
-        for i, days_in_trip in enumerate(travel_segments):
-            trip_id = i + 1
-            topic_id = f"LOG-{trip_id:02d}"
-            trip_label = f"Viagem {trip_id:02d}"
-            
-            # --- 1. Aéreo (Trava de Custos Rígida v2.1) ---
-            if plan.requires_flight:
-                region_key = plan.flight_region
-                flight_bundle = bundles.get(region_key)
-                
-                if flight_bundle:
-                    flight_cost_base = flight_bundle.est_cost
-                    flight_desc_base = flight_bundle.desc
-                else:
-                    # Trava v2.1: Proibido sugerir preço. 
-                    # Se a chave não existir ou for nula, o custo é 0.00 (A COTAR)
-                    flight_cost_base = 0.00
-                    flight_desc_base = f"Passagem Aérea ({region_key}) - NÃO LOCALIZADA NO DB"
-                
-                one_way_cost = flight_cost_base / 2
-                
-                # IDA
-                proposal.expense_table.append(CalculatedExpense(
-                    topic=topic_id,
-                    description=f"[{trip_label}] {flight_desc_base} - IDA",
-                    qty=team_size,
-                    unit_price=one_way_cost,
-                    total_price=team_size * one_way_cost
-                ))
-                
-                # VOLTA
-                proposal.expense_table.append(CalculatedExpense(
-                    topic=topic_id,
-                    description=f"[{trip_label}] {flight_desc_base} - VOLTA",
-                    qty=team_size,
-                    unit_price=one_way_cost,
-                    total_price=team_size * one_way_cost
-                ))
-            
-            # --- 2. Hospedagem ---
-            hotel_price = policies.hotel_tier_capital if plan.hotel_tier == "hotel_tier_capital" else policies.hotel_tier_interior
-            total_hotel_qty = days_in_trip * team_size
-            
-            proposal.expense_table.append(CalculatedExpense(
-                topic=topic_id,
-                description=f"[{trip_label}] Hospedagem ({plan.hotel_tier.replace('hotel_tier_', '')})",
-                qty=total_hotel_qty,
-                unit_price=hotel_price,
-                total_price=total_hotel_qty * hotel_price
-            ))
-            
-            # --- 3. Alimentação (Lógica de Dias Úteis vs. Finais de Semana) ---
-            if not intent.work_on_weekends:
-                # Regra: Todos os dias como meal_weekday
-                qty_weekday = days_in_trip * team_size
-                proposal.expense_table.append(CalculatedExpense(
-                    topic=topic_id,
-                    description=f"[{trip_label}] Alimentação (Dias Úteis)",
-                    qty=qty_weekday,
-                    unit_price=policies.meal_weekday,
-                    total_price=qty_weekday * policies.meal_weekday
-                ))
-            else:
-                # Regra: Proporção 5:2 para viagens longas
-                # A cada 7 dias, 5 úteis e 2 FDS.
-                weeks = days_in_trip // 7
-                extra_days = days_in_trip % 7
-                
-                # Assume-se que extra_days primeiro preenche os dias úteis (até 5)
-                # Se sobrar, vai para FDS?
-                # Exemplo: 10 dias. 1 semana (5,2) + 3 dias. Total: 8 úteis, 2 FDS.
-                # Exemplo: 13 dias. 1 semana (5,2) + 6 dias (5 úteis, 1 FDS). Total: 10 úteis, 3 FDS.
-                
-                extra_weekdays = min(extra_days, 5)
-                extra_fds = max(0, extra_days - 5)
-                
-                total_weekdays = (weeks * 5) + extra_weekdays
-                total_fds = (weeks * 2) + extra_fds
-                
-                qty_weekday = total_weekdays * team_size
-                qty_fds = total_fds * team_size
-                
-                if qty_weekday > 0:
-                    proposal.expense_table.append(CalculatedExpense(
-                        topic=topic_id,
-                        description=f"[{trip_label}] Alimentação (Dias Úteis)",
-                        qty=qty_weekday,
-                        unit_price=policies.meal_weekday,
-                        total_price=qty_weekday * policies.meal_weekday
-                    ))
-                
-                if qty_fds > 0:
-                    proposal.expense_table.append(CalculatedExpense(
-                        topic=topic_id,
-                        description=f"[{trip_label}] Alimentação (Finais de Semana)",
-                        qty=qty_fds,
-                        unit_price=policies.meal_weekend_holiday,
-                        total_price=qty_fds * policies.meal_weekend_holiday
-                    ))
-            
-            # --- 4. Locação Veículo ---
-            if plan.requires_car_rental:
-                cars_qty = math.ceil(team_size / 3)
-                rental_days = days_in_trip
-                total_rental_units = rental_days * cars_qty
-                
-                proposal.expense_table.append(CalculatedExpense(
-                    topic=topic_id,
-                    description=f"[{trip_label}] Locação Veículo (SUV)",
-                    qty=total_rental_units,
-                    unit_price=policies.car_rental_suv,
-                    total_price=total_rental_units * policies.car_rental_suv
-                ))
-                
-                # --- 5. Combustível ---
-                trip_km = days_in_trip * plan.estimated_daily_km * cars_qty
-                trip_liters = math.ceil(trip_km / policies.fuel_efficiency_km_l)
-                
-                proposal.expense_table.append(CalculatedExpense(
-                    topic=topic_id,
-                    description=f"[{trip_label}] Combustível ({trip_km} km)",
-                    qty=trip_liters,
-                    unit_price=policies.fuel_avg_price,
-                    total_price=trip_liters * policies.fuel_avg_price
-                ))
+        if not self.db.logistics_db:
+            self.audit_log.append("- [ERROR] Database logístico não carregado.")
+            return
 
-        # 6. Frete (Transversal - Custo Sugerido v2.1)
-        if plan.requires_freight:
-            freight_bundle = bundles.get("freight_heavy")
-            # Trava v2.1: Proibido fallback manual.
-            freight_cost = freight_bundle.est_cost if freight_bundle else 0.00
-            freight_desc = freight_bundle.desc if freight_bundle else "Frete/Mobilização (EQUIPAMENTO NÃO IDENTIFICADO) - A COTAR"
-            
-            proposal.expense_table.append(CalculatedExpense(
-                topic="LOG-00",
-                description=freight_desc,
-                qty=1,
-                unit_price=freight_cost,
-                total_price=freight_cost
-            ))
-            
-        # 7. Mobilização Inicial Terrestre (Jundiaí - Aeroporto) - V1.2
+        policies = self.db.logistics_db.policies
+        bundles = self.db.logistics_db.logistics_bundles
+        
+        team_size = max(1, intent.logistics_override.team_size) if intent.logistics_override else 1
+        
+        segments = intent.logistics_override.travel_segments if (intent.logistics_override and intent.logistics_override.travel_segments) else []
+        duration_days = sum(segments)
+        
+        # 0. Mobilização Terrestre Origem (v3.0)
         if plan.origin_mobilization_km > 0:
-            total_mob_km = plan.origin_mobilization_km * 2 # Ida e Volta
-            mob_cost = total_mob_km * policies.km_reimbursement
-            
+            mob_cost = (plan.origin_mobilization_km * policies.fuel_avg_price / policies.fuel_efficiency_km_l) + 200
             proposal.expense_table.append(CalculatedExpense(
                 topic="LOG-00",
-                description=f"Mobilização Terrestre Origem (Jundiaí - Aeroporto) - Ida/Volta",
+                description="Mobilização Terrestre Origem (Jundiaí - Aeroporto) - Ida/Volta",
                 qty=1,
                 unit_price=mob_cost,
                 total_price=mob_cost
             ))
-            
+
+        # Loop pelos segmentos de viagem
+        for i, segment_days in enumerate(segments):
+            trip_label = f"Viagem {i+1:02d}"
+            topic_id = f"LOG-{i+1:02d}"
+            # 1. Aéreo
+            if plan.requires_flight:
+                # Se for Nordeste (OFI / Ilhéus), a regra é preço de venda fixo de 2500 (RT)
+                # O custo base é lido do db_div.json. Se lá estiver 2500, e a margem de venda é 1.2:
+                # Custo Unitário = (est_cost / 1.2) / 2 [para splitar IDA/VOLTA]
+                
+                region_key = plan.flight_region or "flight_ne"
+                flight_bundle = bundles.get(region_key)
+                flight_cost_ref = flight_bundle.est_cost if flight_bundle else 2500.00
+                
+                # Override manual se houver
+                if plan.flight_cost_override and plan.flight_cost_override > 0:
+                    flight_cost_ref = plan.flight_cost_override
+
+                # Cálculo de custo unitário para que o total de venda seja flight_cost_ref
+                # Venda_Total = Custo_Total * 1.2
+                # Custo_Total = flight_cost_ref / 1.2
+                # Custo_Unit (por perna) = (flight_cost_ref / 1.2) / 2
+                
+                one_way_cost = (flight_cost_ref / 1.2) / 2
+                flight_desc_base = flight_bundle.desc if flight_bundle else "Passagem Aérea"
+                
+                if region_key == "flight_ne":
+                    flight_desc_base += " [STRICT v4.0]"
+
+                proposal.expense_table.append(CalculatedExpense(
+                    topic=topic_id, description=f"[{trip_label}] {flight_desc_base} - IDA",
+                    qty=format_excel_number(team_size), unit_price=one_way_cost, total_price=team_size * one_way_cost
+                ))
+                proposal.expense_table.append(CalculatedExpense(
+                    topic=topic_id, description=f"[{trip_label}] {flight_desc_base} - VOLTA",
+                    qty=format_excel_number(team_size), unit_price=one_way_cost, total_price=team_size * one_way_cost
+                ))
+
+            # 2. Hospedagem
+            hotel_bundle = bundles.get(plan.hotel_tier)
+            if hotel_bundle:
+                proposal.expense_table.append(CalculatedExpense(
+                    topic=topic_id, description=f"[{trip_label}] {hotel_bundle.desc}",
+                    qty=format_excel_number(team_size * segment_days),
+                    unit_price=hotel_bundle.est_cost, total_price=(team_size * segment_days) * hotel_bundle.est_cost
+                ))
+
+            # 3. Alimentação
+            work_days = 5 
+            weekend_days = 2
+            if segment_days > 7:
+                 work_days = (segment_days // 7) * 5 + min(5, segment_days % 7)
+                 weekend_days = segment_days - work_days
+            elif segment_days > 0:
+                 work_days = segment_days
+                 weekend_days = 0
+
+            proposal.expense_table.append(CalculatedExpense(
+                topic=topic_id, description=f"[{trip_label}] Alimentação (Dias Úteis)",
+                qty=format_excel_number(team_size * work_days), unit_price=policies.meal_weekday,
+                total_price=(team_size * work_days) * policies.meal_weekday
+            ))
+            if weekend_days > 0:
+                proposal.expense_table.append(CalculatedExpense(
+                    topic=topic_id, description=f"[{trip_label}] Alimentação (Finais de Semana)",
+                    qty=format_excel_number(team_size * weekend_days), unit_price=policies.meal_weekend_holiday,
+                    total_price=(team_size * weekend_days) * policies.meal_weekend_holiday
+                ))
+
+            # 4. Aluguel de Carro
+            if plan.requires_car_rental:
+                car_bundle = bundles.get("car_rental_suv")
+                if car_bundle:
+                    proposal.expense_table.append(CalculatedExpense(
+                        topic=topic_id, description=f"[{trip_label}] {car_bundle.desc}",
+                        qty=format_excel_number(segment_days), unit_price=car_bundle.est_cost,
+                        total_price=segment_days * car_bundle.est_cost
+                    ))
+                
+                # Combustível
+                trip_km = plan.estimated_daily_km * segment_days
+                total_km_clean = format_excel_number(trip_km)
+                trip_liters = math.ceil(trip_km / policies.fuel_efficiency_km_l)
+                
+                proposal.expense_table.append(CalculatedExpense(
+                    topic=topic_id,
+                    description=f"[{trip_label}] Combustível ({total_km_clean} km)",
+                    qty=format_excel_number(trip_liters),
+                    unit_price=policies.fuel_avg_price,
+                    total_price=trip_liters * policies.fuel_avg_price
+                ))
+
+        # 6. Frete
+        if plan.requires_freight:
+             freight_bundle = bundles.get("freight_heavy")
+             if freight_bundle:
+                proposal.expense_table.append(CalculatedExpense(
+                    topic="LOG-00", description=freight_bundle.desc,
+                    qty=1, unit_price=freight_bundle.est_cost, total_price=freight_bundle.est_cost
+                ))
+
         proposal.total_expenses = sum(i.total_price for i in proposal.expense_table)

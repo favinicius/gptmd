@@ -6,8 +6,8 @@ from datetime import datetime
 from src.ai_agent import AIAgent
 from src.context_loader import ContextLoader
 from src.database import Database
-from src.models import ProposalData, TopicMapping
-from src.engines import LaborEngine, LogisticsEngine, MaterialEngine, ProposalAssembler
+from src.models import ProposalData, TopicMapping, format_br_currency, SizingMode, ContingencyLevel
+from src.engines import LaborEngine, LogisticsEngine, MaterialEngine, ProposalAssembler, ResearchEngine
 
 def apply_margins(proposal: ProposalData):
     """
@@ -43,6 +43,11 @@ def apply_margins(proposal: ProposalData):
         proposal.total_expenses
     )
 
+def clean_value(val):
+    if isinstance(val, (int, float)) and val == int(val):
+        return int(val)
+    return val
+
 def save_md(output_dir, filename, title, items):
     path = output_dir / filename
     with open(path, "w", encoding="utf-8") as f:
@@ -57,10 +62,10 @@ def save_md(output_dir, filename, title, items):
                 for item in items:
                     f.write(f"| {item.topic_id} | {item.description} |\n")
             elif hasattr(items[0], 'role'): # Labor
-                f.write("| Item | Tópico | Qtde | Horas_Dia | Dias | Total_H | Tipo | Atividade | Profissional | Custo_Unit | Total_R$ | Source_Ref |\n")
-                f.write("| :---: | :--- | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :---: | :---: | :---: |\n")
+                f.write("| Item | Tópico | Execs | Qtde | Horas_Dia | Dias | Total_H | Tipo | Atividade | Profissional | Custo_Unit | Total_R$ | Source_Ref |\n")
+                f.write("| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :---: | :---: | :---: |\n")
                 for item in items:
-                    f.write(f"| {item.item_id} | {item.topic} | {item.qty_professionals} | {item.daily_hours} | {item.days} | {item.hours} | {item.activity_type} | {item.activity} | {item.role} | {item.hourly_rate:,.2f} | {item.total_price:,.2f} | {item.source_ref} |\n")
+                    f.write(f"| {item.item_id} | {item.topic} | {clean_value(item.executions)} | {clean_value(item.qty_professionals)} | {clean_value(item.daily_hours)} | {clean_value(item.days)} | {clean_value(item.hours)} | {item.activity_type} | {item.activity} | {item.role} | {format_br_currency(item.hourly_rate)} | {format_br_currency(item.total_price)} | {item.source_ref} |\n")
             elif hasattr(items[0], 'description'): # Hardware, Service, Expense
                 if hasattr(items[0], 'topic'):
                         f.write("| Tópico | Descrição | Qtd | Unitário (R$) | Total (R$) |\n")
@@ -68,33 +73,68 @@ def save_md(output_dir, filename, title, items):
                         for item in items:
                         # Fix for NoneType is_misc if relevant, but models should have defaults
                         # Using hasattr check just in case
-                            f.write(f"| {item.topic} | {item.description} | {item.qty} | {item.unit_price:,.2f} | {item.total_price:,.2f} |\n")
+                            f.write(f"| {item.topic} | {item.description} | {clean_value(item.qty)} | {format_br_currency(item.unit_price)} | {format_br_currency(item.total_price)} |\n")
                 else:
                     f.write("| Descrição | Qtd | Unitário (R$) | Total (R$) |\n")
                     f.write("| :--- | :---: | :---: | :---: |\n")
                     for item in items:
-                        f.write(f"| {item.description} | {item.qty} | {item.unit_price:,.2f} | {item.total_price:,.2f} |\n")
+                        f.write(f"| {item.description} | {clean_value(item.qty)} | {format_br_currency(item.unit_price)} | {format_br_currency(item.total_price)} |\n")
     return path
 
 def main():
     parser = argparse.ArgumentParser(description="GPT-Md: Technical Proposal Generator - Phase 3 (Engines)")
     parser.add_argument("--tech_ref", type=str, help="Path to technical PDF/docs", default="input/docs")
-    parser.add_argument("--style_ref", type=str, help="Path to style PDF/example", default="input/style")
+    parser.add_argument("--template_dir", type=str, help="Path to Markdown templates", default="templates/")
     parser.add_argument("--instruction", type=str, help="Instruction text or path to .txt", default="input/instruction.txt")
+    parser.add_argument("--split", action="store_true", help="Force split of technical and commercial proposals (and generate all 3 versions in dev mode)")
+    parser.add_argument("--sizing", type=str, choices=["aggressive", "standard", "secure"], help="Override sizing mode (0.85x, 1.0x, 1.25x)")
+    parser.add_argument("--contingency", type=str, choices=["none", "low", "standard", "high"], help="Override contingency level (SHE/Buffer)")
+    parser.add_argument("--help-metrics", action="store_true", help="Show detailed metrics table and exit")
+    parser.add_argument("--debug", action="store_true", help="Enable verbose debug and save raw AI responses")
+    parser.add_argument("--use-docs", action="store_true", help="Load and use technical documents from --tech_ref")
     
     args = parser.parse_args()
+
+    if args.help_metrics:
+        print("\n=== GPT-Md Sizing & Contingency Metrics (v6.0) ===")
+        print("\n1. SIZING MODES (Estimativa de Horas):")
+        print("| Mode      | Multiplicador de Esforço | Perfil Indicado |")
+        print("| :---      | :---:                    | :---            |")
+        print("| aggressive| 0.85x                    | Propostas competitivas, enxutas (Risco Médio) |")
+        print("| standard  | 1.00x                    | Padrão equilibrado (Risco Baixo - Recomendado) |")
+        print("| secure    | 1.25x                    | Cenários conservadores, alta incerteza, premium |")
+        
+        print("\n2. CONTINGENCY LEVELS (Ineficiência/SHE):")
+        print("| Level     | Ineficiência (SHE)      | Buffer Extra |")
+        print("| :---      | :---                    | :---         |")
+        print("| none      | 0.0h / dia (Removido)   | 0%           |")
+        print("| low       | 1.0h / dia físico       | 0%           |")
+        print("| standard  | 1.5h / dia físico       | 0%           |")
+        print("| high      | 2.0h / dia físico       | +10% Tech    |")
+        print("\nUse --sizing [mode] ou --contingency [level] para forçar estes valores.\n")
+        exit(0)
+    
+    # --- Output Dir Initialization (Moved for Debugging) ---
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    output_dir = Path("output") / timestamp
+    output_dir.mkdir(parents=True, exist_ok=True)
     
     # --- Initialization ---
     print("Loading contexts...")
-    loader = ContextLoader(docs_path=args.tech_ref, style_path=args.style_ref)
-    docs_content = loader.load_technical_docs()
-    style_content = loader.load_style_guide()
+    docs_content = ""
+    if args.use_docs:
+        print(f"[*] Carregando documentos técnicos de {args.tech_ref}...")
+        loader = ContextLoader(docs_path=args.tech_ref)
+        docs_content = loader.load_technical_docs()
+    else:
+        print("[*] Documentos técnicos ignorados (Modo Instrução Soberana).")
     
     db = Database()
     agent = AIAgent()
     
     # Engines
-    labor_engine = LaborEngine(db)
+    research_engine = ResearchEngine(db, agent)
+    labor_engine = LaborEngine(db, research_engine)
     logistics_engine = LogisticsEngine(db)
     material_engine = MaterialEngine(db)
     proposal_assembler = ProposalAssembler(agent)
@@ -115,8 +155,34 @@ def main():
         instruction_text = args.instruction
 
     print("Stage 1: AI Analysis (Ingestion)...")
-    intent = agent.interpret_instruction(instruction_text, docs_content)
+    try:
+        intent = agent.interpret_instruction(instruction_text, docs_content)
+    except Exception as e:
+        if args.debug and hasattr(agent, 'last_raw_interpretation'):
+             with open(output_dir / "raw_ai_interpretation.txt", "w", encoding="utf-8") as f:
+                f.write("=== INTERPRETATION (ERROR) ===\n")
+                f.write(agent.last_raw_interpretation)
+        print(f"\nERRO CRÍTICO NO STAGE 1: {e}")
+        print(f"Verifique o arquivo 'raw_ai_interpretation.txt' in {output_dir}")
+        exit(1)
+
     print(f"Dados extraídos: {intent.client_name} / {intent.project_name}")
+    
+    if args.split:
+        intent.split_proposal = True
+        print("[*] Split forçado via CLI.")
+
+    # Apply Sizing/Contingency Overrides (v6.0)
+    if args.sizing:
+        intent.sizing_mode = SizingMode(args.sizing)
+        print(f"[*] Sizing Mode forçado via CLI: {intent.sizing_mode.value}")
+    
+    if args.contingency:
+        intent.contingency_level = ContingencyLevel(args.contingency)
+        print(f"[*] Contingency Level forçado via CLI: {intent.contingency_level.value}")
+
+    print(f"Templates selecionados: {intent.selected_tech_template} / {intent.selected_comm_template} (Split={intent.split_proposal})")
+
     
     # --- 1.5 Logistics Planning ---
     origin = "Jundiaí - SP" # Fixed Origin as per requirements
@@ -124,13 +190,21 @@ def main():
     
     duration_days = intent.estimated_duration_weeks * 5 # Approx
     
-    log_plan = agent.plan_logistics(
-        origin=origin,
-        destination=destination,
-        instruction_text=instruction_text,
-        team_size=max(1, intent.logistics_override.team_size),
-        duration_days=duration_days
-    )
+    try:
+        log_plan = agent.plan_logistics(
+            origin=origin,
+            destination=destination,
+            instruction_text=instruction_text,
+            team_size=max(1, intent.logistics_override.team_size) if intent.logistics_override else 1,
+            duration_days=duration_days
+        )
+    except Exception as e:
+        if args.debug and hasattr(agent, 'last_raw_logistics'):
+            with open(output_dir / "raw_ai_interpretation.txt", "a", encoding="utf-8") as f:
+                f.write("\n\n=== LOGISTICS PLAN (ERROR) ===\n")
+                f.write(agent.last_raw_logistics)
+        print(f"\nERRO CRÍTICO NA LOGÍSTICA: {e}")
+        exit(1)
     intent.detailed_logistics = log_plan
     print(f"Plano Logístico: Flight={log_plan.requires_flight}, Region={log_plan.flight_region}")
 
@@ -149,43 +223,83 @@ def main():
     
     # Run Engines
     material_engine.calculate_materials(intent, proposal)
-    material_engine.calculate_services(proposal, requires_certification) # If handling services there
+    material_engine.calculate_services(proposal, intent, requires_certification)
     labor_engine.calculate_labor(intent, proposal, requires_certification)
     logistics_engine.calculate_logistics(intent, proposal)
     
     # Apply Margins
     apply_margins(proposal)
     
-    print(f"Calculated Total: R$ {proposal.grand_total:,.2f}")
+    print(f"Calculated Total: R$ {format_br_currency(proposal.grand_total)}")
+    
+    total_hours = sum(l.hours for l in proposal.labor_table)
+    print(f"  - {len(proposal.labor_table)} atividades planejadas ({total_hours} horas)")
 
     # --- 3. Output Generation ---
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") # Timestamp as requested
-    output_dir = Path("output") / timestamp
-    output_dir.mkdir(parents=True, exist_ok=True)
+    # output_dir already created at start
+    # --- Debug - Save Raw AI Files (v2.5) ---
+    if args.debug:
+        print(f"[*] Modo DEBUG ativado. Salvando arquivos brutos em {output_dir}")
+        if hasattr(agent, 'last_raw_interpretation'):
+            with open(output_dir / "raw_ai_interpretation.txt", "w", encoding="utf-8") as f:
+                f.write("=== INTERPRETATION ===\n")
+                f.write(agent.last_raw_interpretation)
+                if hasattr(agent, 'last_raw_logistics'):
+                    f.write("\n\n=== LOGISTICS PLAN ===\n")
+                    f.write(agent.last_raw_logistics)
     
     # Debug JSON
     with open(output_dir / "debug_intent.json", "w", encoding="utf-8") as f:
         json.dump(intent.model_dump(), f, indent=4, ensure_ascii=False)
 
-    print("Stage 3: Proposal Assembly (Markdown)...")
-    markdown_output = proposal_assembler.assemble_proposal(proposal, intent, style_context=style_content)
+    print("Stage 3: Proposal Assembly (Markdown Fragmentation v5.0)...")
     
-    # Add Footer
-    footer = f"\n\n---\n*Gerado automaticamente pelo GPT-Md v2.0 (Engines) via {agent.model_name} em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"
-    markdown_output += footer
+    # Blindagem e Privacidade (Reforço): Expurgar itens internos antes da IA de redação ver o intent
+    public_intent = intent.model_copy(deep=True)
+    public_intent.scope_items = [item for item in intent.scope_items if item.visibility == "public"]
     
-    # Save Artifacts
+    print(f"  - Visibilidade: {len(intent.scope_items)} itens totais -> {len(public_intent.scope_items)} itens públicos.")
+    
+    proposal_outputs = proposal_assembler.assemble_proposal(proposal, public_intent, template_dir=args.template_dir)
+    
+    # Add Footer and Save Artifacts
+    footer = f"\n\n---\n*Gerado automaticamente pelo GPT-Md v5.0 (Engines) via {agent.model_name} em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"
+    
+    for filename, content in proposal_outputs.items():
+        # Adicionar timestamp ao nome do arquivo se necessário ou usar o nome fixo
+        final_filename = filename.replace(".md", f"_{timestamp}.md")
+        final_path = output_dir / final_filename
+        with open(final_path, "w", encoding="utf-8") as f:
+            f.write(content + footer)
+        print(f"  - Proposta gerada: {final_filename}")
+
+    # Save Tables
     save_md(output_dir, f"MAT_{timestamp}.md", "Tabela de Materiais", proposal.hardware_table)
     save_md(output_dir, f"MOD_{timestamp}.md", "Tabela de Mão de Obra", proposal.labor_table)
     save_md(output_dir, f"SET_{timestamp}.md", "Serviços Externos", proposal.service_table)
     save_md(output_dir, f"DIV_{timestamp}.md", "Despesas de Viagem", proposal.expense_table)
     save_md(output_dir, f"TOPICS_{timestamp}.md", "Índice de Tópicos", proposal.topics)
 
-    final_output_path = output_dir / f"PROPOSTA_COMPLETA_{timestamp}.md"
-    with open(final_output_path, "w", encoding="utf-8") as f:
-        f.write(markdown_output)
 
-    print(f"Success! Output artifacts saved to: {output_dir}")
+    # Save Logistics Audit (v2.5)
+    with open(output_dir / "LOGISTICS_AUDIT.md", "w", encoding="utf-8") as f:
+        f.write(logistics_engine.get_audit_report())
+
+    # Save raw proposal after assembly (last segment generated)
+    if args.debug and hasattr(agent, 'last_raw_content'):
+        with open(output_dir / "raw_ai_proposal.txt", "w", encoding="utf-8") as f:
+            f.write(agent.last_raw_content)
+
+
+    # API Usage Report (v2.6.1)
+    usage_report = agent.get_usage_stats()
+    with open(output_dir / "API_USAGE_STATS.md", "w", encoding="utf-8") as f:
+        f.write(usage_report)
+    
+    if args.debug:
+        print("\n" + usage_report)
+
+    print(f"\nSuccess! Output artifacts saved to: {output_dir}")
 
 if __name__ == "__main__":
     main()
