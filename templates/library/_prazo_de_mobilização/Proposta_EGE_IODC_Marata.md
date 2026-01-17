@@ -1,0 +1,2 @@
+### 13.1. PRAZO DE MOBILIZAÇÃO
+A **{{ provider_short }}** iniciará a mobilização dos recursos técnicos e logísticos em até **10 (dez) dias úteis** após a confirmação do pedido e liberação das premissas de acesso pela **{{ client_company }}**.

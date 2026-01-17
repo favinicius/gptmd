@@ -1,0 +1,9 @@
+Projeto de Modernização de Datacenter Industrial para a planta Maratá. 
+Deve incluir infraestrutura física e cluster de virtualização.
+IMPORTANTE: A rede industrial NÃO está no escopo, deve ser ignorada. (Cenário Sem Rede).
+Equipamentos fornecidos pela EGE.
+Local: Ilhéus - BA.
+Cliente: Gilmar Corrêa.
+Empresa: OFI.
+Sizing aggressive.
+Contingência none.

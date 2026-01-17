@@ -1,0 +1,2 @@
+## 2. AVISO
+Neste documento podem aparecer nomes/marcas comerciais. A {{ company_name }} usa esses nomes para fins de referência apenas, em benefício do proprietário da marca e sem qualquer intenção de violação de marca registrada.

@@ -1,0 +1,2 @@
+## 6. OBJETIVO GERAL
+Este informativo tem como objetivo apresentar as SOLUÇÃO "TURNKEY" completa para modernizar infraestrutura de TI Industrial da planta {{ client_name }} em {{ city }} - {{ state }}. O objetivo é modernizar o DATACENTER OT, implantar uma INFRAESTRUTURA FÍSICA e uma nova REDE DE AUTOMAÇÃO segura e resiliente, e um CONJUNTO DE APLICAÇÕES robusto, garantindo máxima disponibilidade (N+1), performance e segurança para as operações críticas de manufatura, ao mesmo tempo em que se cria uma base escalável para o crescimento futuro e as demandas da Indústria 4.0.

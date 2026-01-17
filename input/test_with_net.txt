@@ -1,0 +1,9 @@
+Projeto de Modernização de Datacenter Industrial para a planta Maratá. 
+Deve incluir toda a infraestrutura física, cluster de virtualização e a nova rede industrial (OT).
+Equipamentos fornecidos pela EGE.
+Local: Ilhéus - BA.
+Cliente: Gilmar Corrêa.
+Empresa: OFI.
+Desejo propostas separadas técnica e comercial.
+Sizing standard.
+Contingência standard.

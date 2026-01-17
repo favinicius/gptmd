@@ -1,0 +1,5 @@
+jinja
+## 3. INFORMAÇÃO CONFIDENCIAL
+Este documento reúne dados sigilosos e estratégicos da {{ company_name }}, cuja divulgação a terceiros depende de autorização prévia, expressa e escrita da própria {{ company_name }}. Seu conteúdo está coberto pelos compromissos de confidencialidade vigentes entre {{ company_name }} e {{ client_name }}. Ao aceitá-lo, a {{ client_name }} reconhece tratar-se de Informação Confidencial da {{ company_name }}, excetuando-se apenas o que já tenha sido anteriormente disponibilizado a Jonathan Pereira. A {{ client_name }} deve resguardar este material com, no mínimo, o mesmo grau de proteção que aplica aos seus próprios ativos confidenciais.
+
+A preparação deste material baseou-se em elementos fornecidos pela {{ client_name }}. A {{ company_name }} não responde por perdas ou danos decorrentes de inexatidões, omissões ou inconsistências nessas contribuições. Caso venha a ser firmado contrato com fundamento neste conteúdo, ajustes de escopo necessários em razão de dados incorretos ou incompletos apresentados pela {{ client_name }} poderão implicar revisões de prazos.

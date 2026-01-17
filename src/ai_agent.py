@@ -251,6 +251,7 @@ class AIAgent:
                     raise e
             
             # Rotaciona para a próxima "melhor" chave
+            keys_tried += 1
             try:
                 self._select_best_key()
                 self._setup_client()

@@ -121,7 +121,7 @@ class ScopeItem(BaseModel):
     context_note: Optional[str] = ""
     visibility: Literal["public", "internal"] = "public" # New field
     explicit_total_hours: Optional[int] = 0 # New field for overrides, defaulting to 0 if None
-    is_weekend: bool = False # New field for weekend work factor
+    is_weekend: Optional[bool] = False # New field for weekend work factor
 
 class SizingMode(str, Enum):
     AGGRESSIVE = "aggressive"  # 0.85x

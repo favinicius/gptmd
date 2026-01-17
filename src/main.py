@@ -7,7 +7,7 @@ from src.ai_agent import AIAgent
 from src.context_loader import ContextLoader
 from src.database import Database
 from src.models import ProposalData, TopicMapping, format_br_currency, SizingMode, ContingencyLevel
-from src.engines import LaborEngine, LogisticsEngine, MaterialEngine, ProposalAssembler, ResearchEngine
+from src.engines import LaborEngine, LogisticsEngine, MaterialEngine, ProposalAssembler, ResearchEngine, LibraryAssembler
 
 def apply_margins(proposal: ProposalData):
     """
@@ -140,10 +140,13 @@ def main():
     material_engine = MaterialEngine(db)
     material_engine = MaterialEngine(db)
     
-    # Seleção de Assembler (v8.0: Suporte Híbrido)
+    # Seleção de Assembler (v9.0: Suporte Híbrido + Library)
     if args.legacy_assembler:
         print("[*] Usando Assembler V1 (Legado/Estático)")
         proposal_assembler = ProposalAssembler(agent)
+    elif args.template_dir == "templates/library":
+        print("[*] Usando LibraryAssembler (V3 - Alta Fidelidade)")
+        proposal_assembler = LibraryAssembler(library_dir=args.template_dir)
     else:
         print("[*] Usando Assembler V2 (Jinja2/Fidelidade)")
         from src.engines import ProposalAssemblerV2
@@ -270,7 +273,9 @@ def main():
     
     print(f"  - Visibilidade: {len(intent.scope_items)} itens totais -> {len(public_intent.scope_items)} itens públicos.")
     
-    if hasattr(proposal_assembler, 'assemble'):
+    if isinstance(proposal_assembler, LibraryAssembler):
+        proposal_outputs = proposal_assembler.assemble(proposal, public_intent)
+    elif hasattr(proposal_assembler, 'assemble'):
         # V2
         proposal_outputs = proposal_assembler.assemble(proposal, public_intent, output_path=str(output_dir))
     else:
