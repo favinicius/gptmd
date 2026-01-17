@@ -38,17 +38,18 @@ class ProposalAssembler:
         Substituição simples de placeholders {{}}.
         """
         replacements = {
-            "{{CLIENT_NAME}}": ctx["intent"].company_name or "CLIENTE NÃO INFORMADO",
+            "{{CLIENT_NAME}}": ctx["intent"].client_name or "CLIENTE NÃO INFORMADO",
             "{{PROJECT_NAME}}": ctx["intent"].project_name,
             "{{CLIENT_CONTACT}}": ctx["intent"].client_name or "A/C Responsável",  
-            "{{AUTHOR_NAME}}": "Roberto Pereira",
-            "{{COMPANY_NAME}}": "EGE Soluções Industriais",
+            "{{AUTHOR_NAME}}": "Comercial OFI",
+            "{{COMPANY_NAME}}": "OFI",
             "{{DATE}}": ctx.get("date", "16/01/2026"),
             "{{TOTAL_HARDWARE}}": ctx["totals"].get("hardware", "0,00"),
             "{{TOTAL_LABOR}}": ctx["totals"].get("labor", "0,00"),
             "{{TOTAL_SERVICES}}": ctx["totals"].get("services", "0,00"),
             "{{TOTAL_EXPENSES}}": ctx["totals"].get("expenses", "0,00"),
             "{{GRAND_TOTAL}}": ctx["totals"].get("grand_total", "0,00"),
+            "{{estimated_duration_weeks}}": str(ctx["intent"].estimated_duration_weeks),
         }
         
         result = text

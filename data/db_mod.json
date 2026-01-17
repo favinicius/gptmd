@@ -380,6 +380,721 @@
       "tags": [
         "documentation"
       ]
+    },
+    {
+      "id": "RES_001",
+      "category": "Planejamento",
+      "name": "Levantamento de Requisitos e Análise Inicial",
+      "description": "Checklist: [Reunião de kickoff, Entrevista com stakeholders, Documentação dos requisitos funcionais e não funcionais, Análise do ambiente atual, Definição do escopo inicial]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_002",
+      "category": "Planejamento",
+      "name": "Elaboração do Projeto Lógico e Diagramação",
+      "description": "Checklist: [Desenho da arquitetura lógica, Definição dos componentes de infraestrutura (servidores, storage, rede), Diagramas de fluxo de dados, Documentação da arquitetura proposta]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_003",
+      "category": "Execução",
+      "name": "Projeto Físico e Detalhamento da Infraestrutura",
+      "description": "Checklist: [Definição da localização física dos equipamentos, Dimensionamento de energia e refrigeração, Detalhamento da configuração dos servidores e storage, Elaboração do plano de cabemaneto, Documentação do projeto físico]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 5.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_004",
+      "category": "Execução",
+      "name": "Orçamento e Cotação de Materiais e Serviços",
+      "description": "Checklist: [Levantamento dos materiais e serviços necessários, Solicitação de cotações aos fornecedores, Análise comparativa das propostas, Elaboração do orçamento detalhado]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_005",
+      "category": "Execução",
+      "name": "Configuração da Rede e Segurança",
+      "description": "Checklist: [Configuração de roteadores e switches, Configuração de firewalls, Configuração de VLANs, Testes de conectividade, Configuração de VPNs]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_006",
+      "category": "Gerenciamento",
+      "name": "Instalação e Configuração de Servidores",
+      "description": "Checklist: [Instalação do sistema operacional, Configuração de serviços (DNS, DHCP, etc.), Instalação de softwares, Configuração de acesso remoto, Testes de funcionamento]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 6.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_007",
+      "category": "Gerenciamento",
+      "name": "Migração de Dados e Aplicações",
+      "description": "Checklist: [Planejamento da migração, Backup dos dados, Migração dos dados e aplicações, Validação dos dados migrados, Testes de funcionamento]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 8.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_008",
+      "category": "Planejamento",
+      "name": "Gerenciamento do Projeto e Reuniões de Acompanhamento",
+      "description": "Checklist: [Definição do cronograma, Gerenciamento de riscos, Reuniões de acompanhamento, Reporte de status, Gerenciamento de recursos]",
+      "role": "Gestor",
+      "setup_hours": 0.0,
+      "unit_hours": 6.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_009",
+      "category": "Execução",
+      "name": "Validação e Testes Finais",
+      "description": "Checklist: [Testes de desempenho, Testes de segurança, Testes de usabilidade, Validação dos requisitos, Documentação dos testes]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_010",
+      "category": "Planejamento",
+      "name": "Documentação Final e Entrega do Projeto",
+      "description": "Checklist: [Revisão da documentação, Elaboração do relatório final, Apresentação ao cliente, Entrega do projeto]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_348521",
+      "category": "Planejamento",
+      "name": "Planejamento e Design do Cluster",
+      "description": "Checklist: [Definição dos requisitos de capacidade e desempenho; Escolha da versão do VMware vSphere; Design da rede virtual (vSwitches, vLANs); Definição das políticas de armazenamento (datastores); Documentação do design e aprovação.]",
+      "role": "Arquiteto",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_80A60B",
+      "category": "Execução",
+      "name": "Preparação do Hardware e Instalação do ESXi nos Hosts",
+      "description": "Checklist: [Verificação da compatibilidade do hardware; Configuração do BIOS/UEFI (boot, RAID); Instalação do ESXi em cada host; Configuração básica de rede (IP, DNS); Teste de conectividade e acesso ao host.]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 6.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_F2BA08",
+      "category": "Execução",
+      "name": "Configuração da Rede Virtual",
+      "description": "Checklist: [Criação e configuração dos vSwitches (Standard ou Distributed); Configuração das vLANs; Configuração das portas de rede; Teste de conectividade entre as VMs e a rede física.]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_180A82",
+      "category": "Execução",
+      "name": "Configuração do Armazenamento (Datastores)",
+      "description": "Checklist: [Configuração do armazenamento compartilhado (iSCSI, NFS, FC); Criação dos datastores; Verificação do espaço disponível; Teste de acesso aos datastores pelos hosts.]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_2EBD73",
+      "category": "Gerenciamento",
+      "name": "Configuração do vCenter Server",
+      "description": "Checklist: [Instalação e configuração do vCenter Server; Adição dos hosts ao vCenter; Configuração de rede no vCenter; Configuração de usuários e permissões; Teste de acesso e gerenciamento dos hosts pelo vCenter.]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_3D2C26",
+      "category": "Gerenciamento",
+      "name": "Configuração do Cluster VMware (HA, DRS)",
+      "description": "Checklist: [Habilitar o High Availability (HA); Configurar o Distributed Resource Scheduler (DRS); Configurar as políticas de migração de VMs; Testar o HA e DRS.]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_35AEE8",
+      "category": "Gerenciamento",
+      "name": "Instalação e Configuração de VMs Base",
+      "description": "Checklist: [Criação de templates de VMs; Instalação do sistema operacional nas VMs; Instalação dos VMware Tools; Configuração básica das VMs (rede, acesso remoto); Testes de funcionamento.]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_A3FE54",
+      "category": "Gerenciamento",
+      "name": "Testes e Validação do Cluster",
+      "description": "Checklist: [Testes de failover (HA); Testes de migração de VMs (DRS); Testes de desempenho; Verificação dos logs; Documentação dos testes e resultados.]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_2668A1",
+      "category": "Planejamento",
+      "name": "Documentação Final e Transferência de Conhecimento",
+      "description": "Checklist: [Atualização da documentação do projeto; Criação de um documento de transferência de conhecimento; Apresentação para a equipe de suporte; Entrega da documentação final.]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_587136",
+      "category": "Planejamento",
+      "name": "Planejamento e Levantamento de Requisitos",
+      "description": "Checklist: [Definição do escopo da implantação; Levantamento das necessidades de capacidade e performance; Análise da infraestrutura existente (rede, servidores); Elaboração do plano de implantação; Definição dos procedimentos de backup e recuperação; Documentação inicial]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_557CAE",
+      "category": "Execução",
+      "name": "Verificação e Preparação do Ambiente Físico",
+      "description": "Checklist: [Verificação do espaço físico para instalação do storage; Conferência da disponibilidade de energia e refrigeração; Preparação do rack (se necessário); Verificação da cabeamento de rede e fibra óptica (se aplicável)]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 1.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_2200E5",
+      "category": "Execução",
+      "name": "Configuração de Rede e Conectividade",
+      "description": "Checklist: [Configuração de endereços IP e máscara de rede; Configuração de VLANs (se necessário); Teste de conectividade com a rede existente; Configuração de portas de rede no storage; Teste de comunicação com os servidores]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_E92C13",
+      "category": "Gerenciamento",
+      "name": "Instalação e Configuração do Sistema Operacional do Storage",
+      "description": "Checklist: [Instalação do sistema operacional do storage; Configuração inicial do sistema (data/hora, fuso horário); Configuração de usuários e senhas; Configuração de RAID (se aplicável); Configuração de volumes lógicos; Testes de integridade dos volumes]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_8D465C",
+      "category": "Gerenciamento",
+      "name": "Configuração de Acesso e Permissões",
+      "description": "Checklist: [Configuração de acesso aos volumes para os servidores; Definição de permissões de leitura/escrita; Integração com sistemas de autenticação (Active Directory, etc.); Teste de acesso e permissões]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_D7A831",
+      "category": "Gerenciamento",
+      "name": "Configuração de Backup e Recuperação",
+      "description": "Checklist: [Configuração de políticas de backup; Configuração de agendamento de backups; Teste de backup e restauração; Documentação dos procedimentos de backup e recuperação]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_49159C",
+      "category": "Gerenciamento",
+      "name": "Testes e Validação",
+      "description": "Checklist: [Testes de performance (leitura/escrita); Testes de integridade dos dados; Validação do funcionamento do storage; Documentação dos testes realizados]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 1.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_B9AEFE",
+      "category": "Gerenciamento",
+      "name": "Documentação e Transferência de Conhecimento",
+      "description": "Checklist: [Atualização da documentação do ambiente; Elaboração de manuais de operação; Treinamento da equipe (se necessário); Transferência de conhecimento]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 1.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_253195",
+      "category": "Planejamento",
+      "name": "Gerenciamento e Supervisão",
+      "description": "Checklist: [Acompanhamento do cronograma; Gerenciamento de riscos; Comunicação com as partes interessadas; Aprovação de etapas]",
+      "role": "Gestor",
+      "setup_hours": 0.0,
+      "unit_hours": 1.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_2D01FA",
+      "category": "Planejamento",
+      "name": "Planejamento e Definição de Escopo",
+      "description": "Checklist: [Definição da topologia do cluster (5 nós), escolha da rede (Calico, Cilium, etc.), seleção de ferramentas de monitoramento e logging, definição de requisitos de hardware e software, criação de plano de contingência]",
+      "role": "Arquiteto",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_1DD130",
+      "category": "Planejamento",
+      "name": "Orçamento e Aquisição de Recursos",
+      "description": "Checklist: [Cotação de hardware (servidores, switches), aquisição de licenças de software (se aplicável), criação de requisições de compra, acompanhamento da entrega dos recursos]",
+      "role": "Gestor",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_1FE014",
+      "category": "Execução",
+      "name": "Preparação do Ambiente Físico (Hardware)",
+      "description": "Checklist: [Instalação física dos servidores (rack, cabeamento), configuração inicial de BIOS/UEFI, instalação do sistema operacional Debian em cada nó, configuração básica de rede (IP, DNS)]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_34B909",
+      "category": "Execução",
+      "name": "Configuração de Rede e Firewall",
+      "description": "Checklist: [Configuração de rede avançada (VLANs, roteamento), configuração de firewall (iptables/firewalld), configuração de acesso remoto seguro (SSH), teste de conectividade entre os nós]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_0FC0DA",
+      "category": "Gerenciamento",
+      "name": "Instalação e Configuração do Kubernetes (Pré-requisitos)",
+      "description": "Checklist: [Instalação e configuração do Docker/containerd em cada nó, configuração do repositório Kubernetes, instalação das ferramentas kubeadm, kubelet e kubectl, configuração do hostname e do arquivo /etc/hosts]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_E6C272",
+      "category": "Gerenciamento",
+      "name": "Inicialização do Cluster Kubernetes",
+      "description": "Checklist: [Inicialização do cluster com kubeadm, configuração da rede do cluster (CNI - Calico, Cilium, etc.), verificação do status do cluster, configuração do acesso ao cluster (kubectl config)",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_76830D",
+      "category": "Gerenciamento",
+      "name": "Implantação de Pods e Serviços de Teste",
+      "description": "Checklist: [Implantação de um pod de teste (ex: nginx), exposição do serviço, teste de acesso ao serviço, configuração de balanceamento de carga (se necessário)]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_80EFF7",
+      "category": "Gerenciamento",
+      "name": "Configuração de Monitoramento e Logging",
+      "description": "Checklist: [Instalação e configuração de ferramentas de monitoramento (Prometheus, Grafana), instalação e configuração de ferramentas de logging (Fluentd, Elasticsearch, Kibana), configuração de alertas]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_981E14",
+      "category": "Gerenciamento",
+      "name": "Testes e Validação",
+      "description": "Checklist: [Testes de alta disponibilidade (falha de nós), testes de desempenho, validação da configuração, documentação do ambiente]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_77F566",
+      "category": "Gerenciamento",
+      "name": "Documentação e Transferência de Conhecimento",
+      "description": "Checklist: [Criação de documentação detalhada do ambiente, treinamento da equipe, transferência de conhecimento]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_B0FD7B",
+      "category": "Planejamento",
+      "name": "Levantamento de Requisitos e Definição de Escopo",
+      "description": "Checklist: [Reunião com stakeholders (OT/IT), Documentação dos requisitos de segurança, Definição dos limites da segregação, Mapeamento dos ativos e serviços, Elaboração do documento de escopo]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_B5C4FF",
+      "category": "Planejamento",
+      "name": "Análise de Infraestrutura e Topologia Atual",
+      "description": "Checklist: [Mapeamento da infraestrutura Hyper-V existente, Análise da topologia de rede atual, Identificação de pontos de conexão entre OT e IT, Avaliação de vulnerabilidades e riscos, Documentação da infraestrutura atual]",
+      "role": "Engenheiro",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_73D2C0",
+      "category": "Planejamento",
+      "name": "Elaboração do Projeto de Segregação (High-Level)",
+      "description": "Checklist: [Definição da arquitetura de segregação (firewalls, VLANs, etc.), Elaboração do diagrama de rede de alto nível, Definição das políticas de segurança, Seleção das tecnologias e ferramentas, Elaboração do documento de projeto de alto nível]",
+      "role": "Arquiteto",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_743F25",
+      "category": "Execução",
+      "name": "Configuração da Rede de Segregação (Firewall e VLANs)",
+      "description": "Checklist: [Configuração de firewalls (regras de acesso, logs), Criação e configuração de VLANs, Testes de conectividade e isolamento, Documentação das configurações]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_DB9F1A",
+      "category": "Execução",
+      "name": "Configuração do Hyper-V para Segregação",
+      "description": "Checklist: [Criação de redes virtuais isoladas, Configuração de máquinas virtuais (OT e IT), Testes de comunicação entre VMs, Configuração de regras de firewall no Hyper-V, Documentação das configurações]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_AAF632",
+      "category": "Execução",
+      "name": "Implementação das Regras de Firewall e Acesso",
+      "description": "Checklist: [Implementação das regras de firewall definidas, Testes de acesso e comunicação entre as redes, Monitoramento do tráfego de rede, Ajustes finos nas regras de firewall, Documentação das configurações]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_DFF7FA",
+      "category": "Gerenciamento",
+      "name": "Instalação e Configuração de Ferramentas de Monitoramento e Log",
+      "description": "Checklist: [Instalação e configuração de ferramentas de monitoramento de rede, Configuração de logs de segurança, Testes de funcionamento das ferramentas, Documentação das configurações]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_0EE659",
+      "category": "Gerenciamento",
+      "name": "Testes de Validação e Homologação",
+      "description": "Checklist: [Execução dos testes de validação (funcionalidade, segurança), Testes de desempenho, Testes de stress, Elaboração do relatório de homologação, Validação com stakeholders]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_84DBAB",
+      "category": "Gerenciamento",
+      "name": "Documentação Final e Treinamento",
+      "description": "Checklist: [Atualização da documentação técnica, Elaboração de manuais de operação, Treinamento da equipe de suporte, Transferência de conhecimento, Documentação final do projeto]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_15D1E9",
+      "category": "Planejamento",
+      "name": "Gerenciamento do Projeto e Reuniões de Acompanhamento",
+      "description": "Checklist: [Planejamento e acompanhamento do cronograma, Gerenciamento de riscos, Gerenciamento de recursos, Reuniões de status, Reporte de progresso, Gerenciamento de stakeholders]",
+      "role": "Gestor",
+      "setup_hours": 0.0,
+      "unit_hours": 8.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_3F5EEE",
+      "category": "Planejamento",
+      "name": "Planejamento e Levantamento de Requisitos",
+      "description": "Checklist: [Definição do escopo da implantação; Levantamento dos recursos de hardware (CPU, memória, armazenamento, rede); Definição da topologia de rede; Escolha do sistema operacional host; Definição das VMs (sistemas operacionais, recursos, configurações); Documentação inicial]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_450C50",
+      "category": "Execução",
+      "name": "Preparação do Servidor Host",
+      "description": "Checklist: [Instalação do sistema operacional host; Configuração da rede no host (IP, DNS, gateway); Instalação das atualizações do sistema operacional; Configuração do Hyper-V no host; Configuração do armazenamento (criação de volumes, alocação de espaço); Testes de conectividade e acesso]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 3.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_56085C",
+      "category": "Execução",
+      "name": "Configuração de Rede Virtual",
+      "description": "Checklist: [Criação de switches virtuais (externos, internos, privados); Configuração de VLANs (se necessário); Testes de conectividade entre as VMs e a rede externa; Configuração de roteamento (se necessário); Testes de acesso à internet e outros recursos de rede]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_20B68C",
+      "category": "Gerenciamento",
+      "name": "Criação e Configuração de Máquinas Virtuais (VMs)",
+      "description": "Checklist: [Criação das VMs (definição de recursos: CPU, memória, disco); Instalação dos sistemas operacionais nas VMs; Configuração de rede nas VMs (IP, DNS, gateway); Instalação de drivers e softwares nas VMs; Testes de funcionamento das VMs; Configuração de acesso remoto (se necessário)]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_F5FECC",
+      "category": "Gerenciamento",
+      "name": "Configuração de Armazenamento e Backup",
+      "description": "Checklist: [Configuração de armazenamento compartilhado (se necessário); Configuração de backup das VMs (ferramentas nativas ou de terceiros); Teste do processo de backup e restauração; Verificação da integridade dos dados]",
+      "role": "Técnico",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_9D20E8",
+      "category": "Gerenciamento",
+      "name": "Testes e Validação",
+      "description": "Checklist: [Testes de desempenho das VMs; Testes de conectividade e acesso aos recursos; Validação do funcionamento das aplicações nas VMs; Documentação final da configuração; Elaboração de relatório de implantação]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
+    },
+    {
+      "id": "RES_EE8E22",
+      "category": "Planejamento",
+      "name": "Documentação e Treinamento",
+      "description": "Checklist: [Criação de documentação detalhada da configuração do ambiente; Elaboração de manuais de operação e troubleshooting; Treinamento da equipe de suporte; Transferência de conhecimento]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 2.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "research_import"
+      ]
     }
   ],
   "bundle_logic": [
@@ -486,6 +1201,91 @@
       "required_activities": [
         "PLAN_001",
         "PLAN_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Projeto e Consultoria",
+      "required_activities": [
+        "RES_001",
+        "RES_002",
+        "RES_003",
+        "RES_004",
+        "RES_005",
+        "RES_006",
+        "RES_007",
+        "RES_008",
+        "RES_009",
+        "RES_010"
+      ]
+    },
+    {
+      "trigger_keyword": "Implantação e Configuração Cluster VMware (3 Hosts)",
+      "required_activities": [
+        "RES_348521",
+        "RES_80A60B",
+        "RES_F2BA08",
+        "RES_180A82",
+        "RES_2EBD73",
+        "RES_3D2C26",
+        "RES_35AEE8",
+        "RES_A3FE54",
+        "RES_2668A1"
+      ]
+    },
+    {
+      "trigger_keyword": "Implantação e Configuração Storage",
+      "required_activities": [
+        "RES_587136",
+        "RES_557CAE",
+        "RES_2200E5",
+        "RES_E92C13",
+        "RES_8D465C",
+        "RES_D7A831",
+        "RES_49159C",
+        "RES_B9AEFE",
+        "RES_253195"
+      ]
+    },
+    {
+      "trigger_keyword": "Implantação e Configuração Cluster Kubernetes (5 Nodes)",
+      "required_activities": [
+        "RES_2D01FA",
+        "RES_1DD130",
+        "RES_1FE014",
+        "RES_34B909",
+        "RES_0FC0DA",
+        "RES_E6C272",
+        "RES_76830D",
+        "RES_80EFF7",
+        "RES_981E14",
+        "RES_77F566"
+      ]
+    },
+    {
+      "trigger_keyword": "Projeto de Segregação OT/IT (Hyper-V)",
+      "required_activities": [
+        "RES_B0FD7B",
+        "RES_B5C4FF",
+        "RES_73D2C0",
+        "RES_743F25",
+        "RES_DB9F1A",
+        "RES_AAF632",
+        "RES_DFF7FA",
+        "RES_0EE659",
+        "RES_84DBAB",
+        "RES_15D1E9"
+      ]
+    },
+    {
+      "trigger_keyword": "Implantação e Configuração Ambiente Hyper-V",
+      "required_activities": [
+        "RES_3F5EEE",
+        "RES_450C50",
+        "RES_56085C",
+        "RES_20B68C",
+        "RES_F5FECC",
+        "RES_9D20E8",
+        "RES_EE8E22"
       ]
     }
   ]

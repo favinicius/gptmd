@@ -13,4 +13,4 @@ Esta proposta constitui o entendimento completo entre as partes para este escopo
 | Sócio-Diretor | Responsável |
 
 ---
-*Gerado automaticamente via GPT-Md Engine v5.0 (Compliance)*
+

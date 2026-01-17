@@ -180,6 +180,13 @@ class AIAgent:
         """
         Metodo genérico com retentativas, rotação inteligente e rastreamento de tokens.
         """
+        # Simple in-memory cache for repeated prompts (Token Saver)
+        if not hasattr(self, '_response_cache'): self._response_cache = {}
+        cache_key = f"{prompt[:100]}_{len(prompt)}_{temperature}"
+        if cache_key in self._response_cache:
+            print(f"[CACHE] Usando resposta cacheada para prompt ({len(prompt)} chars)")
+            return self._response_cache[cache_key]
+
         max_retries_per_key = 2
         keys_tried = 0
         total_keys = len(self.api_keys)
@@ -214,6 +221,7 @@ class AIAgent:
                     self._clear_cooldown() # Se funcionou, não precisa de cooldown
                         
                     self.last_raw_content = response.text.strip()
+                    self._response_cache[cache_key] = self.last_raw_content
                     return self.last_raw_content
 
                 except errors.ServerError as e:
