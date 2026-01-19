@@ -1,0 +1,15 @@
+Cliente: MetalMec Componentes Automotivos
+Contato: Eng. Ricardo Santos (Gerente de Automação/TI)
+
+O Ricardo herdou uma situação complicada: a fábrica tem 12 servidores pequenos espalhados por diferentes setores (um para o RH, outro para a usinagem, outro para o controle de qualidade, etc). Isso é um pesadelo para ele manter. Ele quer centralizar todas essas funções em apenas 3 máquinas potentes trabalhando juntas. A prioridade absoluta é que o sistema de gestão da produção (MES) nunca pare; se uma máquina der defeito, as outras precisam segurar o trabalho sem interrupção. Além disso, ele quer criar um ambiente de recuperação (DR) em um prédio anexo da fábrica para o caso de um incidente no CPD principal. Ele também mencionou que precisa de muito espaço para guardar as imagens e logs das peças inspecionadas pelos últimos 3 anos.
+
+Relação de Itens:
+03 Servidores de alta performance (Hosts) para criação de um Cluster virtualizado.
+01 Storage centralizado com conexão de alta velocidade e 30TB de espaço útil.
+02 Switches de comunicação de dados dedicados para o storage (Rede SAN).
+01 Sistema de Backup com proteção contra sequestro de dados (Ransomware).
+01 Software de gerenciamento para virtualização de todos os servidores.
+Existente: 12 Servidores físicos que serão convertidos em máquinas virtuais.
+Desejável: Replicação automática para o segundo prédio (Disaster Recovery).
+
+Observação: Cliente vai comprar todo o hardware e licenças diretamente de fornecedor distribuidor.

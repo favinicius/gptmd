@@ -1,0 +1,22 @@
+Cliente: Thiago Leme. Empresa: BIONOVIS S.A.
+Contexto: Elaborar proposta técnica e comercial para o Projeto de Segregação de Ambientes IT/OT e Implantação de Novo Cluster OT.
+
+DETALHAMENTO DO CENÁRIO (ESCopo Técnico):
+1. SEGREGAÇÃO IT/OT: Implementar isolamento profundo seguindo Modelo Purdue.
+2. CLUSTER OT: 3 Hosts físicos rodando VMware ESXi.
+   - Hardware: O cliente comprará todo o hardware diretamente, mas a EGE deve realizar a especificação técnica detalhada, dimensionamento e quantidades.
+   - Especificação necessária: Servidores para 3 hosts, Switches industriais (Anel ótico), No-breaks e Racks.
+3. VIRTUALIZAÇÃO:
+   - Migração (AS-IS): 15 VMs existentes no ambiente legado para o novo cluster.
+   - Novas VMs (Infra/Security): 10 novas VMs (AD, DNS, WSUS, Backup, EDR, etc.).
+4. KUBERNETES NESTED:
+   - Arquitetura: 3 Nodes Control Plane (Master) e 5 Nodes Workers.
+   - Aplicação MES: Orquestração de containers para o sistema MES, prevendo 20 pods distribuídos para as linhas de produção.
+5. SERVIÇOS:
+   - Fase de Planejamento: 30 dias (deve constar detalhado em horas no MOD).
+   - Equipe: 1 Engenheiro, 2 Analistas.
+   - Logística: 2 viagens de 10 dias úteis saindo de Jundiaí para Valinhos/SP (Usar carro local).
+6. RESULTADOS ESPERADOS:
+   - Propostas separadas (Técnica e Comercial) e uma Unificada.
+   - Garantir que a tabela MAT apareça com os itens especificados (mesmo com custo zero ou nota de fornecimento pelo cliente, mas com quantidades).
+   - Match total entre o que foi calculado nas tabelas (MOD, MAT, DIV, SET) e o texto da proposta.

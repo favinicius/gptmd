@@ -48,6 +48,10 @@ class LaborEngine:
         
         # 3. Escopo Técnico
         total_tech_hours = 0.0
+        # Initialize ai_research_count for this calculation run if it's not already part of proposal
+        # Assuming ProposalData already has ai_research_count, as it's incremented later.
+        # If not, it should be initialized in ProposalData's __init__ or here.
+        # proposal.ai_research_count = 0 # Uncomment if ProposalData doesn't initialize it.
         global_complexity = intent.logistics_override.consulting if intent.logistics_override else False
         complexity_multiplier = 1.3
         
@@ -100,14 +104,16 @@ class LaborEngine:
                     if self.research:
                         researched_wbs = self.research.estimate_unknown_activity(scope_item.name, scope_item.context_note)
                         if researched_wbs:
+                            proposal.ai_research_count += 1
                             for res_act in researched_wbs:
                                 eff = res_act["unit_hours"] * sizing_factor
                                 if is_complex and res_act["role"] in ["Engenheiro", "Arquiteto"]:
                                     eff *= complexity_multiplier
                                 
                                 self._add_labor_line_from_raw_generic(
-                                    proposal, topic_id, res_act["role"], f"{res_act['name']} ({scope_item.name})",
-                                    qty_items, team_size, eff, self.db.get_role_cost(res_act["role"]), res_act["category"]
+                                    proposal, topic_id, res_act["role"], res_act["name"],
+                                    qty_items, team_size, eff, self.db.get_role_cost(res_act["role"]), res_act["category"],
+                                    source_ref="AI_RESEARCH_V8"
                                 )
                                 act_total_h = eff * qty_items
                                 topic_tech_effort[topic_id] += act_total_h
@@ -152,7 +158,7 @@ class LaborEngine:
                 main_role = acts[0]["template"].role
                 
                 self._add_labor_line_from_raw_generic(
-                    proposal, topic_id, main_role, f"{combined_name} ({scope_item.name})",
+                    proposal, topic_id, main_role, combined_name,
                     qty_items, team_size, final_unit_eff, self.db.get_role_cost(main_role), category
                 )
                 
@@ -170,7 +176,7 @@ class LaborEngine:
         self._calculate_transversals(intent, proposal, global_complexity, sizing_factor)
         proposal.total_labor = sum(i.total_price for i in proposal.labor_table)
 
-    def _add_labor_line_from_raw_generic(self, proposal, topic_id, role, activity, total_items, team_size, unit_effort, cost, category):
+    def _add_labor_line_from_raw_generic(self, proposal, topic_id, role, activity, total_items, team_size, unit_effort, cost, category, is_contingency=False, source_ref=None):
         qty_profs = max(1, team_size)
         execs_per_prof = total_items / qty_profs
         
@@ -183,6 +189,9 @@ class LaborEngine:
             
         total_h = round(execs_per_prof * qty_profs * h_dia * dias, 2)
         
+        if source_ref is None:
+            source_ref = "DB_MOD_V8" if "fallback" not in activity.lower() else "ESTIMATE_FALLBACK"
+
         proposal.labor_table.append(CalculatedLabor(
             item_id=self.item_counter, topic=topic_id, role=role,
             activity=activity,
@@ -194,8 +203,9 @@ class LaborEngine:
             hourly_rate=cost,
             total_price=total_h * cost,
             activity_type=category,
+            is_contingency=is_contingency,
             complexity="V8.0 - Consolidated",
-            source_ref="DB" if "fallback" not in activity.lower() else "FALLBACK"
+            source_ref=source_ref
         ))
         self.item_counter += 1
 
@@ -226,7 +236,7 @@ class LaborEngine:
         if she_factor <= 0: return
         she_cost = self.db.get_role_cost("Técnico")
         she_total_unit = max(1.0, (tech_effort * she_factor))
-        self._add_labor_line_from_raw_generic(proposal, topic_id, "Técnico", "Ineficiência SHE / Permissões", 1, team_size, she_total_unit, she_cost, "Ineficiência/SHE")
+        self._add_labor_line_from_raw_generic(proposal, topic_id, "Técnico", "Ineficiência SHE / Permissões", 1, team_size, she_total_unit, she_cost, "Ineficiência/SHE", is_contingency=True)
 
     def _create_fallback_with_coalescence(self, topic_id: str, scope_item: ScopeItem, proposal: ProposalData, team_size: int, sizing_factor: float):
         role = "Analista"

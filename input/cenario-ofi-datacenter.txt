@@ -1,0 +1,32 @@
+Cliente: OFI - OLAM Foods Ingredients S.A.
+Contato: Gilmar Corrêa
+
+Após a estabilização da rede, o foco do Gilmar é a centralização das aplicações críticas (AVEVA, Mercury e GSR Server) em um ambiente virtualizado de alta disponibilidade. Como continuação do projeto de rede, implantaremos o terceiro switch Cisco Meraki para completar a topologia planejada.
+
+A implantação do Datacenter e da Sala de Disaster Recovery será feita em paralelo à operação atual para evitar paradas. A migração seguirá um rito cauteloso: primeiro uma cópia idêntica (AS-IS) das máquinas atuais para validação em janela reduzida, seguida pela migração para instalações limpas e definitivas. A segurança contra ataques é prioritária, com uma estrutura de backup imutável que protege os dados contra sequestro ou exclusão indevida.
+
+
+Relação de Itens:
+
+Site Principal (Produção):
+02 Servidores Dell PowerEdge R670 (Hosts Cluster): 2x CPUs Xeon Gold (24C/48T), 384GB RAM, sem discos de dados (acesso 100% iSCSI).
+02 Switches Dell PowerSwitch S4112F-ON (em stack para tráfego iSCSI/vMotion).
+01 Storage Dell PowerVault ME5212: Front-End iSCSI 25GbE com 6x SSDs de 1.92TB.
+
+
+Sala Remota (DR & Backup):
+01 Servidor Dell PowerEdge R670 (DR Target): Mesma CPU/RAM dos hosts principais, com 8x SSDs de 1.92TB para armazenamento interno das réplicas.
+01 Switch Dell PowerSwitch S4112F-ON (Standalone).
+01 Servidor Dell PowerEdge R470 (Veeam Server/Proxy): 4x SSDs de 1.92TB em RAID 5/6 para retenção de curto prazo.
+01 NAS QNAP de Repositório para imutabilidade e retenção de longo prazo.
+01 Switch Cisco C9300 (conclusão do projeto de rede iniciado no Cenário 1).
+
+Software e Licenciamento:
+Windows Server 2025 Datacenter (para os hosts R670).
+Windows Server 2025 Standard (para o servidor de backup R470).
+Veeam Data Platform (VUL): Licenciamento para 30 Workloads (assinatura de 5 anos)
+
+Planejamento: Fase de 20 dias dedicada ao detalhamento do projeto de rede e cronograma (sem detalhar este tempo na proposta comercial)
+Execução: Processo de migração com pipeline p2v, clean install e hand-over definitivo.
+
+Observação: Cliente vai comprar todo o hardware Dell e licenças diretamente. Apenas o NAS QNAP e seus acessórios e patchcords serão vendidos por nós. 

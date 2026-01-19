@@ -1,0 +1,20 @@
+
+Cliente: Thiago Leme.
+Empresa: BIONOVIS S.A.
+
+O Thiago precisa separar totalmente o ambiente de Automação (OT) da rede de TI. Atualmente, eles possuem 9 máquinas virtuais de produção que rodam "dentro" do ambiente da TI, e o objetivo é movê-las para um novo cluster completamente independente. Além dessas máquinas migradas, o novo ambiente precisará de servidores próprios para controle de domínio, segurança e uma estrutura de backup robusta. O projeto é ambicioso: o novo ambiente deve suportar um sistema moderno de gestão de produção (MES PAS-X), que rodará em uma estrutura de containers com 3 nós de controle e 5 nós de trabalho, totalizando cerca de 27 pods divididos entre desenvolvimento, testes e produção. Toda a arquitetura deve seguir rigorosamente as boas práticas de segurança industrial (Modelo Purdue).
+
+Relação de Itens:
+03 Servidores e Storage compartilhado.
+01 Rack completo com PDUs e acessórios.
+02 Novos switches de núcleo (CORE) para a rede OT.
+Switches dedicados para o cluster (Armazenamento, Movimentação e Backup).
+01 Servidor de Backup e 01 Unidade de armazenamento (NAS) imutável.
+01 Firewall modelo F-60.
+Licenciamento para Cluster VMware e Cluster Kubernetes Open-source com Debian.
+Software de Backup Veeam.
+Existente: Cluster IT Hyper-V onde operam as 9 VMs atuais.
+Existente: Firewall F-100 da rede de TI.
+Atenção: Não faremos nenhuma configuração no ambiente de TI, mas sessões conjuntas em regras de rede que impactam no ambiente OT e orientações para exportar as VMs para o novo ambiente OT.
+
+Observação: Cliente vai comprar todo o hardware e licenças diretamente de fornecedor distribuidor.

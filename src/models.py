@@ -117,7 +117,8 @@ class TopicMapping(BaseModel):
 class ScopeItem(BaseModel):
     name: str
     detected_quantity: int = 1
-    action_type: Literal["install", "migrate_p2v", "supply_only", "turnkey", "design", "infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "training", "consulting", "logistics", "other"]
+    action_type: Literal["install", "migrate_p2v", "migration", "v2v_migration", "migrate_v2v", "supply_only", "turnkey", "design", "infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "training", "consulting", "logistics", "other"]
+    summary_rational: Optional[str] = "" # Explicação simples (1-2 linhas) para o cliente
     context_note: Optional[str] = ""
     visibility: Literal["public", "internal"] = "public" # New field
     explicit_total_hours: Optional[int] = 0 # New field for overrides, defaulting to 0 if None
@@ -137,7 +138,10 @@ class ContingencyLevel(str, Enum):
 class Intent(BaseModel):
     client_name: str
     company_name: str
+    contact_name: Optional[str] = "Responsável Técnico" # Novo campo
     project_name: str
+    project_motivation: Optional[str] = ""
+    company_short_name: Optional[str] = "" 
     scope_items: List[ScopeItem]
     hardware_supply_by_client: bool = False
     logistics_override: Optional[LogisticsOverride] = None
@@ -212,3 +216,4 @@ class ProposalData(BaseModel):
     total_services: float = 0.0
     total_expenses: float = 0.0
     grand_total: float = 0.0
+    ai_research_count: int = 0

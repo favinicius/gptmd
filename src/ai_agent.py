@@ -330,8 +330,8 @@ class AIAgent:
         ## DIRETRIZES MESTRAS (SOBERANIA DA INSTRUÇÃO)
         1. **SOBERANIA ABSOLUTA:** A instrução do usuário é um "Ajuste de Rota". Se o PDF diz "2 servidores" e a instrução diz "apenas 1", **IGNORE O PDF E USE 1**.
         2. **DETALHAMENTO TÉCNICO:** O PDF serve apenas para detalhes técnicos (nomes de VMs, modelos) que NÃO foram mencionados na instrução.
-        3. **BRANDING OBRIGATÓRIO:** O Cliente deve ser sempre **'Gilmar Corrêa'** e a Empresa **'OFI'**. 
-        4. **LOCALIDADE:** O local do projeto é **Ilhéus - BA**.
+        3. **BRANDING:** Extraia o nome do Cliente (Pessoa), da Empresa (Razão Social/Nome Fantasia) e do Contato mencionado na instrução. Se não houver, use 'Cliente' e variáveis vazias como fallback.
+        4. **LOCALIDADE:** Se não especificado, considere o local do projeto como **Ilhéus - BA** (Default).
         5. **CALIBRAÇÃO DE ESFORÇO (CALIBRATED WBS):**
            - Evite atomismo exagerado. Para itens simples (ex: 1 servidor, 1 switch), a lista de atividades deve ser concisa (ex: 5-10 atividades totais).
            - Para projetos complexos (ex: Datacenter completo, Migração crítica), a lista deve ser granular (>30 atividades).
@@ -343,19 +343,15 @@ class AIAgent:
            - Localize a seção de Serviços Críticos/VMs no PDF.
            - Se a instrução reduzir a quantidade de VMs, reduza proporcionalmente mantendo a diversidade de tipos detectados.
         
-        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO
-        1. **client_name:** "Gilmar Corrêa" (Default).
-        2. **company_name:** "OFI" (Default).
-        3. **scope_items**: Extraia os itens de escopo como uma LISTA DE OBJETOS JSON.
-            - **Para VMs:** Consolide VMs de mesma função e perfil em uma única linha de escopo se elas forem repetitivas (ex: "8 VMs de Infraestrutura", qtde: 8). Se as VMs tiverem nomes e funções únicas e críticas no PDF, mantenha o detalhamento individual (qtde: 1 por linha).
-              - "action_type": infra_vm, heavy_app_vm, db_vm, vdi_vm.
-              - "context_note": Mencione a seção do PDF. SEJA CONCISO.
-           - **Para Hardware/Outros:** Use os tipos padrão (`install`, `migrate_p2v`, `supply_only`, `turnkey`, `design`).
-        4. **logistics**:
-           - **travel_segments**: Array de dias por viagem.
-           - **team_size**: Default: 1.
-        5. **estimated_duration_weeks**: Baseie no cronograma do PDF. Default: 1.
-        6. **requires_training**: True se o usuário solicitar "curso", "treinamento", "capacitação" ou se houver item de escopo relacionado.
+        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.5 - CLEANING)
+        1. **client_name:** Extrair da instrução.
+        2. **company_name:** Extrair da instrução.
+        3. **contact_name:** Extrair da instrução (ex: "Ricardo").
+        3. **NÃO USE PARÊNTESES DE METADADOS:** Nunca inclua (1 un), (install), ou qualquer tag técnica no campo `name` ou `project_name`. O nome deve ser limpo: "Implantação de Servidores" e não "Implantação de Servidores (install)".
+        4. **CONCISAO E MATCHING:**
+           - Use nomes de itens diretos: "Implantação de Servidores", "Implantação de Storage", "Implantação de Switches", "Implantação de Firewall", "Implantar o Serviço de Backup".
+           - Evite nomes floreados como "Análise e Configuração Logica de Redes de Alta Performance". Use "Implantação de Switches" ou "Rede de Dados".
+        5. **INVENTÁRIO DE VMS:** 
         
         ## REGRAS DE ROTEAMENTO (V5.5 - PREVC)
         1. **selected_tech_template**: 
@@ -369,24 +365,20 @@ class AIAgent:
            - Caso contrário (Default): `capex_only.md`.
         3. **split_proposal**: 
            - Defina como `true` se o usuário solicitar "propostas separadas", "compliance", "anexo técnico", ou "arquivos técnicos e comerciais distintos".
-           - Se não houver menção, defina como `false`.
 
         ## REGRAS DE TERMÔMETRO (V6.0)
         Analise o tom e keywords da instrução para calibrar a proposta:
-        1. **sizing_mode**:
-           - "aggressive" se: "enxuto", "competitivo", "mínimo", "agressivo", "econômico".
-           - "secure" se: "robusto", "conservador", "seguro", "com folga", "premium".
-           - "standard" (Default) caso contrário.
-         2. **contingency_level**:
-            - "none" APENAS se: "sem contingência", "risco zero", "sem gordura".
-            - "high" se: "muito risco", "incerteza", "ambiente complexo", "instável".
-            - "standard" (Padrão para Gilmar Corrêa) caso contrário.
+        1. **sizing_mode**: "aggressive", "secure", "standard".
+        2. **contingency_level**: "none", "low", "standard", "high".
 
         ## FORMATO DE SAÍDA (JSON ESTRITO)
         {{
-            "client_name": "Gilmar Corrêa",
-            "company_name": "OFI",
-            "project_name": "String",
+            "client_name": "String",
+            "company_name": "String",
+            "contact_name": "String",
+            "company_short_name": "String (Apelido/Sigla. Ex: 'MetalMec', 'OFI', 'Norte-Sul'. Se não houver, use o primeiro nome)",
+            "project_name": "String (Limpo, sem metadados)",
+            "project_motivation": "Parágrafo conciso (2-3 linhas) descrevendo os fatos e a necessidade real da EMPRESA cliente que motivam este projeto. Evite termos vagos, exageros ou tom pessimista. Foque na dor técnica ou de negócio factual extraída do contexto.",
             "hardware_supply_by_client": boolean,
             "estimated_duration_weeks": int,
             "governance_level": "standard" | "intensive",
@@ -399,10 +391,11 @@ class AIAgent:
             "contingency_level": "none" | "low" | "standard" | "high",
             "scope_items": [
                 {{
-                    "name": "Nome do Item",
+                    "name": "Nome do Item (Limpo)",
                     "detected_quantity": int,
-                    "action_type": "infra_vm" | "heavy_app_vm" | "db_vm" | "vdi_vm" | "install" | ... ,
-                    "context_note": "String",
+                    "action_type": "infra_vm" | "heavy_app_vm" | "db_vm" | "vdi_vm" | "install" | "design" | "migration",
+                    "summary_rational": "Explicação técnica e de negócio simplificada (1-2 linhas) para o cliente leigo e técnico.",
+                    "context_note": "Resumo conciso da necessidade",
                     "visibility": "public" | "internal",
                     "explicit_total_hours": int,
                     "is_weekend": boolean
@@ -515,11 +508,11 @@ class AIAgent:
             {{
                 "id": "RES_001",
                 "category": "PHASE_X",  // Escolha entre PHASE_1 (Plan), PHASE_2 (Phys), PHASE_3 (Net), PHASE_5 (Soft)
-                "name": "Nome da Tarefa",
+                "name": "Nome da Tarefa (Única linha, ação direta)",
                 "role": "Nome do Perfil",
                 "setup_hours": 0.0,
                 "unit_hours": float,
-                "description": "Checklist: [sub-atividades]",
+                "description": "Resumo conciso da tarefa (máximo 3 linhas ou checklist curto)",
                 "rationale": "Justificativa técnica"
             }}
         ]

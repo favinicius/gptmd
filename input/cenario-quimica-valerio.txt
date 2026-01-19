@@ -1,0 +1,15 @@
+Cliente: Química Vale do Rio
+Contato: Sr. Gustavo (Gerente de Manutenção)
+
+O Sr. Gustavo me chamou porque o servidor que roda o sistema de supervisão da planta química é uma máquina comum de escritório com mais de 5 anos de uso e que fica ligada direto. Ele está morrendo de medo de a placa-mãe queimar e a operação ficar "cega", sem conseguir monitorar a temperatura dos reatores. O objetivo é substituir esse PC antigo por um servidor de verdade, robusto, que suporte o ambiente da indústria. Ele quer que o novo sistema seja muito mais rápido para abrir as telas de histórico e que tenha um esquema de cópia dos dados totalmente automático em discos externos, para que ele possa levar uma cópia para casa toda sexta-feira por segurança.
+
+Relação de Itens:
+01 Servidor tipo Torre com redundância de fonte de energia.
+04 Discos SSD de nível industrial (Enterprise) em configuração de alta segurança (RAID 10).
+01 Licença de Sistema Operacional Windows Server.
+02 Unidades de disco rígido externo de 4TB para backup em rodízio.
+01 Nobreak senoidal de 2.2kVA para segurar quedas rápidas de energia.
+Existente: Software Supervisório (SCADA) rodando em Windows 10.
+Existente: Banco de dados de histórico de processos.
+
+Observação: Cliente vai comprar todo o hardware e licenças diretamente de fornecedor distribuidor.

@@ -273,6 +273,20 @@
       ]
     },
     {
+      "id": "BK_SERV_01",
+      "category": "PHASE_5",
+      "name": "Implantação do Serviço de Backup",
+      "description": "Checklist: Instalação dos servidores de gestão de backup (VMS), configuração de banco de dados e serviços base.",
+      "role": "Analista",
+      "setup_hours": 4.0,
+      "unit_hours": 4.0,
+      "unit_measure": "inst",
+      "tags": [
+        "backup",
+        "infra"
+      ]
+    },
+    {
       "id": "BK_JOB_01",
       "category": "PHASE_6",
       "name": "Configuração de Rotinas e Registros de Backup",
@@ -1095,11 +1109,129 @@
       "tags": [
         "research_import"
       ]
+    },
+    {
+      "id": "MIG_REF_01",
+      "category": "PHASE_5",
+      "name": "Provisionamento de Ambiente em Paralelo (Dry-run)",
+      "description": "Checklist: [Setup de infraestrutura temporária isolada, Restauração de workloads para testes, Validação de drivers e compatibilidade sem afetar produção]",
+      "role": "Engenheiro",
+      "setup_hours": 4.0,
+      "unit_hours": 4.0,
+      "unit_measure": "projeto",
+      "tags": [
+        "migration",
+        "risk_reduction"
+      ]
+    },
+    {
+      "id": "MIG_REF_02",
+      "category": "PHASE_5",
+      "name": "Testes de Validação com Backups Atuais (Pré-cutover)",
+      "description": "Checklist: [Execução de rotinas de negócio em ambiente de teste, Validação de integridade de banco de dados, Testes de rede isolados]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 8.0,
+      "unit_measure": "projeto",
+      "tags": [
+        "migration",
+        "testing"
+      ]
+    },
+    {
+      "id": "MIG_REF_03",
+      "category": "PHASE_7",
+      "name": "Janela de Migração Programada (Cutover Final)",
+      "description": "Checklist: [Desligamento controlado do ambiente antigo, Sincronização final de deltas, Ativação do novo ambiente, Testes de conectividade em tempo real]",
+      "role": "Engenheiro",
+      "setup_hours": 8.0,
+      "unit_hours": 0.0,
+      "unit_measure": "evento",
+      "tags": [
+        "migration",
+        "execution"
+      ]
+    },
+    {
+      "id": "MIG_REF_04",
+      "category": "PHASE_7",
+      "name": "Operação Assistida e Ajustes de Pós-Migração",
+      "description": "Checklist: [Acompanhamento presencial no primeiro dia produtivo, Tunning de performance, Correção de problemas residuais de acesso]",
+      "role": "Analista",
+      "setup_hours": 0.0,
+      "unit_hours": 16.0,
+      "unit_measure": "dia",
+      "tags": [
+        "handover",
+        "support"
+      ]
+    },
+    {
+      "id": "ENG_STO_01",
+      "category": "Execução",
+      "name": "Configuração de Volumes e LUNs de Storage",
+      "description": "Checklist: Criação de Pools, Grupos de RAID, Provisionamento de LUNs e mapeamento de iniciadores (Hosts).",
+      "role": "Engenheiro",
+      "setup_hours": 2.0,
+      "unit_hours": 4.0,
+      "unit_measure": "unidade",
+      "tags": [
+        "storage",
+        "config"
+      ]
+    },
+    {
+      "id": "ENG_DR_01",
+      "category": "Execução",
+      "name": "Configuração de Replicação e Site Recovery",
+      "description": "Checklist: Pareamento de sites, configuração de jobs de replicação assíncrona/síncrona e proteção de VMs.",
+      "role": "Engenheiro",
+      "setup_hours": 4.0,
+      "unit_hours": 2.0,
+      "unit_measure": "VM",
+      "tags": [
+        "dr",
+        "replication"
+      ]
+    },
+    {
+      "id": "ENG_DR_02",
+      "category": "Validação",
+      "name": "Simulado de Failover e Teste de Recuperação",
+      "description": "Checklist: Execução de plano de recuperação (Runbook), validação de IPs no site secundário e tempo de retorno (RTO).",
+      "role": "Analista",
+      "setup_hours": 4.0,
+      "unit_hours": 4.0,
+      "unit_measure": "teste",
+      "tags": [
+        "dr",
+        "validation"
+      ]
     }
   ],
   "bundle_logic": [
     {
       "trigger_keyword": "Switch",
+      "required_activities": [
+        "PHYS_SW_01",
+        "PHYS_SW_02",
+        "NET_CORE_01",
+        "VAL_001",
+        "VAL_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Rede",
+      "required_activities": [
+        "PHYS_SW_01",
+        "PHYS_SW_02",
+        "NET_CORE_01",
+        "VAL_001",
+        "VAL_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Conectividade",
       "required_activities": [
         "PHYS_SW_01",
         "PHYS_SW_02",
@@ -1120,6 +1252,15 @@
     },
     {
       "trigger_keyword": "Server",
+      "required_activities": [
+        "PHYS_SRV_01",
+        "PHYS_SRV_02",
+        "SO_INST_01",
+        "VAL_002"
+      ]
+    },
+    {
+      "trigger_keyword": "Servidor",
       "required_activities": [
         "PHYS_SRV_01",
         "PHYS_SRV_02",
@@ -1169,6 +1310,25 @@
     {
       "trigger_keyword": "Backup",
       "required_activities": [
+        "BK_SERV_01",
+        "BK_JOB_01",
+        "BK_JOB_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Serviço de Backup",
+      "required_activities": [
+        "BK_SERV_01",
+        "BK_JOB_01",
+        "BK_JOB_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Sistema de Backup",
+      "required_activities": [
+        "BK_SERV_01",
         "BK_JOB_01",
         "BK_JOB_02",
         "VAL_001"
@@ -1179,6 +1339,22 @@
       "required_activities": [
         "MIG_VM_01",
         "MIG_VM_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Virtualização",
+      "required_activities": [
+        "SOFT_VIRT_01",
+        "SOFT_VIRT_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Software de Virtualização",
+      "required_activities": [
+        "SOFT_VIRT_01",
+        "SOFT_VIRT_02",
         "VAL_001"
       ]
     },
@@ -1219,7 +1395,7 @@
       ]
     },
     {
-      "trigger_keyword": "Implantação e Configuração Cluster VMware (3 Hosts)",
+      "trigger_keyword": "VMware",
       "required_activities": [
         "RES_348521",
         "RES_80A60B",
@@ -1233,21 +1409,55 @@
       ]
     },
     {
-      "trigger_keyword": "Implantação e Configuração Storage",
+      "trigger_keyword": "Cluster",
       "required_activities": [
-        "RES_587136",
-        "RES_557CAE",
-        "RES_2200E5",
-        "RES_E92C13",
-        "RES_8D465C",
-        "RES_D7A831",
-        "RES_49159C",
-        "RES_B9AEFE",
-        "RES_253195"
+        "RES_348521",
+        "RES_80A60B",
+        "RES_F2BA08",
+        "RES_180A82",
+        "RES_2EBD73",
+        "RES_3D2C26",
+        "RES_35AEE8",
+        "RES_A3FE54",
+        "RES_2668A1"
       ]
     },
     {
-      "trigger_keyword": "Implantação e Configuração Cluster Kubernetes (5 Nodes)",
+      "trigger_keyword": "Storage",
+      "required_activities": [
+        "PHYS_SRV_01",
+        "PHYS_SRV_02",
+        "ENG_STO_01",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Armazenamento",
+      "required_activities": [
+        "PHYS_SRV_01",
+        "PHYS_SRV_02",
+        "ENG_STO_01",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Disaster Recovery",
+      "required_activities": [
+        "ENG_DR_01",
+        "ENG_DR_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "DR",
+      "required_activities": [
+        "ENG_DR_01",
+        "ENG_DR_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "Kubernetes",
       "required_activities": [
         "RES_2D01FA",
         "RES_1DD130",
@@ -1262,7 +1472,7 @@
       ]
     },
     {
-      "trigger_keyword": "Projeto de Segregação OT/IT (Hyper-V)",
+      "trigger_keyword": "Segregação",
       "required_activities": [
         "RES_B0FD7B",
         "RES_B5C4FF",
@@ -1277,7 +1487,7 @@
       ]
     },
     {
-      "trigger_keyword": "Implantação e Configuração Ambiente Hyper-V",
+      "trigger_keyword": "Hyper-V",
       "required_activities": [
         "RES_3F5EEE",
         "RES_450C50",

@@ -1,0 +1,37 @@
+Cliente: OFI - OLAM Foods Ingredients S.A.
+Contato: Gilmar Corrêa
+
+O Gilmar me apresentou um cenário bastante crítico em Ilhéus: hoje a operação da fábrica depende de sistemas vitais (como supervisórios, históricos e bancos de dados) que rodam em computadores Dell comuns espalhados pela planta, sem qualquer redundância ou backup profissional. O cliente teme que a falha de um único PC desses pare a linha de produção por tempo indeterminado.
+
+O plano inicial evoluiu e agora eles decidiram implementar uma sala de Disaster Recovery (DR), o que nos obriga a incluir um terceiro servidor e um terceiro switch para contingência. O objetivo é centralizar tudo em um Datacenter Industrial (IODC) robusto e seguro. A transição será cautelosa: primeiro faremos uma migração "AS-IS" das 3 aplicações atuais (AVEVA, Mercury e GSR Server) para o novo ambiente virtualizado antes de qualquer mudança profunda.
+
+Um ponto inegociável é a segurança contra ataques; por isso, incluímos uma estrutura de backup imutável que impede que os dados sejam apagados ou sequestrados. 
+
+O projeto inicia com uma fase de 30 dias de planejamento e validação técnica antes de qualquer mobilização presencial para garantir que a transição não interrompa a fábrica. O cliente pede o projeto em etapas. Que a implantação seja feita em paralelo, a migração AS-IS seja feita em uma janela pequena de manutenção programada, começando com uma cópia idêntica do que existe hoje para depois passarmos para instalações limpas e definitivas e a virada-de-chave final, garantindo que nada se perca no processo.
+
+O pré-projeto foi carregado e as propostas finais de equipamentos recebidas da Dell e NEC estão anexadas no final do pré-projeto. O hardware será 100% comprado pela OFI diretamente. Relacionar os equipamentos de forma concisa é importante mas nenhum custo de hardware faz sentido aparecer em nossa proposta.
+
+
+Relação de Itens:
+
+Site Principal (Produção):
+02 Servidores Dell PowerEdge R670 (Hosts Cluster): 2x CPUs Xeon Gold (24C/48T), 384GB RAM, sem discos de dados (acesso 100% iSCSI).
+02 Switches Dell PowerSwitch S4112F-ON (em stack para tráfego iSCSI/vMotion).
+01 Storage Dell PowerVault ME5212: Front-End iSCSI 25GbE com 6x SSDs de 1.92TB.
+
+
+Sala Remota (DR & Backup):
+01 Servidor Dell PowerEdge R670 (DR Target): Mesma CPU/RAM dos hosts principais, com 8x SSDs de 1.92TB para armazenamento interno das réplicas.
+01 Switch Dell PowerSwitch S4112F-ON (Standalone).
+01 Servidor Dell PowerEdge R470 (Veeam Server/Proxy): 4x SSDs de 1.92TB em RAID 5/6 para retenção de curto prazo.
+01 Unidade de Armazenamento NAS (Terceiro): Repositório para imutabilidade e retenção de longo prazo.
+
+Infraestrutura de Rede Core (LAN/OT):
+03 Switches Cisco C9300 24 portas (Gerenciamento Meraki).
+03 Módulos de rede C9300 8 x 10GE.
+24 Módulos transceptores SFP-10G-SR-S e cordões ópticos para conectividade dos servidores ao Core.
+
+Software e Licenciamento:
+Windows Server 2025 Datacenter (para os hosts R670).
+Windows Server 2025 Standard (para o servidor de backup R470).
+Veeam Data Platform (VUL): Licenciamento para 30 Workloads (assinatura de 5 anos)

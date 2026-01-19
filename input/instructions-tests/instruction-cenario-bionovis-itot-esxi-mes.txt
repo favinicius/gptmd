@@ -1,0 +1,14 @@
+
+Cliente: Thiago Leme.
+Empresa: BIONOVIS S.A.
+
+Cliente quer separar suas 9 Vms de OT que operam no ambiente cluster Hyper-V de IT para um novo cluster completamente independente.
+Essas VMs precisam ser Migradas AS-IS e depois migradas para instalações limpas.
+O ambiente precisará de novas VMs para dominio (pri+sec: dns, ntp), edr, wsus, backup com veeam. O cliente já vai comprar rack, PDU, acessórios, os 3 servidores, storage compartilhados, novos switches do cluster (strage,vmotion e backup), servidor de backup e NAS imutável, novos switches CORE para a rede OT e um firewall F-60 para comunicar com o cluster F-100 existente em IT. 
+
+O novo ambiente será um cluster em VMware e terá um Cluster Kubernetes nested com 3 nodes de controle e 5 nodes workers para hospedar o MES PAS-X da Körber.
+ 
+O ambiente DEV, QA e PROD contará com aproximadamente 27 pods no total.
+Toda a implantação base do MES será feita por nós e deveremos prover um canal de acesso remoto para o fabricante fazer o deploy.
+
+Toda a arquitetura detalhada de deploy do cluster baremetal, nested, VMs e containers além das redes de comunicação seguindo as boas praticas de modelo Purdue, será nossa responsabilidade.

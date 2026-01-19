@@ -1,0 +1,14 @@
+Cliente: Logística Expressa S.A. 
+Contato: Roberto Mendes
+
+Roberto me chamou porque a nova ala de expedição, que conta com 12 postos de trabalho, está operando de forma precária com cabos soltos pelo chão. Ele precisa que a infraestrutura seja profissionalizada para garantir que as impressoras de etiquetas e os computadores não percam conexão com o servidor central. O projeto deve cobrir a instalação de pontos de rede fixos para todos esses postos e garantir sinal de Wi-Fi para os 3 novos coletores portáteis que circulam no setor. Ele enfatizou que o acabamento deve ser em canaletas aparentes de alumínio, pois não pode furar o piso.
+
+Relação de Itens:
+01 Switch de 24 portas Giga PoE (para alimentar as antenas).
+02 Pontos de Acesso (Access Points) de longo alcance.
+12 Pontos de rede categoria 6 (cabos, tomadas e conectores).
+60 Metros de canaleta de alumínio e acessórios de fixação.
+01 Rack de parede de 6Us.
+Existente: Link de fibra óptica chegando na sala de administração ao lado.
+
+Observação: Cliente vai comprar todo o hardware e licenças diretamente de fornecedor distribuidor.

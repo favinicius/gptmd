@@ -98,9 +98,29 @@ class Database:
 
     def get_scope_bundle(self, item_name: str) -> Optional[any]:
         if not self.labor: return None
-        item_name = item_name.lower()
+        import re
+        # Normalização: minúsculo e remove números
+        clean_name = re.sub(r'\d+', '', item_name.lower()).strip()
+        
+        # Função interna para simplificar palavras (Remover s/es finais para bater singular/plural)
+        def stem(s):
+            words = s.split()
+            stemmed = []
+            for w in words:
+                if len(w) > 4:
+                    if w.endswith('es'): w = w[:-2]
+                    elif w.endswith('s'): w = w[:-1]
+                stemmed.append(w)
+            return " ".join(stemmed)
+
+        stemmed_clean = stem(clean_name)
+        
         for bundle in self.labor.bundle_logic:
-            if bundle.trigger_keyword.lower() in item_name:
+            keyword = bundle.trigger_keyword.lower()
+            stemmed_keyword = stem(keyword)
+            if (keyword in clean_name or 
+                stemmed_keyword in stemmed_clean or 
+                keyword in item_name.lower()):
                 return bundle
         return None
 

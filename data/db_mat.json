@@ -440,5 +440,44 @@
     "cost_list": 150.00,
     "cost_net": null,
     "ipi_rate": 0.10
+  },
+  {
+    "category": "Server",
+    "type": "Physical Host",
+    "description_base": "Servidor HPE ProLiant DL380 Gen11",
+    "description_detail": "Servidor HPE ProLiant DL380 Gen11; 2x Intel Gold; 256GB RAM; redundant power",
+    "option_code": "DL380-G11",
+    "vendor": "HPE",
+    "partnumber": "P52532-B21",
+    "url": "",
+    "cost_list": 45000.00,
+    "cost_net": 35000.00,
+    "ipi_rate": 0.15
+  },
+  {
+    "category": "Rack",
+    "type": "Enclosure",
+    "description_base": "Rack 44U 19\" Industrial",
+    "description_detail": "Rack 44U 800x1000mm; Porta frontal vidro; Laterais removíveis",
+    "option_code": "RACK-44U",
+    "vendor": "Genérico",
+    "partnumber": "GEN-RACK-44U",
+    "url": "",
+    "cost_list": 4500.00,
+    "cost_net": 3800.00,
+    "ipi_rate": 0.10
+  },
+  {
+    "category": "UPS",
+    "type": "Power",
+    "description_base": "No-break (UPS) 3kVA Online",
+    "description_detail": "No-break Online Dupla Conversão 3kVA; Rackmount 2U",
+    "option_code": "UPS-3KVA",
+    "vendor": "Genérico",
+    "partnumber": "GEN-UPS-3KVA",
+    "url": "",
+    "cost_list": 6500.00,
+    "cost_net": 5800.00,
+    "ipi_rate": 0.10
   }
 ]

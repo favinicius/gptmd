@@ -1,0 +1,15 @@
+Cliente: Metalúrgica Norte-Sul
+Contato: Engenheiro Paulo Vieira
+
+O Paulo está com um problema crítico de segurança e performance. Atualmente, os escritórios e a fábrica compartilham a mesma rede, o que causa lentidão nos 5 CLPs da linha de montagem sempre que o RH faz backups pesados. Ele precisa isolar a rede industrial (OT) da rede administrativa (IT) seguindo normas de segurança. O projeto envolve interligar 2 galpões que estão a 150 metros de distância um do outro e garantir que a comunicação entre eles seja imune a ruídos elétricos. Além disso, ele quer que o acesso dos técnicos de manutenção externa seja feito via portal seguro, sem que eles entrem na rede interna.
+
+Relação de Itens:
+02 Firewalls de alta performance para criação de zona desmilitarizada (DMZ).
+08 Switches industriais de trilho DIN (para serem instalados dentro dos painéis).
+300 Metros de fibra óptica monomodo armada (anti-roedor).
+04 Conversores de mídia e distribuidores ópticos (DIO).
+01 Licença de software para gestão de VPN com suporte a 10 usuários simultâneos.
+Existente: Rede Wi-Fi administrativa em todo o site.
+Desejável: Monitoramento de tráfego entre as VLANs.
+
+Observação: Cliente vai comprar todo o hardware e licenças diretamente de fornecedor distribuidor.

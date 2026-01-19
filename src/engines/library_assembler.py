@@ -11,7 +11,7 @@ class LibraryAssembler:
     """
     def __init__(self, library_dir="templates/library"):
         self.library_dir = Path(library_dir)
-        self.default_source = "Proposta_EGE_IODC_Marata"
+        self.default_source = "Proposta_EGE"
 
     def _get_block_content(self, section_name: str, source_name: str = None) -> str:
         """Finds and reads the content of a block in the library."""
@@ -24,6 +24,7 @@ class LibraryAssembler:
             
         file_path = section_path / f"{source_name}.md"
         if not file_path.exists():
+            # Fallback to any md if specific source not found, or Marata if it exists
             any_md = list(section_path.glob("*.md"))
             if any_md:
                 file_path = any_md[0]
@@ -49,78 +50,214 @@ class LibraryAssembler:
         if "sem rede" in intent.project_name.lower() or intent.selected_tech_template == "iodc_no_net.md":
             include_network = False
 
-        # 2. Sequence Definition (Refined Architecture)
+        # 2. Sequence Definition (New Lean Architecture)
         sequence = [
-            "Capa",                         # Cover Page
-            "_resumo_executivo",             # #1
-            "_aviso",                        # #2
-            "_informação_confidencial",      # #3
-            "_histórico_de_revisões",        # #4
-            "_lista_de_revisões",            # #5
-            "_objetivo_geral",               # #6
-            "_benefícios",                   # #7
-            "_visão_geral_da_solução_proposta", # #8
-            "_relação_de_equipamentos_e_softwares_fornecidos", # #9 (Consolidated)
-            "_escopo_técnico_e_detalhamento_das_atividades",    # #10 (Consolidated summary)
-            "_testes,_validações_e_comissionamento",                # #11
-            "_equipe_chave_e_responsabilidades",                    # #12
-            "_cronograma_sugerido",                                 # #13
-            "_prazo_de_mobilização",                                # 13.1
-            "_treinamento_e_transferência_de_conhecimento",        # #14
-            "_sustentação_e_monitoramento_contínuo",               # #15
-            "_lista_de_entregáveis",                                # #16
-            "_premissas"                                            # #17
+            "01-capa",           # Cover
+            "02-carta",          # Intro Letter
+            "03-institucional",   # Resumo, Aviso, Confidencial
+            "04-historico",      # Históricos e Revisões
         ]
+
+        # Select Technical Block based on Intent
+        tech_map = {
+            "iodc_full_structured.md": "Proposta_COMPLETA",
+            "iodc_no_net.md": "Proposta_IODC",
+            "struct_network_industrial.md": "Proposta_REDE_OT",
+            "struct_server_migration.md": "Proposta_MIGRACAO",
+            "struct_services_cabling.md": "Proposta_CABEAMENTO"
+        }
+        selected_tech = tech_map.get(intent.selected_tech_template, "Proposta_COMPLETA")
+        sequence.append(("05-tecnico", selected_tech))
+        
+        sequence.append("06-trabalho")        # Work periods
+
+        # Commercial sections (Only if not split technical)
+        if not intent.split_proposal:
+            sequence.append("07-comercial")
+            
+        sequence.extend([
+            "08-premissas",       # Premissas e Exclusões
+            "09-encerramento"     # Entregáveis e Conclusão
+        ])
 
         # 3. Context Preparation
         base_id = "D2601" + datetime.now().strftime("%d%m")
+        project_cleaned = intent.project_name.replace("Marata", "").replace("Maratá", "").replace("Bionovis", "").strip()
+        project_cleaned = re.sub(r'\s+(para a|da|na)\s+planta$', '', project_cleaned, flags=re.I).strip()
+        project_cleaned = re.sub(r'\s+S\.?A\.?$', '', project_cleaned, flags=re.I).strip()
+        
         context = {
             "proposal_id": base_id,
-            "project_name": intent.project_name.replace("Marata", "").replace("Maratá", "").strip(),
+            "project_name": project_cleaned,
+            "product_name": "IODC", # Solution Branding
             "client_fullname": intent.client_name,
             "client_company": intent.company_name,
             "provider_name": "EGE Soluções Industriais",
             "provider_short": "EGE",
             "date": datetime.now().strftime("%d/%m/%Y"),
-            "city": "Ilhéus",
-            "state": "BA",
-            "include_network": include_network, # For conditional logic in blocks
+            "city": "Jundiaí",
+            "state": "SP",
+            "include_network": include_network,
+            "company_short_name": intent.company_short_name or intent.client_name.split()[0], 
             "total_hardware": format_br_currency(proposal.total_hardware),
+            "total_hardware_raw": proposal.total_hardware,
             "total_labor": format_br_currency(proposal.total_labor),
             "total_services": format_br_currency(proposal.total_services),
             "total_expenses": format_br_currency(proposal.total_expenses),
+            "total_expenses_raw": proposal.total_expenses,
             "grand_total": format_br_currency(proposal.grand_total),
+            "version": "A", # Nova diretriz: Sempre versão A inicialmente
+            "contact_name": intent.contact_name or "Responsável Técnico",
             "company_name": "EGE Soluções Industriais", # Backwards compatibility
+            "project_motivation": intent.project_motivation,
+            "topics": proposal.topics,
+            "labor_items": proposal.labor_table,
+            "ai_research_count": proposal.ai_research_count,
+            "total_hours": sum(item.hours for item in proposal.labor_table),
         }
+        
+        # Helper: Hierarchical Technical Scope (9 Pillars)
+        technical_hierarchy = [
+            {"id": 1, "title": "Design de Arquitetura", "keywords": ["LLD", "Design de Arquitetura", "Aprovações", "Design", "Projeto", "Desenho", "Planejamento"]},
+            {"id": 2, "title": "Instalação Física", "keywords": ["Instalação Física", "Rack", "PDU", "Cabeamento", "Fisica", "Infraestrutura Física", "Montagem"]},
+            {"id": 3, "title": "Implantação de Switches Core", "keywords": ["Switch Core", "Core Switch", "L3"]},
+            {"id": 4, "title": "Implantação de Cluster VMware", "keywords": ["VMware", "Cluster", "ESXi", "vCenter", "Host", "SAN", "Fibre Channel", "iSCSI", "Servidor", "Storage"]},
+            {"id": 5, "title": "Implantação de Backup", "keywords": ["Backup", "Veeam", "Restauração", "NAS", "Salvaguarda"]},
+            {"id": 6, "title": "Implantação de Firewall", "keywords": ["Firewall", "UTM", "Fortinet", "VPN", "Segurança Perímetro"]},
+            {"id": 7, "title": "Implantação de Appliance Monitoramento", "keywords": ["Appliance", "Monitoring", "Appliance de Monitoramento"]},
+            {"id": 8, "title": "Implantação de Cluster Kubernetes", "keywords": ["Kubernetes", "K8s", "PAS-X", "Pods", "Körber", "Pod"]},
+            {"id": 9, "title": "Implantação de Zabbix + Grafana", "keywords": ["Zabbix", "Grafana", "Dashboard", "Observabilidade", "Dashboards"]}
+        ]
+
+        structured_technical_scope = []
+        used_topic_ids = set()
+
+        # Prioritize matching
+        for pillar in technical_hierarchy:
+            pillar_topics = []
+            for topic in proposal.topics:
+                if topic.topic_id in used_topic_ids:
+                    continue
+                
+                text_to_check = (topic.description + " " + topic.topic_id).lower()
+                if any(k.lower() in text_to_check for k in pillar["keywords"]):
+                    activities = [L.activity for L in proposal.labor_table if L.topic == topic.topic_id and not L.is_contingency and L.activity_type != "Logística"]
+                    if activities:
+                        unique_acts = []
+                        for a in activities:
+                            if a not in unique_acts: unique_acts.append(a)
+                        
+                        clean_title = topic.description.split('(')[0].strip()
+                        
+                        # Tenta encontrar a justificativa original no Intent
+                        summary = ""
+                        for item in intent.scope_items:
+                            # Match aproximado pelo nome do item
+                            if item.name.lower() in topic.description.lower() or topic.description.lower() in item.name.lower():
+                                summary = item.summary_rational
+                                break
+                        
+                        pillar_topics.append({
+                            "title": clean_title,
+                            "activities": unique_acts,
+                            "summary": summary
+                        })
+                        used_topic_ids.add(topic.topic_id)
+            
+            if pillar_topics:
+                structured_technical_scope.append({
+                    "id": pillar["id"],
+                    "title": pillar["title"],
+                    "sub_topics": pillar_topics
+                })
+
+        # Add remaining topics as item 10 if any
+        others = []
+        for topic in proposal.topics:
+            if topic.topic_id not in used_topic_ids:
+                activities = [L.activity for L in proposal.labor_table if L.topic == topic.topic_id and not L.is_contingency and L.activity_type != "Logística"]
+                if activities:
+                    unique_acts = []
+                    for a in activities:
+                        if a not in unique_acts: unique_acts.append(a)
+                    clean_title = topic.description.split('(')[0].strip()
+                    
+                    # Tenta encontrar a justificativa original no Intent
+                    summary = ""
+                    for item in intent.scope_items:
+                        if item.name.lower() in topic.description.lower() or topic.description.lower() in item.name.lower():
+                            summary = item.summary_rational
+                            break
+                    
+                    others.append({
+                        "title": clean_title,
+                        "activities": unique_acts,
+                        "summary": summary
+                    })
+        
+        if others:
+            structured_technical_scope.append({
+                "id": 10,
+                "title": "Atividades Complementares de Engenharia",
+                "sub_topics": others
+            })
+
+        context["structured_technical_scope"] = structured_technical_scope
+
+        # Metadata for Footer (Temperature)
+        context["sizing_level"] = intent.sizing_mode.value if hasattr(intent.sizing_mode, 'value') else str(intent.sizing_mode)
+        context["contingency_level"] = intent.contingency_level.value if hasattr(intent.contingency_level, 'value') else str(intent.contingency_level)
+        context["engine_version"] = "GPT-Md v5.0 (Engines)"
+        context["model_info"] = f"gemini-2.5-flash via {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"
+
+        # Helper: Hardware summary for section 9
+        context["hardware_items"] = [
+            {
+                "desc": h.description,
+                "qty": h.qty,
+                "part": h.partnumber,
+                "is_client_supplied": intent.hardware_supply_by_client
+            }
+            for h in proposal.hardware_table if not h.is_misc
+        ]
 
         # 4. Final Assembly
-        if intent.split_proposal:
-            # TECHNICAL VERSION
-            context["proposal_title"] = f"{base_id} - Proposta Técnica"
-            tech_md = self._render_sequence(sequence, context)
-            outputs[f"PROPOSTA_TECNICA_{base_id}.md"] = tech_md
-            
-            # COMMERCIAL VERSION (Usually simpler but here we use similar structure)
-            context["proposal_title"] = f"{base_id} - Proposta Comercial"
-            # In a real scenario, we might skip technical details
-            comm_md = self._render_sequence(sequence, context) # Simplified for now
-            outputs[f"PROPOSTA_COMERCIAL_{base_id}.md"] = comm_md
-        else:
-            # UNIFIED VERSION
-            context["proposal_title"] = f"{base_id} - Proposta Técnica e Comercial"
-            unified_md = self._render_sequence(sequence, context)
-            outputs[f"PROPOSTA_UNIFICADA_{base_id}.md"] = unified_md
+        # Always generate UNIFIED version
+        context["proposal_title"] = f"{base_id}-A - Proposta Unificada"
+        context["proposal_id_full"] = f"{base_id}" # ID base para o 'Ref:' solicitado
+        
+        unified_md = self._render_sequence(sequence, context)
+        outputs[f"PROPOSTA_UNIFICADA_{base_id}.md"] = unified_md
+
+        # Always generate TECHNICAL version (without commercial blocks)
+        context["proposal_title"] = f"{base_id}-A - Proposta Técnica"
+        tech_sequence = [s for s in sequence if s != "07-comercial"]
+        tech_md = self._render_sequence(tech_sequence, context)
+        outputs[f"PROPOSTA_TECNICA_{base_id}.md"] = tech_md
+        
+        # Always generate COMMERCIAL version (Summary + Commercial blocks)
+        context["proposal_title"] = f"{base_id}-A - Proposta Comercial"
+        # For commercial, we use Intro, Institucional and Commercial
+        comm_sequence = ["01-capa", "02-carta", "03-institucional", "07-comercial", "09-encerramento"]
+        comm_md = self._render_sequence(comm_sequence, context)
+        outputs[f"PROPOSTA_COMERCIAL_{base_id}.md"] = comm_md
 
         return outputs
 
     def _render_sequence(self, sequence, context):
         full_md = ""
-        for section in sequence:
-            raw_content = self._get_block_content(section)
+        for item in sequence:
+            if isinstance(item, tuple):
+                section, source = item
+                raw_content = self._get_block_content(section, source)
+            else:
+                section = item
+                raw_content = self._get_block_content(section)
+                
             try:
                 template = Template(raw_content)
                 rendered = template.render(**context)
                 full_md += rendered + "\n\n"
             except Exception as e:
-                full_md += f"\n[ERROR RENDERING {section}: {e}]\n\n"
+                full_md += f"\n[ERROR RENDERING {item}: {e}]\n\n"
         return full_md

@@ -282,15 +282,12 @@ def main():
         # V1 (Legacy)
         proposal_outputs = proposal_assembler.assemble_proposal(proposal, public_intent, template_dir=args.template_dir)
     
-    # Add Footer and Save Artifacts
-    footer = f"\n\n---\n*Gerado automaticamente pelo GPT-Md v5.0 (Engines) via {agent.model_name} em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"
-    
     for filename, content in proposal_outputs.items():
         # Adicionar timestamp ao nome do arquivo se necessário ou usar o nome fixo
         final_filename = filename.replace(".md", f"_{timestamp}.md")
         final_path = output_dir / final_filename
         with open(final_path, "w", encoding="utf-8") as f:
-            f.write(content + footer)
+            f.write(content)
         print(f"  - Proposta gerada: {final_filename}")
 
     # Save Tables
