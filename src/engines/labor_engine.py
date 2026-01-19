@@ -16,7 +16,8 @@ class LaborEngine:
     CONFIG_SIZING = {
         "aggressive": 0.85,
         "standard": 1.00,
-        "secure": 1.25
+        "secure": 1.40,
+        "critical": 1.60
     }
 
     CONFIG_CONTINGENCY = {
@@ -53,7 +54,7 @@ class LaborEngine:
         # If not, it should be initialized in ProposalData's __init__ or here.
         # proposal.ai_research_count = 0 # Uncomment if ProposalData doesn't initialize it.
         global_complexity = intent.logistics_override.consulting if intent.logistics_override else False
-        complexity_multiplier = 1.3
+        complexity_multiplier = 1.5
         
         topic_tech_effort = collections.defaultdict(float)
         topic_team_size = {}
@@ -112,7 +113,7 @@ class LaborEngine:
                                 
                                 self._add_labor_line_from_raw_generic(
                                     proposal, topic_id, res_act["role"], res_act["name"],
-                                    qty_items, team_size, eff, self.db.get_role_cost(res_act["role"]), res_act["category"],
+                                    qty_items, team_size, effort, self.db.get_role_cost(res_act["role"]), res_act["category"],
                                     source_ref="AI_RESEARCH_V8"
                                 )
                                 act_total_h = eff * qty_items
@@ -138,7 +139,18 @@ class LaborEngine:
                         eff *= 1.15
                     
                     eff *= sizing_factor
-                    phase_groups[template.category].append({"template": template, "eff": eff})
+
+                    # --- Lógica de Escala por Medida (v9.0) ---
+                    measure = template.unit_measure.lower()
+                    scale_qty = qty_items
+                    if any(m in measure for m in ["projeto", "site", "evento", "job"]):
+                        scale_qty = 1
+                    
+                    phase_groups[template.category].append({
+                        "template": template, 
+                        "eff": eff,
+                        "scale_qty": scale_qty
+                    })
 
             # Processa e Consolida fases
             for category, acts in phase_groups.items():
@@ -150,19 +162,41 @@ class LaborEngine:
                     for name in main_names:
                         if name not in unique_names: unique_names.append(name)
                     combined_name = " / ".join(unique_names)
+                    combined_name = " / ".join(unique_names)
+                    # Concatena checklists (até 3 linhas para não poluir demais)
+                    raw_descs = [a["template"].description for a in acts if a["template"].description]
+                    unique_descs = list(set(raw_descs))
+                    if len(unique_descs) > 2:
+                        combined_desc = " • " + " • ".join(unique_descs[:2]) + " ... (+ det.)"
+                    else:
+                        combined_desc = " • " + " • ".join(unique_descs)
                 else:
                     combined_name = acts[0]["template"].name
+                    combined_desc = acts[0]["template"].description
 
                 # Regra OFI: Mínimo 1h por bloco consolidado
+                total_phase_unit_eff = sum(a["eff"] for a in acts)
                 final_unit_eff = max(1.0, total_phase_unit_eff)
                 main_role = acts[0]["template"].role
+
+                # A escala final é baseada no primeiro item do grupo (geralmente consistente na fase)
+                final_active_qty = acts[0].get("scale_qty", qty_items)
+                
+                # --- Otimização de Lote (v9.1) ---
+                # Calculamos o esforço total antes de arredondar. 
+                # Se 10 VMs levam 0.5h cada, o total é 5h. 
+                # Antes, o sistema calculava ceil(0.5)=1h por VM, resultando em 10h (Desperdício).
+                total_effort_for_block = final_unit_eff * final_active_qty
                 
                 self._add_labor_line_from_raw_generic(
                     proposal, topic_id, main_role, combined_name,
-                    qty_items, team_size, final_unit_eff, self.db.get_role_cost(main_role), category
+                    final_active_qty, team_size, total_effort_for_block, self.db.get_role_cost(main_role), category,
+                    is_batch=True,
+                    technical_detail=combined_desc
                 )
                 
-                act_total_h = final_unit_eff * qty_items
+                # O total_h agora vem direto do arredondamento do bloco
+                act_total_h = math.ceil(total_effort_for_block)
                 topic_tech_effort[topic_id] += act_total_h
                 total_tech_hours += act_total_h
             
@@ -176,19 +210,22 @@ class LaborEngine:
         self._calculate_transversals(intent, proposal, global_complexity, sizing_factor)
         proposal.total_labor = sum(i.total_price for i in proposal.labor_table)
 
-    def _add_labor_line_from_raw_generic(self, proposal, topic_id, role, activity, total_items, team_size, unit_effort, cost, category, is_contingency=False, source_ref=None):
+    def _add_labor_line_from_raw_generic(self, proposal, topic_id, role, activity, total_items, team_size, effort_value, cost, category, is_contingency=False, source_ref=None, is_batch=False, technical_detail=""):
         qty_profs = max(1, team_size)
         execs_per_prof = total_items / qty_profs
         
-        if unit_effort > 8:
-            dias = math.ceil(unit_effort / 8)
-            h_dia = round(unit_effort / dias, 2)
+        # Se for lote, effort_value já é o TOTAL. Se não, é o UNITÁRIO.
+        total_h_unrounded = effort_value if is_batch else (execs_per_prof * qty_profs * effort_value)
+        total_h = math.ceil(total_h_unrounded)
+        
+        # Re-calcula h_dia e dias para a tabela mantendo a coerência visual
+        if total_h > (8 * qty_profs):
+            dias = math.ceil(total_h / (8 * qty_profs))
+            h_dia = math.ceil(total_h / (dias * qty_profs))
         else:
             dias = 1
-            h_dia = round(unit_effort, 2)
+            h_dia = math.ceil(total_h / qty_profs)
             
-        total_h = round(execs_per_prof * qty_profs * h_dia * dias, 2)
-        
         if source_ref is None:
             source_ref = "DB_MOD_V8" if "fallback" not in activity.lower() else "ESTIMATE_FALLBACK"
 
@@ -204,8 +241,9 @@ class LaborEngine:
             total_price=total_h * cost,
             activity_type=category,
             is_contingency=is_contingency,
-            complexity="V8.0 - Consolidated",
-            source_ref=source_ref
+            complexity="V9.1 - Batch Optimized",
+            source_ref=source_ref,
+            technical_detail=technical_detail
         ))
         self.item_counter += 1
 

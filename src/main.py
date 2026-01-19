@@ -6,47 +6,62 @@ from datetime import datetime
 from src.ai_agent import AIAgent
 from src.context_loader import ContextLoader
 from src.database import Database
-from src.models import ProposalData, TopicMapping, format_br_currency, SizingMode, ContingencyLevel
+from src.models import ProposalData, TopicMapping, format_br_currency, format_br_number, SizingMode, ContingencyLevel
 from src.engines import LaborEngine, LogisticsEngine, MaterialEngine, ProposalAssembler, ResearchEngine, LibraryAssembler
+from src.engines.pricing_engine import PricingEngine
+from src.config.commerce_config import PRAZO_PADRAO_DIAS
 
-def apply_margins(proposal: ProposalData):
+def apply_margins(proposal: ProposalData, term_days: int = PRAZO_PADRAO_DIAS):
     """
     Aplica as margens de venda (Regra de Negócio).
     """
-    # Hardware (* 2)
+    # 1. Hardware (* 2) - Manter regra atual enquanto não houver PricingEngine para MAT
     for hw in proposal.hardware_table:
         hw.unit_price = hw.unit_price * 2
         hw.total_price = hw.unit_price * hw.qty
     proposal.total_hardware = sum(h.total_price for h in proposal.hardware_table)
     
-    # Labor (* 3)
-    for lab in proposal.labor_table:
-        lab.total_price = lab.total_price * 3.0
-    proposal.total_labor = sum(l.total_price for l in proposal.labor_table)
+    # 2. Labor (MOD) - Nova lógica mandatória baseada no PricingEngine
+    # O total_labor mantem o CUSTO para a tabela MOD.md
+    total_labor_cost = sum(lab.hours * lab.hourly_rate for lab in proposal.labor_table)
+    proposal.total_labor = total_labor_cost 
+    proposal.payment_term = term_days
     
-    # Services (* 1.6)
+    # O valor de venda será calculado centralizadamente abaixo
+    # proposal.total_labor_venda será setado em calculate_proposal_selling_prices
+    
+    # 3. Services (Sem margem fixa - Custo Puro)
     for serv in proposal.service_table:
-        serv.unit_price = serv.unit_price * 1.6
         serv.total_price = serv.qty * serv.unit_price
     proposal.total_services = sum(s.total_price for s in proposal.service_table)
     
-    # Expenses (* 1.2)
+    # 4. Expenses (Sem margem fixa - Custo Puro)
     for exp in proposal.expense_table:
-        exp.unit_price = exp.unit_price * 1.2
         exp.total_price = exp.qty * exp.unit_price
     proposal.total_expenses = sum(e.total_price for e in proposal.expense_table)
+
+    # 5. Cálculo dos Valores de Venda (MOD, SET, DIV)
+    PricingEngine.calculate_proposal_selling_prices(proposal, term_days)
     
-    proposal.grand_total = (
+    # Grand Total (prop.grand_total_venda já calculado no PricingEngine)
+    proposal.grand_total = proposal.grand_total_venda
+    proposal.grand_total_venda = (
         proposal.total_hardware +
-        proposal.total_labor +
+        proposal.total_labor_venda +
         proposal.total_services +
         proposal.total_expenses
     )
+    
+    # Grand Total Técnico/Custo (Pode ser mantido para compatibilidade, ou removido)
+    proposal.grand_total = proposal.grand_total_venda
 
-def clean_value(val):
-    if isinstance(val, (int, float)) and val == int(val):
-        return int(val)
-    return val
+def format_clean_br(val):
+    """Retorna o valor formatado no padrão BR: 1.234,56 ou 1.234 (se inteiro)"""
+    if not isinstance(val, (int, float)):
+        return val
+    if val == int(val):
+        return format_br_number(val, 0)
+    return format_br_number(val, 2)
 
 def save_md(output_dir, filename, title, items):
     path = output_dir / filename
@@ -62,10 +77,11 @@ def save_md(output_dir, filename, title, items):
                 for item in items:
                     f.write(f"| {item.topic_id} | {item.description} |\n")
             elif hasattr(items[0], 'role'): # Labor
-                f.write("| Item | Tópico | Execs | Qtde | Horas_Dia | Dias | Total_H | Tipo | Atividade | Profissional | Custo_Unit | Total_R$ | Source_Ref |\n")
-                f.write("| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :---: | :---: | :---: |\n")
+                f.write("| Item | Tópico | Execs | Qtde | Horas_Dia | Dias | Total_H | Tipo | Atividade | Detalhes Técnicos / Checklist | Profissional | Custo_Unit | Total_R$ | Source_Ref |\n")
+                f.write("| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :--- | :---: | :---: | :---: |\n")
                 for item in items:
-                    f.write(f"| {item.item_id} | {item.topic} | {clean_value(item.executions)} | {clean_value(item.qty_professionals)} | {clean_value(item.daily_hours)} | {clean_value(item.days)} | {clean_value(item.hours)} | {item.activity_type} | {item.activity} | {item.role} | {format_br_currency(item.hourly_rate)} | {format_br_currency(item.total_price)} | {item.source_ref} |\n")
+                    detail = item.technical_detail.replace("\n", " ").replace("|", "-") if item.technical_detail else "-"
+                    f.write(f"| {item.item_id} | {item.topic} | {format_clean_br(item.executions)} | {format_clean_br(item.qty_professionals)} | {format_clean_br(item.daily_hours)} | {format_clean_br(item.days)} | {format_clean_br(item.hours)} | {item.activity_type} | {item.activity} | {detail} | {item.role} | {format_br_currency(item.hourly_rate)} | {format_br_currency(item.total_price)} | {item.source_ref} |\n")
             elif hasattr(items[0], 'description'): # Hardware, Service, Expense
                 if hasattr(items[0], 'topic'):
                         f.write("| Tópico | Descrição | Qtd | Unitário (R$) | Total (R$) |\n")
@@ -73,12 +89,12 @@ def save_md(output_dir, filename, title, items):
                         for item in items:
                         # Fix for NoneType is_misc if relevant, but models should have defaults
                         # Using hasattr check just in case
-                            f.write(f"| {item.topic} | {item.description} | {clean_value(item.qty)} | {format_br_currency(item.unit_price)} | {format_br_currency(item.total_price)} |\n")
+                            f.write(f"| {item.topic} | {item.description} | {format_clean_br(item.qty)} | {format_br_currency(item.unit_price)} | {format_br_currency(item.total_price)} |\n")
                 else:
                     f.write("| Descrição | Qtd | Unitário (R$) | Total (R$) |\n")
                     f.write("| :--- | :---: | :---: | :---: |\n")
                     for item in items:
-                        f.write(f"| {item.description} | {clean_value(item.qty)} | {format_br_currency(item.unit_price)} | {format_br_currency(item.total_price)} |\n")
+                        f.write(f"| {item.description} | {format_clean_br(item.qty)} | {format_br_currency(item.unit_price)} | {format_br_currency(item.total_price)} |\n")
     return path
 
 def main():
@@ -87,12 +103,13 @@ def main():
     parser.add_argument("--template_dir", type=str, help="Path to Markdown templates", default="templates/")
     parser.add_argument("--instruction", type=str, help="Instruction text or path to .txt", default="input/instruction.txt")
     parser.add_argument("--split", action="store_true", help="Force split of technical and commercial proposals (and generate all 3 versions in dev mode)")
-    parser.add_argument("--sizing", type=str, choices=["aggressive", "standard", "secure"], help="Override sizing mode (0.85x, 1.0x, 1.25x)")
+    parser.add_argument("--sizing", type=str, choices=["aggressive", "standard", "secure", "critical"], help="Override sizing mode (0.85x, 1.0x, 1.4x, 1.6x)")
     parser.add_argument("--contingency", type=str, choices=["none", "low", "standard", "high"], help="Override contingency level (SHE/Buffer)")
     parser.add_argument("--help-metrics", action="store_true", help="Show detailed metrics table and exit")
     parser.add_argument("--debug", action="store_true", help="Enable verbose debug and save raw AI responses")
     parser.add_argument("--use-docs", action="store_true", help="Load and use technical documents from --tech_ref")
     parser.add_argument("--legacy-assembler", action="store_true", help="Use old non-Jinja assembler")
+    parser.add_argument("--term", type=int, default=PRAZO_PADRAO_DIAS, help="Payment term in days (default: 30)")
     
     args = parser.parse_args()
 
@@ -103,7 +120,8 @@ def main():
         print("| :---      | :---:                    | :---            |")
         print("| aggressive| 0.85x                    | Propostas competitivas, enxutas (Risco Médio) |")
         print("| standard  | 1.00x                    | Padrão equilibrado (Risco Baixo - Recomendado) |")
-        print("| secure    | 1.25x                    | Cenários conservadores, alta incerteza, premium |")
+        print("| secure    | 1.40x                    | Cenários conservadores, alta incerteza, premium |")
+        print("| critical  | 1.60x                    | Missão Crítica (Governo/Militar/Bancos) |")
         
         print("\n2. CONTINGENCY LEVELS (Ineficiência/SHE):")
         print("| Level     | Ineficiência (SHE)      | Buffer Extra |")
@@ -180,6 +198,19 @@ def main():
         exit(1)
 
     print(f"Dados extraídos: {intent.client_name} / {intent.project_name}")
+
+    # Guardrail (Governance v2.0)
+    if intent.needs_clarification:
+        print("\n" + "="*60)
+        print("⛔ PROPOSTA BARRADA POR AMBIGUIDADE (GOVERNANÇA TÉCNICA)")
+        print("="*60)
+        print("O Agente identificou lacunas críticas no escopo que impedem")
+        print("o dimensionamento técnico sem 'alucinações'.")
+        print("\nPor favor, responda às seguintes perguntas no seu input:")
+        for i, q in enumerate(intent.clarification_questions):
+            print(f" {i+1}. {q}")
+        print("="*60 + "\n")
+        exit(1)
     
     if args.split:
         intent.split_proposal = True
@@ -241,7 +272,7 @@ def main():
     logistics_engine.calculate_logistics(intent, proposal)
     
     # Apply Margins
-    apply_margins(proposal)
+    apply_margins(proposal, term_days=args.term)
     
     print(f"Calculated Total: R$ {format_br_currency(proposal.grand_total)}")
     

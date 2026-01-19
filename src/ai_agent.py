@@ -327,21 +327,22 @@ class AIAgent:
         1. **User Instruction (CLI):** "{instruction_text}"
         2. **Technical Context (PDF):** "{doc_content[:15000]}"
         
-        ## DIRETRIZES MESTRAS (SOBERANIA DA INSTRUÇÃO)
+        ## DIRETRIZES MESTRAS (GOVERNANÇA E SOBERANIA)
         1. **SOBERANIA ABSOLUTA:** A instrução do usuário é um "Ajuste de Rota". Se o PDF diz "2 servidores" e a instrução diz "apenas 1", **IGNORE O PDF E USE 1**.
-        2. **DETALHAMENTO TÉCNICO:** O PDF serve apenas para detalhes técnicos (nomes de VMs, modelos) que NÃO foram mencionados na instrução.
-        3. **BRANDING:** Extraia o nome do Cliente (Pessoa), da Empresa (Razão Social/Nome Fantasia) e do Contato mencionado na instrução. Se não houver, use 'Cliente' e variáveis vazias como fallback.
-        4. **LOCALIDADE:** Se não especificado, considere o local do projeto como **Ilhéus - BA** (Default).
-        5. **CALIBRAÇÃO DE ESFORÇO (CALIBRATED WBS):**
-           - Evite atomismo exagerado. Para itens simples (ex: 1 servidor, 1 switch), a lista de atividades deve ser concisa (ex: 5-10 atividades totais).
-           - Para projetos complexos (ex: Datacenter completo, Migração crítica), a lista deve ser granular (>30 atividades).
-           - Se a instrução é simples, responda com simplicidade técnica.
-        6. **LOGÍSTICA:** 
-           - **travel_segments**: Extraia o array de dias de cada viagem.
-           - **team_size**: Extraia a quantidade de pessoas.
-        7. **INVENTÁRIO DE VMS:** 
-           - Localize a seção de Serviços Críticos/VMs no PDF.
-           - Se a instrução reduzir a quantidade de VMs, reduza proporcionalmente mantendo a diversidade de tipos detectados.
+        
+        ## GOVERNANÇA DE ESCOPO (ANTI-ALUCINAÇÃO)
+        1. **NÃO INVENTE QUANTIDADES:** Se a instrução diz apenas "Servidores" e o PDF não especifica, NÃO assuma 1, 2 ou 3. Marque `needs_clarification: true`.
+        2. **AGRUPAMENTO OBRIGATÓRIO:** Sempre que múltiplos hardwares fizerem parte de uma solução lógica única (Ex: 3 servidores em um Cluster, 12 servidores para migrar), gere um ÚNICO `ScopeItem` com a quantidade total no campo `detected_quantity`. **NUNCA** atomize em 3 itens separados de quantidade 1 se o contexto for o mesmo.
+        3. **IGNORAR SUGESTÃO DE EQUIPE:** Se o input disser "Use 2 técnicos" ou "Sugiro equipe de 3 pessoas", **IGNORE**. A equipe é dimensionada estritamente pelo Motor de Cálculo (LaborEngine).
+        4. **TRIGGER DE CLARIFICAÇÃO:** Se houver itens críticos (Servidores, Storage, Switches) sem definição de Quantidade ou Tipo (Físico/Virtual), preencha `needs_clarification: true` e liste as perguntas.
+        
+        ## DIRETRIZES DE EXTRAÇÃO
+        1. **DETALHAMENTO TÉCNICO:** O PDF serve apenas para detalhes técnicos (nomes de VMs, modelos) que NÃO foram mencionados na instrução.
+        2. **BRANDING:** Extraia o nome do Cliente, Empresa e Contato.
+        3. **LOCALIDADE:** Default: **Ilhéus - BA**.
+        4. **CALIBRAÇÃO DE ESFORÇO:** Evite atomismo exagerado para itens simples.
+        5. **LOGÍSTICA:** Extraia travel_segments array.
+        6. **INVENTÁRIO DE VMS:** Se a instrução reduzir a quantidade de VMs, reduza proporcionalmente.
         
         ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.5 - CLEANING)
         1. **client_name:** Extrair da instrução.
@@ -380,14 +381,14 @@ class AIAgent:
             "project_name": "String (Limpo, sem metadados)",
             "project_motivation": "Parágrafo conciso (2-3 linhas) descrevendo os fatos e a necessidade real da EMPRESA cliente que motivam este projeto. Evite termos vagos, exageros ou tom pessimista. Foque na dor técnica ou de negócio factual extraída do contexto.",
             "hardware_supply_by_client": boolean,
-            "estimated_duration_weeks": int,
+            "estimated_duration_weeks": int (Default: 1),
             "governance_level": "standard" | "intensive",
             "work_on_weekends": boolean,
             "requires_training": boolean,
             "selected_tech_template": "iodc_full_structured.md" | "iodc_no_net.md" | "struct_network_industrial.md" | "struct_services_cabling.md" | "struct_server_migration.md",
             "selected_comm_template": "capex_only.md" | "hybrid_capex_opex.md",
             "split_proposal": boolean,
-            "sizing_mode": "aggressive" | "standard" | "secure",
+            "sizing_mode": "aggressive" | "standard" | "secure" | "critical",
             "contingency_level": "none" | "low" | "standard" | "high",
             "scope_items": [
                 {{
@@ -404,9 +405,12 @@ class AIAgent:
             "logistics_override": {{
                 "transport_provider": "client" | "provider",
                 "consulting": boolean,
-                "team_size": int,
-                "travel_segments": [int]
-            }}
+                "team_size": int (Default: 1),
+                "travel_segments": [int] (Ex: [5] para 5 dias)
+            }},
+            "needs_clarification": boolean,
+            "clarification_questions": ["String"],
+            "confidence_score": float
         }}
 
         Responda APENAS com o JSON puro.

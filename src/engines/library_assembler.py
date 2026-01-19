@@ -101,11 +101,11 @@ class LibraryAssembler:
             "company_short_name": intent.company_short_name or intent.client_name.split()[0], 
             "total_hardware": format_br_currency(proposal.total_hardware),
             "total_hardware_raw": proposal.total_hardware,
-            "total_labor": format_br_currency(proposal.total_labor),
-            "total_services": format_br_currency(proposal.total_services),
-            "total_expenses": format_br_currency(proposal.total_expenses),
+            "total_labor": format_br_currency(proposal.total_labor_venda),
+            "total_services": format_br_currency(proposal.total_services_venda),
+            "total_expenses": format_br_currency(proposal.total_expenses_venda),
             "total_expenses_raw": proposal.total_expenses,
-            "grand_total": format_br_currency(proposal.grand_total),
+            "grand_total": format_br_currency(proposal.grand_total_venda),
             "version": "A", # Nova diretriz: Sempre versão A inicialmente
             "contact_name": intent.contact_name or "Responsável Técnico",
             "company_name": "EGE Soluções Industriais", # Backwards compatibility
@@ -114,6 +114,7 @@ class LibraryAssembler:
             "labor_items": proposal.labor_table,
             "ai_research_count": proposal.ai_research_count,
             "total_hours": sum(item.hours for item in proposal.labor_table),
+            "payment_term": proposal.payment_term,
         }
         
         # Helper: Hierarchical Technical Scope (9 Pillars)

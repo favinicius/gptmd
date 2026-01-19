@@ -3,20 +3,27 @@
 Abaixo, apresentamos o resumo dos investimentos necessários para a execução deste projeto, divididos entre a implantação (CAPEX) e a sustentação mensal (OPEX).
 
 ### 17.1. INVESTIMENTO CAPEX (IMPLANTAÇÃO)
+
 | ITEM | DESCRIÇÃO | VALOR (R$) |
 | :--- | :--- | :--- |
-{% if total_hardware_raw > 0 %}| Materiais | Fornecimento de Hardware e Softwares de Base | {{ total_hardware }} |{% endif %}
+{%- if total_hardware_raw > 0 %}
+| Materiais | Fornecimento de Hardware e Softwares de Base | {{ total_hardware }} |
+{%- endif %}
 | Serviços | Engenharia, Gestão, Instalação e Treinamentos | {{ total_labor }} |
-{% if total_expenses_raw > 0 %}| Despesas | Despesas Logísticas e Administrativas | {{ total_expenses }} |{% endif %}
+{%- if total_expenses_raw > 0 %}
+| Despesas | Despesas Logísticas e Administrativas | {{ total_expenses }} |
+{%- endif %}
 | **TOTAL CAPEX** | **Investimento Único** | **{{ grand_total }}** |
 
 ### 17.2. INVESTIMENTO OPEX (SUSTENTAÇÃO)
+
 | ITEM | DESCRIÇÃO | VALOR MENSAL (R$) |
 | :--- | :--- | :--- |
 | Monitoramento | Serviços de Sustentação 24x7 e Monitoramento Proativo | {{ total_services }} |
 | **TOTAL OPEX** | **Mensalidade (Contrato 60 meses)** | **{{ total_services }}** |
 
 ### 17.3. RESUMO GERAL
+
 | CATEGORIA | DESCRIÇÃO | VALOR |
 | :--- | :--- | :--- |
 | **CAPEX** | Total para Implantação do Projeto | {{ grand_total }} |
@@ -30,25 +37,31 @@ Intervenções solicitadas pela **{{ client_company }}** fora dos horários padr
 *   Horas Extras (Seg-Sex após as 17:00): +50% sobre o valor da hora base.
 *   Sábados, Domingos e Feriados: +100% sobre o valor da hora base.
 
-### 17.6. IMPOSTOS
+### 17.6. PRAZO DE PAGAMENTO
+O prazo de pagamento para os valores apresentados nesta proposta é de **{{ payment_term }} dias**, contados a partir da emissão da nota fiscal de cada evento de faturamento.
+
+### 17.7. IMPOSTOS
 Todos os impostos incidentes sobre a prestação de serviços e fornecimento de materiais já estão inclusos nos valores apresentados, conforme a legislação tributária vigente.
 
-### 17.7. EVENTOS DE PAGAMENTO
+### 17.8. EVENTOS DE PAGAMENTO
 O faturamento ocorrerá mediante a entrega dos seguintes marcos (milestones):
-*   30% na aprovação do projeto executivo e emissão da ART.
-*   40% na entrega e conferência física dos equipamentos e materiais na planta.
-*   30% após a conclusão do Teste de Aceitação em Campo (SAT) e entrega do Databook.
 
-### 17.8. DESLOCAMENTO
+| EVENTO | MARCO DE ENTREGA (MILESTONE) | FATURAMENTO |
+| :--- | :--- | :---: |
+| **Início** | Aprovação do projeto executivo e emissão da ART | 30% |
+| **Materiais** | Entrega e conferência física dos equipamentos e materiais na planta | 40% |
+| **Conclusão** | Conclusão do Teste de Aceitação em Campo (SAT) e entrega do Databook | 30% |
+
+### 17.9. DESLOCAMENTO
 Todas as despesas de deslocamento terrestre da equipe técnica da **{{ provider_short }}** estão contempladas no valor de despesas logísticas.
 
-### 17.9. REFEIÇÕES
+### 17.10. REFEIÇÕES
 As refeições da equipe de campo durante a execução do projeto estão inclusas, exceto quando houver acesso ao refeitório da planta, conforme acordado nas premissas.
 
-### 17.10. EPIs, EPCs e MATERIAIS ADICIONAIS
+### 17.11. EPIs, EPCs e MATERIAIS ADICIONAIS
 A **{{ provider_short }}** fornecerá todos os EPIs e EPCs necessários para a segurança de seus profissionais. Materiais adicionais de consumo não previstos no projeto executivo serão orçados separadamente mediante aprovação prévia.
 
-### 17.11. ATRASOS DE PAGAMENTO
+### 17.12. ATRASOS DE PAGAMENTO
 Atrasos no pagamento dos marcos ou mensalidades OPEX acarretarão multa de 2% e juros de 1% ao mês *pro rata die*.
 
 ## 18. REAJUSTES E RESCISÃO - CONTRATO OPEX

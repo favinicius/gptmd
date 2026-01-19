@@ -350,7 +350,7 @@
       "role": "Gestor",
       "setup_hours": 4.0,
       "unit_hours": 0.0,
-      "unit_measure": "evento",
+      "unit_measure": "projeto",
       "tags": [
         "management"
       ]
@@ -403,7 +403,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -416,7 +416,7 @@
       "role": "Engenheiro",
       "setup_hours": 0.0,
       "unit_hours": 4.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -429,7 +429,7 @@
       "role": "Engenheiro",
       "setup_hours": 0.0,
       "unit_hours": 5.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -442,7 +442,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -481,7 +481,7 @@
       "role": "Técnico",
       "setup_hours": 0.0,
       "unit_hours": 8.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -507,7 +507,7 @@
       "role": "Engenheiro",
       "setup_hours": 0.0,
       "unit_hours": 4.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -520,7 +520,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -533,7 +533,7 @@
       "role": "Arquiteto",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -624,7 +624,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -637,7 +637,7 @@
       "role": "Engenheiro",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -650,7 +650,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -715,7 +715,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -728,7 +728,7 @@
       "role": "Técnico",
       "setup_hours": 0.0,
       "unit_hours": 1.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -741,7 +741,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 1.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -767,7 +767,7 @@
       "role": "Arquiteto",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -806,7 +806,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -871,7 +871,7 @@
       "role": "Engenheiro",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -884,7 +884,7 @@
       "role": "Engenheiro",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -897,7 +897,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -910,7 +910,7 @@
       "role": "Engenheiro",
       "setup_hours": 0.0,
       "unit_hours": 4.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -936,7 +936,7 @@
       "role": "Técnico",
       "setup_hours": 0.0,
       "unit_hours": 4.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -949,7 +949,7 @@
       "role": "Técnico",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -962,7 +962,7 @@
       "role": "Técnico",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -975,7 +975,7 @@
       "role": "Técnico",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -1001,7 +1001,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 3.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -1014,7 +1014,7 @@
       "role": "Gestor",
       "setup_hours": 0.0,
       "unit_hours": 8.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -1027,7 +1027,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -1092,7 +1092,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]
@@ -1105,7 +1105,7 @@
       "role": "Analista",
       "setup_hours": 0.0,
       "unit_hours": 2.0,
-      "unit_measure": "unidade",
+      "unit_measure": "projeto",
       "tags": [
         "research_import"
       ]

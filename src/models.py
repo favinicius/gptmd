@@ -2,10 +2,19 @@ from typing import List, Optional, Literal, Dict, Any
 from enum import Enum
 from pydantic import BaseModel, Field
 
-def format_br_currency(value: float) -> str:
+def format_br_number(value: float, decimal_places: int = 2) -> str:
     """Formata um float para o padrão brasileiro: 1.234,56"""
-    if value is None: return "0,00"
-    return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    if value is None: return "0"
+    # Se for um inteiro puro, não precisa de casas decimais a menos que forçado
+    if value == int(value) and decimal_places == 0:
+        return f"{int(value):,}".replace(",", ".")
+    
+    formatted = f"{value:,.{decimal_places}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return formatted
+
+def format_br_currency(value: float) -> str:
+    """Formata um float para o padrão brasileiro com 2 casas: 1.234,56"""
+    return format_br_number(value, 2)
 
 def format_excel_number(value: float):
     """Regra: Se o número for um inteiro (ex: 8.0), remova o decimal (8). 
@@ -127,7 +136,8 @@ class ScopeItem(BaseModel):
 class SizingMode(str, Enum):
     AGGRESSIVE = "aggressive"  # 0.85x
     STANDARD = "standard"      # 1.00x
-    SECURE = "secure"          # 1.25x
+    SECURE = "secure"          # 1.40x
+    CRITICAL = "critical"      # 1.60x
 
 class ContingencyLevel(str, Enum):
     NONE = "none"              # 0.0h
@@ -144,6 +154,10 @@ class Intent(BaseModel):
     company_short_name: Optional[str] = "" 
     scope_items: List[ScopeItem]
     hardware_supply_by_client: bool = False
+    # Governance Fields (v2.0)
+    needs_clarification: bool = False
+    clarification_questions: List[str] = Field(default_factory=list)
+    confidence_score: float = 1.0
     logistics_override: Optional[LogisticsOverride] = None
     detailed_logistics: Optional[LogisticsPlan] = None
     estimated_duration_weeks: int = 1
@@ -190,6 +204,7 @@ class CalculatedLabor(BaseModel):
     is_contingency: bool = False
     complexity: str # To track origin
     source_ref: str = "DB_STD" # DB_STD, DB_CALC, ESTIMATE, EXPLICIT
+    technical_detail: Optional[str] = "" # Checklist/Observações técnicas (v9.2)
 
 class CalculatedService(BaseModel):
     description: str
@@ -215,5 +230,13 @@ class ProposalData(BaseModel):
     total_labor: float = 0.0
     total_services: float = 0.0
     total_expenses: float = 0.0
+    
+    # --- Commercial Selling Prices (v9.0) ---
+    total_labor_venda: float = 0.0
+    total_services_venda: float = 0.0
+    total_expenses_venda: float = 0.0
+    grand_total_venda: float = 0.0
+    payment_term: int = 30
+    
     grand_total: float = 0.0
     ai_research_count: int = 0

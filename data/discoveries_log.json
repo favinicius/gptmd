@@ -188,5 +188,497 @@
             }
         ],
         "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-18T23:10:03.887312",
+        "trigger_term": "Implantação de Hypervisor",
+        "context": "Instalação de hypervisor nos 2 servidores.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Definição da Arquitetura e Requisitos do Hypervisor",
+                "role": "Arquiteto",
+                "unit_hours": 2.0,
+                "description": "Análise de requisitos, seleção do hypervisor, desenho de rede e armazenamento para 2 servidores. Inclui revisão de documentação e criação do plano de implantação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Coordenação e Aprovação da Implantação",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Agendamento de atividades, alocação de recursos, comunicação com stakeholders e obtenção de aprovações necessárias.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Verificação de Hardware e Atualização de Firmware (Servidor 1)",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Verificação de compatibilidade na HCL, atualização de BIOS/UEFI e firmware de componentes (NICs, RAID, HBA) para o Servidor 1.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Verificação de Hardware e Atualização de Firmware (Servidor 2)",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Verificação de compatibilidade na HCL, atualização de BIOS/UEFI e firmware de componentes (NICs, RAID, HBA) para o Servidor 2.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Instalação Física e Cabeamento dos Servidores",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Rackear os 2 servidores, conectar cabos de energia, rede (gerenciamento, dados) e armazenamento (se aplicável).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Instalação do Sistema Operacional Hypervisor (Servidor 1)",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Boot do instalador, seleção de disco, configuração de senha root e IP de gerenciamento inicial para o Servidor 1.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Instalação do Sistema Operacional Hypervisor (Servidor 2)",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Boot do instalador, seleção de disco, configuração de senha root e IP de gerenciamento inicial para o Servidor 2.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Configuração Avançada de Rede do Hypervisor (Servidor 1)",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Configuração de vSwitches, uplinks físicos, VLANs, LACP/teaming, DNS e NTP para o Servidor 1.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Configuração Avançada de Rede do Hypervisor (Servidor 2)",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Configuração de vSwitches, uplinks físicos, VLANs, LACP/teaming, DNS e NTP para o Servidor 2.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Gerenciamento",
+                "name": "Configuração de Armazenamento e Datastores (Servidor 1)",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Conexão a SAN/NAS (iSCSI/NFS/FC), configuração de multipathing e criação/montagem de datastores para o Servidor 1.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Gerenciamento",
+                "name": "Configuração de Armazenamento e Datastores (Servidor 2)",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Conexão a SAN/NAS (iSCSI/NFS/FC), configuração de multipathing e criação/montagem de datastores para o Servidor 2.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Gerenciamento",
+                "name": "Integração com Gerenciamento Central e Hardening Básico",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Adicionar hosts ao vCenter/SCVMM, aplicar patches, configurar syslog, autenticação (AD/LDAP) e revisão de segurança para ambos os servidores.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_013",
+                "category": "Gerenciamento",
+                "name": "Testes de Funcionalidade e Validação da Implantação",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Criação de VM de teste, verificação de conectividade de rede, acesso a armazenamento e funcionalidades básicas (ex: vMotion, HA) para ambos os servidores.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_014",
+                "category": "Planejamento",
+                "name": "Documentação Técnica e Handover",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Elaboração de documentação técnica (IPs, configurações, credenciais) e criação de runbook para operação e suporte.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-18T23:11:08.568143",
+        "trigger_term": "Design e Planejamento da Infraestrutura Virtualizada",
+        "context": "Definição de requisitos e desenho da solução.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Entendimento do Escopo e Requisitos de Negócio",
+                "role": "Arquiteto",
+                "unit_hours": 2.0,
+                "description": "Reunião inicial com stakeholders para levantar objetivos de negócio, identificar restrições e definir o escopo macro do projeto de virtualização.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos Técnicos Detalhados",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Entrevistas com equipes técnicas, análise de sistemas existentes, documentação de requisitos de performance, segurança, disponibilidade e conformidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Análise da Infraestrutura Atual e Gap Analysis",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Coleta de dados de hardware e software existentes, mapeamento de dependências, identificação de gargalos e oportunidades de virtualização.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Definição da Arquitetura Conceitual da Solução Virtualizada",
+                "role": "Arquiteto",
+                "unit_hours": 4.0,
+                "description": "Seleção de tecnologias de virtualização (Hypervisor), desenho de blocos lógicos (compute, storage, network) e definição de padrões arquitetônicos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Desenho Detalhado da Camada de Compute (Servidores Físicos e Hosts Virtuais)",
+                "role": "Engenheiro",
+                "unit_hours": 5.0,
+                "description": "Dimensionamento de CPUs/RAM para hosts, seleção de modelos de servidores, planejamento de clusters de virtualização, HA/DRS e balanceamento de carga.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Desenho Detalhado da Camada de Armazenamento (Storage)",
+                "role": "Engenheiro",
+                "unit_hours": 5.0,
+                "description": "Definição de tipos de storage (SAN, NAS, HCI), dimensionamento de capacidade e IOPS, planejamento de LUNs/volumes, estratégias de backup e replicação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Desenho Detalhado da Camada de Rede para Virtualização",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Planejamento de VLANs, vSwitches, uplinks, endereçamento IP, segmentação de rede, e integração com a rede física existente.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Planejamento de Segurança e Conformidade da Infraestrutura Virtualizada",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Definição de políticas de firewall virtual, controle de acesso, hardening de hosts, integração com AD/LDAP e requisitos de auditoria.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Definição de Estratégias de Monitoramento e Gerenciamento",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Seleção de ferramentas de monitoramento (ex: vROps, Zabbix), planejamento de alertas, integração com ITSM e automação básica de tarefas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Elaboração da Documentação Técnica do Projeto de Design",
+                "role": "Analista",
+                "unit_hours": 6.0,
+                "description": "Compilação de todos os desenhos, especificações, requisitos e planos em um documento coeso, claro e detalhado para referência futura.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Revisão Técnica e Validação do Projeto de Design",
+                "role": "Arquiteto",
+                "unit_hours": 3.0,
+                "description": "Revisão cruzada do documento de design, verificação de aderência aos requisitos, identificação de riscos e otimizações potenciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Planejamento",
+                "name": "Aprovação Final do Projeto de Design e Plano de Implementação",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Apresentação do design para stakeholders, obtenção de aprovação formal e alinhamento de recursos para a próxima fase de implementação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-18T23:11:31.811739",
+        "trigger_term": "Documentação Técnica do Ambiente",
+        "context": "Entrega de manuais e guias para gestão e manutenção do sistema.",
+        "suggested_wbs": [
+            {
+                "id": "DOC_001",
+                "category": "Planejamento",
+                "name": "Planejamento e Definição de Escopo da Documentação",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Definir público-alvo, estrutura, templates e ferramentas. Criar índice preliminar. Alinhar expectativas com stakeholders.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_002",
+                "category": "Planejamento",
+                "name": "Coleta de Inventário e Documentação Existente",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Levantar lista de ativos (servidores, VMs, aplicações). Coletar documentos, diagramas e configurações pré-existentes. Organizar arquivos iniciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_003",
+                "category": "Execução",
+                "name": "Documentação da Infraestrutura Física e Virtual",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Mapear servidores físicos, VMs, storage, hypervisors. Detalhar configurações de hardware, capacidade e alocação de recursos. Criar diagramas de arquitetura física.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_004",
+                "category": "Execução",
+                "name": "Documentação da Infraestrutura de Rede",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Mapear topologia de rede, dispositivos (switches, routers, firewalls). Detalhar configurações de VLANs, IPs, rotas e regras de segurança. Criar diagramas de rede.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_005",
+                "category": "Gerenciamento",
+                "name": "Documentação de Aplicações e Serviços",
+                "role": "Engenheiro",
+                "unit_hours": 5.0,
+                "description": "Detalhar arquitetura de software, dependências, configurações de serviços e bancos de dados. Mapear fluxos de dados e integrações. Documentar APIs e microsserviços.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_006",
+                "category": "Gerenciamento",
+                "name": "Elaboração de Manuais Operacionais e Guias de Manutenção",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Escrever procedimentos de startup/shutdown, backup/restore, monitoramento e troubleshooting. Criar guias passo a passo para manutenção preventiva e corretiva.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_007",
+                "category": "Planejamento",
+                "name": "Formatação e Padronização da Documentação",
+                "role": "Auxiliar",
+                "unit_hours": 2.0,
+                "description": "Aplicar templates, garantir consistência de fontes e estilos. Inserir imagens e diagramas. Gerar sumário e índices.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_008",
+                "category": "Planejamento",
+                "name": "Revisão Técnica e Validação de Conteúdo",
+                "role": "Arquiteto",
+                "unit_hours": 3.0,
+                "description": "Verificar a precisão técnica, completude e alinhamento com a arquitetura geral. Identificar inconsistências e lacunas. Validar diagramas e descrições.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_009",
+                "category": "Planejamento",
+                "name": "Integração de Feedback e Ajustes Finais",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Consolidar feedback de revisores. Realizar ajustes no texto, diagramas e procedimentos. Garantir que todas as sugestões pertinentes foram incorporadas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "DOC_010",
+                "category": "Planejamento",
+                "name": "Aprovação Final e Publicação dos Manuais",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisão final executiva. Obter aprovação formal dos stakeholders. Publicar os manuais e guias no repositório oficial. Comunicar a disponibilidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
     }
 ]
