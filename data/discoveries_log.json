@@ -3954,17 +3954,17 @@
         "status": "pending_review"
     },
     {
-        "timestamp": "2026-01-20T00:21:21.460498",
+        "timestamp": "2026-01-20T12:28:13.454370",
         "trigger_term": "Instalação de Módulos Transceptores SFP-10G-SR-S",
-        "context": "Módulos SFP-10G-SR-S (Enterprise-Class).",
+        "context": "Módulos Enterprise-Class para interconexão dos switches C9300 Core com os switches C9200 de campo.",
         "suggested_wbs": [
             {
                 "id": "RES_001",
-                "category": "Execução",
-                "name": "Preparar e transportar módulos SFP e ferramentas",
-                "role": "Auxiliar",
-                "unit_hours": 1.0,
-                "description": "Coletar módulos SFP do estoque, verificar quantidade e modelo, transportar para o local de instalação (datacenter/rack) e organizar materiais.",
+                "category": "Planejamento",
+                "name": "Revisar arquitetura e compatibilidade de módulos SFP",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Consultar diagramas de rede (L1/L2/L3). Verificar compatibilidade SFP-10G-SR-S com C9300/C9200. Planejar alocação de portas e avaliar impacto.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -3974,10 +3974,10 @@
             {
                 "id": "RES_002",
                 "category": "Planejamento",
-                "name": "Planejar e validar requisitos técnicos para instalação do SFP",
-                "role": "Analista",
-                "unit_hours": 1.0,
-                "description": "Revisar documentação do projeto/CR, verificar compatibilidade do SFP com o equipamento, confirmar slot disponível, agendar janela de manutenção e comunicar partes interessadas.",
+                "name": "Elaborar Método de Procedimento (MOP) e plano de rollback",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Criar MOP detalhado com pré-requisitos, passos de execução, comandos de configuração, procedimentos de teste e plano de contingência para rollback.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -3987,10 +3987,10 @@
             {
                 "id": "RES_003",
                 "category": "Planejamento",
-                "name": "Aprovar formalmente a solicitação de mudança (CR) para instalação",
+                "name": "Aprovar MOP e alinhar com stakeholders",
                 "role": "Gestor",
                 "unit_hours": 1.0,
-                "description": "Revisar os detalhes da solicitação de mudança (Change Request), avaliar o impacto potencial e conceder a aprovação formal para a execução da instalação.",
+                "description": "Revisar e aprovar o MOP. Comunicar cronograma, potenciais impactos e requisitos aos envolvidos (equipes, usuários).",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -4000,10 +4000,10 @@
             {
                 "id": "RES_004",
                 "category": "Execução",
-                "name": "Instalar fisicamente o módulo SFP e conectar cabos de fibra óptica",
-                "role": "Técnico",
-                "unit_hours": 2.0,
-                "description": "Identificar equipamento e slot, desembalar e inserir cuidadosamente o módulo SFP, conectar os cabos de fibra óptica, organizar a cablagem e realizar verificação visual inicial (LEDs).",
+                "name": "Preparar ambiente e conferir módulos SFP",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Receber e conferir módulos SFP-10G-SR-S. Desembalar e inspecionar visualmente. Organizar ferramentas e preparar a área de trabalho no datacenter/rack.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -4013,10 +4013,10 @@
             {
                 "id": "RES_005",
                 "category": "Execução",
-                "name": "Configurar interface de rede para o módulo SFP",
-                "role": "Analista",
+                "name": "Instalar fisicamente módulos SFP e conectar fibras",
+                "role": "Técnico",
                 "unit_hours": 2.0,
-                "description": "Acessar o dispositivo de rede (SSH/console), identificar a nova interface, configurar descrição, velocidade/duplex (se aplicável), atribuir VLANs e salvar a configuração.",
+                "description": "Deslocar-se ao local dos switches (Core e Campo). Acessar racks. Inserir módulos SFP-10G-SR-S nas portas designadas. Conectar cabos de fibra óptica LC-LC.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -4026,10 +4026,10 @@
             {
                 "id": "RES_006",
                 "category": "Execução",
-                "name": "Realizar testes avançados de conectividade e performance do SFP",
-                "role": "Engenheiro",
-                "unit_hours": 3.0,
-                "description": "Verificar status do link e contadores de erro, executar testes de ping/traceroute, realizar testes de throughput (e.g., iperf), validar integração com sistemas de monitoramento e analisar logs do dispositivo.",
+                "name": "Configurar interfaces e verificar status de link",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Acessar CLI dos switches C9300 e C9200. Aplicar configurações de interface (speed, duplex, description). Verificar status do link (show interface status, show interface transceiver).",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -4038,11 +4038,37 @@
             },
             {
                 "id": "RES_007",
+                "category": "Execução",
+                "name": "Realizar testes de conectividade e validação de tráfego",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Executar testes de throughput (iPerf, etc.) entre switches. Verificar rotas e tabelas ARP/MAC. Monitorar logs e métricas de desempenho. Ajustar configurações se necessário.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
                 "category": "Planejamento",
-                "name": "Atualizar documentação e encerrar solicitação de mudança",
+                "name": "Atualizar documentação de rede e inventário",
                 "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Atualizar diagramas de rede (L1/L2/L3). Registrar módulos no sistema de inventário. Documentar configurações finais e fechar MOP.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Revisão pós-implementação e lições aprendidas",
+                "role": "Gestor",
                 "unit_hours": 1.0,
-                "description": "Atualizar o sistema de gestão de ativos/inventário, diagramas de rede (lógicos e físicos), CMDB com atribuições de porta e configuração, e fechar o ticket/CR.",
+                "description": "Conduzir reunião de revisão do processo. Identificar pontos de melhoria para futuras instalações. Garantir que o conhecimento foi transferido e formalizar o encerramento da atividade.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -4447,6 +4473,191 @@
                 "role": "Gestor",
                 "unit_hours": 1.0,
                 "description": "Revisar o relatório consolidado de acompanhamento; Validar as conclusões e recomendações da equipe; Comunicar o status da operação e próximos passos aos stakeholders.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-20T14:34:06.106196",
+        "trigger_term": "Planejamento e Design da Nova Arquitetura",
+        "context": "Estimativa de 10 dias de trabalho para esta fase.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Kick-off e Alinhamento de Escopo",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Reunião inicial com stakeholders, definição de objetivos de alto nível, escopo, restrições e expectativas do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos de Negócio e Técnicos",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Condução de entrevistas com usuários-chave, workshops e análise de documentos para coletar requisitos funcionais e não funcionais detalhados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Atividade Pesquisada",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-20T15:21:45.928688",
+        "trigger_term": "Configuração de Redundância de Links (Port-channel)",
+        "context": "Configuração em 6 switches de campo para garantir alta disponibilidade.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Análise de Requisitos e Desenho Conceitual de Redundância",
+                "role": "Arquiteto",
+                "unit_hours": 4.0,
+                "description": "Revisar topologia de rede existente e requisitos de HA.\nDefinir estratégia de Port-channel (LACP/static, interfaces, modos) para 6 switches.\nAvaliar impacto na rede e aprovar o desenho conceitual.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Elaboração do Plano de Configuração Detalhado e Rollback",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Mapear interfaces físicas para cada Port-channel nos 6 switches.\nDefinir comandos CLI específicos e criar script de rollback.\nDocumentar pré-requisitos e pós-requisitos para a execução.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Planejamento e Coordenação da Implementação em Campo",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Agendar janelas de manutenção e alocar recursos (equipe).\nComunicar stakeholders e monitorar progresso.\nGerenciar riscos para a implementação nos 6 switches.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Verificação Remota de Pré-requisitos e Coleta de Dados",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Acessar remotamente os 6 switches.\nColetar comandos 'show' (run, interface status, etherchannel summary).\nVerificar versões de firmware e salvar configurações atuais para backup.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Verificação Física e Preparação de Cabos em Campo (6 switches)",
+                "role": "Técnico",
+                "unit_hours": 6.0,
+                "description": "Deslocamento para os 6 locais de campo.\nEm cada switch: identificar portas físicas, verificar integridade e rotulagem de cabos.\nRealizar re-patching ou instalação se necessário, confirmar status dos LEDs.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Execução da Configuração de Port-channel (6 switches)",
+                "role": "Analista",
+                "unit_hours": 6.0,
+                "description": "Acessar cada um dos 6 switches (console ou SSH).\nExecutar comandos de configuração do Port-channel conforme plano.\nSalvar a configuração e monitorar logs iniciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Testes de Funcionalidade e Redundância (6 switches)",
+                "role": "Analista",
+                "unit_hours": 6.0,
+                "description": "Em cada um dos 6 switches: verificar status do Port-channel.\nTestar falha de link (desconectar um cabo) e verificar failover.\nVerificar conectividade de dispositivos e monitorar logs para erros.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Validação Pós-Configuração e Troubleshooting Avançado",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Análise de logs e métricas de desempenho dos Port-channels nos 6 switches.\nDiagnosticar e resolver problemas complexos de conectividade ou redundância.\nOtimizar parâmetros de configuração se necessário.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Atualização da Documentação e Base de Conhecimento",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Atualizar diagramas de rede (físico e lógico) para os 6 switches.\nRegistrar configurações finais em repositório e atualizar SOPs.\nCriar ou atualizar entradas na base de conhecimento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Gerenciamento",
+                "name": "Revisão Final da Implementação e Aprovação",
+                "role": "Engenheiro",
+                "unit_hours": 1.0,
+                "description": "Revisar todas as configurações, resultados dos testes e documentação final.\nConfirmar que todos os requisitos de alta disponibilidade foram atendidos.\nAprovar a conclusão da atividade.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",

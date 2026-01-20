@@ -13,12 +13,13 @@ from src.models import Intent, LogisticsPlan
 load_dotenv()
 
 # Usando o modelo mais recente conforme diretriz Section 5.
-#MODEL_ID = "gemini-3-flash-preview"
-MODEL_ID = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+# Configuração de Modelos (v3.0 - Resiliência)
+MODEL_PREFERENCIAL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+MODEL_SECUNDARIO = os.getenv("GEMINI_MODEL_LIGHT", "gemini-2.0-flash") # Fallback mais estável
 
 class AIAgent:
     def __init__(self):
-        self.model_name = MODEL_ID
+        self.model_name = MODEL_PREFERENCIAL
         self._load_keys_tiered() # Carrega separado Free vs Paid
         
         if not self.free_keys and not self.paid_key:
@@ -178,91 +179,82 @@ class AIAgent:
 
     def generate_content(self, prompt: str, temperature: float = 0.1, max_output_tokens: int = 8192) -> str:
         """
-        Metodo genérico com retentativas, rotação inteligente e rastreamento de tokens.
+        Geração resiliente com:
+        1. Rotação de Chaves (Free -> Paid)
+        2. Rotação de Modelos (Preferencial -> Light)
+        3. Backoff Exponencial (Retentativas para 503)
         """
-        # Simple in-memory cache for repeated prompts (Token Saver)
         if not hasattr(self, '_response_cache'): self._response_cache = {}
         cache_key = f"{prompt[:100]}_{len(prompt)}_{temperature}"
         if cache_key in self._response_cache:
-            print(f"[CACHE] Usando resposta cacheada para prompt ({len(prompt)} chars)")
             return self._response_cache[cache_key]
 
-        max_retries_per_key = 2
-        keys_tried = 0
-        total_keys = len(self.api_keys)
+        # Prioridade de Modelos
+        models_to_try = [MODEL_PREFERENCIAL, MODEL_SECUNDARIO]
         
-        while keys_tried < total_keys:
-            for attempt in range(max_retries_per_key):
-                try:
-                    response = self.client.models.generate_content(
-                        model=MODEL_ID,
-                        contents=prompt,
-                        config={
-                            "temperature": temperature,
-                            "max_output_tokens": max_output_tokens
-                        }
-                    )
-                    if not response or not response.text:
-                        print(f"[!] Resposta vazia da IA (Tentativa {attempt + 1})...")
-                        continue
-                    
-                    # Rastreamento de Tokens
-                    tokens_total = 0
-                    tokens_prompt = 0
-                    tokens_output = 0
-                    if hasattr(response, 'usage_metadata'):
-                        tokens_total = response.usage_metadata.total_token_count
-                        tokens_prompt = response.usage_metadata.prompt_token_count
-                        tokens_output = response.usage_metadata.candidates_token_count
-                    
-                    self._mark_key_usage(tokens_total)
-                    print(f"[METRICS] MODEL={MODEL_ID} TOKENS_PROMPT={tokens_prompt} TOKENS_OUTPUT={tokens_output} TOTAL={tokens_total}")
-                    
-                    self._clear_cooldown() # Se funcionou, não precisa de cooldown
+        while True: # Loop de Rotação de Chave (Select Best Key cuida da ordem)
+            goto_next_key = False
+            for model_id in models_to_try:
+                max_retries = 4
+                for attempt in range(max_retries):
+                    try:
+                        print(f"[*] Tentando {model_id} (Attempt {attempt+1}/{max_retries}) | Model Tier: {'FREE' if self.state[self.current_key]['tier'] == 'free' else 'PAID'}")
+                        response = self.client.models.generate_content(
+                            model=model_id,
+                            contents=prompt,
+                            config={"temperature": temperature, "max_output_tokens": max_output_tokens}
+                        )
                         
-                    self.last_raw_content = response.text.strip()
-                    self._response_cache[cache_key] = self.last_raw_content
-                    return self.last_raw_content
+                        if not response or not response.text:
+                            continue
+                        
+                        # Sucesso
+                        self._mark_key_usage(getattr(response.usage_metadata, 'total_token_count', 0))
+                        self._clear_cooldown()
+                        self.last_raw_content = response.text.strip()
+                        self._response_cache[cache_key] = self.last_raw_content
+                        return self.last_raw_content
 
-                except errors.ServerError as e:
-                    wait_time = (attempt + 1) * 3
-                    print(f"[!] Servidor Sobrecarregado (503). Esperando {wait_time}s... ({e})")
-                    time.sleep(wait_time)
-                    
-                except errors.ClientError as e:
-                    if "429" in str(e) or "QUOTA_EXCEEDED" in str(e).upper():
-                        masked_key = f"{self.current_key[:8]}...{self.current_key[-4:]}"
-                        print(f"[!] Quota Excedida na chave {masked_key}. (Erro 429)")
-                        self._mark_cooldown()
-                        break # Rotaciona para próxima chave
-                        
-                    elif "400" in str(e) or "403" in str(e) or "API_KEY_INVALID" in str(e):
-                         masked_key = f"{self.current_key[:8]}...{self.current_key[-4:]}"
-                         print(f"❌ [CRÍTICO] Chave INVÁLIDA ou REVOGADA: {masked_key}. Desativando permanentemente.")
-                         self.state[self.current_key]["status"] = "invalid"
-                         self._save_state()
-                         break # Rotaciona para próxima chave
-                         
-                    else:
-                        print(f"[!] Erro de API Genérico: {e}")
+                    except errors.ServerError as e:
+                        if "503" in str(e):
+                            wait_time = 2 ** (attempt + 1) + 2 # Exponencial: 4, 6, 10, 18
+                            print(f"[!] Erro 503 ({model_id} sobrecarregado). Backoff: {wait_time}s...")
+                            time.sleep(wait_time)
+                            continue
                         raise e
-                except Exception as e:
-                    print(f"[!] Erro inesperado na IA: {e}")
-                    raise e
-            
-            # Rotaciona para a próxima "melhor" chave
-            keys_tried += 1
+                    
+                    except errors.ClientError as e:
+                        if "429" in str(e) or "QUOTA_EXCEEDED" in str(e).upper():
+                            print(f"[!] Quota Excedida na chave {self.current_key[:8]}... Rodando chave.")
+                            self._mark_cooldown()
+                            goto_next_key = True
+                            break # Sai do loop de retentativas do modelo para trocar a chave
+                        elif any(err in str(e) for err in ["400", "403", "API_KEY_INVALID"]):
+                             print(f"❌ Chave INVÁLIDA: {self.current_key[:8]}.")
+                             self.state[self.current_key]["status"] = "invalid"
+                             self._save_state()
+                             goto_next_key = True
+                             break
+                        else:
+                            raise e
+                    except Exception as e:
+                        print(f"[!] Erro inesperado: {e}")
+                        raise e
+                
+                if goto_next_key:
+                    break # Sai do loop de modelos para trocar a chave
+
+                # Se após as 4 tentativas do modelo 1 deu erro de servidor, ele pula pro modelo 2 na MESMA chave
+                # antes de tentar rodar a chave se for um erro de cota.
+                print(f"[!] Modelo {model_id} indisponível após {max_retries} tentativas.")
+                
+            # Se chegamos aqui, esgotamos os modelos nesta chave ou tivemos erro de cota
             try:
                 self._select_best_key()
                 self._setup_client()
-            except ValueError as ve:
-                print(f"[!] Fim da linha: {ve}")
+            except Exception as ve:
+                print(f"[!] Crítico: Todas as chaves e modelos falharam.")
                 raise ve
-                
-            keys_tried += 1
-            time.sleep(1)
-
-        raise Exception("Todas as chaves de API falharam ou estão em cooldown.")
 
     def _clean_json_text(self, text: str) -> str:
         """Remove blocos de Markdown e tenta reparar JSON truncado."""
@@ -344,8 +336,12 @@ class AIAgent:
         5. **LOGÍSTICA:** Extraia travel_segments array.
         6. **INVENTÁRIO DE VMS:** Se a instrução reduzir a quantidade de VMs, reduza proporcionalmente.
         
-        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.7 - EXHAUSTIVE)
-        1. **MAPEAMENTO COMPLETO DE ITENS**: Extraia CADA item listado na seção "Relação de Itens" ou similar da Instrução. Não agrupe itens de sites diferentes (ex: Site Principal vs Sala Remota).
+        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.8 - EXHAUSTIVE MERGE)
+        1. **MAPEAMENTO COMPLETO DE ITENS (SOMA PDF + CLI)**: 
+           - Extraia CADA item listado na seção "Relação de Itens" (Existentes e Novos) da Instrução.
+           - Extraia os part numbers e detalhes específicos do PDF.
+           - **MESCLE:** Se um item está na instrução (ex: "06 Switches C9200") e no PDF (detalhes técnicos), use a quantidade da instrução (SOBERANIA) mas os detalhes do PDF.
+           - **NÃO EXCLUA:** Itens marcados como "Existentes" na instrução DEVEM constar no `detected_hardware_list` com a nota de que são existentes, pois a engenharia precisará validá-los.
         2. **AÇÃO POR ITEM**:
            - Servidores/Switches/Storages Físicos -> `action_type: "install"`
            - Aplicações/VMs/Workloads -> `action_type: "migration"` ou `action_type: "infra_vm"`
@@ -481,49 +477,39 @@ class AIAgent:
         """
         # Criar prompt sob medida (v1.3 - Alta Fidelidade)
         prompt = f"""
-        # ATUE COMO ENGENHEIRO DE SISTEMAS SÊNIOR E REDATOR TÉCNICO (V1.3)
+        # ATUE COMO ENGENHEIRO DE SISTEMAS SÊNIOR E REDATOR TÉCNICO (V1.4 - ALTA FIDELIDADE)
         
-        Sua tarefa é gerar 6 blocos de texto personalizados em Markdown para uma proposta técnica industrial.
-        O tom deve ser EXTREMAMENTE PROFISSIONAL, SÓBRIO e altamente conectado aos detalhes técnicos fornecidos.
+        Sua tarefa é gerar 6 blocos de texto personalizados e RÍGIDOS em Markdown para uma proposta técnica industrial. 
+        O objetivo é eliminar qualquer tom genérico. Se o texto parecer "boilerplate", ele falhou.
         
         ## INPUTS DO PROJETO
         - RESUMO DO INTENT: {intent_summary}
         - ESCOPO TÉCNICO DETALHADO: {tech_scope}
         - RESUMO DA PROPOSTA (VALORES/HORAS): {proposal_summary}
         
-        ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES RÍGIDAS)
-        1. **Seção: Objetivo Geral (2º Parágrafo)**:
-           - Escreve um parágrafo denso e específico.
-           - Em vez de "melhorar a rede", use "garantir a segmentação lógica de tráfego OT/IT conforme ISA/IEC 62443, eliminando gargalos de latência...".
-           - PROIBIDO: Discurso genérico ou marketing vazio.
-
-        2. **Seção: Benefícios (Mínimo 2 categorias)**:
-           - Gere um bloco com títulos ### (Ex: ### RESILIÊNCIA OPERACIONAL).
-           - Cada categoria deve ter 2-3 bullet-points técnicos explicando o "Porquê" (valor tangível).
-           - Ex: "Redução do MTTR através de diagnósticos centralizados via SNMP v3..."
-
-        3. **Seção: Visão Geral da Solução (Pilar Estrutural)**:
-           - Descreva em 4-5 pontos numerados a jornada tecnológica DESTE projeto.
-           - Adapte os pilares: Se não há Datacenter, não fale de Datacenter. Se é Rede, foque em Backbone, Acesso, Segurança.
-
-        4. **Seção: Protocolo de Testes e Comissionamento**:
-           - Liste validações técnicas reais e específicas do escopo.
-
-        5. **Seção: Estrutura da Equipe**:
-           - Defina responsabilidades práticas para Gestor, Arquiteto e Engenharia de Campo.
-
-        6. **Seção: Cronograma Estimado**:
-           - Divida em fases coerentes com o volume de horas ({proposal_summary}).
+        ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES)
+        1. **Seção: Objetivo Geral**: Escreva um parágrafo técnico denso. Use termos como "resiliência de camada 2", "MTTR", "segurança por design".
+        2. **Seção: Benefícios (Extensivo)**:
+           - Gere no mínimo de 2 a 3 categorias usando títulos ###.
+           - Em cada categoria, adicione 2 a 3 bullet points detalhados.
+           - O texto deve explicar o ganho real para este escopo. Ex: "Eliminação de loops de rede através de protocolos RSTP/STP..."
+        3. **Seção: Visão Geral da Solução (O Coração da Proposta)**:
+           - Descreva a solução em 4 a 5 passos numerados de 1 a 5.
+           - Cada passo deve ter um título em negrito e uma explicação técnica de 2 linhas.
+           - Adapte ao escopo: Se for rede, os passos são Design, Backbone, Acesso, Segurança e SAT.
+        4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT).
+        5. **Seção: Estrutura da Equipe**: Cargos e responsabilidades (Gestor, Engenheiro, Técnico).
+        6. **Seção: Cronograma**: Coerente com {proposal_summary}.
 
         ## REGRAS DE OURO
-        - **PRODUTO**: Não use o nome "IODC" a menos que o escopo envolva explicitamente um micro-datacenter. Use "Solução de Rede", "Infraestrutura de Servidores", etc.
-        - **TOM**: Engenharia pura.
+        - **PROIBIDO**: Termos genéricos, frases vazias ("solução completa", "atender necessidades").
+        - **BRANDING**: Não use "IODC" se não for datacenter. Use nomes genéricos técnicos ("Nova Rede Industrial", "Cluster Hyper-V").
         
         ## FORMATO DA RESPOSTA (JSON ESTRITO)
         {{
-            "custom_objective_md": "...",
-            "custom_benefits_md": "...",
-            "custom_vision_md": "...",
+            "custom_objective_md": "Markdown aqui",
+            "custom_benefits_md": "Markdown aqui (com títulos ### e bullets)",
+            "custom_vision_md": "Markdown aqui (pontos numerados 1 a 5)",
             "testing_protocol_md": "...",
             "team_structure_md": "...",
             "timeline_md": "..."

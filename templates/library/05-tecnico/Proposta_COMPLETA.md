@@ -6,10 +6,10 @@
 {{ custom_objective_md | default("Este informativo tem como objetivo apresentar a solução técnica para a modernização da infraestrutura de TI Industrial da planta " ~ client_company ~ ". O foco é garantir máxima disponibilidade, performance e segurança para as operações críticas, criando uma base escalável para as demandas da Indústria 4.0.") }}
 
 ## 7. BENEFÍCIOS
-{{ custom_benefits_md | default("A implementação da nossa solução integrada trará para a " ~ company_short_name ~ " uma transformação completa em sua capacidade operacional, gerando valor tangível em todas as frentes do negócio.") }}
+{{ custom_benefits_md | default("A implementação da nossa solução trará para a **" ~ company_short_name ~ "** ganhos significativos em resiliência e eficiência:\n\n### CONFIABILIDADE\n*   **Continuidade de Negócio:** Arquitetura projetada para alta disponibilidade e mitigação de falhas.\n*   **Segurança Industrial:** Alinhamento com padrões de mercado para proteção de ativos críticos.\n\n### OPERACIONAIS\n*   **Manutenção Simplificada:** Infraestrutura organizada para facilitar diagnósticos e futuras expansões.") }}
 
 ## 8. VISÃO GERAL DA SOLUÇÃO PROPOSTA
-{{ custom_vision_md | default("Nossa abordagem consiste em um projeto integrado de ponta a ponta, fundamentado em pilares que se constroem sequencialmente para entregar uma solução robusta e operante.") }}
+{{ custom_vision_md | default("Nossa abordagem consiste em um projeto integrado fundamentado em pilares estratégicos que garantem a entrega de uma solução robusta, escalável e de fácil gestão para a **" ~ company_short_name ~ "**.") }}
 
 ## 9. RELAÇÃO DE EQUIPAMENTOS E SOFTWARES ESPECIFICADOS
 Esta seção consolida os ativos de hardware, software e acessórios que fazem parte da solução proposta.
@@ -24,7 +24,7 @@ Esta seção consolida os ativos de hardware, software e acessórios que fazem p
 {% endfor %}
 
 {% elif detected_hardware %}
-*Relação de equipamentos extraída do contexto técnico (RFQ/Orçamento) para fornecimento pelo **CLiente/Terceiros** e validação pela nossa engenharia:*
+*Relação de equipamentos extraída do contexto técnico (RFQ/Orçamento) para fornecimento pelo **Cliente/Terceiros** e validação pela nossa engenharia:*
 
 | ITEM | DESCRIÇÃO TÉCNICA | QTD | REF / PN |
 | :--- | :--- | :--- | :--- |
