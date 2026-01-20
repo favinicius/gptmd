@@ -1,9 +1,11 @@
 ## 6. OBJETIVO GERAL
-{% if project_motivation %}
+{% if custom_objective_md %}
+{{ custom_objective_md }}
+{% elif project_motivation %}
 {{ project_motivation }}
+{% else %}
+Este informativo tem como objetivo apresentar a solução técnica para a modernização da infraestrutura de TI Industrial da planta {{ client_company }}. O foco é garantir máxima disponibilidade, performance e segurança para as operações críticas, criando uma base escalável para as demandas da Indústria 4.0.
 {% endif %}
-
-{{ custom_objective_md | default("Este informativo tem como objetivo apresentar a solução técnica para a modernização da infraestrutura de TI Industrial da planta " ~ client_company ~ ". O foco é garantir máxima disponibilidade, performance e segurança para as operações críticas, criando uma base escalável para as demandas da Indústria 4.0.") }}
 
 ## 7. BENEFÍCIOS
 {{ custom_benefits_md | default("A implementação da nossa solução trará para a **" ~ company_short_name ~ "** ganhos significativos em resiliência e eficiência:\n\n### CONFIABILIDADE\n*   **Continuidade de Negócio:** Arquitetura projetada para alta disponibilidade e mitigação de falhas.\n*   **Segurança Industrial:** Alinhamento com padrões de mercado para proteção de ativos críticos.\n\n### OPERACIONAIS\n*   **Manutenção Simplificada:** Infraestrutura organizada para facilitar diagnósticos e futuras expansões.") }}
@@ -46,10 +48,10 @@ Esta seção consolida os ativos de hardware, software e acessórios que fazem p
 {% endif %}
 
 ### CABOS E ACESSÓRIOS
-Todos os transceivers, cordões ópticos, cabos de rede Categoria 6A e acessórios necessários para a interconexão completa de todos os equipamentos.
+{{ custom_cabling_md | default("Incluso o fornecimento de transceivers, cordões e acessórios para a interconexão de todos os equipamentos." if not hardware_supply_by_client else "O fornecimento de transceivers, cordões e acessórios de conectividade é de responsabilidade da **" ~ client_company ~ "**, conforme premissa de hardware.") }}
 
 ### COMPONENTES DE SOFTWARE E LICENCIAMENTO
-Os softwares necessários para a operação do ambiente (Hypervisors, Windows Server, Backup) estão listados conforme o dimensionamento do cluster.
+{{ custom_software_md | default("Incluso o licenciamento necessário para a operação plena da solução proposta." if not hardware_supply_by_client else "O licenciamento de software e sistemas operacionais é de responsabilidade da **" ~ client_company ~ "**.") }}
 
 ## 10. ESCOPO TÉCNICO E DETALHAMENTO DAS ATIVIDADES
 Nossa metodologia de execução é dividida em blocos lógicos que garantem uma implementação segura e controlada, desde o design até a observabilidade final.

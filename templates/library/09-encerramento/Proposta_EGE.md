@@ -1,11 +1,14 @@
 ## 23. LISTA DE ENTREGÁVEIS
 Ao final do projeto, a {{ company_short_name }} receberá:
-*   **Infraestrutura Física:** Caminhos, pontos de energia e dados 100% instalados, identificados e operacionais.
-*   **Infraestrutura de TI e TA:** Todos os equipamentos listados, instalados, e um ambiente lógico com Datacenter OT (cluster N+1){% if include_network %}, Rede Industrial resiliente{% endif %} e VMs com aplicações validadas conforme escopo.
-*   **Documentação Completa (Databook "As-Built"):** Incluindo projetos de infraestrutura (plantas, diagramas elétricos), diagramas de rede, relatórios de certificação de cabos e fibra, e documentação das configurações lógicas.
-*   **Validação Formal:** Relatório de Testes de Aceitação em Campo (SAT) assinado.
-*   **Capacitação:** Treinamentos realizados e material de apoio entregue.
-*   **Serviço Contínuo:** Acesso à plataforma de suporte e monitoramento para o início do contrato de 5 anos.
+{% if custom_deliverables_md %}
+{{ custom_deliverables_md }}
+{% else %}
+*   **Infraestrutura Física e Lógica:** Ativos instalados, configurados e operacionais conforme escopo técnico.
+*   **Documentação Completa (Databook "As-Built"):** Projetos, diagramas de rede, certificações e relatórios de configuração.
+*   **Protocolo de Validação:** Relatório de Testes de Aceitação em Campo (SAT) assinado.
+*   **Capacitação Técnica:** Treinamentos realizados e material de apoio entregue.
+*   **Suporte e Sustentação:** Acesso à plataforma de monitoramento e canais de suporte conforme contrato.
+{% endif %}
 
 Agradecemos a oportunidade de participar deste importante processo e reiteramos nosso compromisso com a excellence técnica e o sucesso da **{{ client_company }}**.
     

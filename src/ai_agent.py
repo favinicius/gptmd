@@ -497,9 +497,12 @@ class AIAgent:
            - Descreva a solução em 4 a 5 passos numerados de 1 a 5.
            - Cada passo deve ter um título em negrito e uma explicação técnica de 2 linhas.
            - Adapte ao escopo: Se for rede, os passos são Design, Backbone, Acesso, Segurança e SAT.
-        4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT).
+        4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT). Explique a metodologia de testes em um parágrafo denso.
         5. **Seção: Estrutura da Equipe**: Cargos e responsabilidades (Gestor, Engenheiro, Técnico).
-        6. **Seção: Cronograma**: Coerente com {proposal_summary}.
+        6. **Seção: Cronograma**: 
+           - **PROIBIDO**: Mencionar quantidade exata de horas ou dias (Ex: NÃO diga "185 horas" ou "20 dias").
+           - **FOCO**: Use um tom narrativo sobre as fases e dê ênfase aos **Eventos Presenciais** (Kick-off, Levantamento de Campo, Mobilização de Equipe, SAT e Handover).
+           - **ESTRUTURA**: Um parágrafo dissertativo sobre o fluxo do projeto seguido por uma lista sucinta de "Marcos do Plano", reforçando que o cronograma detalhado será definido no início do projeto.
 
         ## REGRAS DE OURO
         - **PROIBIDO**: Termos genéricos, frases vazias ("solução completa", "atender necessidades").
@@ -512,7 +515,10 @@ class AIAgent:
             "custom_vision_md": "Markdown aqui (pontos numerados 1 a 5)",
             "testing_protocol_md": "...",
             "team_structure_md": "...",
-            "timeline_md": "..."
+            "timeline_md": "...",
+            "cabling_context_md": "Texto CONCISO (máximo 2-3 linhas) sobre transceivers, cabos e acessórios (respeitando se o cliente fornece hardware)",
+            "software_licensing_md": "Texto CONCISO (máximo 2-3 linhas) sobre softwares, licenças e SOs (respeitando se o cliente fornece hardware)",
+            "deliverables_list_md": "Lista em bullets dos entregáveis REAIS do projeto (ex: Hardware instalado, Databook As-built, Relatório SAT, Treinamento). Adapte ao escopo."
         }}
         
         Responda APENAS o JSON.

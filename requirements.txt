@@ -1,7 +1,0 @@
-pandas
-pydantic
-google-genai
-python-dotenv
-pypdf
-jinja2
-markupsafe

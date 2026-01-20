@@ -368,14 +368,17 @@ def main():
     except Exception as e:
         print(f"⚠️ Erro no Al-Redaction (Personalização): {e}")
 
-    # Assembly Context Augmentation (v12.0)
+    # Assembly Context Augmentation (v12.3 - Deliverables)
     extra_context = {
         "custom_objective_md": redaction.get("custom_objective_md", ""),
         "custom_benefits_md": redaction.get("custom_benefits_md", ""),
         "custom_vision_md": redaction.get("custom_vision_md", ""),
-        "testing_protocol_md": redaction.get("testing_protocol_md", ""),
-        "team_structure_md": redaction.get("team_structure_md", ""),
-        "timeline_md": redaction.get("timeline_md", "")
+        "custom_testing_protocol": redaction.get("testing_protocol_md", ""),
+        "custom_team_structure": redaction.get("team_structure_md", ""),
+        "custom_timeline": redaction.get("timeline_md", ""),
+        "custom_cabling_md": redaction.get("cabling_context_md", ""),
+        "custom_software_md": redaction.get("software_licensing_md", ""),
+        "custom_deliverables_md": redaction.get("deliverables_list_md", "")
     }
 
     if isinstance(proposal_assembler, LibraryAssembler):

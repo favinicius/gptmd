@@ -4666,5 +4666,471 @@
             }
         ],
         "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-20T18:00:32.357604",
+        "trigger_term": "Implantação de NAS QNAP de Repositório Imutável",
+        "context": "Sala Remota (DR & Backup), para imutabilidade e retenção de longo prazo. Hardware a ser fornecido pelo provedor.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Desenho da Solução",
+                "role": "Arquiteto",
+                "unit_hours": 3.0,
+                "description": "Reunião com stakeholders, análise de infraestrutura, definição de arquitetura de armazenamento (RAID, pools, volumes), desenho de integração de rede, políticas de imutabilidade e retenção, elaboração de design preliminar.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Planejamento de Implementação e Validação de Pré-requisitos",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Revisão e validação do design, criação de plano de implementação detalhado, verificação de pré-requisitos físicos (rack, energia, cabos) e lógicos (IPs, VLANs, firewall), coordenação com equipes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Instalação Física e Cabeamento do NAS",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Desembalagem, montagem do NAS no rack, conexão de cabos de energia (redundância) e rede (gerenciamento e dados), organização e identificação de cabos, primeiro boot do equipamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Configuração Inicial de Rede e Acesso Remoto",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Acesso inicial ao NAS, atribuição de IPs estáticos, configuração de gateway e DNS, teste de conectividade, configuração de acesso remoto seguro (SSH, HTTPS), atualização inicial de firmware.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Configuração Básica do Sistema e Segurança",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Alteração de senha padrão, configuração de fuso horário e NTP, criação de usuários/grupos administrativos, configuração de alertas, habilitação de firewall básico e regras iniciais, atualização de pacotes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Configuração de Pools de Armazenamento e Volumes",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Criação de grupos RAID/Storage Pools conforme design, configuração de volumes e LUNs, habilitação de thin provisioning, configuração de cache SSD, verificação da integridade dos discos e do RAID.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Configuração de Compartilhamentos e Políticas de Imutabilidade",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Criação de compartilhamentos de rede (SMB/NFS), configuração de permissões de acesso (ACLs, AD/LDAP), habilitação e configuração de políticas de imutabilidade (WORM, retenção de snapshots), testes iniciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Integração com Software de Backup Existente",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Adição do NAS QNAP como repositório no software de backup, configuração de credenciais de acesso, criação de tarefas de backup de teste, verificação de conectividade e capacidade de escrita.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Testes Abrangentes e Validação da Imutabilidade",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Execução de backups de teste, tentativas de exclusão/modificação de dados imutáveis, testes de restauração, monitoramento de performance, verificação de logs, simulação de cenários de falha.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Documentação Final e Treinamento Operacional",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Elaboração de documentação 'as-built' (rede, armazenamento, imutabilidade, acesso), atualização de diagramas, criação de guia de operação básica, sessão de treinamento/handover com a equipe de operações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Revisão e Aprovação da Solução",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisão da documentação final e resultados dos testes, validação do cumprimento dos requisitos de negócio e técnicos, aprovação formal da implantação, comunicação de conclusão do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-20T18:01:07.052308",
+        "trigger_term": "Licenciamento e Configuração Veeam Data Platform (VUL)",
+        "context": "Licenciamento para 30 Workloads (assinatura de 5 anos).",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Project Kick-off e Alinhamento de Escopo",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Reunião inicial com stakeholders para definir escopo (30 workloads, 5 anos VUL), objetivos, cronograma e recursos. Alinhamento de expectativas e aprovação do plano.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Análise de Requisitos e Desenho da Arquitetura Veeam",
+                "role": "Arquiteto",
+                "unit_hours": 4.0,
+                "description": "Levantamento detalhado de 30 workloads, ambiente existente (virtualização, armazenamento), requisitos de RTO/RPO e retenção. Desenho da arquitetura Veeam (componentes, sizing, repositórios).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Gestão e Ativação da Licença Veeam VUL",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Confirmação da compra da licença VUL para 30 workloads (5 anos), obtenção das chaves de licença e registro no portal Veeam. Preparação para instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Preparação da Infraestrutura Base para Servidor Veeam",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Verificação de pré-requisitos de hardware/VM para o servidor Veeam, configuração de rede básica (IP, DNS), abertura de portas de firewall necessárias. Instalação de SO e updates.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Instalação do Veeam Backup & Replication Server",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Instalação do Veeam Backup & Replication Server, incluindo banco de dados (SQL Express ou externo), console de gerenciamento e componentes iniciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Configuração de Repositórios e Proxies de Backup",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Adição e configuração de repositórios de backup (primários e secundários, se aplicável). Instalação e configuração de proxies de backup para otimização de desempenho.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Adição de Infraestrutura Virtual e Física ao Veeam",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Adição de vCenter/Hyper-V hosts ou servidores físicos ao console Veeam. Instalação de agentes Veeam (se necessário para servidores físicos).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Criação e Configuração de Jobs de Backup (30 Workloads)",
+                "role": "Analista",
+                "unit_hours": 6.0,
+                "description": "Criação e configuração de jobs de backup para os 30 workloads. Seleção de VMs/servidores, agendamento, políticas de retenção (GFS) e configurações avançadas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Configuração de Notificações e Relatórios Básicos",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Configuração de notificações por e-mail para sucesso/falha de jobs. Agendamento de relatórios básicos de status e desempenho.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Gerenciamento",
+                "name": "Testes de Backup e Restauração e Validação",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Execução de jobs de backup de teste. Validação da integridade dos backups. Realização de testes de restauração (file-level, VM-level) para workloads críticos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Documentação Técnica e Handover da Solução",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Elaboração de documentação técnica da solução implementada (arquitetura, configurações, procedimentos operacionais). Sessão de handover com a equipe de operação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-20T18:01:37.535190",
+        "trigger_term": "Configuração e Integração EGE RASA Appliance",
+        "context": "Para suporte e serviços, conforme pré-projeto.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Análise Detalhada do Pré-projeto e Requisitos Técnicos",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Leitura e compreensão do pré-projeto, identificação de requisitos de rede, segurança, integração e validação do escopo técnico.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Validação de Pré-requisitos de Infraestrutura (Física e Lógica)",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Confirmação de espaço físico, energia, portas de rede, IPs, DNS e regras de firewall com as equipes de infraestrutura.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Recebimento, Inspeção e Registro do Appliance",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Desembalar o equipamento, inspeção visual de danos, conferência de itens da lista de materiais e registro de número de série/patrimônio.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Instalação Física no Rack e Conexão Inicial de Cabos",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Fixação do appliance no rack, conexão de cabos de energia e cabos de rede para gerenciamento e dados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Acesso Inicial e Configuração de Rede Básica (IP, Gateway, DNS)",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Acesso ao appliance via console (KVM/Serial), configuração de IP estático, máscara, gateway, DNS e teste de conectividade básica (ping).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Atualização de Firmware/Sistema Operacional do Appliance",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Verificação de versões, download de pacotes, aplicação de atualizações, monitoramento de reboots e validação pós-atualização.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Configuração de Parâmetros Específicos do EGE RASA",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Configuração de licenças, criação de usuários/grupos, definição de parâmetros de segurança e configuração de serviços essenciais do appliance.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Integração com Sistemas Externos (AD/LDAP, SIEM, Monitoramento)",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Configuração de conectores AD/LDAP, envio de logs para SIEM (syslog/SNMP), integração com ferramentas de monitoramento e testes de autenticação/fluxo de dados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Implementação de Políticas e Regras de Negócio",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Criação/modificação de políticas de acesso, regras de segurança e perfis de serviço conforme o pré-projeto, incluindo testes de impacto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Execução de Testes Funcionais e de Integração",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Execução de casos de teste definidos, validação de funcionalidades, verificação da integração com sistemas externos e registro de resultados/anomalias.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Documentação Pós-Instalação e Atualização de CMDB",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Registro de configurações finais, IPs, credenciais, atualização do CMDB e criação/atualização de runbooks e procedimentos de suporte.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Planejamento",
+                "name": "Validação Final e Aceitação Formal do Cliente/Gestor",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisão dos resultados da implantação, apresentação ao cliente/gestor, obtenção de aprovação formal e encerramento da atividade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
     }
 ]
