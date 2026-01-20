@@ -107,16 +107,22 @@ class LaborEngine:
                         if researched_wbs:
                             proposal.ai_research_count += 1
                             for res_act in researched_wbs:
-                                eff = res_act["unit_hours"] * sizing_factor
-                                if is_complex and res_act["role"] in ["Engenheiro", "Arquiteto"]:
-                                    eff *= complexity_multiplier
+                                unit_h = res_act.get("unit_hours", 0.0)
+                                setup_h = res_act.get("setup_hours", 0.0)
+                                
+                                # A eficiência é calculada como unit + setup/qty para manter a compatibilidade com a tabela MOD
+                                # que multiplica eff * qty_items
+                                single_unit_eff = (unit_h + (setup_h / qty_items if qty_items > 0 else 0)) * sizing_factor
+                                
+                                if is_complex and res_act.get("role") in ["Engenheiro", "Arquiteto"]:
+                                    single_unit_eff *= complexity_multiplier
                                 
                                 self._add_labor_line_from_raw_generic(
                                     proposal, topic_id, res_act["role"], res_act["name"],
-                                    qty_items, team_size, effort, self.db.get_role_cost(res_act["role"]), res_act["category"],
+                                    qty_items, team_size, single_unit_eff, self.db.get_role_cost(res_act["role"]), res_act["category"],
                                     source_ref="AI_RESEARCH_V8"
                                 )
-                                act_total_h = eff * qty_items
+                                act_total_h = single_unit_eff * qty_items
                                 topic_tech_effort[topic_id] += act_total_h
                                 total_tech_hours += act_total_h
                             topic_team_size[topic_id] = team_size

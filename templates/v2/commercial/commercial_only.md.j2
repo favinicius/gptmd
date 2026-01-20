@@ -1,0 +1,38 @@
+# {{ project }} - Anexo Comercial
+
+**Cliente:** {{ client }}  
+**Data:** {{ now | date_pt }}
+
+---
+
+## INVESTIMENTO TOTAL
+
+| Categoria | Valor (R$) |
+| :--- | :---: |
+| Materiais | {{ proposal.total_hardware | brl }} |
+| Mão de Obra | {{ proposal.total_labor_venda | brl }} |
+| Serviços Externos | {{ proposal.total_services_venda | brl }} |
+| Despesas de Viagem | {{ proposal.total_expenses_venda | brl }} |
+| **TOTAL CAPEX** | **{{ proposal.grand_total_venda | brl }}** |
+
+{% if opex %}
+
+## INVESTIMENTO OPEX (SUPORTE MENSAL)
+
+| Descrição | Valor Mensal |
+| :--- | :---: |
+| **Monitoramento e Suporte** | **R$ {{ opex.grand_total_monthly | brl }}** |
+
+**Franquia Mensal:** {{ opex.support_hours_f2 }} horas (F2)
+
+**Contrato {{ opex.contract_duration_months }} meses:** R$ {{ opex.contract_total_value | brl }}
+
+{% endif %}
+
+---
+
+## CONDIÇÕES COMERCIAIS
+
+1. Valores válidos por 30 dias.
+2. Impostos inclusos conforme legislação vigente.
+3. Pagamento conforme cronograma físico-financeiro.

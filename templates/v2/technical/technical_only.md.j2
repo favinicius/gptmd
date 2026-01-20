@@ -1,0 +1,22 @@
+# {{ project }} - Anexo Técnico
+
+**Cliente:** {{ client }}  
+**Data:** {{ now | date_pt }}
+
+---
+
+## ESCOPO TÉCNICO
+
+{% include 'technical/scope_detail.md.j2' %}
+
+## MATERIAIS (MAT)
+
+{% include 'technical/bom_mat.md.j2' %}
+
+## MÃO DE OBRA (MOD)
+
+{% include 'technical/bom_mod.md.j2' %}
+
+## DESPESAS (DIV)
+
+{% include 'technical/bom_div.md.j2' %}

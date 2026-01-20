@@ -1,6 +1,6 @@
 from typing import List, Optional, Literal, Dict, Any
 from enum import Enum
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 def format_br_number(value: float, decimal_places: int = 2) -> str:
     """Formata um float para o padrão brasileiro: 1.234,56"""
@@ -117,16 +117,28 @@ class LogisticsOverride(BaseModel):
     travel_segments: List[int] = Field(default_factory=list) # Array de dias, ex: [5, 5, 5, 5, 15]
     team_size: int = 1
     stay_duration_days: List[int] = Field(default_factory=list)
+    
+    @field_validator('team_size', mode='before')
+    @classmethod
+    def default_team_size(cls, v):
+        """Convert None to 1 for team_size from AI responses."""
+        return 1 if v is None else v
+
 
 
 class TopicMapping(BaseModel):
     topic_id: str
     description: str
 
+class HardwareSpec(BaseModel):
+    description: str
+    quantity: int = 1
+    part_number: Optional[str] = "N/A"
+
 class ScopeItem(BaseModel):
     name: str
     detected_quantity: int = 1
-    action_type: Literal["install", "migrate_p2v", "migration", "v2v_migration", "migrate_v2v", "supply_only", "turnkey", "design", "infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "training", "consulting", "logistics", "other"]
+    action_type: Literal["install", "migration", "design", "infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "training", "consulting", "logistics", "other"] = "install"
     summary_rational: Optional[str] = "" # Explicação simples (1-2 linhas) para o cliente
     context_note: Optional[str] = ""
     visibility: Literal["public", "internal"] = "public" # New field
@@ -153,17 +165,17 @@ class Intent(BaseModel):
     project_motivation: Optional[str] = ""
     company_short_name: Optional[str] = "" 
     scope_items: List[ScopeItem]
-    hardware_supply_by_client: bool = False
+    hardware_supply_by_client: Optional[bool] = False
     # Governance Fields (v2.0)
     needs_clarification: bool = False
     clarification_questions: List[str] = Field(default_factory=list)
     confidence_score: float = 1.0
     logistics_override: Optional[LogisticsOverride] = None
     detailed_logistics: Optional[LogisticsPlan] = None
-    estimated_duration_weeks: int = 1
+    estimated_duration_weeks: Optional[int] = 4
     governance_level: Literal["standard", "intensive"] = "standard"
-    work_on_weekends: bool = False
-    requires_training: bool = False # Flag for training/course requirement
+    work_on_weekends: Optional[bool] = False
+    requires_training: Optional[bool] = False # Flag for training/course requirement
     
     # --- New Template Routing Fields (v5.0) ---
     selected_tech_template: str = "iodc_full.md"
@@ -173,6 +185,9 @@ class Intent(BaseModel):
     # --- Sizing Thermometers (v6.0) ---
     sizing_mode: SizingMode = SizingMode.STANDARD
     contingency_level: ContingencyLevel = ContingencyLevel.STANDARD
+    
+    # --- Context-Aware Extractions (v7.0) ---
+    detected_hardware_list: List[HardwareSpec] = Field(default_factory=list)
 
 
 
@@ -219,6 +234,23 @@ class CalculatedExpense(BaseModel):
     unit_price: float
     total_price: float
 
+class OpexItem(BaseModel):
+    item_name: str
+    quantity: int
+    unit_price: float
+    total_price: float
+    category: str # 'monitoring', 'connectivity'
+
+class OpexData(BaseModel):
+    items: List[OpexItem] = Field(default_factory=list)
+    total_monitoring_monthly: float = 0.0
+    total_connectivity_monthly: float = 0.0
+    grand_total_monthly: float = 0.0
+    support_hours_f2: int = 0
+    support_hours_f3_rule: str = "1h F3 consome 3h F2"
+    contract_duration_months: int = 12
+    contract_total_value: float = 0.0
+
 class ProposalData(BaseModel):
     hardware_table: List[CalculatedHardware] = Field(default_factory=list)
     labor_table: List[CalculatedLabor] = Field(default_factory=list)
@@ -240,3 +272,6 @@ class ProposalData(BaseModel):
     
     grand_total: float = 0.0
     ai_research_count: int = 0
+    
+    # --- OPEX / Recurring Costs (v10.0) ---
+    opex_data: Optional[OpexData] = None

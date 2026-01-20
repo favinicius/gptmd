@@ -1,6 +1,8 @@
 import argparse
 import os
 import json
+import csv
+import time
 from pathlib import Path
 from datetime import datetime
 from src.ai_agent import AIAgent
@@ -9,6 +11,7 @@ from src.database import Database
 from src.models import ProposalData, TopicMapping, format_br_currency, format_br_number, SizingMode, ContingencyLevel
 from src.engines import LaborEngine, LogisticsEngine, MaterialEngine, ProposalAssembler, ResearchEngine, LibraryAssembler
 from src.engines.pricing_engine import PricingEngine
+from src.engines.opex_engine import OpexEngine
 from src.config.commerce_config import PRAZO_PADRAO_DIAS
 
 def apply_margins(proposal: ProposalData, term_days: int = PRAZO_PADRAO_DIAS):
@@ -43,16 +46,7 @@ def apply_margins(proposal: ProposalData, term_days: int = PRAZO_PADRAO_DIAS):
     # 5. Cálculo dos Valores de Venda (MOD, SET, DIV)
     PricingEngine.calculate_proposal_selling_prices(proposal, term_days)
     
-    # Grand Total (prop.grand_total_venda já calculado no PricingEngine)
-    proposal.grand_total = proposal.grand_total_venda
-    proposal.grand_total_venda = (
-        proposal.total_hardware +
-        proposal.total_labor_venda +
-        proposal.total_services +
-        proposal.total_expenses
-    )
-    
-    # Grand Total Técnico/Custo (Pode ser mantido para compatibilidade, ou removido)
+    # Sincroniza grand_total (usado em alguns templates) com grand_total_venda
     proposal.grand_total = proposal.grand_total_venda
 
 def format_clean_br(val):
@@ -97,9 +91,48 @@ def save_md(output_dir, filename, title, items):
                         f.write(f"| {item.description} | {format_clean_br(item.qty)} | {format_br_currency(item.unit_price)} | {format_br_currency(item.total_price)} |\n")
     return path
 
+def save_csv(output_dir: Path, filename: str, items: list):
+    """
+    Saves a list of Pydantic models to a CSV file.
+    Uses ';' as delimiter for Brazilian Excel compatibility and utf-8-sig.
+    Numbers are formatted with Brazilian decimal separator (comma).
+    """
+    if not items:
+        return None
+    
+    path = output_dir / filename
+    
+    # Extract fieldnames from the first item
+    if hasattr(items[0], 'model_dump'):
+        fieldnames = list(items[0].model_dump().keys())
+    else:
+        return None
+
+    with open(path, "w", encoding="utf-8-sig", newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';')
+        writer.writeheader()
+        for item in items:
+            data = item.model_dump()
+            # Format numeric fields to Brazilian style
+            formatted_data = {}
+            for k, v in data.items():
+                if isinstance(v, (float, int)) and not isinstance(v, bool):
+                    if isinstance(v, float):
+                        # Use comma for decimal, no thousands separator for cleaner Excel ingestion
+                        formatted_data[k] = f"{v:.2f}".replace('.', ',')
+                    else:
+                        formatted_data[k] = str(v)
+                else:
+                    formatted_data[k] = v
+            writer.writerow(formatted_data)
+            
+    return path
+
 def main():
+    start_time = time.time()
+    print("DEBUG: Entrou no main()")
     parser = argparse.ArgumentParser(description="GPT-Md: Technical Proposal Generator - Phase 3 (Engines)")
-    parser.add_argument("--tech_ref", type=str, help="Path to technical PDF/docs", default="input/docs")
+    # Remove redundant --tech_ref and make --use-docs take files
     parser.add_argument("--template_dir", type=str, help="Path to Markdown templates", default="templates/")
     parser.add_argument("--instruction", type=str, help="Instruction text or path to .txt", default="input/instruction.txt")
     parser.add_argument("--split", action="store_true", help="Force split of technical and commercial proposals (and generate all 3 versions in dev mode)")
@@ -107,7 +140,7 @@ def main():
     parser.add_argument("--contingency", type=str, choices=["none", "low", "standard", "high"], help="Override contingency level (SHE/Buffer)")
     parser.add_argument("--help-metrics", action="store_true", help="Show detailed metrics table and exit")
     parser.add_argument("--debug", action="store_true", help="Enable verbose debug and save raw AI responses")
-    parser.add_argument("--use-docs", action="store_true", help="Load and use technical documents from --tech_ref")
+    parser.add_argument("--use-docs", nargs="+", help="Explicit technical documents (PDF/TXT/MD) to load for context", metavar="FILE")
     parser.add_argument("--legacy-assembler", action="store_true", help="Use old non-Jinja assembler")
     parser.add_argument("--term", type=int, default=PRAZO_PADRAO_DIAS, help="Payment term in days (default: 30)")
     
@@ -142,9 +175,10 @@ def main():
     print("Loading contexts...")
     docs_content = ""
     if args.use_docs:
-        print(f"[*] Carregando documentos técnicos de {args.tech_ref}...")
-        loader = ContextLoader(docs_path=args.tech_ref)
-        docs_content = loader.load_technical_docs()
+        for doc_path in args.use_docs:
+            print(f"[*] Carregando documento técnico: {doc_path}...")
+            loader = ContextLoader(docs_path=doc_path)
+            docs_content += loader.load_technical_docs()
     else:
         print("[*] Documentos técnicos ignorados (Modo Instrução Soberana).")
     
@@ -158,17 +192,23 @@ def main():
     material_engine = MaterialEngine(db)
     material_engine = MaterialEngine(db)
     
-    # Seleção de Assembler (v9.0: Suporte Híbrido + Library)
+    # Seleção de Assembler (v9.6: Força Bruta Premium)
+    library_path = Path("templates/library")
+    
     if args.legacy_assembler:
         print("[*] Usando Assembler V1 (Legado/Estático)")
         proposal_assembler = ProposalAssembler(agent)
-    elif args.template_dir == "templates/library":
+    elif library_path.exists() and not args.template_dir.endswith("v2"):
         print("[*] Usando LibraryAssembler (V3 - Alta Fidelidade)")
-        proposal_assembler = LibraryAssembler(library_dir=args.template_dir)
+        proposal_assembler = LibraryAssembler(library_dir=str(library_path))
     else:
-        print("[*] Usando Assembler V2 (Jinja2/Fidelidade)")
+        print(f"[*] Usando Assembler V2 (Jinja2/Fidelidade) - Path: {args.template_dir}")
         from src.engines import ProposalAssemblerV2
         proposal_assembler = ProposalAssemblerV2(template_dir=str(Path(args.template_dir) / "v2"))
+
+
+
+
 
     # --- 1. Instruction Processing ---
     instruction_text = ""
@@ -271,6 +311,9 @@ def main():
     labor_engine.calculate_labor(intent, proposal, requires_certification)
     logistics_engine.calculate_logistics(intent, proposal)
     
+    # Run OPEX Engine (Monthly Recurring Costs) - v10.0
+    proposal.opex_data = OpexEngine.calculate_opex(proposal, intent.scope_items)
+    
     # Apply Margins
     apply_margins(proposal, term_days=args.term)
     
@@ -304,8 +347,41 @@ def main():
     
     print(f"  - Visibilidade: {len(intent.scope_items)} itens totais -> {len(public_intent.scope_items)} itens públicos.")
     
+    processing_duration = time.time() - start_time
+    
+    # Stage 3: Technical Redaction (Personalization) - v11.0
+    print("Stage 3: AI Technical Redaction...")
+    tech_summary_for_ai = "\n".join([f"- {t.description}" for t in proposal.topics])
+    proposal_summary_for_ai = f"Total Horas: {sum(i.hours for i in proposal.labor_table)}h | Total CAPEX: {format_br_currency(proposal.grand_total_venda)}"
+    
+    redaction = {}
+    try:
+        redaction = agent.compose_technical_redaction(
+            intent_summary=intent.project_motivation,
+            tech_scope=tech_summary_for_ai,
+            proposal_summary=proposal_summary_for_ai
+        )
+        if args.debug:
+            with open(output_dir / "raw_ai_proposal.txt", "w", encoding="utf-8") as f:
+                f.write("=== TECHNICAL REDACTION ===\n")
+                f.write(json.dumps(redaction, indent=4, ensure_ascii=False))
+    except Exception as e:
+        print(f"⚠️ Erro no Al-Redaction (Personalização): {e}")
+
+    # Assembly Context Augmentation
+    extra_context = {
+        "custom_testing_protocol": redaction.get("testing_protocol_md", ""),
+        "custom_team_structure": redaction.get("team_structure_md", ""),
+        "custom_timeline": redaction.get("timeline_md", "")
+    }
+
     if isinstance(proposal_assembler, LibraryAssembler):
-        proposal_outputs = proposal_assembler.assemble(proposal, public_intent)
+        proposal_outputs = proposal_assembler.assemble(
+            proposal, 
+            public_intent, 
+            processing_time=processing_duration,
+            extra_context=extra_context
+        )
     elif hasattr(proposal_assembler, 'assemble'):
         # V2
         proposal_outputs = proposal_assembler.assemble(proposal, public_intent, output_path=str(output_dir))
@@ -327,6 +403,12 @@ def main():
     save_md(output_dir, f"SET_{timestamp}.md", "Serviços Externos", proposal.service_table)
     save_md(output_dir, f"DIV_{timestamp}.md", "Despesas de Viagem", proposal.expense_table)
     save_md(output_dir, f"TOPICS_{timestamp}.md", "Índice de Tópicos", proposal.topics)
+
+    # Save CSVs for Excel Import (v11.0)
+    save_csv(output_dir, f"MAT_{timestamp}.csv", proposal.hardware_table)
+    save_csv(output_dir, f"MOD_{timestamp}.csv", proposal.labor_table)
+    save_csv(output_dir, f"SET_{timestamp}.csv", proposal.service_table)
+    save_csv(output_dir, f"DIV_{timestamp}.csv", proposal.expense_table)
 
 
     # Save Logistics Audit (v2.5)

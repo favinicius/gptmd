@@ -344,74 +344,65 @@ class AIAgent:
         5. **LOGÍSTICA:** Extraia travel_segments array.
         6. **INVENTÁRIO DE VMS:** Se a instrução reduzir a quantidade de VMs, reduza proporcionalmente.
         
-        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.5 - CLEANING)
-        1. **client_name:** Extrair da instrução.
-        2. **company_name:** Extrair da instrução.
-        3. **contact_name:** Extrair da instrução (ex: "Ricardo").
-        3. **NÃO USE PARÊNTESES DE METADADOS:** Nunca inclua (1 un), (install), ou qualquer tag técnica no campo `name` ou `project_name`. O nome deve ser limpo: "Implantação de Servidores" e não "Implantação de Servidores (install)".
-        4. **CONCISAO E MATCHING:**
-           - Use nomes de itens diretos: "Implantação de Servidores", "Implantação de Storage", "Implantação de Switches", "Implantação de Firewall", "Implantar o Serviço de Backup".
-           - Evite nomes floreados como "Análise e Configuração Logica de Redes de Alta Performance". Use "Implantação de Switches" ou "Rede de Dados".
-        5. **INVENTÁRIO DE VMS:** 
-        
-        ## REGRAS DE ROTEAMENTO (V5.5 - PREVC)
-        1. **selected_tech_template**: 
-           - **Redes Industriais (Switches/OT):** Use `struct_network_industrial.md` se o escopo for focado em anéis óticos, switches industriais ou segmentação.
-           - **Cabeamento/Serviços:** Use `struct_services_cabling.md` se o foco for lançamento de cabos, fusão de fibra, certificação e passivos.
-           - **Migração/Upgrade:** Use `struct_server_migration.md` se for P2V, V2V, troca de servidores ou storage.
-           - **Datacenter Sem Rede:** Use `iodc_no_net.md` se for explicitamente solicitado excluir a rede.
-           - **Datacenter Completo (Default):** Use `iodc_full_structured.md` para projetos Turnkey (Infra + TI) completos.
-        2. **selected_comm_template**:
-           - Se a instrução mencionar "suporte mensal", "SLA", "recorrência" ou "manutenção": `hybrid_capex_opex.md`.
-           - Caso contrário (Default): `capex_only.md`.
-        3. **split_proposal**: 
-           - Defina como `true` se o usuário solicitar "propostas separadas", "compliance", "anexo técnico", ou "arquivos técnicos e comerciais distintos".
-
-        ## REGRAS DE TERMÔMETRO (V6.0)
-        Analise o tom e keywords da instrução para calibrar a proposta:
-        1. **sizing_mode**: "aggressive", "secure", "standard".
-        2. **contingency_level**: "none", "low", "standard", "high".
+        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.7 - EXHAUSTIVE)
+        1. **MAPEAMENTO COMPLETO DE ITENS**: Extraia CADA item listado na seção "Relação de Itens" ou similar da Instrução. Não agrupe itens de sites diferentes (ex: Site Principal vs Sala Remota).
+        2. **AÇÃO POR ITEM**:
+           - Servidores/Switches/Storages Físicos -> `action_type: "install"`
+           - Aplicações/VMs/Workloads -> `action_type: "migration"` ou `action_type: "infra_vm"`
+           - Planejamento/Design -> `action_type: "design"`
+        3. **NÃO IGNORE O FINAL DO TEXTO**: Certifique-se de capturar itens como Backup, DR e Migração que costumam estar no final.
+        4. **CLIENTE VS PROVEDOR**: Cliente = OFI. Provedor = EGE.
+        5. **ESTIMATIVA DE HORAS**: Se a instrução der um tempo total para uma fase (ex: "20 dias de planejamento"), coloque esse valor total (em horas, ex: 160) no campo `explicit_total_hours` do item correspondente.
 
         ## FORMATO DE SAÍDA (JSON ESTRITO)
         {{
-            "client_name": "String",
-            "company_name": "String",
-            "contact_name": "String",
-            "company_short_name": "String (Apelido/Sigla. Ex: 'MetalMec', 'OFI', 'Norte-Sul'. Se não houver, use o primeiro nome)",
-            "project_name": "String (Limpo, sem metadados)",
-            "project_motivation": "Parágrafo conciso (2-3 linhas) descrevendo os fatos e a necessidade real da EMPRESA cliente que motivam este projeto. Evite termos vagos, exageros ou tom pessimista. Foque na dor técnica ou de negócio factual extraída do contexto.",
+            "client_name": "String (Primeiro nome ou nome informal do cliente)",
+            "company_name": "String (NOME COMPLETO DA EMPRESA DO CLIENTE - Razão Social ou Nome Fantasia Completo)",
+            "contact_name": "String (Nome Completo do Contato Principal)",
+            "company_short_name": "String (Nome Curto da Empresa para Redação)",
+            "project_name": "String",
+            "project_motivation": "String",
             "hardware_supply_by_client": boolean,
-            "estimated_duration_weeks": int (Default: 1),
+            "estimated_duration_weeks": int,
             "governance_level": "standard" | "intensive",
             "work_on_weekends": boolean,
             "requires_training": boolean,
-            "selected_tech_template": "iodc_full_structured.md" | "iodc_no_net.md" | "struct_network_industrial.md" | "struct_services_cabling.md" | "struct_server_migration.md",
-            "selected_comm_template": "capex_only.md" | "hybrid_capex_opex.md",
+            "selected_tech_template": "iodc_full_structured.md",
+            "selected_comm_template": "hybrid_capex_opex.md",
             "split_proposal": boolean,
             "sizing_mode": "aggressive" | "standard" | "secure" | "critical",
             "contingency_level": "none" | "low" | "standard" | "high",
             "scope_items": [
                 {{
-                    "name": "Nome do Item (Limpo)",
+                    "name": "String (Ex: Implantação de Servidores Dell R670)",
                     "detected_quantity": int,
-                    "action_type": "infra_vm" | "heavy_app_vm" | "db_vm" | "vdi_vm" | "install" | "design" | "migration",
-                    "summary_rational": "Explicação técnica e de negócio simplificada (1-2 linhas) para o cliente leigo e técnico.",
-                    "context_note": "Resumo conciso da necessidade",
-                    "visibility": "public" | "internal",
-                    "explicit_total_hours": int,
+                    "action_type": "install" | "migration" | "design" | "infra_vm",
+                    "summary_rational": "String",
+                    "context_note": "String (Inclua detalhes como site, modelo, etc)",
+                    "visibility": "public",
+                    "explicit_total_hours": int (0 se não houver override),
                     "is_weekend": boolean
                 }}
             ],
             "logistics_override": {{
-                "transport_provider": "client" | "provider",
+                "transport_provider": "provider",
                 "consulting": boolean,
-                "team_size": int (Default: 1),
-                "travel_segments": [int] (Ex: [5] para 5 dias)
+                "team_size": int,
+                "travel_segments": [int]
             }},
             "needs_clarification": boolean,
-            "clarification_questions": ["String"],
-            "confidence_score": float
+            "clarification_questions": [],
+            "confidence_score": float,
+            "detected_hardware_list": [
+                {{
+                    "description": "String (Descrição do equipamento)",
+                    "quantity": int,
+                    "part_number": "String"
+                }}
+            ]
         }}
+
+
 
         Responda APENAS com o JSON puro.
         """
@@ -482,6 +473,77 @@ class AIAgent:
         except Exception as e:
             print(f"CRÍTICO: Erro de Parsing na Logística. Verifique raw_ai_interpretation.txt. Erro: {e}")
             raise e
+
+    def compose_technical_redaction(self, intent_summary: str, tech_scope: str, proposal_summary: str) -> Dict[str, str]:
+        """
+        Stage 3: Technical Redaction (V1.3 - Deep Personalization).
+        Gera blocos dinâmicos para contornar textos hardcoded e elevar a qualidade técnica.
+        """
+        # Criar prompt sob medida (v1.3 - Alta Fidelidade)
+        prompt = f"""
+        # ATUE COMO ENGENHEIRO DE SISTEMAS SÊNIOR E REDATOR TÉCNICO (V1.3)
+        
+        Sua tarefa é gerar 6 blocos de texto personalizados em Markdown para uma proposta técnica industrial.
+        O tom deve ser EXTREMAMENTE PROFISSIONAL, SÓBRIO e altamente conectado aos detalhes técnicos fornecidos.
+        
+        ## INPUTS DO PROJETO
+        - RESUMO DO INTENT: {intent_summary}
+        - ESCOPO TÉCNICO DETALHADO: {tech_scope}
+        - RESUMO DA PROPOSTA (VALORES/HORAS): {proposal_summary}
+        
+        ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES RÍGIDAS)
+        1. **Seção: Objetivo Geral (2º Parágrafo)**:
+           - Escreve um parágrafo denso e específico.
+           - Em vez de "melhorar a rede", use "garantir a segmentação lógica de tráfego OT/IT conforme ISA/IEC 62443, eliminando gargalos de latência...".
+           - PROIBIDO: Discurso genérico ou marketing vazio.
+
+        2. **Seção: Benefícios (Mínimo 2 categorias)**:
+           - Gere um bloco com títulos ### (Ex: ### RESILIÊNCIA OPERACIONAL).
+           - Cada categoria deve ter 2-3 bullet-points técnicos explicando o "Porquê" (valor tangível).
+           - Ex: "Redução do MTTR através de diagnósticos centralizados via SNMP v3..."
+
+        3. **Seção: Visão Geral da Solução (Pilar Estrutural)**:
+           - Descreva em 4-5 pontos numerados a jornada tecnológica DESTE projeto.
+           - Adapte os pilares: Se não há Datacenter, não fale de Datacenter. Se é Rede, foque em Backbone, Acesso, Segurança.
+
+        4. **Seção: Protocolo de Testes e Comissionamento**:
+           - Liste validações técnicas reais e específicas do escopo.
+
+        5. **Seção: Estrutura da Equipe**:
+           - Defina responsabilidades práticas para Gestor, Arquiteto e Engenharia de Campo.
+
+        6. **Seção: Cronograma Estimado**:
+           - Divida em fases coerentes com o volume de horas ({proposal_summary}).
+
+        ## REGRAS DE OURO
+        - **PRODUTO**: Não use o nome "IODC" a menos que o escopo envolva explicitamente um micro-datacenter. Use "Solução de Rede", "Infraestrutura de Servidores", etc.
+        - **TOM**: Engenharia pura.
+        
+        ## FORMATO DA RESPOSTA (JSON ESTRITO)
+        {{
+            "custom_objective_md": "...",
+            "custom_benefits_md": "...",
+            "custom_vision_md": "...",
+            "testing_protocol_md": "...",
+            "team_structure_md": "...",
+            "timeline_md": "..."
+        }}
+        
+        Responda APENAS o JSON.
+        """
+
+        raw_text = self.generate_content(prompt, temperature=0.3)
+        clean_text = self._clean_json_text(raw_text)
+        
+        try:
+            return json.loads(clean_text)
+        except Exception:
+            # Fallback simple dict if AI fails
+            return {
+                "testing_protocol_md": "Protocolo de testes a ser definido no kick-off.",
+                "team_structure_md": "Equipe multidisciplinar de TI/TA.",
+                "timeline_md": "Cronograma a ser detalhado após aprovação."
+            }
 
     def research_technical_wbs(self, activity_name: str, context: str = "") -> List[Dict[str, Any]]:
         """

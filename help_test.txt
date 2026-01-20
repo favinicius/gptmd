@@ -1,0 +1,27 @@
+DEBUG: Entrou no main()
+usage: main.py [-h] [--tech_ref TECH_REF] [--template_dir TEMPLATE_DIR]
+               [--instruction INSTRUCTION] [--split]
+               [--sizing {aggressive,standard,secure,critical}]
+               [--contingency {none,low,standard,high}] [--help-metrics]
+               [--debug] [--use-docs] [--legacy-assembler] [--term TERM]
+
+GPT-Md: Technical Proposal Generator - Phase 3 (Engines)
+
+options:
+  -h, --help            show this help message and exit
+  --tech_ref TECH_REF   Path to technical PDF/docs
+  --template_dir TEMPLATE_DIR
+                        Path to Markdown templates
+  --instruction INSTRUCTION
+                        Instruction text or path to .txt
+  --split               Force split of technical and commercial proposals (and
+                        generate all 3 versions in dev mode)
+  --sizing {aggressive,standard,secure,critical}
+                        Override sizing mode (0.85x, 1.0x, 1.4x, 1.6x)
+  --contingency {none,low,standard,high}
+                        Override contingency level (SHE/Buffer)
+  --help-metrics        Show detailed metrics table and exit
+  --debug               Enable verbose debug and save raw AI responses
+  --use-docs            Load and use technical documents from --tech_ref
+  --legacy-assembler    Use old non-Jinja assembler
+  --term TERM           Payment term in days (default: 30)

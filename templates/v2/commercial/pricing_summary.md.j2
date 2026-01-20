@@ -7,6 +7,39 @@
 | **3. Logística & Despesas (DIV)** | R$ {{ proposal.total_expenses | brl }} |
 | **4. Serviços Especializados (SET)** | R$ {{ proposal.total_services | brl }} |
 | | |
-| **TOTAL GERAL DO PROJETO** | **R$ {{ proposal.grand_total | brl }}** |
+| **TOTAL GERAL DO PROJETO (CAPEX)** | **R$ {{ proposal.grand_total | brl }}** |
 
 Obs: Valores com impostos inclusos (IPI nas mercadorias, ISS nos serviços).
+
+{% if opex %}
+
+---
+
+## Investimento de Suporte Recorrente (OPEX)
+
+O serviço de Monitoramento e Suporte Contínuo (NOC) contempla a gestão proativa dos seguintes ativos:
+
+| Item Monitorado / Conectividade | Quantidade |
+| :--- | :---: |
+{% for item in opex.items -%}
+| {{ item.item_name }} | {{ item.quantity }} |
+{% endfor %}
+
+### Investimento Mensal
+
+| Descrição | Valor Mensal |
+| :--- | :---: |
+| **Monitoramento, Suporte e Conectividade** | **R$ {{ opex.grand_total_monthly | brl }}** |
+
+> **Franquia de Atendimento Técnico:**  
+> O contrato contempla uma franquia mensal de **{{ opex.support_hours_f2 }} horas** para atendimentos remotos em horário comercial (F2).  
+> *Atendimentos fora de horário (F3 - Madrugada/Feriados) consomem a franquia na proporção de 1:3 (1h F3 consome 3h de franquia).*
+
+### Projeção do Contrato de Suporte
+
+| Período | Investimento Total Estimado |
+| :--- | :---: |
+| **{{ opex.contract_duration_months }} Meses** | **R$ {{ opex.contract_total_value | brl }}** |
+
+{% endif %}
+

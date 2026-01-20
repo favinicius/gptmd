@@ -2,8 +2,8 @@ import os
 import re
 from datetime import datetime
 from pathlib import Path
-from jinja2 import Template
-from src.models import ProposalData, Intent, format_br_currency
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+from src.models import ProposalData, Intent, format_br_currency, format_br_number
 
 class LibraryAssembler:
     """
@@ -12,6 +12,13 @@ class LibraryAssembler:
     def __init__(self, library_dir="templates/library"):
         self.library_dir = Path(library_dir)
         self.default_source = "Proposta_EGE"
+        # Setup Jinja Environment
+        self.env = Environment(
+            autoescape=select_autoescape(['html', 'xml'])
+        )
+        self.env.filters["brl"] = format_br_currency
+        self.env.filters["br_num"] = format_br_number
+
 
     def _get_block_content(self, section_name: str, source_name: str = None) -> str:
         """Finds and reads the content of a block in the library."""
@@ -38,7 +45,7 @@ class LibraryAssembler:
             content = re.sub(r'^markdown\s*\n', '', content)
             return content.strip()
 
-    def assemble(self, proposal: ProposalData, intent: Intent) -> dict:
+    def assemble(self, proposal: ProposalData, intent: Intent, processing_time: float = 0.0, extra_context: dict = None) -> dict:
         """
         Assembles the proposal(s) based on intent.
         Returns a dict of {filename: content}.
@@ -86,23 +93,27 @@ class LibraryAssembler:
         project_cleaned = re.sub(r'\s+(para a|da|na)\s+planta$', '', project_cleaned, flags=re.I).strip()
         project_cleaned = re.sub(r'\s+S\.?A\.?$', '', project_cleaned, flags=re.I).strip()
         
+        # Format processing time (e.g. 1.2s)
+        benchmark_str = f"{processing_time:.1f}s"
+
         context = {
             "proposal_id": base_id,
             "project_name": project_cleaned,
-            "product_name": "IODC", # Solution Branding
-            "client_fullname": intent.client_name,
-            "client_company": intent.company_name,
+            "product_name": "IODC" if any(x in project_cleaned.upper() for x in ["MODULAR", "CLUSTER", "IODC", "DATACENTER"]) else "Solução Integrada de TI", 
+            "client_fullname": intent.contact_name or "Responsável Técnico",
+            "client_company": intent.company_name or intent.client_name,
             "provider_name": "EGE Soluções Industriais",
             "provider_short": "EGE",
             "date": datetime.now().strftime("%d/%m/%Y"),
             "city": "Jundiaí",
             "state": "SP",
             "include_network": include_network,
-            "company_short_name": intent.company_short_name or intent.client_name.split()[0], 
+            "company_short_name": intent.company_short_name or (intent.company_name.split()[0] if intent.company_name else "Cliente"), 
             "total_hardware": format_br_currency(proposal.total_hardware),
             "total_hardware_raw": proposal.total_hardware,
             "total_labor": format_br_currency(proposal.total_labor_venda),
             "total_services": format_br_currency(proposal.total_services_venda),
+            "total_services_venda_raw": proposal.total_services_venda,
             "total_expenses": format_br_currency(proposal.total_expenses_venda),
             "total_expenses_raw": proposal.total_expenses,
             "grand_total": format_br_currency(proposal.grand_total_venda),
@@ -115,7 +126,18 @@ class LibraryAssembler:
             "ai_research_count": proposal.ai_research_count,
             "total_hours": sum(item.hours for item in proposal.labor_table),
             "payment_term": proposal.payment_term,
+            "opex": proposal.opex_data, # Novos dados calculados pelo OpexEngine
+            "processing_time_bench": benchmark_str,
+            "detected_hardware": intent.detected_hardware_list,
+            "tech_template_name": intent.selected_tech_template,
+            "comm_template_name": intent.selected_comm_template,
         }
+
+        # Merge Extra Context (Stage 3 Redaction)
+        if extra_context:
+            context.update(extra_context)
+
+
         
         # Helper: Hierarchical Technical Scope (9 Pillars)
         technical_hierarchy = [
@@ -256,7 +278,7 @@ class LibraryAssembler:
                 raw_content = self._get_block_content(section)
                 
             try:
-                template = Template(raw_content)
+                template = self.env.from_string(raw_content)
                 rendered = template.render(**context)
                 full_md += rendered + "\n\n"
             except Exception as e:

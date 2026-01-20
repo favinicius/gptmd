@@ -58,7 +58,8 @@ class ProposalAssemblerV2:
             "intent": intent,
             "now": datetime.now(),
             "client": intent.client_name,
-            "project": intent.project_name
+            "project": intent.project_name,
+            "opex": proposal.opex_data # Atalho para o template
         }
 
         outputs = {}

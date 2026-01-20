@@ -1,17 +1,24 @@
 Cliente: OFI - OLAM Foods Ingredients S.A.
 Contato: Gilmar Corrêa
 
-O Gilmar identificou que a rede de automação atual é um gargalo crítico, operando com switches não gerenciáveis e conversores de mídia que geram instabilidade constante. A prioridade agora é a modernização do Core Industrial através de um stack de switches Cisco (Meraki) para garantir segmentação via VLANs conforme a norma ISA-95.
+O Gilmar identificou que a rede de automação atual é um gargalo crítico, operando com switches gerenciáveis mas não devidamente configurados e diversos conversores de mídia que geram instabilidade constante. A prioridade agora é a modernização da Rede, com inclusão de Switches Core no lugar de um switch de acesso usado como "core" e a redistribuição deste, substituindo um switch com recursos limitados. Configuração de todos switches existentes, conforme a norma ISA-95.
 
 O projeto exige o ajuste lógico de todos os switches de campo: vamos aproveitar as duas fibras ópticas existentes em cada ponto para criar links redundantes (ativo/backup) utilizando Port-channel conectados ao novo stack. Este desenho de rede é a fundação para o futuro Datacenter e a sala de Disaster Recovery, devendo prever as rotas e a largura de banda necessárias para o tráfego de replicação e vMotion que virá na fase seguinte.
 
+Relação de Itens existentes:
+06 Switches Cisco C9200
+01 Switch Cisco SG200
 
-Relação de Itens:
+Um dos switches C9200 está sendo usado como "core" e vai substituir o SG200, que será removido.
+
+
+Relação de Itens novos:
 02 Switches Cisco C9300 24 portas com gerenciamento Meraki.
 02 Módulos de rede C9300 com 8 portas 10GE.
 02 Licenças Meraki Enterprise para C9300 (3 anos).
 02 Cabos de Stack (50cm) e 02 Cabos de Stack Power (30cm).
 24 Módulos transceptores SFP-10G-SR-S (Enterprise-Class) para interconexão do Core com o restante da planta.
+
 
 Planejamento: Fase de 10 dias dedicada ao detalhamento do projeto de rede e cronograma (sem detalhar este tempo na proposta comercial)
 Logística: Equipe de 01 Engenheiro e 02 Analistas para execução presencial em uma viagem. 2 dias de viagem (ida-volta), 1 dia de integração (SHE), 2 dias (sábado e domingo) de execução e 1 dia de acompanhamento/suporte da operação.
