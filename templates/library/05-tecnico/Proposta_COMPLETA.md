@@ -88,13 +88,37 @@ A observabilidade avançada entrega o valor analítico do monitoramento. Dashboa
 {% endfor %}
 
 ## 11. TESTES, VALIDAÇÕES E COMISSIONAMENTO
-{{ custom_testing_protocol | default("Nosso compromisso com a qualidade é garantido por um protocolo de testes integrado que valida cada camada da solução.") }}
+{% if custom_testing_protocol -%}
+{{ custom_testing_protocol }}
+{%- else -%}
+Nosso compromisso com a qualidade é garantido por um protocolo de testes integrado que valida cada camada da solução:
+*   **Validação da Infraestrutura Física:** Testes elétricos e validação de 100% dos pontos de rede e fibra com scanner.
+*   **Validação de Hardware e Conectividade:** Testes de resiliência do anel de rede e validação de comunicação com as interfaces de gerenciamento.
+*   **Validação da Infraestrutura:** Teste de failover do cluster de virtualização e execução de ciclos de backup/restauração.
+*   **Teste de Aceitação em Campo (SAT):** Execução de roteiro consolidado com a equipe da {{ client_company }} para aceite formal.
+{%- endif %}
 
 ## 12. EQUIPE CHAVE E RESPONSABILIDADES
-{{ custom_team_structure | default("Alocaremos uma equipe de projeto unificada e multidisciplinar para garantir uma execução coesa e eficiente.") }}
+{% if custom_team_structure -%}
+{{ custom_team_structure }}
+{%- else -%}
+Alocaremos uma equipe de projeto unificada e multidisciplinar para garantir uma execução coesa:
+*   **Gerente de Projeto:** Focado no sucesso geral, cronograma e gestão de riscos.
+*   **Engenheiro Responsável:** Liderança técnica de infraestrutura e gestão da equipe de campo.
+*   **Arquiteto de Soluções:** Responsável pela arquitetura técnica integrada e conectividade entre frentes.
+*   **Especialistas Técnicos:** Equipe composta por técnicos de redes, virtualização, elétrica e automação.
+{%- endif %}
 
 ## 13. CRONOGRAMA SUGERIDO
-{{ custom_timeline | default("O cronograma macro do projeto será detalhado e refinado na reunião de kick-off.") }}
+{% if custom_timeline -%}
+{{ custom_timeline }}
+{%- else -%}
+O cronograma macro será refinado no Kick-off, seguindo a sequência lógica estimada:
+*   **Fase 1 - Planejamento:** Kick-off, Site Survey e finalização do projeto executivo.
+*   **Fase 2 - Infraestrutura Física (Semanas 1-4):** Instalações elétricas e lançamento de cabos.
+*   **Fase 3 - Implantação de TI (Semanas 5-9):** Instalação de hardware, configuração de redes e cluster.
+*   **Fase 4 - Go-Live e Transição (Semanas 10-12):** Testes integrados, SAT e Operação Assistida.
+{%- endif %}
 
 ## 14. TREINAMENTO E TRANSFERÊNCIA DE CONHECIMENTO
 Conforme solicitado, será fornecido um programa de treinamento formal e completo para as equipes da **{{ client_company }}**, cobrindo os três turnos operacionais e dividido em trilhas de conhecimento:

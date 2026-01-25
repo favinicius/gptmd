@@ -3,7 +3,7 @@
 {{ project_motivation }}
 {% endif %}
 
-Este informativo tem como objetivo apresentar a solução **{{ product_name }}** para a modernização da infraestrutura de TI Industrial da planta **{{ client_company }}** em {{ city }} - {{ state }}. O objetivo é modernizar o DATACENTER OT, implantar uma INFRAESTRUTURA FÍSICA e uma nova REDE DE AUTOMAÇÃO segura e resiliente, e um CONJUNTO DE APLICAÇÕES robusto, garantindo máxima disponibilidade (N+1), performance e segurança para as operações críticas de manufatura, ao mesmo tempo em que se cria uma base escalável para o crescimento futuro e as demandas da Indústria 4.0.
+Este informativo tem como objetivo apresentar a solução **{{ product_name }}** para a modernização da infraestrutura física de rede e conectividade industrial da planta **{{ client_company }}** em {{ city }} - {{ state }}. O objetivo é implantar uma INFRAESTRUTURA FÍSICA e uma nova REDE DE AUTOMAÇÃO segura e resiliente em áreas produtivas, máquinas ou operações industriais, garantindo máxima disponibilidade, performance e segurança para as operações críticas de manufatura, ao mesmo tempo em que se cria uma base escalável para as demandas da Indústria 4.0.
 
 ## 7. BENEFÍCIOS
 A implementação da nossa solução integrada trará para a {{ company_short_name }} uma transformação completa em sua capacidade operacional de TI/TA, gerando valor tangível em todas as frentes do negócio:
@@ -25,7 +25,7 @@ A implementação da nossa solução integrada trará para a {{ company_short_na
 ### ESTRATÉGICOS
 *   **Plataforma à Prova de Futuro:** O dimensionamento da infraestrutura já contempla a projeção de crescimento de 50%, fornecendo uma base sólida, padronizada e escalável que suportará as necessidades da {{ company_short_name }} pelos próximos 5 anos.
 *   **Liberação da Equipe Interna:** Nossa abordagem completa, do hardware à sustentação, permite que os valiosos especialistas da {{ company_short_name }} se dediquem a projetos de engenharia, melhoria de processos e inovação, em vez de tarefas operacionais de infraestrutura.
-*   **Responsabilidade Técnica Assegurada:** Projeto assinado por engenheiro responsável, com emissão de ART, garantindo conformidade e segurança legal.
+*   **Responsabilidade Técnica Assegurada:** Projeto assinado por engenheiro responsável, garantindo conformidade e segurança legal.
 
 Nossa abordagem consiste em um projeto integrado de ponta a ponta, fundamentado em cinco pilares que se constroem sequencialmente para entregar uma solução robusta e sem preocupações para a {{ company_short_name }}:
 
@@ -75,7 +75,7 @@ Nossa metodologia de execução é dividida em blocos lógicos que garantem uma 
 {% if pillar.id == 1 %}
 As atividades de design contemplam o levantamento detalhado das necessidades de negócio e a tradução destas em especificações técnicas de baixo nível (LLD), garantindo que a implantação siga as melhores práticas de arquitetura e segurança.
 {% elif pillar.id == 2 %}
-A fundação física é o alicerce de toda a solução. Esta fase engloba a montagem mecânica, a organização do rack, o fornecimento de energia estabilizada e o cabeamento estruturado, garantindo um ambiente limpo, identificado e normalizado.
+A fundação física é o alicerce de toda a solução. Esta fase engloba a montagem mecânica, a organização e migração de racks (quando aplicável), o fornecimento de energia estabilizada e o cabeamento estruturado, garantindo um ambiente limpo, identificado e normalizado.
 {% elif pillar.id == 3 %}
 A camada de conectividade core estabelece o "backbone" de comunicação da planta. Os switches core são configurados para alta performance, resiliência e segmentação de tráfego, servindo como o nó central de distribuição de dados.
 {% elif pillar.id == 4 %}
@@ -112,7 +112,7 @@ Nosso compromisso com a qualidade é garantido por um protocolo de testes integr
 ## 12. EQUIPE CHAVE E RESPONSABILIDADES
 Alocaremos uma equipe de projeto unificada e multidisciplinar para garantir uma execução coesa e eficiente, liderada por:
 *   **Gerente de Projeto:** Ponto focal para o cliente, responsável pelo cronograma, comunicação, gestão de riscos e sucesso geral do projeto.
-*   **Engenheiro Responsável:** Responsável técnico pelo projeto de infraestrutura física, planejamento, emissão da ART e gestão da equipe de campo.
+*   **Engenheiro Responsável:** Responsável técnico pelo projeto de infraestrutura física, planejamento e gestão da equipe de campo.
 *   **Arquiteto de Soluções:** Responsável pela arquitetura técnica integrada e por garantir que todas as frentes de trabalho se conectem perfeitamente.
 *   **Especialistas Técnicos:** Uma equipe composta por Eletricistas, Técnicos de Cabeamento, Engenheiros de Redes, Analistas de Infraestrutura e Virtualização, Especialistas em Automação Rockwell e Técnicos de Campo, cada um atuando em suas respectivas fases do projeto sob a coordenação do Gerente de Projeto.
 

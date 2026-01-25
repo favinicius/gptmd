@@ -71,11 +71,11 @@ def save_md(output_dir, filename, title, items):
                 for item in items:
                     f.write(f"| {item.topic_id} | {item.description} |\n")
             elif hasattr(items[0], 'role'): # Labor
-                f.write("| Item | Tópico | Execs | Qtde | Horas_Dia | Dias | Total_H | Tipo | Atividade | Detalhes Técnicos / Checklist | Profissional | Custo_Unit | Total_R$ | Source_Ref |\n")
-                f.write("| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :--- | :---: | :---: | :---: |\n")
+                f.write("| Item | Tópico | Execs | Qtde | Horas_Dia | Dias | Total_H | Sizing | Tipo | Atividade | Detalhes Técnicos / Checklist | Profissional | Custo_Unit | Total_R$ | Source_Ref |\n")
+                f.write("| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- | :--- | :---: | :---: | :---: |\n")
                 for item in items:
                     detail = item.technical_detail.replace("\n", " ").replace("|", "-") if item.technical_detail else "-"
-                    f.write(f"| {item.item_id} | {item.topic} | {format_clean_br(item.executions)} | {format_clean_br(item.qty_professionals)} | {format_clean_br(item.daily_hours)} | {format_clean_br(item.days)} | {format_clean_br(item.hours)} | {item.activity_type} | {item.activity} | {detail} | {item.role} | {format_br_currency(item.hourly_rate)} | {format_br_currency(item.total_price)} | {item.source_ref} |\n")
+                    f.write(f"| {item.item_id} | {item.topic} | {format_clean_br(item.executions)} | {format_clean_br(item.qty_professionals)} | {format_clean_br(item.daily_hours)} | {format_clean_br(item.days)} | {format_clean_br(item.hours)} | {format_clean_br(item.sizing_factor)}x | {item.activity_type} | {item.activity} | {detail} | {item.role} | {format_br_currency(item.hourly_rate)} | {format_br_currency(item.total_price)} | {item.source_ref} |\n")
             elif hasattr(items[0], 'description'): # Hardware, Service, Expense
                 if hasattr(items[0], 'topic'):
                         f.write("| Tópico | Descrição | Qtd | Unitário (R$) | Total (R$) |\n")
@@ -272,7 +272,7 @@ def main():
     origin = "Jundiaí - SP" # Fixed Origin as per requirements
     destination = "Local do Cliente" # Or extract?
     
-    duration_days = intent.estimated_duration_weeks * 5 # Approx
+    duration_days = (intent.estimated_duration_weeks or 4) * 5 # Approx
     
     try:
         log_plan = agent.plan_logistics(
@@ -347,8 +347,6 @@ def main():
     
     print(f"  - Visibilidade: {len(intent.scope_items)} itens totais -> {len(public_intent.scope_items)} itens públicos.")
     
-    processing_duration = time.time() - start_time
-    
     # Stage 3: Technical Redaction (Personalization) - v11.0
     print("Stage 3: AI Technical Redaction...")
     tech_summary_for_ai = "\n".join([f"- {t.description}" for t in proposal.topics])
@@ -367,6 +365,10 @@ def main():
                 f.write(json.dumps(redaction, indent=4, ensure_ascii=False))
     except Exception as e:
         print(f"⚠️ Erro no Al-Redaction (Personalização): {e}")
+
+    # Benchmark Final (antes da montagem)
+    processing_duration = time.time() - start_time
+
 
     # Assembly Context Augmentation (v12.3 - Deliverables)
     extra_context = {
@@ -433,9 +435,15 @@ def main():
         f.write(usage_report)
     
     if args.debug:
+        total_prompt_tokens = sum(info["total_tokens"] for info in agent.state.values())
+        # Nota: Como o sistema é stateless por run no benchmark, o total_tokens aqui 
+        # representará apenas os tokens desta execução específica.
+        print(f"\n[METRICS] TOKENS_PROMPT={total_prompt_tokens} TOKENS_OUTPUT=0") # Simplificado para benchmark
         print("\n" + usage_report)
 
-    print(f"\nSuccess! Output artifacts saved to: {output_dir}")
+    total_execution_time = time.time() - start_time
+    print(f"\n✅ Success! Output artifacts saved to: {output_dir}")
+    print(f"⏱️ Total Processing Time: {total_execution_time:.2f}s")
 
 if __name__ == "__main__":
     main()

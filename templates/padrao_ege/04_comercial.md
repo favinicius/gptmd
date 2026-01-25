@@ -41,6 +41,19 @@ Para o serviço contínuo de monitoramento proativo e suporte técnico especiali
 
 *Obs: Não se incluem na base de cálculo do INSS, valores de materiais fornecidos na prestação de serviços, conforme disposto na IN-RFB n° 2.110/2022. (cód. 7.02.03 / 237)*
 
+## 19.4. CONDIÇÕES DE PAGAMENTO (MILESTONES)
+
+O faturamento será realizado via medição, seguindo os marcos de execução do projeto (Milestones):
+
+| Marco (Milestone) | Evento de Pagamento | Percentual |
+| :--- | :--- | :---: |
+| **M1: Kick-off** | Aprovação do cronograma e mobilização de equipe | 30% |
+| **M2: Sprints** | Conclusão das etapas de campo (instalação/configuração) | 60% |
+| **M3: Aceite Final** | Entrega do Data Book e encerramento operacional | 10% |
+
+*   **Prazo de Pagamento:** {{ payment_term | default(30) }} dias após a emissão da Nota Fiscal.
+
+
 ## 19.5. IMPOSTOS
 
 A EGE Soluções Industriais é uma empresa que opera sob o regime de lucro real, garantindo transparência e precisão na tributação dos serviços prestados. Todos os impostos especificados na tabela abaixo estão inclusos na presente proposta.

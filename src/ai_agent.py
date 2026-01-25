@@ -143,8 +143,18 @@ class AIAgent:
         if not all_valid:
              raise ValueError("CRÍTICO: Todas as chaves foram marcadas como INVÁLIDAS.")
              
-        print("[!] AVISO: Todas as chaves (Free & Paid) em cooldown. Priorizando a que libera mais cedo.")
-        self.current_key = min(all_valid, key=lambda k: self.state[k].get("cooldown_until") or "9999-12-31")
+        soonest_key = min(all_valid, key=lambda k: self.state[k].get("cooldown_until") or "9999-12-31")
+        cooldown_until = self.state[soonest_key].get("cooldown_until")
+        
+        if cooldown_until:
+            until_dt = datetime.fromisoformat(cooldown_until)
+            if now < until_dt:
+                wait_time = min(int((until_dt - now).total_seconds()) + 1, 60)
+                if wait_time > 0:
+                    print(f"[!] AVISO: Todas as chaves (Free & Paid) em cooldown. Aguardando {wait_time}s até liberação...")
+                    time.sleep(wait_time)
+        
+        self.current_key = soonest_key
         
     def _setup_client(self):
         """Inicializa o cliente com a chave selecionada."""
@@ -488,37 +498,38 @@ class AIAgent:
         - RESUMO DA PROPOSTA (VALORES/HORAS): {proposal_summary}
         
         ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES)
-        1. **Seção: Objetivo Geral**: Escreva um parágrafo técnico denso. Use termos como "resiliência de camada 2", "MTTR", "segurança por design".
+        1. **Seção: Objetivo Geral**: Escreva um parágrafo técnico denso. Use termos como "resiliência de camada 2", "MTTR", "segurança por design", "disponibilidade industrial" e "convergência TI/TA".
         2. **Seção: Benefícios (Extensivo)**:
            - Gere no mínimo de 2 a 3 categorias usando títulos ###.
            - Em cada categoria, adicione 2 a 3 bullet points detalhados.
-           - O texto deve explicar o ganho real para este escopo. Ex: "Eliminação de loops de rede através de protocolos RSTP/STP..."
+           - O texto deve explicar o ganho real para este escopo. Ex: "Eliminação de loops de rede através de protocolos RSTP/STP", "Redução de inatividade por falhas de infraestrutura física".
         3. **Seção: Visão Geral da Solução (O Coração da Proposta)**:
            - Descreva a solução em 4 a 5 passos numerados de 1 a 5.
            - Cada passo deve ter um título em negrito e uma explicação técnica de 2 linhas.
-           - Adapte ao escopo: Se for rede, os passos são Design, Backbone, Acesso, Segurança e SAT.
-        4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT). Explique a metodologia de testes em um parágrafo denso.
-        5. **Seção: Estrutura da Equipe**: Cargos e responsabilidades (Gestor, Engenheiro, Técnico).
+           - Adapte ao escopo: Se for rede, os passos são Design, Greenfield/Brownfield, Backbone, Acesso, Segurança e SAT. Se for migração, foque em Inventário, Staging, Cutover e Validação.
+        4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT). Explique a metodologia de testes em ambientes de manufatura/operação.
+        5. **Seção: Estrutura da Equipe**: Cargos e responsabilidades (Gestor, Engenheiro, Especialista em Automação, Técnicos de Campo).
         6. **Seção: Cronograma**: 
            - **PROIBIDO**: Mencionar quantidade exata de horas ou dias (Ex: NÃO diga "185 horas" ou "20 dias").
-           - **FOCO**: Use um tom narrativo sobre as fases e dê ênfase aos **Eventos Presenciais** (Kick-off, Levantamento de Campo, Mobilização de Equipe, SAT e Handover).
-           - **ESTRUTURA**: Um parágrafo dissertativo sobre o fluxo do projeto seguido por uma lista sucinta de "Marcos do Plano", reforçando que o cronograma detalhado será definido no início do projeto.
+           - **FOCO**: Use um tom narrativo sobre as fases e dê ênfase aos **Eventos Presenciais** (Kick-off, Site Survey, Mobilização de Equipe, Janelas de Manutenção/Cutover, SAT e Handover).
+           - **ESTRUTURA**: Um parágrafo dissertativo sobre o fluxo do projeto seguido por uma lista sucinta de "Marcos do Plano".
 
         ## REGRAS DE OURO
-        - **PROIBIDO**: Termos genéricos, frases vazias ("solução completa", "atender necessidades").
-        - **BRANDING**: Não use "IODC" se não for datacenter. Use nomes genéricos técnicos ("Nova Rede Industrial", "Cluster Hyper-V").
+        - **PROIBIDO**: Termos genéricos corporativos ("value-add", "best-in-class").
+        - **BRANDING**: Use nomes genéricos técnicos ou descritivos da operação ("Área de Envasado", "Rede de Automação da Moega", "Cluster de Virtualização Industrial").
+        - **SOBERANIA INDUSTRIAL**: Lembre-se que o usuário muitas vezes trabalha com MÁQUINAS e OPERAÇÕES, não apenas servidores em racks de escritório.
         
         ## FORMATO DA RESPOSTA (JSON ESTRITO)
         {{
             "custom_objective_md": "Markdown aqui",
             "custom_benefits_md": "Markdown aqui (com títulos ### e bullets)",
             "custom_vision_md": "Markdown aqui (pontos numerados 1 a 5)",
-            "testing_protocol_md": "...",
-            "team_structure_md": "...",
-            "timeline_md": "...",
-            "cabling_context_md": "Texto CONCISO (máximo 2-3 linhas) sobre transceivers, cabos e acessórios (respeitando se o cliente fornece hardware)",
-            "software_licensing_md": "Texto CONCISO (máximo 2-3 linhas) sobre softwares, licenças e SOs (respeitando se o cliente fornece hardware)",
-            "deliverables_list_md": "Lista em bullets dos entregáveis REAIS do projeto (ex: Hardware instalado, Databook As-built, Relatório SAT, Treinamento). Adapte ao escopo."
+            "testing_protocol_md": "Markdown aqui (Protocolo de Testes Industrial)",
+            "team_structure_md": "Markdown aqui (Equipe e Responsabilidades)",
+            "timeline_md": "Markdown aqui (Fluxo do projeto e Marcos)",
+            "cabling_context_md": "Texto CONCISO sobre conectividade, cabos e acessórios industriais",
+            "software_licensing_md": "Texto CONCISO sobre licenciamento de automação e sistemas operacionais",
+            "deliverables_list_md": "Lista em bullets dos entregáveis REAIS (ex: Databook, SAT, Treinamento, Relatório de Certificação de Rede)."
         }}
         
         Responda APENAS o JSON.

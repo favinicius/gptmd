@@ -16,7 +16,10 @@ MODELS = ["gemini-2.0-flash-exp", "gemini-1.5-flash"] # Modelos para benchmark
 
 def run_calc(model, sizing, contingency):
     # Caminho absoluto para o python do venv
-    python_exe = os.path.join(os.getcwd(), "venv", "bin", "python3")
+    # Busca o interpretador do venv conforme padrão do usuário
+    python_exe = os.path.join(os.path.dirname(os.getcwd()), "venvs", "gptmd", "bin", "python3")
+    if not os.path.exists(python_exe):
+        python_exe = "python3" # Fallback
     
     cmd = [
         python_exe, "src/main.py",

@@ -14,7 +14,7 @@ Apresentamos abaixo o quadro resumo dos investimentos necessários para a realiz
 ## 4. CONDIÇÕES COMERCIAIS
 
 ### 4.1. Condições de Pagamento
-*   **Faturamento Direto:** 40% no Aceite da Proposta (Mobilização) e 60% na Entrega Final/Go-Live.
+*   **Marcos de Faturamento (Milestones):** 30% no Início (Mobilização), 60% durante a execução (Sprints) e 10% na Entrega Final/Go-Live.
 *   **Prazo de Entrega:** Conforme cronograma a ser validado no Kick-off (Estimado em {{estimated_duration_weeks}} semanas).
 
 ### 4.2. Impostos e Validade

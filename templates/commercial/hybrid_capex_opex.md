@@ -47,6 +47,15 @@ O serviço de Monitoramento e Suporte Contínuo (NOC) contempla a gestão proati
 {% endif %}
 
 
-## 4. PREMISSAS E TERMOS
-1. Contrato de suporte com fidelidade de 12 meses.
-2. Reajuste anual pelo IGPM.
+## 4. CONDIÇÕES DE PAGAMENTO (MILESTONES)
+
+| Marco (Milestone) | Evento de Pagamento | Percentual |
+| :--- | :--- | :---: |
+| **M1: Kick-off** | Aprovação do cronograma e mobilização de equipe | 30% |
+| **M2: Sprints** | Conclusão das etapas de execução (instalação/configuração) | 60% |
+| **M3: Aceite Final** | Entrega do Data Book e encerramento operacional | 10% |
+
+## 5. PREMISSAS E TERMOS
+1. Contrato de suporte com fidelidade de 12 meses (renovável).
+2. Reajuste anual pelo IGPM/IPCA.
+3. Prazo de pagamento: {{ payment_term | default(30) }} dias.

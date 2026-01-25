@@ -7,7 +7,7 @@ import csv
 from datetime import datetime
 
 # Configurações do teste
-INSTRUCTION = "Instalação de 1 Servidor e 1 Switch na OFI Ilhéus. Cliente fornece hardware."
+INSTRUCTION = "input/cenario-metalmec.txt"
 
 # Lista de Modelos para Teste
 MODELS = [
@@ -20,13 +20,17 @@ SIZING_MODES = ["standard", "secure", "aggressive"]
 CONTINGENCY_LEVELS = ["standard", "high"]
 
 def run_calc(model, sizing, contingency):
-    python_exe = os.path.join(os.getcwd(), "venv", "bin", "python3")
+    # Busca o interpretador do venv conforme padrão do usuário
+    python_exe = os.path.join(os.path.dirname(os.getcwd()), "venvs", "gptmd", "bin", "python3")
+    if not os.path.exists(python_exe):
+        python_exe = "python3" # Fallback
     
     cmd = [
         python_exe, "src/main.py",
         "--instruction", INSTRUCTION,
         "--sizing", sizing,
-        "--contingency", contingency
+        "--contingency", contingency,
+        "--debug"
     ]
     
     env = os.environ.copy()

@@ -120,7 +120,8 @@ class LaborEngine:
                                 self._add_labor_line_from_raw_generic(
                                     proposal, topic_id, res_act["role"], res_act["name"],
                                     qty_items, team_size, single_unit_eff, self.db.get_role_cost(res_act["role"]), res_act["category"],
-                                    source_ref="AI_RESEARCH_V8"
+                                    source_ref="AI_RESEARCH_V8",
+                                    sizing_factor=sizing_factor
                                 )
                                 act_total_h = single_unit_eff * qty_items
                                 topic_tech_effort[topic_id] += act_total_h
@@ -194,11 +195,14 @@ class LaborEngine:
                 # Antes, o sistema calculava ceil(0.5)=1h por VM, resultando em 10h (Desperdício).
                 total_effort_for_block = final_unit_eff * final_active_qty
                 
+                rich_activity_name = f"[{category}] {combined_name}"
+                
                 self._add_labor_line_from_raw_generic(
-                    proposal, topic_id, main_role, combined_name,
+                    proposal, topic_id, main_role, rich_activity_name,
                     final_active_qty, team_size, total_effort_for_block, self.db.get_role_cost(main_role), category,
                     is_batch=True,
-                    technical_detail=combined_desc
+                    technical_detail=combined_desc,
+                    sizing_factor=sizing_factor
                 )
                 
                 # O total_h agora vem direto do arredondamento do bloco
@@ -216,7 +220,7 @@ class LaborEngine:
         self._calculate_transversals(intent, proposal, global_complexity, sizing_factor)
         proposal.total_labor = sum(i.total_price for i in proposal.labor_table)
 
-    def _add_labor_line_from_raw_generic(self, proposal, topic_id, role, activity, total_items, team_size, effort_value, cost, category, is_contingency=False, source_ref=None, is_batch=False, technical_detail=""):
+    def _add_labor_line_from_raw_generic(self, proposal, topic_id, role, activity, total_items, team_size, effort_value, cost, category, is_contingency=False, source_ref=None, is_batch=False, technical_detail="", sizing_factor=1.0):
         qty_profs = max(1, team_size)
         execs_per_prof = total_items / qty_profs
         
@@ -247,7 +251,8 @@ class LaborEngine:
             total_price=total_h * cost,
             activity_type=category,
             is_contingency=is_contingency,
-            complexity="V9.1 - Batch Optimized",
+            complexity=f"Sizing: {sizing_factor}x",
+            sizing_factor=sizing_factor,
             source_ref=source_ref,
             technical_detail=technical_detail
         ))
@@ -261,26 +266,38 @@ class LaborEngine:
         
         for idx, _ in enumerate(intent.logistics_override.travel_segments):
             label = f"Mobilização Técnico Viagem {idx+1:02d}"
-            self._add_labor_line_from_raw_generic(proposal, "LOG-MOB", "Engenheiro", label, 1, 1, 10.0, cost_eng, "Logística")
+            self._add_labor_line_from_raw_generic(proposal, "LOG-MOB", "Engenheiro", label, 1, 1, 10.0, cost_eng, "Logística", sizing_factor=1.0)
             if team_size > 1:
-                self._add_labor_line_from_raw_generic(proposal, "LOG-MOB", "Analista", label, 1, team_size-1, 10.0, cost_ana, "Logística")
+                self._add_labor_line_from_raw_generic(proposal, "LOG-MOB", "Analista", label, 1, team_size-1, 10.0, cost_ana, "Logística", sizing_factor=1.0)
 
     def _calculate_governance(self, intent: Intent, proposal: ProposalData, sizing_factor: float = 1.0):
+        # Dynamically scale governance based on technical volume (v9.5)
+        # Minimums: 12h Gestor, 20h Arquiteto
+        total_tech_h = sum(item.hours for item in proposal.labor_table if item.topic.startswith("T-"))
+        
         c_gestor = self.db.get_role_cost("Gestor")
         c_arq = self.db.get_role_cost("Arquiteto")
-        self._add_labor_line_from_raw_generic(proposal, "T-00", "Gestor", "Kick-off e Gestão de Stakeholders", 1, 1, 12.0 * sizing_factor, c_gestor, "Governança")
-        self._add_labor_line_from_raw_generic(proposal, "T-00", "Arquiteto", "Planejamento Técnico e Design LLD", 1, 1, 20.0 * sizing_factor, c_arq, "Planejamento")
+        
+        # Scaling rule: base + 5% of tech hours for management, base + 8% for architecture/design
+        gestao_h = max(12.0, total_tech_h * 0.08) * sizing_factor
+        design_h = max(20.0, total_tech_h * 0.12) * sizing_factor
+        
+        gov_checklist = "Checklist: Kick-off, Gestão de Cronograma, Alinhamento de Stakeholders, Reporte de Status e Gestão de Riscos."
+        plan_checklist = "Checklist: Design LLD, Topologia Lógica/Física, Plano de Endereçamento IP/VLANs e Validação de Pré-requisitos."
+        
+        self._add_labor_line_from_raw_generic(proposal, "T-00", "Gestor", "Kick-off e Gestão de Stakeholders", 1, 1, gestao_h, c_gestor, "Governança", sizing_factor=sizing_factor, technical_detail=gov_checklist)
+        self._add_labor_line_from_raw_generic(proposal, "T-00", "Arquiteto", "Planejamento Técnico e Design LLD", 1, 1, design_h, c_arq, "Planejamento", sizing_factor=sizing_factor, technical_detail=plan_checklist)
 
     def _calculate_transversals(self, intent: Intent, proposal: ProposalData, global_complexity: bool, sizing_factor: float = 1.0):
         if global_complexity:
              c_eng = self.db.get_role_cost("Engenheiro")
-             self._add_labor_line_from_raw_generic(proposal, "T-00", "Engenheiro", "Consultoria Técnica (Acompanhamento)", 1, 1, 16.0 * sizing_factor, c_eng, "Consultoria")
+             self._add_labor_line_from_raw_generic(proposal, "T-00", "Engenheiro", "Consultoria Técnica (Acompanhamento)", 1, 1, 16.0 * sizing_factor, c_eng, "Consultoria", sizing_factor=sizing_factor)
 
     def _calculate_she(self, tech_effort, topic_id, team_size, proposal, she_factor: float = 0.15):
         if she_factor <= 0: return
         she_cost = self.db.get_role_cost("Técnico")
         she_total_unit = max(1.0, (tech_effort * she_factor))
-        self._add_labor_line_from_raw_generic(proposal, topic_id, "Técnico", "Ineficiência SHE / Permissões", 1, team_size, she_total_unit, she_cost, "Ineficiência/SHE", is_contingency=True)
+        self._add_labor_line_from_raw_generic(proposal, topic_id, "Técnico", "Ineficiência SHE / Permissões", 1, team_size, she_total_unit, she_cost, "Ineficiência/SHE", is_contingency=True, sizing_factor=1.0)
 
     def _create_fallback_with_coalescence(self, topic_id: str, scope_item: ScopeItem, proposal: ProposalData, team_size: int, sizing_factor: float):
         role = "Analista"
@@ -288,4 +305,4 @@ class LaborEngine:
         unit_h = 16.0 * sizing_factor
         if (scope_item.explicit_total_hours or 0) > 0:
             unit_h = scope_item.explicit_total_hours / scope_item.detected_quantity
-        self._add_labor_line_from_raw_generic(proposal, topic_id, role, f"Execução Técnica: {scope_item.name}", scope_item.detected_quantity, team_size, max(1.0, unit_h), cost, "Execução")
+        self._add_labor_line_from_raw_generic(proposal, topic_id, role, f"Execução Técnica: {scope_item.name}", scope_item.detected_quantity, team_size, max(1.0, unit_h), cost, "Execução", sizing_factor=sizing_factor)

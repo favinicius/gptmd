@@ -25,7 +25,7 @@ A implementação da nossa solução integrada trará para a {{ company_short_na
 ### ESTRATÉGICOS
 *   **Plataforma à Prova de Futuro:** O dimensionamento da infraestrutura já contempla a projeção de crescimento de 50%, fornecendo uma base sólida, padronizada e escalável que suportará as necessidades da {{ company_short_name }} pelos próximos 5 anos.
 *   **Liberação da Equipe Interna:** Nossa abordagem completa, do hardware à sustentação, permite que os valiosos especialistas da {{ company_short_name }} se dediquem a projetos de engenharia, melhoria de processos e inovação, em vez de tarefas operacionais de infraestrutura.
-*   **Responsabilidade Técnica Assegurada:** Projeto assinado por engenheiro responsável, com emissão de ART, garantindo conformidade e segurança legal.
+*   **Responsabilidade Técnica Assegurada:** Projeto assinado por engenheiro responsável, garantindo conformidade e segurança legal.
 
 Nossa abordagem consiste em um projeto integrado de ponta a ponta, fundamentado em cinco pilares que se constroem sequencialmente para entregar uma solução robusta e sem preocupações para a {{ company_short_name }}:
 
@@ -112,7 +112,7 @@ Nosso compromisso com a qualidade é garantido por um protocolo de testes integr
 ## 12. EQUIPE CHAVE E RESPONSABILIDADES
 Alocaremos uma equipe de projeto unificada e multidisciplinar para garantir uma execução coesa e eficiente, liderada por:
 *   **Gerente de Projeto:** Ponto focal para o cliente, responsável pelo cronograma, comunicação, gestão de riscos e sucesso geral do projeto.
-*   **Engenheiro Responsável:** Responsável técnico pelo projeto de infraestrutura física, planejamento, emissão da ART e gestão da equipe de campo.
+*   **Engenheiro Responsável:** Responsável técnico pelo projeto de infraestrutura física, planejamento e gestão da equipe de campo.
 *   **Arquiteto de Soluções:** Responsável pela arquitetura técnica integrada e por garantir que todas as frentes de trabalho se conectem perfeitamente.
 *   **Especialistas Técnicos:** Uma equipe composta por Eletricistas, Técnicos de Cabeamento, Engenheiros de Redes, Analistas de Infraestrutura e Virtualização, Especialistas em Automação Rockwell e Técnicos de Campo, cada um atuando em suas respectivas fases do projeto sob a coordenação do Gerente de Projeto.
 

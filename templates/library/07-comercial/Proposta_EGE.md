@@ -42,14 +42,16 @@ Abaixo, apresentamos o resumo dos investimentos necessários para a execução d
 | **TOTAL OPEX** | **Mensalidade (Contrato 60 meses)** | **{{ total_services }}** |
 {% endif %}
 
-| CATEGORIA | DESCRIÇÃO | VALOR |
-| :--- | :--- | :--- |
-| **CAPEX** | Total para Implantação do Projeto | {{ grand_total }} |
+### 17.3. RESUMO GERAL DE INVESTIMENTOS
+
+| CATEGORIA | DESCRIÇÃO | INVESTIMENTO |
+| :--- | :--- | :---: |
+| **CAPEX** | Total para Implantação do Projeto (Investimento Único) | **{{ grand_total }}** |
 {% if opex -%}
-| **OPEX** | Mensalidade de Serviços Recorrentes | R$ {{ opex.grand_total_monthly | brl }} |
-| **CONTRATO** | Valor Total Projetado ({{ opex.contract_duration_months }} meses) | R$ {{ opex.contract_total_value | brl }} |
+| **OPEX** | Mensalidade de Serviços Recorrentes e Monitoramento | **R$ {{ opex.grand_total_monthly | brl }}** |
+| **CONTRATO** | Valor Total Projetado (Fidelidade {{ opex.contract_duration_months }} meses) | **R$ {{ opex.contract_total_value | brl }}** |
 {% else -%}
-| **OPEX** | Mensalidade de Serviços Recorrentes | {{ total_services }} |
+| **OPEX** | Mensalidade de Serviços Recorrentes | **{{ total_services }}** |
 {%- endif %}
 
 

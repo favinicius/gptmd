@@ -218,6 +218,7 @@ class CalculatedLabor(BaseModel):
     activity_type: str
     is_contingency: bool = False
     complexity: str # To track origin
+    sizing_factor: float = 1.0 # Multiplier applied (v9.5)
     source_ref: str = "DB_STD" # DB_STD, DB_CALC, ESTIMATE, EXPLICIT
     technical_detail: Optional[str] = "" # Checklist/Observações técnicas (v9.2)
 
