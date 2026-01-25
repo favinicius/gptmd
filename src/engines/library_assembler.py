@@ -65,15 +65,20 @@ class LibraryAssembler:
             "04-historico",      # Históricos e Revisões
         ]
 
-        # Select Technical Block based on Intent
-        tech_map = {
-            "iodc_full_structured.md": "Proposta_COMPLETA",
-            "iodc_no_net.md": "Proposta_IODC",
-            "struct_network_industrial.md": "Proposta_REDE_OT",
-            "struct_server_migration.md": "Proposta_MIGRACAO",
-            "struct_services_cabling.md": "Proposta_CABEAMENTO"
+        # 2. Product-Centric Configuration (New Architecture)
+        product_config = {
+            "iodc_full_structured.md": {"block": "Proposta_COMPLETA", "name": "Infraestrutura Industrial (IODC Full)"},
+            "iodc_no_net.md": {"block": "Proposta_IODC", "name": "Modernização de Datacenter Industrial (IODC)"},
+            "struct_network_industrial.md": {"block": "Proposta_REDE_OT", "name": "Rede Industrial e Conectividade OT"},
+            "struct_server_migration.md": {"block": "Proposta_MIGRACAO", "name": "Consolidação e Migração de Servidores"},
+            "struct_services_cabling.md": {"block": "Proposta_CABEAMENTO", "name": "Cabeamento e Infraestrutura de Dados"},
+            "noc_monitoring_support.md": {"block": "Proposta_NOC", "name": "Sustentação, Monitoramento e Suporte NOC"}
         }
-        selected_tech = tech_map.get(intent.selected_tech_template, "Proposta_COMPLETA")
+        
+        config = product_config.get(intent.selected_tech_template, {"block": "Proposta_COMPLETA", "name": "Solução Integrada de TI"})
+        selected_tech = config["block"]
+        detected_product_name = config["name"]
+        
         sequence.append(("05-tecnico", selected_tech))
         
         sequence.append("06-trabalho")        # Work periods
@@ -99,7 +104,7 @@ class LibraryAssembler:
         context = {
             "proposal_id": base_id,
             "project_name": project_cleaned,
-            "product_name": "IODC" if any(x in project_cleaned.upper() for x in ["MODULAR", "CLUSTER", "IODC", "DATACENTER"]) else "Solução Integrada de TI", 
+            "product_name": detected_product_name, 
             "client_fullname": intent.contact_name or "Responsável Técnico",
             "client_company": intent.company_name or intent.client_name,
             "provider_name": "EGE Soluções Industriais",
@@ -144,7 +149,7 @@ class LibraryAssembler:
             {"id": 1, "title": "Design de Arquitetura", "keywords": ["LLD", "Design de Arquitetura", "Aprovações", "Design", "Projeto", "Desenho", "Planejamento"]},
             {"id": 2, "title": "Instalação Física", "keywords": ["Instalação Física", "Rack", "PDU", "Cabeamento", "Fisica", "Infraestrutura Física", "Montagem"]},
             {"id": 3, "title": "Implantação de Switches Core", "keywords": ["Switch Core", "Core Switch", "L3"]},
-            {"id": 4, "title": "Implantação de Cluster VMware", "keywords": ["VMware", "Cluster", "ESXi", "vCenter", "Host", "SAN", "Fibre Channel", "iSCSI", "Servidor", "Storage"]},
+            {"id": 4, "title": "Infraestrutura de Servidores e Processamento", "keywords": ["VMware", "Cluster", "ESXi", "vCenter", "Host", "SAN", "Fibre Channel", "iSCSI", "Servidor", "Storage", "Windows Server", "Linux", "Hyper-V"]},
             {"id": 5, "title": "Implantação de Backup", "keywords": ["Backup", "Veeam", "Restauração", "NAS", "Salvaguarda"]},
             {"id": 6, "title": "Implantação de Firewall", "keywords": ["Firewall", "UTM", "Fortinet", "VPN", "Segurança Perímetro"]},
             {"id": 7, "title": "Implantação de Appliance Monitoramento", "keywords": ["Appliance", "Monitoring", "Appliance de Monitoramento"]},

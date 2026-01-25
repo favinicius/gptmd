@@ -65,7 +65,7 @@ A fundação física é o alicerce de toda a solução. Esta fase engloba a mont
 {% elif pillar.id == 3 %}
 A camada de conectividade core estabelece o "backbone" de comunicação da planta. Os switches core são configurados para alta performance, resiliência e segmentação de tráfego, servindo como o nó central de distribuição de dados.
 {% elif pillar.id == 4 %}
-O cluster de virtualização é o motor de processamento da solução. Concentra os hosts físicos em um pool de recursos redundante, onde as máquinas virtuais operam com failover automático e balanceamento dinâmico de carga.
+A infraestrutura de servidores e processamento é o motor da solução. Esta fase engloba a configuração de sistemas operacionais, ambientes de virtualização (se houver) e integração com o armazenamento centralizado, garantindo performance e disponibilidade.
 {% elif pillar.id == 5 %}
 A estratégia de backup garante a proteção contra perda de dados. Implementamos rotinas automatizadas, armazenamento dedicado e validação de restauração, assegurando que o ambiente possa ser recuperado rapidamente em caso de falha.
 {% elif pillar.id == 6 %}
@@ -114,18 +114,23 @@ Alocaremos uma equipe de projeto unificada e multidisciplinar para garantir uma 
 {{ custom_timeline }}
 {%- else -%}
 O cronograma macro será refinado no Kick-off, seguindo a sequência lógica estimada:
+*   **Marco 1 - Entrevista de Expectativa:** Alinhamento inicial de requisitos e visão do cliente.
 *   **Fase 1 - Planejamento:** Kick-off, Site Survey e finalização do projeto executivo.
 *   **Fase 2 - Infraestrutura Física (Semanas 1-4):** Instalações elétricas e lançamento de cabos.
-*   **Fase 3 - Implantação de TI (Semanas 5-9):** Instalação de hardware, configuração de redes e cluster.
+*   **Fase 3 - Implantação de TI (Semanas 5-9):** Instalação de hardware, configuração de redes e servidores.
 *   **Fase 4 - Go-Live e Transição (Semanas 10-12):** Testes integrados, SAT e Operação Assistida.
 {%- endif %}
 
 ## 14. TREINAMENTO E TRANSFERÊNCIA DE CONHECIMENTO
+{% if custom_training_md -%}
+{{ custom_training_md }}
+{%- else -%}
 Conforme solicitado, será fornecido um programa de treinamento formal e completo para as equipes da **{{ client_company }}**, cobrindo os três turnos operacionais e dividido em trilhas de conhecimento:
-*   **Handover da Infraestrutura Física:** Apresentação dos quadros elétricos, organização dos racks e identificação dos pontos.
-*   **Trilha de Operação de Infraestrutura de TI:** Visão Geral do cluster de virtualização e da solução de backup.
+*   **Handover da Infraestrutura Física:** Apresentação dos equipamentos, organização dos racks e identificação dos ativos.
+*   **Trilha de Operação de Infraestrutura de TI:** Visão Geral dos servidores, sistemas e solução de backup.
 *   **Trilha de Operação e Engenharia de Redes:** Gestão da plataforma **{{ provider_short }}** e troubleshooting.
-*   **Handover das Aplicações:** Sessões sobre a nova arquitetura das aplicações **{{ provider_short }}**.
+*   **Handover das Aplicações:** Sessões sobre a nova arquitetura das aplicações implementadas.
+{%- endif %}
 
 ## 15. SUSTENTAÇÃO E MONITORAMENTO CONTÍNUO
 Após a conclusão e aceite do projeto, inicia-se a nossa parceria de longo prazo, garantindo a tranquilidade e a saúde contínua do ambiente:
@@ -134,3 +139,16 @@ Após a conclusão e aceite do projeto, inicia-se a nossa parceria de longo praz
 *   **SLA:** Atendimento com tempos de resposta definidos por severidade (N1, N2, N3), conforme RFQ.
 *   **Franquia:** Inclusão de uma franquia mínima de 80 horas anuais para atendimentos técnicos.
 *   **Governança:** Acesso a uma Central de Tickets, canais de atendimento emergenciais e a uma Plataforma de Monitoramento com visibilidade em tempo real para a {{ provider_short }}.
+
+{% if asset_table_md or opex -%}
+### 15.1. RELAÇÃO DE ATIVOS (CONSOLIDAÇÃO)
+{% if asset_table_md -%}
+{{ asset_table_md }}
+{%- elif opex -%}
+| Item Monitorado / Ativos | Quantidade |
+| :--- | :---: |
+{% for item in opex.items -%}
+| {{ item.item_name }} | {{ item.quantity }} |
+{% endfor %}
+{%- endif %}
+{%- endif %}

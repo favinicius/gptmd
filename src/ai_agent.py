@@ -336,7 +336,8 @@ class AIAgent:
         1. **NÃO INVENTE QUANTIDADES:** Se a instrução diz apenas "Servidores" e o PDF não especifica, NÃO assuma 1, 2 ou 3. Marque `needs_clarification: true`.
         2. **AGRUPAMENTO OBRIGATÓRIO:** Sempre que múltiplos hardwares fizerem parte de uma solução lógica única (Ex: 3 servidores em um Cluster, 12 servidores para migrar), gere um ÚNICO `ScopeItem` com a quantidade total no campo `detected_quantity`. **NUNCA** atomize em 3 itens separados de quantidade 1 se o contexto for o mesmo.
         3. **IGNORAR SUGESTÃO DE EQUIPE:** Se o input disser "Use 2 técnicos" ou "Sugiro equipe de 3 pessoas", **IGNORE**. A equipe é dimensionada estritamente pelo Motor de Cálculo (LaborEngine).
-        4. **TRIGGER DE CLARIFICAÇÃO:** Se houver itens críticos (Servidores, Storage, Switches) sem definição de Quantidade ou Tipo (Físico/Virtual), preencha `needs_clarification: true` e liste as perguntas.
+        4. **ANTI-DEFAULT (CLUSTER/VMWARE):** Se a instrução mencionar apenas "Servidor" ou "Migração", NÃO assuma que é um Cluster ou que utilizará VMware/Hyper-V a menos que esteja explicitamente escrito. Se houver dúvida sobre a arquitetura (Cluster vs Standalone), preencha `needs_clarification: true`.
+        5. **TRIGGER DE CLARIFICAÇÃO:** Se houver itens críticos (Servidores, Storage, Switches) sem definição de Quantidade OU sem distinção básica (Físico/Virtual), preencha `needs_clarification: true`. Se a quantidade estiver clara (ex: "3 Servidores"), prossiga usando modelos genéricos de mercado.
         
         ## DIRETRIZES DE EXTRAÇÃO
         1. **DETALHAMENTO TÉCNICO:** O PDF serve apenas para detalhes técnicos (nomes de VMs, modelos) que NÃO foram mencionados na instrução.
@@ -346,6 +347,14 @@ class AIAgent:
         5. **LOGÍSTICA:** Extraia travel_segments array.
         6. **INVENTÁRIO DE VMS:** Se a instrução reduzir a quantidade de VMs, reduza proporcionalmente.
         
+        ## SELEÇÃO DE TEMPLATE TÉCNICO
+        Escolha o template que melhor se adapta ao escopo principal:
+        - `iodc_full_structured.md`: Projetos completos (Infraestrutura + Rede + Backup).
+        - `iodc_no_net.md`: Foco em Datacenter/Servidores (sem escopo de rede industrial).
+        - `struct_network_industrial.md`: Foco exclusivo em Redes OT (Switches, Fibra, Firewalls).
+        - `struct_server_migration.md`: Foco em Virtualização e Migração de sistemas.
+        - `struct_services_cabling.md`: Foco em Cabeamento e Infraestrutura Física.
+        - `noc_monitoring_support.md`: Contratos de Sustentação, Monitoramento e Suporte NOC (quando a infra já existe).
         ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.8 - EXHAUSTIVE MERGE)
         1. **MAPEAMENTO COMPLETO DE ITENS (SOMA PDF + CLI)**: 
            - Extraia CADA item listado na seção "Relação de Itens" (Existentes e Novos) da Instrução.
@@ -363,7 +372,7 @@ class AIAgent:
         ## FORMATO DE SAÍDA (JSON ESTRITO)
         {{
             "client_name": "String (Primeiro nome ou nome informal do cliente)",
-            "company_name": "String (NOME COMPLETO DA EMPRESA DO CLIENTE - Razão Social ou Nome Fantasia Completo)",
+            "company_name": "String (NOME COMPLETO DA EMPRESA DO CLIENTE - Extraia exatamente do campo 'Cliente:')",
             "contact_name": "String (Nome Completo do Contato Principal)",
             "company_short_name": "String (Nome Curto da Empresa para Redação)",
             "project_name": "String",
@@ -373,7 +382,7 @@ class AIAgent:
             "governance_level": "standard" | "intensive",
             "work_on_weekends": boolean,
             "requires_training": boolean,
-            "selected_tech_template": "iodc_full_structured.md",
+            "selected_tech_template": "iodc_full_structured.md" | "iodc_no_net.md" | "struct_network_industrial.md" | "struct_server_migration.md" | "struct_services_cabling.md" | "noc_monitoring_support.md",
             "selected_comm_template": "hybrid_capex_opex.md",
             "split_proposal": boolean,
             "sizing_mode": "aggressive" | "standard" | "secure" | "critical",
@@ -498,7 +507,9 @@ class AIAgent:
         - RESUMO DA PROPOSTA (VALORES/HORAS): {proposal_summary}
         
         ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES)
-        1. **Seção: Objetivo Geral**: Escreva um parágrafo técnico denso. Use termos como "resiliência de camada 2", "MTTR", "segurança por design", "disponibilidade industrial" e "convergência TI/TA".
+        1. **Seção: Objetivo Geral**: Escreva obrigatoriamente 2 parágrafos. 
+           - Parágrafo 1: Contextualize a dor/necessidade do cliente (Cenário atual explicado).
+           - Parágrafo 2: Resuma nossa sugestão/estratégia de solução de forma objetiva.
         2. **Seção: Benefícios (Extensivo)**:
            - Gere no mínimo de 2 a 3 categorias usando títulos ###.
            - Em cada categoria, adicione 2 a 3 bullet points detalhados.
@@ -507,12 +518,15 @@ class AIAgent:
            - Descreva a solução em 4 a 5 passos numerados de 1 a 5.
            - Cada passo deve ter um título em negrito e uma explicação técnica de 2 linhas.
            - Adapte ao escopo: Se for rede, os passos são Design, Greenfield/Brownfield, Backbone, Acesso, Segurança e SAT. Se for migração, foque em Inventário, Staging, Cutover e Validação.
+           - **EVITE REPETIÇÃO**: Garanta que o passo de "Infraestrutura Física" (se houver) não repita o conteúdo de "Design/Planejamento".
         4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT). Explique a metodologia de testes em ambientes de manufatura/operação.
         5. **Seção: Estrutura da Equipe**: Cargos e responsabilidades (Gestor, Engenheiro, Especialista em Automação, Técnicos de Campo).
         6. **Seção: Cronograma**: 
            - **PROIBIDO**: Mencionar quantidade exata de horas ou dias (Ex: NÃO diga "185 horas" ou "20 dias").
-           - **FOCO**: Use um tom narrativo sobre as fases e dê ênfase aos **Eventos Presenciais** (Kick-off, Site Survey, Mobilização de Equipe, Janelas de Manutenção/Cutover, SAT e Handover).
+           - **OESTRUTURA**: Comece obrigatoriamente com o marco "**Entrevista de Expectativa**" seguido de Kick-off, Mobilização, Execução, SAT e Handover.
            - **ESTRUTURA**: Um parágrafo dissertativo sobre o fluxo do projeto seguido por uma lista sucinta de "Marcos do Plano".
+        7. **Seção: Treinamento**: Foco em transferência de conhecimento. NÃO mencione "quadros elétricos" a menos que seja instalação elétrica. Use termos genéricos: "Apresentação dos equipamentos, organização e identificação dos ativos".
+        8. **Seção: Tabela de Ativos (OPEX)**: Crie uma tabela Markdown consolidando os ativos que serão suportados/monitorados (para o bloco de Sustentação).
 
         ## REGRAS DE OURO
         - **PROIBIDO**: Termos genéricos corporativos ("value-add", "best-in-class").
@@ -527,25 +541,32 @@ class AIAgent:
             "testing_protocol_md": "Markdown aqui (Protocolo de Testes Industrial)",
             "team_structure_md": "Markdown aqui (Equipe e Responsabilidades)",
             "timeline_md": "Markdown aqui (Fluxo do projeto e Marcos)",
+            "custom_training_md": "Markdown aqui (Transferência de conhecimento)",
+            "asset_table_md": "Tabela Markdown com os ativos monitorados",
             "cabling_context_md": "Texto CONCISO sobre conectividade, cabos e acessórios industriais",
             "software_licensing_md": "Texto CONCISO sobre licenciamento de automação e sistemas operacionais",
             "deliverables_list_md": "Lista em bullets dos entregáveis REAIS (ex: Databook, SAT, Treinamento, Relatório de Certificação de Rede)."
         }}
         
-        Responda APENAS o JSON.
+        Responda APENAS o JSON. Seja conciso mas técnico.
         """
 
-        raw_text = self.generate_content(prompt, temperature=0.3)
+        raw_text = self.generate_content(prompt, temperature=0.3, max_output_tokens=16384)
         clean_text = self._clean_json_text(raw_text)
         
         try:
             return json.loads(clean_text)
         except Exception:
-            # Fallback simple dict if AI fails
+            # Fallback aprimorado para manter as novas regras mesmo em erro
             return {
-                "testing_protocol_md": "Protocolo de testes a ser definido no kick-off.",
-                "team_structure_md": "Equipe multidisciplinar de TI/TA.",
-                "timeline_md": "Cronograma a ser detalhado após aprovação."
+                "custom_objective_md": f"{intent.project_motivation}\n\nNossa proposta foca na modernização e segurança da infraestrutura para garantir a continuidade operacional conforme os requisitos apresentados.",
+                "custom_benefits_md": "### Confiabilidade e Segurança\n* Mitigação de riscos de parada.\n* Proteção de ativos críticos.",
+                "custom_vision_md": "1. Planejamento\n2. Execução de Infra\n3. Configuração Lógica\n4. Testes e Validação\n5. Handover",
+                "testing_protocol_md": "Protocolo de testes (SAT) a ser definido no kick-off focado em ambiente industrial.",
+                "team_structure_md": "Equipe multidisciplinar composta por Coordenador, Engenheiros e Técnicos Especializados.",
+                "timeline_md": "*   **Entrevista de Expectativa**\n*   Kick-off\n*   Mobilização\n*   Execução e Configuração\n*   Testes de Aceitação (SAT)\n*   Handover e Treinamento",
+                "custom_training_md": "Treinamento focado na operação dos ativos, identificação de pontos e procedimentos de emergência.",
+                "asset_table_md": "| Ativo | Descrição |\n| :--- | :--- |\n| Infraestrutura | Conforme levantamento |"
             }
 
     def research_technical_wbs(self, activity_name: str, context: str = "") -> List[Dict[str, Any]]:
