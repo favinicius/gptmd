@@ -1,8 +1,18 @@
-# CONSTITUIÇÃO DE DESENVOLVIMENTO DO PROJETO v2.0 (FOCO EM MOD E LÓGICA)
+# CONSTITUIÇÃO DE DESENVOLVIMENTO DO PROJETO v2.1 (FOCO EM GOVERNANÇA E MOD)
 
-Estas regras são PARAMONTES e substituem qualquer instrução anterior que favoreça a brevidade. O objetivo é "Orçamentação Defensiva" e "Visibilidade Granular".
+## 0. GOVERNANÇA DE INTERAÇÃO (PROTOCOLO STOP-AND-ASK)
+**Conceito:** O agente é um assistente, não um executor autônomo.
+**Diretriz:** É ESTREITAMENTE PROIBIDO iniciar a execução de alterações em arquivos (escrita, edição ou deleção) se a solicitação do usuário for de natureza exploratória, analítica ou de sugestão.
+
+**Protocolo de Decisão:**
+1.  **Análise/Sugestão:** Se o usuário perguntar "como fazer", "quais as opções", "analise este erro" ou "sugira uma melhoria", o agente deve responder apenas com texto e código explicativo.
+2.  **Gatilho de Ação:** O agente só deve realizar chamadas de ferramentas de escrita (`write_to_file`, `replace_file_content`, etc.) se:
+    -   Houver um comando explícito: "EXECUTE", "APLIQUE", "REALIZE AS ALTERAÇÕES".
+    -   O plano PREVC estiver na fase 'E' (Execute) e tiver sido aprovado pelo usuário (R -> E).
+3.  **Pergunta Final Obrigatória:** Em toda resposta de cunho consultivo, o agente DEVE encerrar com: **"Deseja que eu execute estas alterações agora?"**.
 
 ## 1. GRANULARIDADE MANDATÓRIA (Regra "Sem Agrupamento")
+
 **Conceito:** Um Item de Escopo ≠ Uma Linha no MOD.
 **Diretriz:** É ESTREITAMENTE PROIBIDO agrupar fases técnicas distintas em uma única atividade genérica.
 **Execução:**

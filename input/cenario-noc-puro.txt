@@ -1,0 +1,17 @@
+Cliente: Metalúrgica Gerdau
+Contato: Roberto Silva (Gerente TI Industrial)
+Projeto: Sustentação e Monitoramento NOC 24x7
+Motivação: A planta já possui um cluster VMware e rede industrial instalada, mas sofre com a falta de visibilidade e suporte especializado proativo. Querem contratar a EGE para monitorar as 10 máquinas virtuais críticas que rodam nos 3 hosts físicos existentes.
+
+Relação de itens (Existentes):
+- 01 Cluster VMware com 3 Hosts Dell R740
+- 10 Máquinas Virtuais (VMs) de produção
+- 01 Storage Dell Unity 350
+- 20 Switches Cisco IE-4000
+- 01 Rede Industrial completa
+
+Desejado: 
+- Implantação de Appliance EGE RASA para coleta local.
+- Monitoramento 24x7 com SLA N1/N2/N3.
+- Dashboards de observabilidade Zabbix/Grafana.
+- Suporte técnico especializado com franquia de 20 horas mensais.

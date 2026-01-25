@@ -1,66 +1,66 @@
 {
     "AIzaSyBPRH3MhzXD87m3BErtXFS87lzZyinGZr4": {
-        "last_used": "2026-01-20T23:12:23.704468",
-        "cooldown_until": "2026-01-22T14:28:25.878005",
+        "last_used": "2026-01-25T15:16:42.527060",
+        "cooldown_until": null,
         "status": "active",
-        "total_calls": 83,
-        "total_tokens": 440067,
+        "total_calls": 94,
+        "total_tokens": 518994,
         "tier": "free"
     },
     "AIzaSyA5XS71wWI7g5e-9ewk22kv16sNt4UiKhc": {
-        "last_used": "2026-01-25T14:13:39.803766",
-        "cooldown_until": "2026-01-25T14:28:40.067243",
+        "last_used": "2026-01-25T15:30:56.555179",
+        "cooldown_until": null,
         "status": "active",
-        "total_calls": 87,
-        "total_tokens": 477771,
+        "total_calls": 97,
+        "total_tokens": 546325,
         "tier": "free"
     },
     "AIzaSyDo2QWA3UuUBlxIYdFhnnOHZP3LWMxpp_U": {
-        "last_used": "2026-01-20T23:14:18.290146",
-        "cooldown_until": "2026-01-22T14:28:26.222946",
+        "last_used": "2026-01-25T15:28:22.006734",
+        "cooldown_until": null,
         "status": "active",
-        "total_calls": 93,
-        "total_tokens": 500270,
+        "total_calls": 98,
+        "total_tokens": 523621,
         "tier": "free"
     },
     "AIzaSyBUWScrp_ouTG-t3JYglMRaMiF9y5Dapiw": {
-        "last_used": "2026-01-20T23:10:48.945663",
-        "cooldown_until": "2026-01-22T14:28:25.521644",
+        "last_used": "2026-01-25T15:13:50.888234",
+        "cooldown_until": null,
         "status": "active",
-        "total_calls": 90,
-        "total_tokens": 498653,
+        "total_calls": 96,
+        "total_tokens": 532511,
         "tier": "free"
     },
     "AIzaSyBkmTSLck2fYVPOf8bNPHyoH4N7OT0MSKc": {
-        "last_used": "2026-01-25T14:15:01.240872",
+        "last_used": "2026-01-25T15:11:03.733341",
         "cooldown_until": null,
         "status": "active",
-        "total_calls": 57,
-        "total_tokens": 309041,
+        "total_calls": 62,
+        "total_tokens": 334838,
         "tier": "free"
     },
     "AIzaSyDEsLNGZ2WQ3574TmXbcI8eNZOAtX2W17E": {
-        "last_used": "2026-01-25T14:18:33.207015",
+        "last_used": "2026-01-25T15:11:30.361954",
         "cooldown_until": null,
         "status": "active",
-        "total_calls": 86,
-        "total_tokens": 489622,
+        "total_calls": 87,
+        "total_tokens": 497342,
         "tier": "free"
     },
     "AIzaSyCF6HmWZ86K3LggO0JIpowX6Sf5M2qPl3c": {
-        "last_used": "2026-01-25T14:12:19.231572",
-        "cooldown_until": null,
+        "last_used": "2026-01-25T15:30:12.065161",
+        "cooldown_until": "2026-01-25T15:45:12.340523",
         "status": "active",
-        "total_calls": 54,
-        "total_tokens": 313432,
+        "total_calls": 62,
+        "total_tokens": 365969,
         "tier": "free"
     },
     "AIzaSyDLQzCqtYbyeIvyDbCHXBpr8z1GgvHQ0pI": {
-        "last_used": "2026-01-20T23:10:11.807826",
-        "cooldown_until": "2026-01-22T14:28:25.166030",
+        "last_used": "2026-01-25T15:12:59.481636",
+        "cooldown_until": null,
         "status": "active",
-        "total_calls": 88,
-        "total_tokens": 490764,
+        "total_calls": 96,
+        "total_tokens": 533340,
         "tier": "free"
     },
     "AIzaSyAIXn7TfaC40BPjhBSAISJI6muZ-yCVKbY": {

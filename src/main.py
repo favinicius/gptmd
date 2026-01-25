@@ -378,6 +378,8 @@ def main():
         "custom_testing_protocol": redaction.get("testing_protocol_md", ""),
         "custom_team_structure": redaction.get("team_structure_md", ""),
         "custom_timeline": redaction.get("timeline_md", ""),
+        "custom_training_md": redaction.get("custom_training_md", ""),
+        "asset_table_md": redaction.get("asset_table_md", ""),
         "custom_cabling_md": redaction.get("cabling_context_md", ""),
         "custom_software_md": redaction.get("software_licensing_md", ""),
         "custom_deliverables_md": redaction.get("deliverables_list_md", "")

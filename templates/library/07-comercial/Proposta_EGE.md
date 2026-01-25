@@ -26,13 +26,6 @@ Abaixo, apresentamos o resumo dos investimentos necessários para a execução d
 | Monitoramento e NOC | Serviços de Monitoramento Proativo e Suporte Técnico | R$ {{ opex.grand_total_monthly | brl }} |
 | **TOTAL OPEX** | **Mensalidade (Contrato {{ opex.contract_duration_months }} meses)** | **R$ {{ opex.grand_total_monthly | brl }}** |
 
-#### RELAÇÃO DE ATIVOS (CONSOLIDAÇÃO)
-| Item Monitorado / Ativos | Quantidade |
-| :--- | :---: |
-{% for item in opex.items -%}
-| {{ item.item_name }} | {{ item.quantity }} |
-{% endfor %}
-
 > [!TIP]
 > **Franquia de Horas:** O contrato inclui uma franquia mensal de **{{ opex.support_hours_f2 }} horas (F2)** para atendimentos remotos.
 {% else %}

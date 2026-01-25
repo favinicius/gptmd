@@ -6139,17 +6139,17 @@
         "status": "pending_review"
     },
     {
-        "timestamp": "2026-01-25T14:12:53.393084",
+        "timestamp": "2026-01-25T15:10:24.220703",
         "trigger_term": "Design e Planejamento da Nova Infraestrutura de Supervisão",
-        "context": "Foco em redundância de hardware, alta performance para acesso a históricos e segurança dos dados de processo.",
+        "context": "Inclui a definição da arquitetura do servidor, configuração de armazenamento (RAID 10), instalação do Windows Server e desenho da rotina de backup automático.",
         "suggested_wbs": [
             {
                 "id": "RES_001",
                 "category": "Planejamento",
-                "name": "Levantamento de Inventário e Configurações Atuais",
-                "role": "Técnico",
+                "name": "Definição da Arquitetura de Alto Nível da Infraestrutura de Supervisão",
+                "role": "Arquiteto",
                 "unit_hours": 4.0,
-                "description": "Coletar dados de hardware, software, rede e configurações existentes.\n- Acessar sistemas de inventário e CMDB.\n- Documentar configurações de rede e segurança.\n- Registrar volumes de dados e performance atual.",
+                "description": "Reunião de requisitos, definição de componentes principais, escalabilidade, segurança e integração com sistemas existentes. Criação de diagrama de arquitetura conceitual.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6159,10 +6159,10 @@
             {
                 "id": "RES_002",
                 "category": "Planejamento",
-                "name": "Reunião de Alinhamento e Coleta de Requisitos de Negócio",
-                "role": "Gestor",
+                "name": "Desenho Detalhado da Arquitetura do Servidor e Especificação de Hardware/OS",
+                "role": "Engenheiro",
                 "unit_hours": 3.0,
-                "description": "Entender necessidades de negócio, objetivos de redundância, performance e segurança.\n- Conduzir entrevistas com stakeholders (operação, segurança, TI).\n- Identificar KPIs de performance e disponibilidade.\n- Definir requisitos de conformidade e segurança.",
+                "description": "Especificação de hardware (CPU, RAM, NICs), versão do Windows Server, roles e features. Planejamento de licenciamento e compatibilidade de componentes.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6172,10 +6172,10 @@
             {
                 "id": "RES_003",
                 "category": "Planejamento",
-                "name": "Análise de Requisitos Técnicos e Benchmarking de Soluções",
-                "role": "Arquiteto",
-                "unit_hours": 5.0,
-                "description": "Traduzir requisitos de negócio em especificações técnicas e pesquisar tecnologias de mercado.\n- Analisar requisitos de IOPS, throughput e latência para históricos.\n- Pesquisar soluções de virtualização, armazenamento redundante e segurança.\n- Comparar fornecedores e tecnologias disponíveis.",
+                "name": "Desenho da Arquitetura de Armazenamento (RAID 10)",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Definição do layout de discos, cálculo de capacidade, seleção do controlador RAID e planejamento de volumes lógicos para RAID 10.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6185,10 +6185,10 @@
             {
                 "id": "RES_004",
                 "category": "Planejamento",
-                "name": "Definição da Arquitetura Lógica e Conceitual",
-                "role": "Arquiteto",
-                "unit_hours": 6.0,
-                "description": "Desenhar o diagrama de blocos da arquitetura, definindo componentes e fluxos de dados.\n- Criar diagrama de arquitetura de alto nível (visão conceitual).\n- Definir camadas (apresentação, aplicação, dados) e interconexões.\n- Esboçar estratégias de Alta Disponibilidade (HA) e Recuperação de Desastres (DR).",
+                "name": "Desenho da Rotina de Backup Automático e Plano de Recuperação",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Definição de escopo, frequência, retenção, RTO/RPO, método de backup (imagem/arquivo), software e estratégia de armazenamento (local/nuvem).",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6198,10 +6198,10 @@
             {
                 "id": "RES_005",
                 "category": "Execução",
-                "name": "Projeto Detalhado de Hardware de Servidores e Armazenamento",
-                "role": "Engenheiro",
-                "unit_hours": 7.0,
-                "description": "Especificar modelos de servidores, CPUs, RAM, discos, controladoras e soluções de armazenamento.\n- Dimensionar recursos de CPU/RAM para VMs e aplicações.\n- Calcular capacidade de armazenamento para históricos (dados brutos, agregados) e IOPS.\n- Selecionar modelos de hardware (servidores, SAN/NAS) e níveis de RAID para redundância.",
+                "name": "Preparação Física do Servidor (Rack, Cabos, Energia)",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Instalação do servidor no rack, conexão de cabos de energia e rede, organização de cabeamento e verificação inicial de hardware.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6211,10 +6211,10 @@
             {
                 "id": "RES_006",
                 "category": "Execução",
-                "name": "Projeto Detalhado da Infraestrutura de Rede",
-                "role": "Engenheiro",
-                "unit_hours": 6.0,
-                "description": "Desenhar topologia de rede, VLANs, endereçamento IP, rotas, firewalls e switches.\n- Definir segmentação de rede e VLANs para gerência, dados e DMZ.\n- Planejar endereçamento IP e rotas estáticas/dinâmicas.\n- Especificar switches (core, access) com redundância (stacking, MLAG) e regras de firewall para acesso seguro.",
+                "name": "Configuração de RAID 10 no Controlador de Hardware",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Acesso à BIOS/UEFI do controlador RAID, criação do array RAID 10, inicialização dos discos e verificação de status.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6224,10 +6224,10 @@
             {
                 "id": "RES_007",
                 "category": "Gerenciamento",
-                "name": "Projeto de Segurança da Infraestrutura e Dados",
-                "role": "Engenheiro",
-                "unit_hours": 5.0,
-                "description": "Detalhar políticas de segurança, hardening de SO, controle de acesso, criptografia e backup.\n- Definir políticas de acesso (RBAC) e autenticação.\n- Especificar configurações de hardening para SO e aplicações.\n- Planejar solução de backup e restore (RTO/RPO) e considerar criptografia de dados em repouso e em trânsito.",
+                "name": "Instalação do Sistema Operacional Windows Server",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Boot a partir da mídia de instalação, seleção de idioma, partição de disco (inicial), instalação do SO e configuração de senha inicial.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6237,10 +6237,10 @@
             {
                 "id": "RES_008",
                 "category": "Gerenciamento",
-                "name": "Definição de Software Base, Virtualização e Monitoramento",
+                "name": "Configuração Inicial do Windows Server e Atualizações",
                 "role": "Analista",
-                "unit_hours": 4.0,
-                "description": "Escolher SO, plataforma de virtualização, ferramentas de monitoramento e gerenciamento.\n- Selecionar versão do SO (Windows Server, Linux) e hypervisor (VMware, Hyper-V).\n- Especificar ferramentas de monitoramento (Zabbix, PRTG, Nagios) e gerenciamento.\n- Planejar integração com serviços de diretório (AD/LDAP).",
+                "unit_hours": 3.0,
+                "description": "Configuração de rede (IP, DNS), nome do host, habilitação de RDP, instalação de drivers básicos e execução de Windows Updates.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6249,11 +6249,11 @@
             },
             {
                 "id": "RES_009",
-                "category": "Planejamento",
-                "name": "Elaboração da Documentação Técnica Detalhada",
-                "role": "Engenheiro",
-                "unit_hours": 8.0,
-                "description": "Compilar todos os projetos em um documento técnico completo para implementação.\n- Redigir seções de arquitetura, hardware, rede, segurança, software.\n- Incluir diagramas detalhados, lista de materiais (BOM) e planos de implementação.\n- Revisar consistência, clareza e aderência aos requisitos.",
+                "category": "Gerenciamento",
+                "name": "Particionamento e Formatação de Discos Lógicos no Windows",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Utilização do Gerenciamento de Disco para criar partições, atribuir letras de unidade e formatar volumes com NTFS.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6262,11 +6262,11 @@
             },
             {
                 "id": "RES_010",
-                "category": "Planejamento",
-                "name": "Estimativa de Custos e Análise de Viabilidade Financeira",
+                "category": "Gerenciamento",
+                "name": "Instalação e Configuração Básica do Software de Backup",
                 "role": "Analista",
-                "unit_hours": 4.0,
-                "description": "Consolidar custos de hardware, software, licenças, serviços e mão de obra.\n- Solicitar e consolidar cotações de fornecedores.\n- Estimar custos de implementação e manutenção (OPEX).\n- Preparar análise de TCO (Total Cost of Ownership) e ROI.",
+                "unit_hours": 3.0,
+                "description": "Instalação do agente/servidor de backup, configuração de credenciais, definição de repositórios de backup e criação de políticas iniciais.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6275,11 +6275,11 @@
             },
             {
                 "id": "RES_011",
-                "category": "Planejamento",
-                "name": "Revisão e Aprovação Formal do Projeto",
-                "role": "Gestor",
-                "unit_hours": 2.0,
-                "description": "Apresentar o projeto para stakeholders e obter aprovação formal.\n- Preparar apresentação executiva do projeto.\n- Conduzir reunião de revisão com stakeholders (TI, Operação, Segurança, Financeiro).\n- Obter aprovação formal e assinaturas dos responsáveis.",
+                "category": "Gerenciamento",
+                "name": "Configuração Detalhada e Teste da Rotina de Backup Automático",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Agendamento de jobs de backup, configuração de notificações, execução de backups de teste, validação de integridade e simulação de restauração.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6289,10 +6289,10 @@
             {
                 "id": "RES_012",
                 "category": "Planejamento",
-                "name": "Suporte Administrativo para Cotação e Aquisição",
-                "role": "Auxiliar",
+                "name": "Documentação Final da Infraestrutura e Procedimentos",
+                "role": "Engenheiro",
                 "unit_hours": 3.0,
-                "description": "Auxiliar na organização de cotações, contato inicial com fornecedores e preparação de requisições.\n- Organizar documentos de cotação e propostas.\n- Comunicar-se com fornecedores para esclarecimentos básicos.\n- Apoiar na preparação de ordens de compra e requisições de material.",
+                "description": "Elaboração de documentação técnica completa, incluindo diagramas, configurações de hardware/software, plano de backup e procedimentos operacionais.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6303,17 +6303,17 @@
         "status": "pending_review"
     },
     {
-        "timestamp": "2026-01-25T14:13:20.480354",
+        "timestamp": "2026-01-25T15:10:44.227133",
         "trigger_term": "Instalação de Nobreak Senoidal 2.2kVA",
-        "context": "Nobreak senoidal de 2.2kVA para segurar quedas rápidas de energia.",
+        "context": "Nobreak senoidal de 2.2kVA.",
         "suggested_wbs": [
             {
                 "id": "RES_001",
                 "category": "Planejamento",
-                "name": "Recebimento e Conferência Física do Nobreak",
-                "role": "Auxiliar",
-                "unit_hours": 1.0,
-                "description": "Desembalar o equipamento, inspecionar danos visíveis, conferir modelo e número de série, mover para a área de staging.",
+                "name": "Análise de Requisitos e Planejamento de Instalação",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Avaliação do local de instalação (espaço, ventilação, temperatura), infraestrutura elétrica existente (tomadas, disjuntores, aterramento) e requisitos de carga dos equipamentos. Revisão de manuais técnicos do Nobreak e definição dos pontos de conexão. Elaboração de um plano de ação.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6322,11 +6322,11 @@
             },
             {
                 "id": "RES_002",
-                "category": "Planejamento",
-                "name": "Análise de Requisitos e Planejamento Preliminar da Instalação",
-                "role": "Analista",
-                "unit_hours": 2.0,
-                "description": "Avaliar infraestrutura existente, carga elétrica, dispositivos a proteger, definir local de instalação e elaborar plano básico de execução.",
+                "category": "Execução",
+                "name": "Recebimento, Desembalagem e Posicionamento Físico",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Recebimento e conferência do Nobreak. Transporte interno do equipamento até o local de instalação. Desembalagem cuidadosa e inspeção visual para verificar possíveis danos. Posicionamento inicial do Nobreak no local definido.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6335,11 +6335,11 @@
             },
             {
                 "id": "RES_003",
-                "category": "Planejamento",
-                "name": "Validação Técnica e Desenho Detalhado da Solução Elétrica",
-                "role": "Engenheiro",
+                "category": "Execução",
+                "name": "Conexão Elétrica e Cabeamento de Carga",
+                "role": "Técnico",
                 "unit_hours": 2.0,
-                "description": "Avaliação elétrica detalhada, cálculo de carga, revisão de diagramas, garantia de conformidade com normas e aprovação do plano de instalação.",
+                "description": "Conexão do Nobreak à rede elétrica principal (entrada de energia) e dos equipamentos a serem protegidos (servidores, switches, etc.) às saídas do Nobreak. Organização e fixação do cabeamento para garantir segurança e estética. Verificação de polaridade e aterramento.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6349,10 +6349,10 @@
             {
                 "id": "RES_004",
                 "category": "Execução",
-                "name": "Preparação do Local e Posicionamento Físico do Nobreak",
-                "role": "Técnico",
-                "unit_hours": 1.0,
-                "description": "Limpar e preparar a área designada, posicionar o Nobreak no local definido, garantir ventilação adequada e estabilidade física.",
+                "name": "Configuração de Rede e Parâmetros Iniciais",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Conexão do Nobreak à rede de dados (se possuir interface de rede). Configuração de endereço IP, máscara de sub-rede e gateway. Acesso à interface de gerenciamento (web ou CLI) e ajuste de parâmetros básicos como data/hora, tensão de saída e sensibilidade. Configuração de SNMP ou alertas por e-mail.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6361,11 +6361,11 @@
             },
             {
                 "id": "RES_005",
-                "category": "Execução",
-                "name": "Conexão Elétrica de Entrada do Nobreak à Rede",
-                "role": "Técnico",
-                "unit_hours": 1.0,
-                "description": "Identificar o circuito elétrico correto, conectar o cabo de entrada do Nobreak à tomada/disjuntor, verificar o aterramento adequado.",
+                "category": "Gerenciamento",
+                "name": "Testes de Funcionalidade e Autonomia",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Realização de testes de bateria (simulação de falta de energia) para verificar a transição para o modo bateria. Medição do tempo de autonomia sob carga. Verificação do comportamento dos equipamentos conectados durante a transição e o desligamento seguro (se configurado).",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -6374,76 +6374,11 @@
             },
             {
                 "id": "RES_006",
-                "category": "Execução",
-                "name": "Conexão Elétrica de Saída do Nobreak às Cargas",
-                "role": "Técnico",
-                "unit_hours": 1.0,
-                "description": "Conectar os equipamentos a serem protegidos (servidores, switches, etc.) às saídas do Nobreak, realizar a organização e roteamento dos cabos.",
-                "setup_hours": 0.0,
-                "tags": [
-                    "research",
-                    "ai-generated"
-                ]
-            },
-            {
-                "id": "RES_007",
-                "category": "Execução",
-                "name": "Primeiro Power-Up e Testes Funcionais Básicos do Nobreak",
-                "role": "Técnico",
-                "unit_hours": 1.0,
-                "description": "Ligar o Nobreak, verificar LEDs indicadores, alarmes, status da bateria e testar o modo bypass inicial para operação básica.",
-                "setup_hours": 0.0,
-                "tags": [
-                    "research",
-                    "ai-generated"
-                ]
-            },
-            {
-                "id": "RES_008",
-                "category": "Gerenciamento",
-                "name": "Instalação e Configuração de Software de Monitoramento e Shutdown",
-                "role": "Analista",
-                "unit_hours": 2.0,
-                "description": "Instalar agente de monitoramento em servidores/VMs, configurar comunicação entre Nobreak e software, definir parâmetros de desligamento seguro.",
-                "setup_hours": 0.0,
-                "tags": [
-                    "research",
-                    "ai-generated"
-                ]
-            },
-            {
-                "id": "RES_009",
-                "category": "Gerenciamento",
-                "name": "Testes de Carga e Simulação de Falha de Energia",
-                "role": "Analista",
-                "unit_hours": 2.0,
-                "description": "Simular uma queda de energia, verificar a autonomia da bateria, testar a sequência de desligamento seguro dos sistemas e monitorar a carga.",
-                "setup_hours": 0.0,
-                "tags": [
-                    "research",
-                    "ai-generated"
-                ]
-            },
-            {
-                "id": "RES_010",
                 "category": "Planejamento",
-                "name": "Atualização de Inventário e Documentação Técnica Pós-Instalação",
+                "name": "Documentação e Encerramento da Instalação",
                 "role": "Analista",
                 "unit_hours": 1.0,
-                "description": "Registrar dados do Nobreak no sistema de inventário, atualizar diagramas de infraestrutura e procedimentos operacionais relacionados.",
-                "setup_hours": 0.0,
-                "tags": [
-                    "research",
-                    "ai-generated"
-                ]
-            },
-            {
-                "id": "RES_011",
-                "category": "Planejamento",
-                "name": "Revisão e Aprovação Final da Instalação",
-                "role": "Gestor",
-                "unit_hours": 1.0,
-                "description": "Revisar toda a documentação, verificar a conclusão satisfatória dos testes, e aprovar formalmente a instalação e sua conformidade.",
+                "description": "Atualização do inventário de ativos com as informações do Nobreak. Registro das configurações realizadas (IP, parâmetros). Elaboração de um relatório de instalação e comunicação do status final da atividade aos stakeholders. Atualização de diagramas de infraestrutura.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
@@ -7022,6 +6957,2076 @@
                 "role": "Gestor",
                 "unit_hours": 1.0,
                 "description": "Avaliar o projeto, custos, desempenho da solução e feedback dos usuários. Identificar oportunidades de otimização ou melhorias futuras.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T14:59:49.050890",
+        "trigger_term": "Configuração de Acesso Remoto Seguro (VPN)",
+        "context": "Utilizando licença de software para 10 usuários simultâneos.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Desenho de Solução VPN",
+                "role": "Arquiteto",
+                "unit_hours": 3.0,
+                "description": "Entender necessidades de acesso remoto, definir escopo, selecionar tecnologia VPN (considerando licença existente), projetar arquitetura de alto nível e políticas de segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Detalhamento de Design de Rede e Políticas de Segurança",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Detalhar regras de firewall, rotas, endereçamento IP para VPN, métodos de autenticação e autorização para 10 usuários, e políticas de acesso aos recursos internos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Configuração de Infraestrutura de Rede e Firewall",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Abrir portas necessárias no firewall, configurar NAT/PAT, ajustar tabelas de roteamento e garantir conectividade para o servidor VPN.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Preparação do Servidor VPN (SO e Hardening)",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Instalar sistema operacional no servidor (físico/virtual), aplicar patches de segurança, configurar acesso remoto seguro ao servidor e realizar hardening básico.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Instalação e Ativação da Licença do Software VPN",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Instalar o software VPN no servidor, ativar a licença para 10 usuários simultâneos e realizar as configurações iniciais do servidor.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Configuração de Usuários, Grupos e Políticas de Acesso VPN",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Criar/integrar 10 usuários e seus respectivos grupos, definir políticas de acesso granular (quais recursos cada grupo pode acessar) e configurar métodos de autenticação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Geração de Perfis de Cliente VPN e Instruções de Conexão",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Gerar os arquivos de configuração para os clientes VPN, criar um guia passo a passo para os usuários finais e preparar o pacote de distribuição.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Suporte Inicial ao Usuário e Testes de Conectividade Cliente",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Auxiliar os 10 usuários na instalação inicial do cliente VPN e na primeira conexão, verificando a conectividade básica.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Testes Abrangentes de Funcionalidade e Segurança da VPN",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Realizar testes de conectividade de ponta a ponta, validação de políticas de acesso, testes de desempenho, resiliência e segurança (ex: tentativas de acesso não autorizado).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Gerenciamento",
+                "name": "Elaboração de Documentação Técnica e Procedimentos Operacionais",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Documentar a arquitetura, configurações do servidor VPN, regras de firewall, políticas de acesso, procedimentos de troubleshooting e guia de uso para administradores.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Revisão Final e Aprovação da Implementação da VPN",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar a documentação, validar a conformidade com os requisitos iniciais e aprovar a entrada em produção da solução VPN.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:15:41.273788",
+        "trigger_term": "Configuração de Monitoramento de Tráfego entre VLANs",
+        "context": "Monitoramento de tráfego entre as VLANs da rede IT e OT.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantar requisitos e definir escopo do monitoramento IT/OT",
+                "role": "Arquiteto",
+                "unit_hours": 2.0,
+                "description": "Entender objetivos de monitoramento IT/OT; Identificar VLANs e ativos críticos; Definir tipos de tráfego a monitorar; Avaliar requisitos de segurança e conformidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Projetar a arquitetura da solução de monitoramento de tráfego",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Selecionar tecnologia (SPAN/NetFlow/IPFIX); Definir pontos de coleta e agregação; Escolher ferramenta de monitoramento; Arquitetar fluxo de dados e armazenamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Mapear e preparar dispositivos de rede para coleta de tráfego",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Mapear switches, routers e firewalls entre VLANs IT/OT; Verificar compatibilidade de hardware para SPAN/NetFlow; Garantir acessos administrativos aos dispositivos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Configurar SPAN/NetFlow/IPFIX nos dispositivos de rede",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Acessar dispositivos de rede (switches/routers); Configurar sessões SPAN/RSPAN ou exportação NetFlow/IPFIX; Ajustar regras de firewall para tráfego de monitoramento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Instalar e configurar ambiente para a ferramenta de monitoramento",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Provisionar VM/servidor (SO, recursos); Instalar software de monitoramento (coletor, SIEM); Configurar acessos e dependências básicas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Configurar fontes de dados e dashboards na ferramenta de monitoramento",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Adicionar fontes de dados (NetFlow/SPAN) na ferramenta; Criar dashboards básicos para visualização IT/OT; Definir alertas iniciais para anomalias de tráfego.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Validar coleta de dados e otimizar configurações de monitoramento",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Analisar dados coletados (volume, tipo, origem/destino); Verificar integridade e relevância do tráfego IT/OT; Ajustar configurações de rede ou da ferramenta; Otimizar regras de alerta.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Documentar a solução e treinar equipes operacionais",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Elaborar documentação técnica da arquitetura e configurações; Criar manuais de operação e troubleshooting; Realizar sessão de treinamento para equipe de suporte.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:02:44.155671",
+        "trigger_term": "Instalação e Configuração de Nobreak Senoidal",
+        "context": "Nobreak senoidal de 2.2kVA.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Planejamento e Verificação de Pré-requisitos",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Levantamento do local de instalação, verificação de infraestrutura elétrica (tomadas, disjuntores, capacidade), requisitos de rede (se Nobreak for gerenciável), e revisão da documentação existente.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Execução",
+                "name": "Recebimento, Desembalagem e Posicionamento Físico",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Receber o equipamento, inspecionar a embalagem e o Nobreak por danos, desembalar, transportar até o local de instalação final e posicionar fisicamente o equipamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Instalação Física e Conexões Elétricas",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Conectar os cabos de entrada de energia (rede elétrica), cabos de saída para os equipamentos a serem protegidos, e as baterias internas/externas do Nobreak. Organização básica dos cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Configuração Básica e Testes Iniciais de Hardware",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Ligar o Nobreak, verificar os LEDs e o painel de controle para status inicial, realizar o autoteste do equipamento e configurar um endereço IP básico (se o modelo for gerenciável via rede).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Configuração Avançada e Integração de Software",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Instalar e configurar o software de gerenciamento do Nobreak (ex: PowerChute, PowerPanel) em um servidor ou estação de trabalho. Configurar a comunicação entre o Nobreak e o software, definir políticas de desligamento seguro, alertas e integração com sistemas de monitoramento existentes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Testes de Funcionalidade e Autonomia",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Simular uma falha de energia para verificar a transição para bateria, testar o procedimento de desligamento seguro dos servidores/equipamentos conectados e verificar o tempo de autonomia do Nobreak sob carga real.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Planejamento",
+                "name": "Documentação e Treinamento Operacional",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Atualizar o inventário de ativos, registrar as configurações realizadas, criar ou atualizar diagramas de infraestrutura, documentar os resultados dos testes e fornecer um breve treinamento para a equipe de operação sobre o uso e monitoramento do Nobreak.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:05:47.148368",
+        "trigger_term": "Instalação de Interligação Óptica entre Galpões",
+        "context": "Instalação de 300 metros de fibra óptica monomodo armada (anti-roedor) para interligar galpões a 150m de distância.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Campo e Análise de Requisitos",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Visita técnica ao local, identificação de pontos de interligação, obstáculos, infraestrutura existente (eletrodutos, bandejas) e requisitos de segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Projeto Detalhado da Interligação Óptica",
+                "role": "Engenheiro",
+                "unit_hours": 8.0,
+                "description": "Elaboração do projeto físico e lógico, definição do trajeto da fibra, tipo de cabo, conectores, equipamentos, lista de materiais, diagramas de conexão e plano de segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Planejamento e Coordenação Logística do Projeto",
+                "role": "Gestor",
+                "unit_hours": 4.0,
+                "description": "Criação do cronograma, alocação de recursos (equipe, ferramentas), coordenação com outras equipes, agendamento de acessos e aprovações internas/externas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Preparação da Rota e Infraestrutura para Cabo",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Limpeza da rota, verificação de eletrodutos/bandejas, instalação de suportes adicionais, passagem de guia e preparação para o lançamento do cabo óptico.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Lançamento e Acomodação do Cabo Óptico Armado",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Desbobinamento e puxada dos 300m de fibra óptica armada, fixação adequada em bandejas/eletrodutos e criação de reserva técnica nas extremidades.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Fusão e Conectorização das Fibras Ópticas",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Preparação das fibras (decapagem, clivagem), fusão das 12 fibras (considerando 2 pontos), instalação de conectores e acomodação em DIOs/caixas de emenda.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Instalação e Conexão de Equipamentos Passivos e Ativos",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Montagem de DIOs (Distribuidores Internos Ópticos), patch panels, instalação de módulos SFP/transceptores em switches ou conversores de mídia.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Certificação Óptica com OTDR e Power Meter",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Realização de testes de atenuação, perdas e continuidade com equipamentos especializados (OTDR, Power Meter/Light Source) e geração de relatórios de certificação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Testes de Conectividade Lógica e Desempenho",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Verificação de conectividade de ponta a ponta (ping, traceroute), teste de throughput e validação da comunicação entre os equipamentos interligados nos galpões.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Elaboração de Documentação 'As-Built' e Aceite Final",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Compilação de todos os relatórios de teste, diagramas 'as-built', manuais e apresentação para o cliente/gestor para aceite formal do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:06:06.824445",
+        "trigger_term": "Instalação de Conversores de Mídia e DIOs",
+        "context": "Conversores de mídia e DIOs para a infraestrutura de fibra óptica.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Planejamento da Instalação e Preparação de Materiais",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Revisão de projeto, levantamento de requisitos, verificação de materiais e ferramentas. Planejamento logístico e de segurança para a execução.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Execução",
+                "name": "Montagem Física de DIOs e Conversores de Mídia",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Fixação dos DIOs e conversores nos locais designados (rack, parede, trilho DIN). Organização inicial dos cabos e identificação de pontos de instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Lançamento e Conexão de Cabos Ópticos e Elétricos",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Roteamento e organização dos cabos de fibra óptica dentro dos DIOs e para os conversores. Conexão dos cabos de alimentação dos conversores e aterramento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Conexão de Cabos de Rede e Testes Básicos de Conectividade",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Conexão dos cabos Ethernet aos conversores de mídia e equipamentos de rede. Verificação de LEDs de link e atividade. Realização de testes de ping básicos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Configuração e Testes Avançados de Rede e Ópticos",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Configuração de parâmetros de rede (VLANs, SNMP) em conversores gerenciáveis. Medição de potência óptica (dBm) e testes de throughput da fibra.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Planejamento",
+                "name": "Atualização de Documentação e Relatório Final",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Atualização de diagramas 'as-built', registro de números de série e localização dos equipamentos. Elaboração de relatório de testes e encerramento formal da atividade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:06:34.046361",
+        "trigger_term": "Configuração de Licença de Software VPN e Acesso Seguro",
+        "context": "Configuração da licença de software VPN com suporte a 10 usuários simultâneos e políticas de acesso.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Design da Solução VPN",
+                "role": "Arquiteto",
+                "unit_hours": 3.0,
+                "description": "Reunião com stakeholders para entender necessidades de acesso e segurança. Desenho da arquitetura VPN, seleção de protocolo e software. Elaboração de um design preliminar.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Aquisição e Gestão da Licença de Software VPN",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Pesquisa de fornecedores e comparação de soluções. Solicitação de cotações e aprovação de compra. Gestão e registro da chave de licença.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Preparação do Ambiente Servidor para VPN",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Provisionamento de máquina virtual ou servidor físico. Instalação e configuração básica do sistema operacional. Hardening de segurança inicial e atualização de patches.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Configuração de Regras de Firewall e Roteamento para VPN",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Análise da topologia de rede existente. Abertura de portas necessárias no firewall corporativo. Configuração de NAT/PAT e roteamento estático/dinâmico para o servidor VPN.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Instalação do Software Servidor VPN",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Download do instalador do software VPN. Verificação de pré-requisitos de sistema. Execução do assistente de instalação e instalação de componentes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Ativação da Licença e Configuração Inicial do Servidor VPN",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Inserção e validação da chave de licença. Configuração de parâmetros básicos do servidor VPN (ex: range de IPs, método de autenticação inicial). Criação de conta de administrador.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Definição e Implementação de Políticas de Acesso VPN",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Tradução dos requisitos de acesso em políticas de segurança granulares. Criação de grupos de usuários e associação de recursos. Configuração de regras de firewall internas do VPN e controle de acesso.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Criação de Contas de Usuários VPN (10 Usuários)",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Criação de 10 contas de usuário no sistema VPN. Associação dos usuários aos grupos de acesso definidos. Geração e registro de credenciais iniciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Configuração e Distribuição de Clientes VPN",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Preparação de pacotes de instalação do cliente VPN. Criação de arquivos de configuração pré-definidos para os usuários. Distribuição segura dos clientes e credenciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Gerenciamento",
+                "name": "Testes de Conectividade e Validação de Políticas de Acesso",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Testes de conexão VPN para todos os usuários configurados. Validação das políticas de acesso (recursos permitidos/negados). Testes de desempenho básico e estabilidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Elaboração da Documentação Técnica e Operacional",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Criação de documentação da arquitetura da solução VPN. Registro da configuração do servidor e políticas de acesso. Elaboração de procedimentos de troubleshooting e guia rápido para usuários.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Planejamento",
+                "name": "Treinamento e Transição para Equipe de Operações",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Apresentação da solução VPN à equipe de operações. Explicação das configurações, políticas e procedimentos de monitoramento. Sessão de perguntas e respostas para transição de conhecimento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:07:01.592644",
+        "trigger_term": "Design e Configuração de Monitoramento de Tráfego de VLANs",
+        "context": "Definição e configuração de ferramentas ou recursos para monitorar o tráfego entre as VLANs da rede OT e IT.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Definição de Escopo",
+                "role": "Arquiteto",
+                "unit_hours": 4.0,
+                "description": "Entender o contexto OT/IT e requisitos de segurança. Identificar VLANs críticas para monitoramento. Definir objetivos e métricas de monitoramento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Pesquisa e Seleção de Ferramentas de Monitoramento",
+                "role": "Arquiteto",
+                "unit_hours": 4.0,
+                "description": "Avaliar soluções de mercado (SPAN, NetFlow, SIEM, sondas). Comparar funcionalidades, custos, escalabilidade e compatibilidade OT/IT. Recomendar a ferramenta ideal.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Desenho da Arquitetura de Monitoramento (HLD/LLD)",
+                "role": "Engenheiro",
+                "unit_hours": 8.0,
+                "description": "Elaborar High-Level Design (HLD) e Low-Level Design (LLD). Definir topologia de coleta de dados, pontos de integração e requisitos de hardware/software. Detalhar fluxos de dados e segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Planejamento",
+                "name": "Planejamento de Capacidade e Recursos",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Dimensionar recursos de hardware (servidores, storage) e software (licenças). Planejar endereçamento IP para a solução de monitoramento. Estimar requisitos de rede.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Configuração de Portas SPAN/RSPAN e VLANs de Gerenciamento",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Acessar switches de rede. Configurar portas SPAN/RSPAN nas VLANs OT/IT selecionadas. Criar/configurar VLANs dedicadas para tráfego de monitoramento e gerenciamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Provisionamento de Servidores/VMs para Ferramenta de Monitoramento",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Instalar sistema operacional em servidores físicos ou VMs. Configurar rede básica (IP, DNS). Aplicar patches de segurança iniciais. Garantir conectividade de rede para a ferramenta.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Instalação e Configuração Inicial da Ferramenta de Monitoramento",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Instalar software ou appliance da ferramenta de monitoramento. Configurar acesso inicial e credenciais. Aplicar licenças. Realizar testes de funcionamento básico.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Configuração de Políticas de Coleta de Tráfego e Filtros",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Definir quais VLANs, interfaces ou sub-redes serão monitoradas. Aplicar filtros de tráfego para otimizar a coleta. Configurar fontes de dados (NetFlow, sFlow, SPAN).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Configuração de Alertas, Limiares e Notificações",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Definir regras de alerta para anomalias de tráfego (ex: picos, portas incomuns). Configurar limiares de desempenho. Integrar com sistemas de notificação (e-mail, SMS, ITSM).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Gerenciamento",
+                "name": "Integração com SIEM/NMS e Criação de Dashboards",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Configurar envio de logs e eventos para SIEM/NMS existentes. Criar dashboards e relatórios personalizados para visualização do tráfego e métricas de segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Gerenciamento",
+                "name": "Testes Funcionais e de Desempenho do Monitoramento",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Simular cenários de tráfego. Verificar a coleta de dados de todas as fontes configuradas. Testar o disparo de alertas. Validar o desempenho da solução sob carga.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Planejamento",
+                "name": "Validação de Segurança e Conformidade (OT/IT)",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Revisar configurações para garantir a segregação adequada entre redes OT e IT. Validar conformidade com políticas de segurança. Assegurar impacto zero na rede OT.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_013",
+                "category": "Planejamento",
+                "name": "Elaboração de Documentação Operacional e Diagramas",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Criar manuais de operação e procedimentos de troubleshooting. Atualizar diagramas de rede e arquitetura com a nova solução. Documentar configurações e políticas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_014",
+                "category": "Planejamento",
+                "name": "Treinamento da Equipe de Operações",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Conduzir sessões de treinamento para a equipe de operações. Apresentar o uso da ferramenta, dashboards, alertas e procedimentos de resposta a incidentes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_015",
+                "category": "Planejamento",
+                "name": "Revisão e Aprovação Final do Projeto",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar a documentação final e o escopo entregue. Validar a conformidade com os objetivos iniciais. Aprovar a transição formal para a operação e encerramento do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:07:22.893023",
+        "trigger_term": "Testes e Validação da Solução Implementada",
+        "context": "Testes de conectividade, isolamento de rede, performance dos CLPs, acesso VPN e monitoramento de tráfego.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Execução",
+                "name": "Preparar e verificar ambiente físico de testes",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Verificar cabos e conexões; Ligar equipamentos; Confirmar endereçamento IP básico; Abrir ferramentas de teste.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Execução",
+                "name": "Executar testes de conectividade de rede padrão",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Realizar pings entre dispositivos; Testar portas TCP/UDP essenciais; Verificar rotas com traceroute.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Validar regras de isolamento e segmentação de rede",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Testar acesso entre VLANs/segmentos; Verificar bloqueios de firewall; Validar aplicação de ACLs.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Testar funcionalidade e segurança do acesso VPN",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Conectar cliente VPN; Acessar recursos internos via VPN; Testar túnel dividido/completo.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Avaliar performance e comportamento dos CLPs",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Monitorar ciclo de scan do CLP; Testar tempos de resposta de I/O; Simular cenários de falha; Verificar integridade de dados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Monitorar e analisar tráfego de rede para anomalias",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Capturar pacotes (Wireshark); Identificar protocolos e latência; Buscar anomalias ou gargalos de tráfego.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Planejamento",
+                "name": "Compilar evidências e elaborar relatório preliminar de testes",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Consolidar logs, screenshots e resultados; Redigir sumário executivo com achados e recomendações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Revisar tecnicamente e validar conformidade da solução",
+                "role": "Arquiteto",
+                "unit_hours": 2.0,
+                "description": "Revisar relatório de testes; Verificar aderência aos requisitos de design; Aprovar resultados técnicos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Aprovar gerencialmente e fechar atividade de testes",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar sumário executivo; Confirmar aprovação técnica; Autorizar próxima fase do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:12:30.056230",
+        "trigger_term": "Instalação de Nobreak Senoidal",
+        "context": "Nobreak senoidal de 2.2kVA para garantir a continuidade da operação em caso de interrupções rápidas de energia.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Análise de Requisitos e Planejamento de Instalação",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Avaliação do ambiente elétrico e físico.\nIdentificação de cargas e requisitos de rede.\nDefinição do escopo da instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Execução",
+                "name": "Recebimento, Inspeção e Posicionamento Físico",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Recebimento e inspeção visual de danos.\nDesempacotamento do equipamento.\nPosicionamento inicial do Nobreak no local.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Conexão Elétrica e Aterramento",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Conexão do Nobreak à rede elétrica (entrada).\nConexão dos equipamentos protegidos (saída).\nVerificação e garantia do aterramento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Configuração Inicial e Teste de Funcionamento Básico",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Primeira energização do Nobreak.\nVerificação de indicadores de status.\nExecução de autoteste e confirmação de operação básica.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Configuração de Rede e Instalação de Software de Monitoramento",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Configuração de interface de rede (IP, SNMP).\nInstalação de agentes de shutdown em servidores.\nIntegração com sistema de monitoramento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Teste de Carga e Autonomia",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Simulação de falha de energia.\nVerificação da autonomia da bateria.\nConfirmação do desligamento seguro dos equipamentos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Planejamento",
+                "name": "Documentação e Treinamento Operacional",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Atualização de inventário e diagramas.\nCriação/atualização de procedimentos operacionais.\nBreve treinamento para a equipe local.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Validação Final e Encerramento Técnico",
+                "role": "Engenheiro",
+                "unit_hours": 1.0,
+                "description": "Revisão técnica final da instalação e configuração.\nGarantia de conformidade com padrões e requisitos.\nFormalização do encerramento técnico do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:14:45.065249",
+        "trigger_term": "Implantação de Infraestrutura de Fibra Óptica e Conversores de Mídia",
+        "context": "Inclui a passagem de 300 metros de fibra óptica monomodo armada (anti-roedor) e a instalação de 4 conversores de mídia e distribuidores ópticos (DIO).",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Projeto Lógico/Físico",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Análise do local, definição do trajeto da fibra, especificação de materiais (fibra, DIOs, conversores), desenho da topologia e plano de instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Preparação de Ferramentas e Materiais",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Verificação e organização de ferramentas (fusora, OTDR, power meter, kit de crimpagem, etc.), conferência de materiais (fibra, DIOs, conversores, conectores, bandejas).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Passagem de Fibra Óptica (300m)",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Desbobinamento e passagem da fibra óptica monomodo armada pelos dutos/eletrocalhas/bandejas, garantindo raio de curvatura adequado e proteção contra danos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Apoio à Passagem de Fibra Óptica",
+                "role": "Auxiliar",
+                "unit_hours": 4.0,
+                "description": "Auxílio na passagem da fibra, suporte na movimentação de bobinas, limpeza do local e organização de ferramentas durante a instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Montagem de DIOs e Conversores de Mídia (4 unidades)",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Fixação dos Distribuidores Ópticos (DIOs) e Conversores de Mídia em racks ou paredes, organização inicial dos cabos de energia e rede.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Fusão/Conectorização e Acomodação de Fibra (4 pontos)",
+                "role": "Técnico",
+                "unit_hours": 6.0,
+                "description": "Preparação das pontas da fibra, fusão ou conectorização dos conectores ópticos, acomodação das sobras de fibra e pigtails/cordões dentro dos DIOs.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Organização e Identificação da Infraestrutura",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Organização final dos cabos, identificação e etiquetagem de todas as fibras, DIOs e conversores de mídia conforme o projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Testes de Continuidade e Potência Óptica",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Realização de testes com Power Meter e/ou OTDR para verificar a atenuação, continuidade e qualidade dos enlaces ópticos instalados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Configuração de Conversores de Mídia e Integração de Rede",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Configuração lógica dos conversores de mídia (endereçamento IP, VLANs, modos de operação), integração com a rede existente e testes de conectividade L2/L3.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Execução",
+                "name": "Testes de Funcionalidade e Validação End-to-End",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Testes de comunicação de dados entre os pontos conectados, validação da performance e funcionalidade da nova infraestrutura com as aplicações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Elaboração de Documentação Técnica e As-Built",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Criação ou atualização de diagramas lógicos e físicos, relatórios de testes, inventário de equipamentos e procedimentos operacionais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Planejamento",
+                "name": "Gerenciamento e Acompanhamento do Projeto",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Planejamento, coordenação de equipes, acompanhamento do cronograma e orçamento, comunicação com stakeholders e resolução de impedimentos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:15:17.724435",
+        "trigger_term": "Configuração de Acesso VPN Seguro para Manutenção Externa",
+        "context": "Utilização de licença de software para gestão de VPN com suporte a 10 usuários simultâneos.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Desenho da Solução VPN",
+                "role": "Arquiteto",
+                "unit_hours": 4.0,
+                "description": "Entender necessidades de acesso externo, definir protocolos, autenticação (MFA), políticas de segurança e segmentação. Elaborar desenho técnico da solução para 10 usuários.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Aprovação do Desenho e Planejamento de Implementação",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Revisar e aprovar o desenho técnico da solução VPN, garantindo alinhamento com políticas de segurança e orçamento. Planejar etapas de implementação e alocar recursos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Preparação da Infraestrutura de Rede e Firewall",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Configurar regras de firewall, rotas de rede e garantir conectividade para o servidor VPN. Verificar requisitos de IP e DNS.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Instalação e Configuração Inicial do Software VPN",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Instalar o software de gestão de VPN no servidor/appliance. Realizar configuração inicial, ativação da licença para 10 usuários e configurações básicas de rede.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Configuração de Políticas de Segurança e Autenticação",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Definir e implementar políticas de segurança para a VPN, incluindo métodos de autenticação (AD/LDAP, MFA), criptografia e controle de acesso baseado em grupos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Criação de Contas de Usuários e Perfis de Acesso",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Criar contas de usuário para técnicos de manutenção externa e atribuir perfis de acesso definidos, garantindo o princípio do menor privilégio.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Testes de Conectividade e Acesso (Interno e Piloto)",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Realizar testes exaustivos de conectividade VPN e validação de acesso aos recursos internos permitidos, com testes internos e com usuário piloto externo.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Elaboração de Documentação Operacional e Manual do Usuário",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Criar documentação técnica para a equipe de suporte e um manual simplificado para usuários externos, cobrindo conexão e troubleshooting básico.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Treinamento da Equipe de Suporte e Configuração de Monitoramento",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Treinar a equipe de suporte sobre a operação da VPN, procedimentos de troubleshooting e monitoramento de logs. Configurar alertas e dashboards.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:29:19.158935",
+        "trigger_term": "Implantação de Appliance EGE RASA para Coleta Local",
+        "context": "Appliance EGE RASA para coleta local de dados de observabilidade.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Planejamento e Levantamento de Requisitos Técnicos",
+                "role": "Arquiteto",
+                "unit_hours": 2.0,
+                "description": "Definir escopo, identificar fontes de dados, requisitos de capacidade e segurança. Validar arquitetura de integração.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Detalhamento de Pré-requisitos e Design de Baixo Nível",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Mapear IPs, portas de rede, regras de firewall, requisitos de energia e espaço físico. Criar plano de implantação detalhado.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Coordenação Logística e Agendamento",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Agendar equipes, coordenar acesso ao datacenter, confirmar disponibilidade de equipamentos e ferramentas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Recebimento e Conferência Física do Appliance",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Desembalar equipamento, verificar integridade física, conferir itens com lista de materiais. Preparar para transporte interno.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Instalação Física no Rack e Conexão de Energia",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Montar trilhos, fixar appliance no rack, conectar cabos de energia redundantes. Organizar cabos de força.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Conexão de Cabos de Rede e Console",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Conectar cabos de rede nas portas designadas, conectar cabo de console para acesso inicial. Etiquetar cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Configuração Inicial de Rede do Appliance",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Acessar via console, configurar IP estático, máscara, gateway, DNS e NTP. Testar conectividade básica (ping).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Validação de Conectividade e Regras de Firewall",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Testar rotas para fontes de dados e plataforma central. Coordenar abertura de portas de firewall com equipe de rede.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Acesso Remoto, Atualização de SO e Firmware",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Estabelecer acesso SSH/GUI. Aplicar patches de segurança do SO e atualizar firmware do appliance. Reiniciar se necessário.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Gerenciamento",
+                "name": "Instalação e Configuração Básica do Software EGE RASA",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Instalar a aplicação EGE RASA, executar assistente de configuração inicial, definir parâmetros básicos (licença, usuários).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Gerenciamento",
+                "name": "Configuração de Fontes de Dados Locais",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Configurar coletores para logs, métricas e traces de sistemas locais. Definir políticas de coleta e retenção.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Gerenciamento",
+                "name": "Integração com Plataforma Central de Observabilidade",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Configurar encaminhamento de dados coletados para a plataforma central EGE RASA ou outro sistema de observabilidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_013",
+                "category": "Gerenciamento",
+                "name": "Testes Funcionais e Validação da Coleta de Dados",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Verificar fluxo de dados, integridade, latência e volume. Executar consultas de teste e validar dashboards.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_014",
+                "category": "Gerenciamento",
+                "name": "Monitoramento Inicial e Ajustes Finos",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Monitorar saúde do appliance, uso de recursos e fluxo de dados. Realizar pequenos ajustes de configuração para otimização.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_015",
+                "category": "Planejamento",
+                "name": "Documentação e Handover para Operações",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Atualizar documentação técnica (IPs, configurações, fontes de dados). Treinar equipe de operações. Criar runbooks.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_016",
+                "category": "Planejamento",
+                "name": "Revisão e Aprovação Final da Implantação",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar o projeto finalizado, validar conformidade com requisitos e padrões. Realizar aceite formal.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:29:46.859916",
+        "trigger_term": "Serviço de Monitoramento NOC 24x7 com SLA N1/N2/N3",
+        "context": "Monitoramento contínuo de 10 Máquinas Virtuais de produção em cluster VMware existente.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Definição de Escopo",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Coletar requisitos de SLA (N1/N2/N3), métricas críticas e escopo de monitoramento para as 10 VMs. Entender expectativas do cliente e prioridades.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Desenho da Solução de Monitoramento e Fluxos de Alerta",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Projetar a arquitetura de monitoramento, selecionar métricas detalhadas, definir thresholds para N1/N2/N3 e desenhar fluxos de escalonamento de alertas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Gerenciamento",
+                "name": "Configuração Inicial da Plataforma de Monitoramento",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Criar ambiente dedicado ao cliente na plataforma de monitoramento, configurar acessos, integrar com vCenter existente e aplicar templates base para VMs.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Descoberta e Adição das Máquinas Virtuais",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Adicionar as 10 Máquinas Virtuais de produção ao sistema de monitoramento. Verificar conectividade e aplicar templates iniciais de monitoramento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Ajuste Fino de Métricas e Limiares de Alerta (N1/N2/N3)",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Configurar métricas específicas (CPU, RAM, Disco, Rede, serviços essenciais) para cada VM. Definir thresholds para cada nível de SLA (N1/N2/N3).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Criação de Dashboards e Relatórios de Monitoramento",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Desenvolver dashboards de visão geral e detalhe para as 10 VMs. Configurar relatórios básicos de performance e disponibilidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Testes de Alertas e Validação de Fluxos de Escalada",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Simular cenários de falha (ex: CPU alta, disco cheio). Verificar geração de alertas, testar escalonamento N1/N2/N3 e validação de notificações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Elaboração de Runbooks e Treinamento da Equipe NOC",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Documentar procedimentos de atendimento N1/N2/N3 e runbooks para incidentes comuns. Realizar sessão de treinamento com a equipe NOC.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Revisão e Aprovação Final do Serviço de Monitoramento",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar toda a configuração, documentação, resultados dos testes e aprovar o 'go-live' do serviço de monitoramento 24x7.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:30:12.067466",
+        "trigger_term": "Configuração de Dashboards de Observabilidade Zabbix/Grafana",
+        "context": "Dashboards personalizados para observabilidade do cluster VMware, VMs e rede industrial.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Escopo de Observabilidade",
+                "role": "Arquiteto",
+                "unit_hours": 4.0,
+                "description": "Definir métricas chave para VMware (cluster, VMs) e rede industrial. Mapear fontes de dados, requisitos de segurança e expectativas de dashboards.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Gerenciamento",
+                "name": "Configuração de Fonte de Dados Zabbix - Cluster VMware",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Configurar integração Zabbix com vCenter API. Importar e ajustar templates oficiais/customizados para VMware. Validar coleta de dados básicos do cluster e VMs.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Gerenciamento",
+                "name": "Configuração de Fonte de Dados Zabbix - Rede Industrial",
+                "role": "Engenheiro",
+                "unit_hours": 6.0,
+                "description": "Identificar protocolos (SNMP, Modbus TCP, OPC UA), configurar Zabbix Proxies/Agentes em gateways industriais. Criar/customizar templates para dispositivos OT. Validar coleta de dados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Configuração de Fonte de Dados Zabbix no Grafana",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Adicionar Zabbix como Data Source no Grafana. Configurar credenciais e testar conectividade e acesso aos dados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Desenvolvimento de Dashboards Grafana - Cluster VMware",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Criar painéis para CPU, Memória, Disco, Rede de cluster e VMs. Implementar variáveis, filtros e drill-downs para navegação eficiente.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Desenvolvimento de Dashboards Grafana - Rede Industrial",
+                "role": "Engenheiro",
+                "unit_hours": 5.0,
+                "description": "Criar painéis para métricas específicas da rede industrial (sensores, PLCs, status de equipamentos, latência). Desenvolver visualizações personalizadas e alertas se necessário.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Testes, Validação e Refinamento dos Dashboards",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Verificar a precisão dos dados, funcionalidade dos filtros e desempenho dos dashboards. Coletar feedback dos usuários e realizar ajustes iterativos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Documentação Técnica e Treinamento Básico",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Documentar configurações Zabbix (templates, hosts, itens) e Grafana (painéis, variáveis, data sources). Criar guia de uso básico dos dashboards e realizar breve treinamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Coordenação e Revisão Final do Projeto",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Acompanhamento do progresso, comunicação com stakeholders, gestão de riscos e revisão final da entrega e aprovação formal.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T15:30:38.619897",
+        "trigger_term": "Suporte Técnico Especializado com Franquia Mensal",
+        "context": "Contrato de suporte técnico com 20 horas mensais para infraestrutura VMware e rede industrial.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Registro e Triagem Inicial de Solicitações de Suporte",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Receber, registrar e classificar chamados de suporte. Coletar informações básicas do usuário e encaminhar para o nível técnico apropriado.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Execução",
+                "name": "Monitoramento Proativo de Infraestrutura VMware (Hosts e VMs)",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Verificação diária/semanal de alertas, logs de hosts ESXi, status de VMs, utilização de recursos (CPU/RAM/Disco) e conectividade básica da infraestrutura virtual.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Monitoramento Proativo de Rede Industrial (Dispositivos e Conectividade)",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Verificação de status de dispositivos de rede industrial (switches, firewalls), logs de eventos, conectividade entre equipamentos e disponibilidade de links críticos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Resolução de Incidentes Nível 1 (VMware e Rede Industrial)",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Execução de procedimentos padrão: reinicialização de VMs, verificação de conectividade básica, liberação de espaço em disco, reset de senhas, verificação de cabos/portas e testes de ping.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Análise e Resolução de Incidentes Nível 2 (Infraestrutura VMware)",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Diagnóstico de problemas de performance em VMs/hosts, falhas de HA/DRS, configuração de vSwitches, análise de logs complexos e troubleshooting avançado de componentes VMware.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Análise e Resolução de Incidentes Nível 2 (Rede Industrial)",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Diagnóstico de problemas de conectividade em rede industrial, falhas de comunicação de PLCs, análise de tráfego, configuração de VLANs e rotas em switches industriais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Implementação de Pequenas Mudanças e Melhorias (VMware e Rede)",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Aplicação de patches e atualizações de firmware, reconfiguração de VLANs, otimização de recursos de VMs, ajustes em políticas de segurança de rede.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Elaboração de Relatório Mensal de Atividades e Recomendações",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Compilação de atividades realizadas, métricas de serviço, identificação de tendências, análise de performance e proposição de recomendações para otimização.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Revisão de Arquitetura e Capacidade (Pro-rata Mensal)",
+                "role": "Arquiteto",
+                "unit_hours": 2.0,
+                "description": "Análise de tendências de crescimento, gargalos de infraestrutura, oportunidades de otimização e alinhamento com o roadmap tecnológico do cliente.",
                 "setup_hours": 0.0,
                 "tags": [
                     "research",
