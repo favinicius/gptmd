@@ -380,7 +380,11 @@ class AIAgent:
            - `CABLING`: Para serviços de infraestrutura passiva/fibra.
            - `DESIGN`: Para planejamento, arquitetura e LLD.
         3. **NÃO IGNORE O FINAL DO TEXTO**: Certifique-se de capturar itens como Backup, DR e Migração.
-        4. **CLIENTE VS PROVEDOR**: Cliente = OFI. Provedor = EGE.
+        4. **CLIENTE VS PROVEDOR (CRÍTICO)**:
+           - O **PROVEDOR** (Sua empresa) é SEMPRE "EGE Soluções Industriais" (ou "EGE").
+           - O **CLIENTE** é a empresa para quem a proposta está sendo enviada (ex: OFI, Bionovis, Maratá).
+           - **NUNCA** preencha `client_name` com "EGE".
+           - **NUNCA** preencha `company_name` com "EGE". `company_name` deve ser o nome completo do CLIENTE.
 
         ## FORMATO DE SAÍDA (JSON ESTRITO)
         {{

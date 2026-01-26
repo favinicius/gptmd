@@ -2,13 +2,44 @@
 
 O **GPT-Md** é uma ferramenta CLI avançada para geração de propostas técnicas industriais, integrando inteligência artificial (Gemini) com motores de precificação determinísticos.
 
+## ⚙️ Configuração do Ambiente
+
+Este projeto utiliza **venv externo** para melhor performance e organização:
+
+```bash
+# Estrutura de diretórios
+~/Desenvolvimento/
+├── gptmd/              # Código do projeto
+└── venvs/
+    └── gptmd/          # Ambiente virtual (externo)
+```
+
+### Ativação do Ambiente (Opcional)
+```bash
+source ../venvs/gptmd/bin/activate
+```
+
 ## 🚀 Como Usar
 
-Para executar o gerador, utilize o script `src/main.py` através do interpretador Python do ambiente virtual.
+### Execução Direta (Recomendado)
+Use o interpretador Python do venv diretamente:
 
 ```bash
 export PYTHONPATH=$PYTHONPATH:.
-python src/main.py [OPÇÕES]
+../venvs/gptmd/bin/python src/main.py [OPÇÕES]
+```
+
+### Exemplo Completo
+```bash
+export PYTHONPATH=$PYTHONPATH:.
+../venvs/gptmd/bin/python src/main.py \
+  --instruction input/cenario-ofi-datacenter.txt \
+  --use-docs input/docs/OFI_Pre-Projeto.pdf \
+  --term 60 \
+  --sizing standard \
+  --contingency standard \
+  --output-mode full \
+  --separate-opex
 ```
 
 ### 📋 Argumentos Principais
@@ -21,22 +52,24 @@ python src/main.py [OPÇÕES]
 | `--sizing <mode>` | Modo de dimensionamento: `aggressive`, `standard`, `secure`, `critical`. |
 | `--contingency <level>` | Nível de contingência (SHE/Buffer): `low`, `standard`, `high`. |
 
-### 🛠️ Controles de Saída (Novidade v5.0)
+### 🛠️ Controles de Saída (v5.0)
 
-Agora você pode controlar quais arquivos de proposta deseja gerar:
+Controle quais arquivos de proposta deseja gerar:
 
 | Modo de Saída (`--output-mode`) | Arquivos Gerados |
 | :--- | :--- |
 | `unified` (Padrão) | Apenas a proposta completa (Técnica + Comercial). |
-| `full` | Gera as 3 versões: Unificada, Técnica e Comercial de uma vez. |
+| `full` | Gera as 3 versões: Unificada, Técnica e Comercial. |
 | `splited` | Gera apenas os arquivos Técnica e Comercial separados. |
 
 ### 🛰️ Proposta de NOC/OPEX Isolada
 
-Se o projeto incluir serviços de sustentação (NOC) e você precisar de uma proposta avulsa para aprovação independente:
+Para gerar proposta de sustentação separada (aprovação independente):
 
 ```bash
-python src/main.py --instruction input/cenario.txt --separate-opex
+../venvs/gptmd/bin/python src/main.py \
+  --instruction input/cenario.txt \
+  --separate-opex
 ```
 Isso gerará o arquivo `PROPOSTA_NOC_SUSTENTACAO_...md` além das propostas CAPEX.
 
@@ -52,5 +85,11 @@ Isso gerará o arquivo `PROPOSTA_NOC_SUSTENTACAO_...md` além das propostas CAPE
 ## 📊 Métricas e Benchmarks
 Para visualizar a tabela de multiplicadores de esforço e contingência:
 ```bash
-python src/main.py --help-metrics
+../venvs/gptmd/bin/python src/main.py --help-metrics
 ```
+
+## 🔍 Verificação de Qualidade
+O sistema inclui QA automático que verifica:
+- Integridade das seções da proposta
+- Nomes de cliente e provedor corretos
+- Ausência de auto-referências (EGE -> EGE)

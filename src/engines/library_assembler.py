@@ -106,7 +106,7 @@ class LibraryAssembler:
             "project_name": project_cleaned,
             "product_name": detected_product_name, 
             "client_fullname": intent.contact_name or "Responsável Técnico",
-            "client_company": intent.company_name or intent.client_name,
+            "client_company": intent.client_name, # CORREÇÃO: Força o uso do client_name identificado
             "provider_name": "EGE Soluções Industriais",
             "provider_short": "EGE",
             "date": datetime.now().strftime("%d/%m/%Y"),
@@ -124,7 +124,7 @@ class LibraryAssembler:
             "grand_total": format_br_currency(proposal.grand_total_venda),
             "version": "A", # Nova diretriz: Sempre versão A inicialmente
             "contact_name": intent.contact_name or "Responsável Técnico",
-            "company_name": "EGE Soluções Industriais", # Backwards compatibility
+            "company_name": intent.client_name, # CORREÇÃO: Templates legados usam company_name como Cliente
             "project_motivation": intent.project_motivation,
             "topics": proposal.topics,
             "labor_items": proposal.labor_table,

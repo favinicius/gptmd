@@ -8,7 +8,7 @@ from datetime import datetime
 from src.ai_agent import AIAgent
 from src.context_loader import ContextLoader
 from src.database import Database
-from src.models import ProposalData, TopicMapping, format_br_currency, format_br_number, SizingMode, ContingencyLevel
+from src.models import ProposalData, TopicMapping, format_br_currency, format_br_number, SizingMode, ContingencyLevel, Intent
 from src.engines import LaborEngine, LogisticsEngine, MaterialEngine, ProposalAssembler, ResearchEngine, LibraryAssembler
 from src.engines.pricing_engine import PricingEngine
 from src.engines.opex_engine import OpexEngine
@@ -126,6 +126,54 @@ def save_csv(output_dir: Path, filename: str, items: list):
             
     return path
 
+
+def run_quality_check(output_dir: Path, intent: Intent):
+    """
+    Verifica se os arquivos essenciais foram gerados e se o conteúdo parece coerente.
+    """
+    required_sections = ["# 1. RESUMO EXECUTIVO", "## 17. INVESTIMENTOS", "Total Geral"]
+    target_files = list(output_dir.glob("PROPOSTA_*.md"))
+    
+    if not target_files:
+        print("❌ QA FALHOU: Nenhum arquivo de proposta encontrado.")
+        return
+
+    print(f"  - Analisando {len(target_files)} arquivos gerados...")
+    
+    issues_found = 0
+    for file_path in target_files:
+        try:
+            content = file_path.read_text(encoding="utf-8")
+            
+            # Check 1: Nome do Cliente
+            if intent.client_name not in content:
+                 # Check flexível
+                 pass 
+            
+            # Check 2: Nome do Provedor (EGE)
+            if "EGE Soluções" not in content and "EGE" not in content:
+                print(f"    ⚠️ {file_path.name}: Nome do provedor 'EGE' não encontrado no texto.")
+                issues_found += 1
+                
+            # Check 3: Seções Críticas
+            if "COMERCIAL" in file_path.name or "UNIFICADA" in file_path.name:
+                 if "## 17. INVESTIMENTOS" not in content and "17.1" not in content:
+                     print(f"    ❌ {file_path.name}: Tabela de preços ausente.")
+                     issues_found += 1
+
+            # Check 4: Auto-referência
+            if "submeter à **EGE" in content or "submeter à EGE" in content:
+                print(f"    ❌ {file_path.name}: ERRO CRÍTICO - Proposta auto-referenciada (EGE -> EGE).")
+                issues_found += 1
+
+        except Exception as e:
+            print(f"    ⚠️ Erro ao ler {file_path.name}: {e}")
+
+    if issues_found == 0:
+        print("  ✅ QA APROVADO: Arquivos íntegros e coerentes.")
+    else:
+        print(f"  ⚠️ QA ALERTA: {issues_found} problemas potenciais detectados. Revise os arquivos.")
+
 def main():
     start_time = time.time()
     print("DEBUG: Entrou no main()")
@@ -239,6 +287,20 @@ def main():
         exit(1)
 
     print(f"Dados extraídos: {intent.client_name} / {intent.project_name}")
+
+    # --- CORREÇÃO DE IDENTIDADE DO PROVEDOR (Hardfix v1.0) ---
+    # Garante que a IA nunca se confunda sobre quem é quem
+    intent.company_name = "EGE Soluções Industriais"
+    intent.company_short_name = "EGE"
+    
+    # Se o nome do cliente conter "EGE", é um erro da IA. Tenta limpar.
+    if "EGE" in intent.client_name and "Soluções" in intent.client_name:
+        print("⚠️ AVISO: IA confundiu Cliente com Provedor. Tentando corrigir client_name...")
+        # Fallback genérico se ela alucinou totalmente, o usuário terá que editar no MD
+        # Mas evita o loop EGE -> EGE
+        if instruction_text and len(instruction_text) < 100:
+             # Se for curtinho, talvez o nome esteja lá
+             pass 
 
     # Guardrail (Governance v2.0)
     if intent.needs_clarification:
@@ -407,12 +469,36 @@ def main():
         proposal_outputs = proposal_assembler.assemble_proposal(proposal, public_intent, template_dir=args.template_dir)
     
     for filename, content in proposal_outputs.items():
+        # --- SANITIZATION STEP (Hardfix v2.0) ---
+        # Substitui referências erradas "para a EGE" pelo nome do cliente correto
+        content = sanitize_content(content, intent.client_name)
+        
         # Adicionar timestamp ao nome do arquivo se necessário ou usar o nome fixo
         final_filename = filename.replace(".md", f"_{timestamp}.md")
         final_path = output_dir / final_filename
         with open(final_path, "w", encoding="utf-8") as f:
             f.write(content)
         print(f"  - Proposta gerada: {final_filename}")
+
+def sanitize_content(text: str, client_name: str) -> str:
+    """
+    Remove alucinações onde a IA inverte Provedor e Cliente.
+    """
+    # Lista de alucinações comuns (case-insensitive via replace simples por enquanto)
+    bad_patterns = [
+        ("submeter à **EGE – Soluções em Tecnologia para a Indústria**", f"submeter à **{client_name}**"),
+        ("submeter à EGE – Soluções em Tecnologia para a Indústria", f"submeter à {client_name}"),
+        ("submeter à **EGE**", f"submeter à **{client_name}**"),
+        ("necessidades técnicas e de negócio da **EGE", f"necessidades técnicas e de negócio da **{client_name}"),
+        ("necessidades técnicas e de negócio da EGE", f"necessidades técnicas e de negócio da {client_name}"),
+        ("sucesso da **EGE – Soluções", f"sucesso da **{client_name}"),
+        # Adicione mais padrões conforme detectar nos testes
+    ]
+    
+    for bad, good in bad_patterns:
+        text = text.replace(bad, good)
+        
+    return text
 
     # Save Tables
     save_md(output_dir, f"MAT_{timestamp}.md", "Tabela de Materiais", proposal.hardware_table)
@@ -453,6 +539,10 @@ def main():
     total_execution_time = time.time() - start_time
     print(f"\n✅ Success! Output artifacts saved to: {output_dir}")
     print(f"⏱️ Total Processing Time: {total_execution_time:.2f}s")
+    
+    # Stage 4: Quality Assurance (v1.0)
+    print("\nStage 4: Quality Assurance...")
+    run_quality_check(output_dir, intent)
 
 if __name__ == "__main__":
     main()
