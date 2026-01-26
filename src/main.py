@@ -480,6 +480,23 @@ def main():
             f.write(content)
         print(f"  - Proposta gerada: {final_filename}")
 
+    # Save Tables
+    save_md(output_dir, f"MAT_{timestamp}.md", "Tabela de Materiais", proposal.hardware_table)
+    save_md(output_dir, f"MOD_{timestamp}.md", "Tabela de Mão de Obra", proposal.labor_table)
+    save_md(output_dir, f"SET_{timestamp}.md", "Serviços Externos", proposal.service_table)
+    save_md(output_dir, f"DIV_{timestamp}.md", "Despesas de Viagem", proposal.expense_table)
+    save_md(output_dir, f"TOPICS_{timestamp}.md", "Índice de Tópicos", proposal.topics)
+
+    # Save CSVs for Excel Import (v11.0)
+    save_csv(output_dir, f"MAT_{timestamp}.csv", proposal.hardware_table)
+    save_csv(output_dir, f"MOD_{timestamp}.csv", proposal.labor_table)
+    save_csv(output_dir, f"SET_{timestamp}.csv", proposal.service_table)
+    save_csv(output_dir, f"DIV_{timestamp}.csv", proposal.expense_table)
+
+    # Save Logistics Audit (v2.5)
+    with open(output_dir / "LOGISTICS_AUDIT.md", "w", encoding="utf-8") as f:
+        f.write(logistics_engine.get_audit_report())
+
 def sanitize_content(text: str, client_name: str) -> str:
     """
     Remove alucinações onde a IA inverte Provedor e Cliente.
@@ -499,25 +516,6 @@ def sanitize_content(text: str, client_name: str) -> str:
         text = text.replace(bad, good)
         
     return text
-
-    # Save Tables
-    save_md(output_dir, f"MAT_{timestamp}.md", "Tabela de Materiais", proposal.hardware_table)
-    save_md(output_dir, f"MOD_{timestamp}.md", "Tabela de Mão de Obra", proposal.labor_table)
-    save_md(output_dir, f"SET_{timestamp}.md", "Serviços Externos", proposal.service_table)
-    save_md(output_dir, f"DIV_{timestamp}.md", "Despesas de Viagem", proposal.expense_table)
-    save_md(output_dir, f"TOPICS_{timestamp}.md", "Índice de Tópicos", proposal.topics)
-
-    # Save CSVs for Excel Import (v11.0)
-    save_csv(output_dir, f"MAT_{timestamp}.csv", proposal.hardware_table)
-    save_csv(output_dir, f"MOD_{timestamp}.csv", proposal.labor_table)
-    save_csv(output_dir, f"SET_{timestamp}.csv", proposal.service_table)
-    save_csv(output_dir, f"DIV_{timestamp}.csv", proposal.expense_table)
-
-
-    # Save Logistics Audit (v2.5)
-
-    with open(output_dir / "LOGISTICS_AUDIT.md", "w", encoding="utf-8") as f:
-        f.write(logistics_engine.get_audit_report())
 
     # Save raw proposal after assembly (last segment generated)
     if args.debug and hasattr(agent, 'last_raw_content'):
