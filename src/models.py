@@ -285,6 +285,7 @@ class ProposalData(BaseModel):
     
     # --- Commercial Selling Prices (v9.0) ---
     total_labor_venda: float = 0.0
+    total_hardware_venda: float = 0.0
     total_services_venda: float = 0.0
     total_expenses_venda: float = 0.0
     grand_total_venda: float = 0.0

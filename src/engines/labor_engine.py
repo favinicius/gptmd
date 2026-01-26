@@ -70,7 +70,7 @@ class LaborEngine:
         for i, scope_item in enumerate(intent.scope_items):
             topic_id = f"T-{i+1:02d}"
             team_size = max(1, intent.logistics_override.team_size) if intent.logistics_override else 1
-            is_complex = any(kw in scope_item.name.lower() or kw in scope_item.context_note.lower() 
+            is_complex = any(kw in scope_item.name.lower() or (scope_item.context_note or "").lower() 
                            for kw in ["migração", "crítico", "complexo", "cluster"])
             
             qty_items = scope_item.detected_quantity

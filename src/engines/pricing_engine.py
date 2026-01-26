@@ -3,6 +3,8 @@ from src.config.commerce_config import (
     TAXA_FINANCEIRA_DIARIA_MOD, 
     FIXO_DIVISOR_SET_DIV, 
     TAXA_FINANCEIRA_DIARIA_SET_DIV, 
+    FIXO_DIVISOR_MAT,
+    TAXA_FINANCEIRA_DIARIA_MAT,
     PRAZO_PADRAO_DIAS
 )
 
@@ -21,7 +23,8 @@ class PricingEngine:
         if cost <= 0:
             return 0.0
             
-        divisor = 1.0 - fixed_markup - (daily_rate * term_days)
+        # Fórmula de Divisor Progressivo: Custo / (Divisor_Fixo - (Taxa_Diaria * Dias))
+        divisor = fixed_markup - (daily_rate * term_days)
         
         if divisor <= 0.01: 
             divisor = 0.01
@@ -48,6 +51,15 @@ class PricingEngine:
         )
 
     @staticmethod
+    def calculate_mat_selling_price(cost: float, term_days: int = PRAZO_PADRAO_DIAS) -> float:
+        """
+        Calcula o valor de venda para Materiais (MAT).
+        """
+        return PricingEngine.calculate_generic_selling_price(
+            cost, term_days, FIXO_DIVISOR_MAT, TAXA_FINANCEIRA_DIARIA_MAT
+        )
+
+    @staticmethod
     def calculate_proposal_selling_prices(proposal_data, term_days: int = PRAZO_PADRAO_DIAS):
         """
         Ajusta todos os totais da proposta para valores de venda comercial.
@@ -69,10 +81,15 @@ class PricingEngine:
         )
         
         # Grand total comercial (soma dos valores de venda)
-        # Nota: MAT (Hardware) ainda entra pelo total normal (custo ou markup fixo antigo se houver)
+        # MAT (Hardware) 
+        proposal_data.total_hardware_venda = PricingEngine.calculate_mat_selling_price(
+            proposal_data.total_hardware,
+            term_days
+        )
+
         proposal_data.grand_total_venda = (
             proposal_data.total_labor_venda + 
-            proposal_data.total_hardware + 
+            proposal_data.total_hardware_venda + 
             proposal_data.total_services_venda + 
             proposal_data.total_expenses_venda
         )

@@ -1,0 +1,10 @@
+Cliente: MetalMec Indústria
+Projeto: Modernização de Rede e Servidores (Teste MAT)
+Instrução:
+- Fornecimento de 3 Switches XC208G.
+- Fornecimento de 2 Servidores HPE DL380 Gen11.
+- Fornecimento de 10 conectores RJ45 CAT6A Macho.
+- Fornecimento de 1 Unidade de Fita LTO-9 (Item inexistente no banco para testar anti-alucinação).
+- Considerar prazo de faturamento de 90 dias para validar taxas progressivas.
+- Mão de obra para instalação e configuração.
+- Local: Ilhéus - BA.
