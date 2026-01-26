@@ -27,16 +27,16 @@ def format_excel_number(value: float):
 
 class HardwareItem(BaseModel):
     category: str
-    type: str
+    type: Optional[str] = "Reference"
     description_base: str
     description_detail: str
-    option_code: str
+    option_code: Optional[str] = ""
     vendor: str
     partnumber: str
-    url: str
+    url: Optional[str] = ""
     cost_list: float
     cost_net: Optional[float] = None
-    ipi_rate: float
+    ipi_rate: Optional[float] = 0.0
 
 class LaborRole(BaseModel):
     role: str

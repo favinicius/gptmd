@@ -45,7 +45,7 @@ class LibraryAssembler:
             content = re.sub(r'^markdown\s*\n', '', content)
             return content.strip()
 
-    def assemble(self, proposal: ProposalData, intent: Intent, processing_time: float = 0.0, extra_context: dict = None) -> dict:
+    def assemble(self, proposal: ProposalData, intent: Intent, processing_time: float = 0.0, extra_context: dict = None, output_mode: str = "unified", separate_opex: bool = False) -> dict:
         """
         Assembles the proposal(s) based on intent.
         Returns a dict of {filename: content}.
@@ -250,25 +250,38 @@ class LibraryAssembler:
         ]
 
         # 4. Final Assembly
-        # Always generate UNIFIED version
+        # A. UNIFIED Version
         context["proposal_title"] = f"{base_id}-A - Proposta Unificada"
-        context["proposal_id_full"] = f"{base_id}" # ID base para o 'Ref:' solicitado
-        
+        context["proposal_id_full"] = f"{base_id}"
         unified_md = self._render_sequence(sequence, context)
-        outputs[f"PROPOSTA_UNIFICADA_{base_id}.md"] = unified_md
-
-        # Always generate TECHNICAL version (without commercial blocks)
-        context["proposal_title"] = f"{base_id}-A - Proposta Técnica"
+        
+        # B. TECHNICAL Version
         tech_sequence = [s for s in sequence if s != "07-comercial"]
         tech_md = self._render_sequence(tech_sequence, context)
-        outputs[f"PROPOSTA_TECNICA_{base_id}.md"] = tech_md
         
-        # Always generate COMMERCIAL version (Summary + Commercial blocks)
-        context["proposal_title"] = f"{base_id}-A - Proposta Comercial"
-        # For commercial, we use Intro, Institucional and Commercial
+        # C. COMMERCIAL Version
         comm_sequence = ["01-capa", "02-carta", "03-institucional", "07-comercial", "09-encerramento"]
         comm_md = self._render_sequence(comm_sequence, context)
-        outputs[f"PROPOSTA_COMERCIAL_{base_id}.md"] = comm_md
+
+        # Filtering based on output_mode
+        if output_mode == "full":
+            outputs[f"PROPOSTA_UNIFICADA_{base_id}.md"] = unified_md
+            outputs[f"PROPOSTA_TECNICA_{base_id}.md"] = tech_md
+            outputs[f"PROPOSTA_COMERCIAL_{base_id}.md"] = comm_md
+        elif output_mode == "splited":
+            outputs[f"PROPOSTA_TECNICA_{base_id}.md"] = tech_md
+            outputs[f"PROPOSTA_COMERCIAL_{base_id}.md"] = comm_md
+        else: # unified
+            outputs[f"PROPOSTA_UNIFICADA_{base_id}.md"] = unified_md
+
+        # D. STANDALONE OPEX (NOC) Proposal
+        if separate_opex and proposal.opex_data and proposal.opex_data.grand_total_monthly > 0:
+            context["proposal_title"] = f"{base_id}-A - Proposta de Sustentação (NOC)"
+            # Sequência focada em OPEX: Capa, Carta, Institucional, Comercial (que contém o NOC), Encerramento
+            # O bloco 07-comercial lida com o if opex internamente.
+            opex_sequence = ["01-capa", "02-carta", "03-institucional", "07-comercial", "09-encerramento"]
+            opex_md = self._render_sequence(opex_sequence, context)
+            outputs[f"PROPOSTA_NOC_SUSTENTACAO_{base_id}.md"] = opex_md
 
         return outputs
 

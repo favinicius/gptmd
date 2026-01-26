@@ -18,11 +18,9 @@ def apply_margins(proposal: ProposalData, term_days: int = PRAZO_PADRAO_DIAS):
     """
     Aplica as margens de venda (Regra de Negócio).
     """
-    # 1. Hardware (* 2) - Manter regra atual enquanto não houver PricingEngine para MAT
-    for hw in proposal.hardware_table:
-        hw.unit_price = hw.unit_price * 2
-        hw.total_price = hw.unit_price * hw.qty
-    proposal.total_hardware = sum(h.total_price for h in proposal.hardware_table)
+    # 1. Hardware - O valor de venda já é calculado pelo PricingEngine para manter consistência com o prazo
+    # proposal.total_hardware_venda será setado em calculate_proposal_selling_prices
+    pass
     
     # 2. Labor (MOD) - Nova lógica mandatória baseada no PricingEngine
     # O total_labor mantem o CUSTO para a tabela MOD.md
@@ -144,6 +142,8 @@ def main():
     parser.add_argument("--legacy-assembler", action="store_true", help="Use old non-Jinja assembler")
     parser.add_argument("--term", type=int, default=PRAZO_PADRAO_DIAS, help="Payment term in days (default: 30)")
     parser.add_argument("--model", type=str, help="Specify Gemini Model (e.g., gemini-2.0-flash-lite)")
+    parser.add_argument("--output-mode", type=str, choices=["unified", "full", "splited"], default="unified", help="Output generation mode: unified (default), full (all 3), or splited (tech+comm)")
+    parser.add_argument("--separate-opex", action="store_true", help="Generate a separate standalone proposal for NOC/OPEX costs")
     
     args = parser.parse_args()
 
@@ -395,7 +395,9 @@ def main():
             proposal, 
             public_intent, 
             processing_time=processing_duration,
-            extra_context=extra_context
+            extra_context=extra_context,
+            output_mode=args.output_mode,
+            separate_opex=args.separate_opex
         )
     elif hasattr(proposal_assembler, 'assemble'):
         # V2
