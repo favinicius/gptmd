@@ -18,7 +18,7 @@ class MaterialEngine:
 
         for scope_item in intent.scope_items:
             # Pular itens que não envolvem fornecimento de hardware físico (ex: migração de carga ou criação de VMs)
-            if scope_item.action_type in ["migration", "design", "consulting", "infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "other"]:
+            if scope_item.action_type in ["MIGRATION", "DESIGN", "CONSULTING", "VM", "TRAINING", "OTHER"]:
                 continue
 
             matches = []

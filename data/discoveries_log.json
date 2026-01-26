@@ -9035,5 +9035,1968 @@
             }
         ],
         "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:24:47.387653",
+        "trigger_term": "Fornecimento e Instalação de PDUs Verticais 32A",
+        "context": "Cada PDU com 16 tomadas C13, compatíveis com padrão IEC 60320.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantar requisitos e analisar viabilidade técnica da instalação de PDUs",
+                "role": "Engenheiro",
+                "unit_hours": 3.0,
+                "description": "Reunião com stakeholders; Levantamento de carga e infraestrutura elétrica; Análise de espaço em rack e compatibilidade; Avaliação de riscos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Elaborar projeto lógico e físico para instalação de PDUs",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Desenho de layout das PDUs nos racks; Dimensionamento e roteamento de cabos; Especificação técnica das PDUs e BOM; Plano de instalação e testes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Planejar aquisição e logística de PDUs e materiais",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Pesquisa de fornecedores e cotações; Análise de propostas e emissão de PO; Acompanhamento de entrega e recebimento; Planejamento de armazenamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Planejamento",
+                "name": "Gerenciar e aprovar o plano de projeto de instalação de PDUs",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisão e aprovação de orçamento e cronograma; Alocação de recursos e comunicação; Gerenciamento de expectativas e riscos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Preparar ambiente e receber fisicamente PDUs e materiais",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Limpeza e organização da área; Desembalagem e conferência visual de materiais; Transporte das PDUs para o local.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Instalar fisicamente PDUs verticais nos racks",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Fixação das PDUs nos trilhos do rack; Organização inicial dos cabos de alimentação; Verificação de alinhamento e segurança da montagem.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Conectar eletricamente PDUs à infraestrutura 32A existente",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Conexão do cabo de alimentação da PDU à tomada 32A; Verificação de polaridade e aterramento; Organização final e etiquetagem dos cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Realizar testes de funcionalidade e carga básica das PDUs",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Ligação das PDUs e verificação de LEDs; Teste de continuidade e tensão das tomadas C13; Registro de resultados dos testes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Validar instalação e documentar infraestrutura atualizada",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Comparação da instalação com o projeto; Atualização de diagramas de infraestrutura; Registro de números de série e localização; Relatório de instalação e testes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Encerrar e realizar handover formal do projeto de PDUs",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Reunião de encerramento com o cliente; Apresentação de resultados e documentação; Coleta de feedback e formalização do aceite; Arquivamento de documentos do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:25:13.291825",
+        "trigger_term": "Fornecimento e Instalação de Racks de Campo 12U IP65",
+        "context": "600mm profundidade, com ventilação e filtros.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento Técnico e Projeto Preliminar do Rack",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Visita ao local, análise de requisitos (espaço, energia, ambiente IP65).\nDefinição de especificações do rack (profundidade, ventilação, filtros).\nElaboração de layout preliminar e avaliação de riscos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Planejamento de Aquisição e Logística do Rack",
+                "role": "Gestor",
+                "unit_hours": 3.0,
+                "description": "Cotação de fornecedores e negociação de termos.\nEmissão de pedidos de compra e coordenação de transporte.\nAgendamento de entrega e alocação da equipe de instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Elaboração do Plano de Instalação Detalhado do Rack",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Criação de um plano de instalação passo a passo e diagramas.\nLista de ferramentas e EPIs necessários.\nProcedimentos de segurança, cronograma e checklist de verificação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Recebimento e Conferência de Materiais do Rack",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Receber o rack e acessórios no local da instalação.\nConferir itens com a nota fiscal/pedido e verificar integridade física.\nOrganizar materiais para facilitar a instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Preparação do Local para Instalação do Rack",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Limpeza da área de instalação e verificação de pontos de fixação.\nPreparação de ferramentas e equipamentos de proteção individual (EPIs).\nDemarcação precisa do local para posicionamento do rack.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Posicionamento, Nivelamento e Fixação do Rack",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Movimentação cuidadosa do rack para o local demarcado.\nNivelamento preciso do rack e furação para ancoragem.\nAncoragem segura do rack ao piso/parede, garantindo estabilidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Instalação de Módulos de Ventilação e Filtros",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Montagem e fixação dos módulos de ventilação.\nInstalação dos filtros de ar e conexão da alimentação elétrica dos ventiladores.\nVerificação da vedação para garantir a conformidade IP65.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Aterramento e Conexões Elétricas Básicas do Rack",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Conexão do aterramento do rack à infraestrutura existente.\nInstalação de régua de tomadas interna e organização de cabos.\nVerificação de continuidade e segurança elétrica básica.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Verificação de Vedação IP65 e Limpeza Final",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Inspeção visual de todas as vedações, portas e painéis para conformidade IP65.\nVerificação de fechaduras e mecanismos de segurança.\nLimpeza interna e externa do rack e da área de trabalho.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Execução",
+                "name": "Testes Funcionais e Validação da Instalação do Rack",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Teste de funcionamento dos sistemas de ventilação e iluminação interna (se houver).\nVerificação de fechaduras, alarmes de porta (se houver).\nValidação final da instalação conforme o projeto e especificações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Documentação Pós-Instalação e Handover do Rack",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Registro fotográfico da instalação e atualização de diagramas 'as-built'.\nPreenchimento de checklist de entrega e coleta de assinaturas de aceite.\nGeração de relatório final e arquivamento da documentação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T19:36:26.454521",
+        "trigger_term": "Fornecimento e Instalação de Nobreaks de 600VA para Racks de Campo",
+        "context": "Nobreaks de 600VA (Torre, Senoidal) para os racks de campo.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Planejamento Técnico",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Validar especificações técnicas do nobreak (senoidal, torre, autonomia), confirmar quantidade e localização dos racks, analisar impacto na infraestrutura existente, definir plano de implementação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Cotação, Análise de Propostas e Seleção de Fornecedor",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Pesquisar fornecedores, solicitar cotações detalhadas, comparar propostas (custo, prazo, garantia, suporte), preparar matriz de decisão, negociar termos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Aprovação Orçamentária e Emissão de Pedido de Compra",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar e aprovar a recomendação de compra, alocar orçamento, emitir o pedido de compra formal, acompanhar o status inicial do pedido.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Planejamento",
+                "name": "Planejamento Logístico e Agendamento da Equipe",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Coordenar a entrega dos nobreaks, planejar a logística de transporte para os locais de campo, agendar a equipe técnica, comunicar cronograma aos stakeholders.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Recebimento, Conferência e Registro de Equipamentos",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Receber os nobreaks, conferir quantidade e modelo com o pedido, inspecionar embalagens e equipamentos por danos visíveis, registrar entrada no sistema de inventário.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Preparação de Ferramentas e Carregamento para Deslocamento",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Separar e organizar ferramentas específicas para instalação elétrica e de rack, verificar cabos e acessórios dos nobreaks, carregar veículo de transporte de forma segura.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Deslocamento para o Local do Rack de Campo",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Conduzir o veículo até o local do rack de campo, considerando tempo de trânsito, acesso e retorno à base.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Inspeção Pré-Instalação e Preparação do Ambiente",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Avaliar o espaço físico disponível no rack ou adjacente, verificar a infraestrutura elétrica (tomadas, disjuntores), identificar equipamentos a serem conectados, garantir segurança do local.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Instalação Física do Nobreak e Conexões Elétricas",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Posicionar o nobreak (torre) no local definitivo, conectar o cabo de força do nobreak à rede elétrica, conectar os cabos de força dos equipamentos do rack ao nobreak, organizar e fixar cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Execução",
+                "name": "Ativação Inicial e Verificação de Status",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Ligar o nobreak, observar LEDs e painel para verificar status de funcionamento, realizar teste de bateria inicial (se disponível), confirmar carga da bateria.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Execução",
+                "name": "Teste de Autonomia e Carga dos Equipamentos",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Simular uma falha de energia (desconectar nobreak da rede), monitorar o funcionamento dos equipamentos conectados, registrar o tempo de autonomia, reconectar o nobreak à rede e verificar o início da recarga.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Execução",
+                "name": "Configuração e Teste de Monitoramento Remoto",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Acessar a interface de gerenciamento do nobreak (se houver), configurar parâmetros de rede (IP, SNMP), integrar com o sistema de monitoramento central, testar o envio de alertas e o recebimento de dados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_013",
+                "category": "Planejamento",
+                "name": "Atualização de Inventário e Documentação Técnica",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Registrar número de série, modelo, data de instalação, localização exata do nobreak, atualizar diagramas de rack e infraestrutura, anexar fotos da instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_014",
+                "category": "Planejamento",
+                "name": "Elaboração de Relatório Final e Fechamento do Projeto",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Consolidar todas as informações da instalação, elaborar relatório de conclusão, fechar o ticket de serviço ou projeto, comunicar a finalização às partes interessadas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:29:32.554929",
+        "trigger_term": "Treinamento Operacional e Operação Assistida",
+        "context": "10 dias úteis de operação assistida.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Escopo do Treinamento",
+                "role": "Analista",
+                "unit_hours": 0.0,
+                "description": "Reunião com stakeholders para definir objetivos, público-alvo e conteúdo programático do treinamento. Esboço de agenda e tópicos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Execução",
+                "name": "Preparação do Ambiente de Treinamento e Acessos",
+                "role": "Técnico",
+                "unit_hours": 0.0,
+                "description": "Configuração de VMs, criação de contas de usuário, carga de dados de teste, verificação de conectividade e instalação de softwares clientes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Logística e Agendamento das Sessões",
+                "role": "Auxiliar",
+                "unit_hours": 0.0,
+                "description": "Coordenação de agendas, envio de convites, confirmação de presença e preparação de listas de participantes e materiais de apoio.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Gerenciamento",
+                "name": "Condução das Sessões de Treinamento Operacional",
+                "role": "Analista",
+                "unit_hours": 16.0,
+                "description": "Apresentação de funcionalidades do sistema, demonstrações práticas, condução de exercícios e esclarecimento de dúvidas funcionais dos usuários.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Suporte Técnico Direto durante Treinamento",
+                "role": "Técnico",
+                "unit_hours": 16.0,
+                "description": "Resolução de problemas técnicos de acesso, configuração de estações de trabalho, auxílio em erros de sistema e garantia da estabilidade do ambiente durante as sessões.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Gerenciamento",
+                "name": "Suporte Operacional Nível 1 (L1) - Atendimento e Triagem",
+                "role": "Auxiliar",
+                "unit_hours": 40.0,
+                "description": "Atendimento inicial a usuários, registro de incidentes, verificação de dados básicos, orientação em processos simples e escalonamento de problemas complexos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Suporte Operacional Nível 2 (L2) - Diagnóstico e Resolução",
+                "role": "Técnico",
+                "unit_hours": 64.0,
+                "description": "Diagnóstico e resolução de problemas técnicos e funcionais de média complexidade, monitoramento de logs, aplicação de correções e documentação de soluções.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Análise de Fluxos e Otimização de Processos Operacionais",
+                "role": "Analista",
+                "unit_hours": 40.0,
+                "description": "Identificação de gargalos, análise de causas-raiz de problemas recorrentes, proposição de melhorias em fluxos de trabalho e ajustes de configurações avançadas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Gerenciamento",
+                "name": "Monitoramento de Performance e Estabilidade do Sistema",
+                "role": "Engenheiro",
+                "unit_hours": 24.0,
+                "description": "Acompanhamento de KPIs de performance, verificação da integridade dos dados, otimização de consultas e garantia da robustez e escalabilidade do ambiente em produção assistida.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Gestão e Coordenação da Operação Assistida",
+                "role": "Gestor",
+                "unit_hours": 20.0,
+                "description": "Supervisão da equipe de suporte, alinhamento com stakeholders, gestão de expectativas, resolução de impasses e garantia do cumprimento dos objetivos da operação assistida.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Coleta de Feedback e Documentação de Lições Aprendidas",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Realização de pesquisas de satisfação, entrevistas com usuários e equipe, consolidação de feedback e criação de base de conhecimento (FAQs, procedimentos).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Planejamento",
+                "name": "Elaboração de Relatório Final e Plano de Ação",
+                "role": "Gestor",
+                "unit_hours": 8.0,
+                "description": "Consolidação dos resultados da operação assistida, análise de métricas, elaboração de relatório final com recomendações e definição de plano de ação para melhorias contínuas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:25:39.916586",
+        "trigger_term": "Fornecimento e Instalação de Nobreaks 600VA para Racks de Campo",
+        "context": "Formato Torre, Senoidal.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Definir requisitos técnicos e especificar modelo de Nobreak",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Levantamento de necessidades, análise de carga elétrica, compatibilidade com racks de campo, definição de modelo (Torre, Senoidal 600VA), documentação de especificações técnicas detalhadas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Planejar aquisição, cotação e logística de entrega dos Nobreaks",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Pesquisa de fornecedores qualificados, solicitação e análise de cotações (técnicas e comerciais), emissão de pedido de compra, coordenação de prazos de entrega e planejamento de armazenamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Receber, inventariar e realizar carga inicial dos Nobreaks",
+                "role": "Auxiliar",
+                "unit_hours": 2.0,
+                "description": "Descarregamento e transporte dos equipamentos, conferência física com nota fiscal, registro em sistema de inventário/CMDB, conexão à rede elétrica para carga inicial das baterias.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Realizar preparação e configuração básica (firmware, rede) em ambiente controlado",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Atualização de firmware do Nobreak, configuração de endereço IP e parâmetros de rede (se aplicável), testes de funcionamento básico em bancada, etiquetagem e preparação para transporte ao campo.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Planejamento",
+                "name": "Planejar rotas, agendar acessos e coordenar equipes para instalação em campo",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Otimização de rotas de deslocamento, contato com responsáveis pelos sites para agendamento de janelas de manutenção, alocação de técnicos e recursos necessários para as instalações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Deslocamento ao site e instalação física do Nobreak no rack de campo",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Deslocamento (ida e volta) até o local do rack, remoção de equipamento antigo (se houver), posicionamento do Nobreak no formato torre dentro do rack, fixação e organização inicial.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Realizar conexões elétricas e de dispositivos no Nobreak instalado",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Conexão do Nobreak à rede elétrica do rack, conexão dos equipamentos do rack (servidores, switches, etc.) às tomadas protegidas do Nobreak, organização e roteamento de cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Executar testes funcionais e integrar Nobreak ao sistema de monitoramento",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Simulação de falta de energia para teste de autonomia, verificação de alarmes e notificações, configuração de SNMP/agente de monitoramento, validação de comunicação com o NOC.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Documentar instalação, atualizar inventário e gerar relatório de conclusão",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Registro de informações da instalação (fotos, número de série, localização exata), atualização de CMDB/sistema de inventário, elaboração de relatório técnico de conclusão da atividade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Gerenciar e coordenar o projeto de fornecimento e instalação de Nobreaks",
+                "role": "Gestor",
+                "unit_hours": 3.0,
+                "description": "Acompanhamento de cronograma e orçamento, comunicação com stakeholders, resolução de impedimentos, aprovações de etapas e garantia de conformidade com os objetivos do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:08:09.688397",
+        "trigger_term": "PDU Vertical 32A com 16 tomadas C13 (IEC 60320)",
+        "context": "PDUs verticais 32A com 16 tomadas C13, compatíveis com padrão IEC 60320.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Validar Requisitos e Planejamento de Localização da PDU",
+                "role": "Engenheiro",
+                "unit_hours": 1.0,
+                "description": "Analisar requisitos de energia, capacidade do rack, compatibilidade com infraestrutura existente e definir o local exato para instalação da PDU.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Execução",
+                "name": "Preparar Ferramentas e Componentes para Instalação da PDU",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Coletar ferramentas necessárias (chaves, parafusadeiras), verificar a integridade da PDU e acessórios (parafusos, porcas gaiola), e organizar o ambiente de trabalho no rack.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Montar PDU Vertical no Rack",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Fixar a PDU verticalmente nos trilhos do rack utilizando os kits de montagem apropriados, garantindo alinhamento e segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Conectar Cabo de Alimentação 32A da PDU",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Conectar o cabo de entrada de 32A da PDU à fonte de energia designada (ex: UPS, PDU de andar), garantindo a polaridade correta e o travamento seguro do conector.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Conectar Dispositivos aos 16 Tomadas C13 da PDU",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Conectar os cabos de alimentação dos equipamentos (servidores, switches, etc.) às 16 tomadas C13 da PDU, realizando a organização e gerenciamento de cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Realizar Testes de Funcionalidade e Carga Básica da PDU",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Ligar a PDU, verificar indicadores de status, medir a carga inicial (se PDU tiver monitoramento), e confirmar que os dispositivos conectados estão recebendo energia.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Planejamento",
+                "name": "Atualizar Documentação de Infraestrutura e Ativos",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Registrar a instalação da nova PDU no sistema de gerenciamento de ativos (CMDB), atualizar diagramas de rack e esquemas elétricos, e documentar quaisquer observações relevantes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Revisar e Aprovar a Instalação da PDU",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar o processo de instalação, a documentação atualizada e a funcionalidade geral da PDU, concedendo a aprovação final para a operação em produção.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:08:40.955781",
+        "trigger_term": "Rack de Campo 12U IP65 (600mm profundidade) com ventilação e filtros",
+        "context": "Racks de Campo 12U com profundidade de 600mm, proteção IP65, ventilação e filtros.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Projeto Preliminar do Rack",
+                "role": "Arquiteto",
+                "unit_hours": 3.0,
+                "description": "Definir requisitos funcionais e não funcionais (localização, equipamentos, ambiente, energia, conectividade). Selecionar preliminarmente modelo e componentes. Analisar viabilidade técnica e estratégica.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Projeto Detalhado e Especificação Técnica do Rack",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Elaborar projeto detalhado (diagramas elétricos, dimensionamento de ventilação/filtros, especificação de materiais IP65/600mm, plano de aterramento). Criar Lista de Materiais (BOM).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Planejamento Logístico e Aquisição de Componentes do Rack",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Coordenar aquisição do rack e componentes. Gerenciar fornecedores, aprovar orçamentos. Planejar logística de entrega e armazenamento dos materiais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Preparação do Local e Recebimento de Materiais do Rack",
+                "role": "Auxiliar",
+                "unit_hours": 2.0,
+                "description": "Preparar a área de instalação (limpeza, organização). Receber e conferir materiais (rack, ventilação, filtros, PDU, cabos). Organizar ferramentas necessárias.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Instalação Física e Fixação do Rack de Campo",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Posicionar e fixar o rack de campo no local designado. Garantir nivelamento e segurança estrutural. Realizar furações e ancoragens necessárias.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Instalação do Sistema de Ventilação e Filtros do Rack",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Instalar módulos de ventilação, filtros de ar e selos de vedação. Garantir proteção IP65 e fluxo de ar adequado conforme projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Instalação Elétrica Básica e Aterramento do Rack",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Instalar PDU (Power Distribution Unit) dentro do rack. Realizar conexão da alimentação elétrica e aterramento do rack conforme projeto e normas de segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Testes de Funcionalidade e Integridade IP65 do Rack",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Realizar testes funcionais do sistema de ventilação (fluxo de ar, termostato). Verificar integridade da vedação IP65 (inspeção visual, testes de pressão). Testar alimentação elétrica. Registrar resultados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Validação Final e Documentação As-Built do Rack",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Validar a instalação completa do rack, comparando com o projeto detalhado. Elaborar ou revisar a documentação 'as-built' (diagramas atualizados, fotos, relatórios de teste).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:09:10.467340",
+        "trigger_term": "Nobreak de 600VA (Torre, Senoidal) para racks de campo",
+        "context": "Nobreaks de 600VA, formato torre, senoidal, para os racks de campo.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Análise de Requisitos e Planejamento de Implantação",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Avaliar o ambiente do rack de campo (energia, espaço físico, compatibilidade elétrica). Definir o modelo exato do Nobreak e elaborar um plano de implantação detalhado.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Aquisição e Coordenação de Compra",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Gerenciar o processo de cotação e compra do Nobreak. Coordenar com fornecedores e equipe interna para agilizar o pedido e garantir a entrega.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Recebimento, Inspeção e Estocagem Inicial",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Receber o Nobreak, verificar integridade física, conferir com o pedido e estocar temporariamente em local seguro. Inclui registro básico de entrada.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Preparação de Ferramentas e Deslocamento ao Local",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Separar ferramentas necessárias, equipamentos de proteção individual (EPIs) e o Nobreak para transporte. Deslocamento seguro até o local do rack de campo.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Instalação Física e Conexões Elétricas",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Desembalar, posicionar o Nobreak (formato torre) no local definido. Conectar o cabo de alimentação à rede elétrica e os equipamentos do rack às tomadas do Nobreak. Organizar a cablagem.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Testes de Funcionamento e Verificação de Carga",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Ligar o Nobreak, verificar LEDs e painel para status de bateria, carga e rede. Simular falta de energia (desconectar entrada AC) para testar a bateria e a continuidade da carga.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Configuração de Monitoramento e Integração (se aplicável)",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Se o Nobreak possuir interface de rede ou USB, configurar IP, SNMP ou instalar software de monitoramento local. Testar comunicação e alertas básicos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Planejamento",
+                "name": "Documentação Técnica e Encerramento Administrativo",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Atualizar o inventário de ativos (CMDB), registrar detalhes da instalação (número de série, modelo, localização, data). Preencher relatório de serviço e encerrar a ordem de serviço/ticket.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:27:48.741669",
+        "trigger_term": "PDUs verticais 32A",
+        "context": "Com 16 tomadas C13, compatíveis com padrão IEC 60320.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Definir padrão arquitetural e requisitos de PDU",
+                "role": "Arquiteto",
+                "unit_hours": 2.0,
+                "description": "Estabelecer o padrão de PDUs para o ambiente, considerando escalabilidade, redundância, tipo (vertical, 32A, C13), compatibilidade IEC 60320 e alinhamento com a estratégia de infraestrutura.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Detalhar especificação técnica da PDU para aquisição",
+                "role": "Engenheiro",
+                "unit_hours": 1.0,
+                "description": "Traduzir os requisitos arquiteturais em especificações técnicas detalhadas para a PDU, incluindo modelo, recursos e compatibilidade com o ambiente físico e elétrico específico.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Validar seleção e coordenar aquisição da PDU",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Revisar propostas de fornecedores, confirmar especificações do modelo escolhido e iniciar processo de compra.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Receber e inspecionar PDU",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Desembalar PDU, verificar modelo e quantidade, inspecionar danos físicos e preparar para instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Preparar local de instalação no rack",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Identificar e liberar espaço físico no rack, verificar disponibilidade de ponto de energia adequado e organizar ferramentas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Montar PDU vertical no rack",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Fixar a PDU verticalmente nos trilhos do rack, garantindo alinhamento e segurança.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Conectar PDU à fonte de energia principal",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Conectar o cabo de entrada da PDU ao circuito elétrico designado, garantindo conexão segura e correta.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Realizar gestão de cabos da PDU",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Organizar e fixar o cabo de entrada da PDU, garantindo fluxo de ar adequado e estética.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Testar funcionalidade básica da PDU",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Ligar a PDU, verificar indicadores de status e testar a presença de energia nas tomadas C13 com um multímetro ou dispositivo de teste.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Execução",
+                "name": "Etiquetar e realizar inspeção final",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Aplicar etiquetas de identificação na PDU e cabos, e realizar uma inspeção visual final da instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Planejamento",
+                "name": "Atualizar sistema de inventário e CMDB",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Registrar número de série, tag de ativo, localização e data de instalação da PDU no sistema de gerenciamento de ativos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Planejamento",
+                "name": "Atualizar diagramas de infraestrutura",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Atualizar diagramas de elevação de rack, distribuição de energia e outros esquemas relevantes com a nova PDU.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_013",
+                "category": "Planejamento",
+                "name": "Revisar e aprovar conclusão da atividade",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisar a documentação de instalação, confirmar a conclusão das tarefas e aprovar o encerramento da atividade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:28:19.154743",
+        "trigger_term": "Racks de Campo 12U IP65",
+        "context": "600mm profundidade, com ventilação e filtros.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Análise de Local para Rack de Campo",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Visita técnica ao local, avaliação de infraestrutura (energia, rede, aterramento), condições ambientais (temperatura, umidade, exposição), segurança e acessibilidade. Coleta de dados para dimensionamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Projeto Lógico e Físico do Rack de Campo 12U IP65",
+                "role": "Arquiteto",
+                "unit_hours": 8.0,
+                "description": "Definição da arquitetura da solução, seleção de componentes (rack, PDU, UPS, switches, sensores, ventilação, filtros), desenho de layout interno, diagramas de conectividade e lista de materiais (BOM).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Planejamento de Aquisição e Logística de Componentes",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Cotação de materiais, criação de requisições de compra, acompanhamento de pedidos, coordenação de entrega e planejamento de transporte para o local de instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Planejamento",
+                "name": "Aprovação de Projeto e Orçamento Final",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Revisão final do projeto e orçamento, validação de riscos, alocação de recursos e aprovação formal para execução da instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Recebimento e Conferência de Materiais do Rack de Campo",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Descarregamento, conferência física dos itens recebidos com a lista de materiais (BOM), verificação de avarias, organização e armazenamento temporário no local.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Preparação do Local e Instalação da Base do Rack",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Limpeza da área, marcação para furação, perfuração, fixação da base do rack ao solo/parede, nivelamento e verificação de estabilidade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Instalação de Aterramento e Infraestrutura Elétrica do Rack",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Conexão do aterramento do rack à malha existente, instalação de PDU (Power Distribution Unit) e passagem de cabos de alimentação elétrica principal.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Montagem de Ventilação e Filtros IP65",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Instalação dos sistemas de ventilação, exaustores, sensores de temperatura e umidade, e filtros de ar, garantindo a vedação IP65.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Instalação de Equipamentos Internos no Rack",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Montagem de switches, roteadores, UPS, patch panels e outros dispositivos ativos/passivos nos trilhos do rack, organização inicial de cabos de energia.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Execução",
+                "name": "Lançamento e Conectorização de Cabos de Rede",
+                "role": "Técnico",
+                "unit_hours": 6.0,
+                "description": "Passagem de cabos de rede (fibra óptica e/ou cobre) do ponto de origem até o rack, conectorização em patch panels e organização interna dos cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Execução",
+                "name": "Configuração Básica de Dispositivos de Rede",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Acesso inicial aos switches/roteadores, configuração de IPs de gerenciamento, VLANs básicas, portas de acesso e testes de conectividade elementares.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Gerenciamento",
+                "name": "Configuração de Monitoramento Ambiental do Rack",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Configuração dos sensores de temperatura, umidade e abertura de porta, integração com sistema de monitoramento centralizado e definição de alertas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_013",
+                "category": "Gerenciamento",
+                "name": "Testes de Integração e Validação de Sistema Completo",
+                "role": "Engenheiro",
+                "unit_hours": 5.0,
+                "description": "Execução de testes de conectividade fim-a-fim, testes de carga elétrica, verificação de desempenho da ventilação, testes de redundância e validação de todos os sistemas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_014",
+                "category": "Planejamento",
+                "name": "Elaboração de Documentação As-Built do Rack de Campo",
+                "role": "Analista",
+                "unit_hours": 4.0,
+                "description": "Atualização de diagramas lógicos e físicos, inventário final de equipamentos, registro de configurações, fotos da instalação e criação de manual de operação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_015",
+                "category": "Planejamento",
+                "name": "Encerramento do Projeto e Handover ao Cliente/Operação",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Reunião de encerramento, apresentação da documentação, treinamento básico à equipe de operação, coleta de feedback e formalização da entrega do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:28:40.148780",
+        "trigger_term": "Nobreaks de 600VA para racks de campo",
+        "context": "Torre, Senoidal.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Análise de Requisitos e Desenho da Solução UPS",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Definir especificações técnicas (600VA, Senoidal, Torre), compatibilidade com racks de campo, autonomia necessária e requisitos de monitoramento. Pesquisa de mercado para modelos adequados.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Planejamento de Aquisição e Logística",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Cotação com fornecedores, preparação de pedido de compra, acompanhamento da entrega e planejamento da logística de transporte para os locais de campo.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Planejamento",
+                "name": "Aprovação e Gestão do Projeto de Implantação",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisão e aprovação do plano de aquisição e implantação, alocação de recursos, definição de cronograma e acompanhamento geral do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Recebimento, Inventário e Inspeção Física",
+                "role": "Auxiliar",
+                "unit_hours": 1.0,
+                "description": "Receber o Nobreak, desempacotar, verificar integridade física, conferir acessórios, registrar número de série e patrimônio no sistema.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Preparação e Teste Funcional Básico em Laboratório",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Carregar baterias (carga inicial), ligar o Nobreak para teste funcional básico, verificar LEDs e alarmes, etiquetar o equipamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Deslocamento e Instalação Física no Rack de Campo",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Deslocamento até o local do rack de campo, posicionamento do Nobreak (formato torre), conexão da alimentação elétrica, conexão dos equipamentos do rack ao Nobreak, organização de cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Testes de Carga e Autonomia no Local",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Ligar o Nobreak com os equipamentos conectados, simular falha de energia para verificar a autonomia da bateria e o funcionamento da comutação, medir tensões de saída.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Configuração de Monitoramento e Alertas (se aplicável)",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Configurar placa de rede do Nobreak (IP, SNMP), integrar com sistema de monitoramento centralizado, configurar alertas para eventos (falha de energia, bateria baixa).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Documentação e Encerramento da Implantação",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Atualizar documentação técnica, registrar detalhes da instalação, resultados dos testes, e gerar relatório de encerramento para o cliente ou equipe de operações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:29:02.344448",
+        "trigger_term": "Kit de Upgrade para Hosts HPE DL380 Gen10 Plus",
+        "context": "Inclui 2º Processador, Memória RAM para N+1, Placas 10Gb SFP+.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Análise e Planejamento Técnico do Upgrade",
+                "role": "Engenheiro",
+                "unit_hours": 4.0,
+                "description": "Revisar configuração atual do host, verificar compatibilidade de hardware (CPU, RAM, NICs) com o kit e firmware existente. Definir estratégia N+1 para RAM e integração das placas 10Gb SFP+. Elaborar MOP (Method of Procedure) detalhado.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Coordenação e Agendamento da Janela de Manutenção",
+                "role": "Gestor",
+                "unit_hours": 2.0,
+                "description": "Comunicar com stakeholders para agendamento da janela de manutenção. Coordenar logística de peças e disponibilidade da equipe. Obter aprovações necessárias para o downtime.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Preparação Física e Desligamento do Host",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Documentar cabeamento atual (rede, energia). Desligar o host de forma segura. Desconectar cabos e, se necessário, remover o servidor do rack para acesso facilitado.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Instalação Física de Componentes (CPU, RAM, NICs)",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Abrir o chassis do servidor. Instalar o 2º processador e dissipador. Instalar módulos de memória RAM para atingir N+1. Instalar as placas 10Gb SFP+. Fechar o chassis e reconectar cabos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Gerenciamento",
+                "name": "Atualização de Firmware e Verificação de Hardware",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Ligar o host e acessar o iLO/BIOS. Verificar o reconhecimento dos novos componentes. Atualizar firmware do iLO, BIOS e das placas 10Gb SFP+. Realizar reboots e verificar sucesso das atualizações.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Configuração de Rede no Sistema Operacional/Hypervisor",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Acessar o sistema operacional/hypervisor. Identificar e configurar as novas interfaces de rede 10Gb SFP+ (IP, VLANs). Criar ou modificar bonds/teaming de rede. Testar conectividade básica.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Gerenciamento",
+                "name": "Ajustes de Recursos no Hypervisor/Sistema Operacional",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Verificar se o sistema operacional/hypervisor reconhece e utiliza os novos núcleos de CPU e a memória RAM adicional. Ajustar configurações de agendamento de recursos ou pools, se necessário. Verificar licenciamento.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Gerenciamento",
+                "name": "Testes Funcionais Pós-Upgrade",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Executar conjunto de testes para validar todas as funcionalidades do host. Inclui testes de rede (throughput), armazenamento (se aplicável), migração de VMs (se hypervisor) e monitoramento de saúde do sistema.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Planejamento",
+                "name": "Atualização de Documentação e CMDB",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Atualizar o CMDB com os novos detalhes de hardware (CPU, RAM, NICs). Revisar e atualizar diagramas de rede e documentação operacional do host. Gerar relatório pós-manutenção.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Planejamento",
+                "name": "Revisão Técnica e Aprovação Final",
+                "role": "Engenheiro",
+                "unit_hours": 1.0,
+                "description": "Revisar a execução do MOP, os resultados dos testes e a documentação atualizada. Validar a conformidade do upgrade com os requisitos iniciais e aprovar formalmente a conclusão da atividade.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-25T20:34:46.197195",
+        "trigger_term": "Treinamento operacional e Operação Assistida",
+        "context": "10 dias úteis.",
+        "suggested_wbs": [
+            {
+                "id": "RES_001",
+                "category": "Planejamento",
+                "name": "Planejar Treinamento e Operação Assistida",
+                "role": "Gestor",
+                "unit_hours": 4.0,
+                "description": "Definir escopo do treinamento, público-alvo, cronograma detalhado, recursos necessários e métricas de sucesso. Alinhar com as partes interessadas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_002",
+                "category": "Planejamento",
+                "name": "Preparar Material de Treinamento",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Criar apresentações, manuais, exercícios práticos e outros materiais de apoio. Garantir que o conteúdo seja claro, conciso e relevante.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_003",
+                "category": "Execução",
+                "name": "Configurar Ambiente de Treinamento",
+                "role": "Técnico",
+                "unit_hours": 4.0,
+                "description": "Preparar os equipamentos, softwares e acessos necessários para o treinamento. Testar o ambiente para garantir que tudo funcione corretamente.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_004",
+                "category": "Execução",
+                "name": "Executar Treinamento Operacional (Dia 1)",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Apresentar o conteúdo do treinamento, realizar exercícios práticos e responder às dúvidas dos participantes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_005",
+                "category": "Execução",
+                "name": "Executar Treinamento Operacional (Dia 2)",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Apresentar o conteúdo do treinamento, realizar exercícios práticos e responder às dúvidas dos participantes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_006",
+                "category": "Execução",
+                "name": "Executar Treinamento Operacional (Dia 3)",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Apresentar o conteúdo do treinamento, realizar exercícios práticos e responder às dúvidas dos participantes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_007",
+                "category": "Execução",
+                "name": "Executar Treinamento Operacional (Dia 4)",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Apresentar o conteúdo do treinamento, realizar exercícios práticos e responder às dúvidas dos participantes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_008",
+                "category": "Execução",
+                "name": "Executar Treinamento Operacional (Dia 5)",
+                "role": "Analista",
+                "unit_hours": 8.0,
+                "description": "Apresentar o conteúdo do treinamento, realizar exercícios práticos e responder às dúvidas dos participantes.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_009",
+                "category": "Execução",
+                "name": "Operação Assistida (Dia 6)",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Acompanhar os participantes na execução das tarefas, oferecendo suporte e orientação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_010",
+                "category": "Execução",
+                "name": "Operação Assistida (Dia 7)",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Acompanhar os participantes na execução das tarefas, oferecendo suporte e orientação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_011",
+                "category": "Execução",
+                "name": "Operação Assistida (Dia 8)",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Acompanhar os participantes na execução das tarefas, oferecendo suporte e orientação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_012",
+                "category": "Execução",
+                "name": "Operação Assistida (Dia 9)",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Acompanhar os participantes na execução das tarefas, oferecendo suporte e orientação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_013",
+                "category": "Execução",
+                "name": "Operação Assistida (Dia 10)",
+                "role": "Técnico",
+                "unit_hours": 8.0,
+                "description": "Acompanhar os participantes na execução das tarefas, oferecendo suporte e orientação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "RES_014",
+                "category": "Gerenciamento",
+                "name": "Avaliar Resultados do Treinamento",
+                "role": "Gestor",
+                "unit_hours": 4.0,
+                "description": "Analisar os resultados do treinamento, coletar feedback dos participantes e identificar oportunidades de melhoria. Elaborar relatório final.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
     }
 ]

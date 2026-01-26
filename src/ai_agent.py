@@ -14,12 +14,13 @@ load_dotenv()
 
 # Usando o modelo mais recente conforme diretriz Section 5.
 # Configuração de Modelos (v3.0 - Resiliência)
-MODEL_PREFERENCIAL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-MODEL_SECUNDARIO = os.getenv("GEMINI_MODEL_LIGHT", "gemini-2.0-flash") # Fallback mais estável
+# Configuração de Modelos (v3.1 - Benchmark Optim-Lite)
+MODEL_PREFERENCIAL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
+MODEL_SECUNDARIO = os.getenv("GEMINI_MODEL_LIGHT", "gemini-2.0-flash") # Fallback para o modelo completo
 
 class AIAgent:
-    def __init__(self):
-        self.model_name = MODEL_PREFERENCIAL
+    def __init__(self, model_name: str = None):
+        self.model_name = model_name or MODEL_PREFERENCIAL
         self._load_keys_tiered() # Carrega separado Free vs Paid
         
         if not self.free_keys and not self.paid_key:
@@ -199,8 +200,10 @@ class AIAgent:
         if cache_key in self._response_cache:
             return self._response_cache[cache_key]
 
-        # Prioridade de Modelos
-        models_to_try = [MODEL_PREFERENCIAL, MODEL_SECUNDARIO]
+        # Prioridade de Modelos (Dinâmico v3.1)
+        models_to_try = [self.model_name]
+        if self.model_name != MODEL_SECUNDARIO:
+            models_to_try.append(MODEL_SECUNDARIO)
         
         while True: # Loop de Rotação de Chave (Select Best Key cuida da ordem)
             goto_next_key = False
@@ -313,6 +316,10 @@ class AIAgent:
         while stack:
             text += stack.pop()
             
+        # Se após toda a limpeza o texto não contiver as chaves mínimas de um JSON, retorna vazio para disparar erro de parsing
+        if '{' not in text and '[' not in text:
+            return ""
+            
         return text
 
     def interpret_instruction(self, instruction_text: str, doc_content: str = "") -> Intent:
@@ -355,31 +362,37 @@ class AIAgent:
         - `struct_server_migration.md`: Foco em Virtualização e Migração de sistemas.
         - `struct_services_cabling.md`: Foco em Cabeamento e Infraestrutura Física.
         - `noc_monitoring_support.md`: Contratos de Sustentação, Monitoramento e Suporte NOC (quando a infra já existe).
-        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO (V6.8 - EXHAUSTIVE MERGE)
+        ## REGRAS DE EXTRAÇÃO E CLASSIFICAÇÃO DETERMINÍSTICA (V7.0)
         1. **MAPEAMENTO COMPLETO DE ITENS (SOMA PDF + CLI)**: 
            - Extraia CADA item listado na seção "Relação de Itens" (Existentes e Novos) da Instrução.
            - Extraia os part numbers e detalhes específicos do PDF.
-           - **MESCLE:** Se um item está na instrução (ex: "06 Switches C9200") e no PDF (detalhes técnicos), use a quantidade da instrução (SOBERANIA) mas os detalhes do PDF.
-           - **NÃO EXCLUA:** Itens marcados como "Existentes" na instrução DEVEM constar no `detected_hardware_list` com a nota de que são existentes, pois a engenharia precisará validá-los.
-        2. **AÇÃO POR ITEM**:
-           - Servidores/Switches/Storages Físicos -> `action_type: "install"`
-           - Aplicações/VMs/Workloads -> `action_type: "migration"` ou `action_type: "infra_vm"`
-           - Planejamento/Design -> `action_type: "design"`
-        3. **NÃO IGNORE O FINAL DO TEXTO**: Certifique-se de capturar itens como Backup, DR e Migração que costumam estar no final.
+           - **MESCLE:** Use a quantidade da instrução (SOBERANIA) mas os detalhes do PDF.
+        2. **CLASSIFICAÇÃO MANDATÓRIA (ACTION_TYPE)**:
+           O campo `action_type` é o gatilho para o cálculo de mão de obra. Você DEVE usar um destes valores exatos:
+           - `SWITCH`: Para switches de acesso, core ou industriais.
+           - `SERVER`: Para servidores físicos (Bare Metal).
+           - `STORAGE`: Para storages NAS/SAN físicos.
+           - `VM`: Para criação de máquinas virtuais (Infra VM).
+           - `WIFI`: Para Access Points e Controladoras.
+           - `FIREWALL`: Para ativos de segurança física/virtual.
+           - `BACKUP`: Para sistemas de proteção de dados.
+           - `MIGRATION`: Para migração de cargas (P2V/V2V).
+           - `CABLING`: Para serviços de infraestrutura passiva/fibra.
+           - `DESIGN`: Para planejamento, arquitetura e LLD.
+        3. **NÃO IGNORE O FINAL DO TEXTO**: Certifique-se de capturar itens como Backup, DR e Migração.
         4. **CLIENTE VS PROVEDOR**: Cliente = OFI. Provedor = EGE.
-        5. **ESTIMATIVA DE HORAS**: Se a instrução der um tempo total para uma fase (ex: "20 dias de planejamento"), coloque esse valor total (em horas, ex: 160) no campo `explicit_total_hours` do item correspondente.
 
         ## FORMATO DE SAÍDA (JSON ESTRITO)
         {{
-            "client_name": "String (Primeiro nome ou nome informal do cliente)",
-            "company_name": "String (NOME COMPLETO DA EMPRESA DO CLIENTE - Extraia exatamente do campo 'Cliente:')",
-            "contact_name": "String (Nome Completo do Contato Principal)",
-            "company_short_name": "String (Nome Curto da Empresa para Redação)",
+            "client_name": "String",
+            "company_name": "String",
+            "contact_name": "String",
+            "company_short_name": "String",
             "project_name": "String",
             "project_motivation": "String",
             "hardware_supply_by_client": boolean,
             "estimated_duration_weeks": int,
-            "governance_level": "standard" | "intensive",
+            "governance_level": "standard" | "intensive" | "critical",
             "work_on_weekends": boolean,
             "requires_training": boolean,
             "selected_tech_template": "iodc_full_structured.md" | "iodc_no_net.md" | "struct_network_industrial.md" | "struct_server_migration.md" | "struct_services_cabling.md" | "noc_monitoring_support.md",
@@ -391,11 +404,11 @@ class AIAgent:
                 {{
                     "name": "String (Ex: Implantação de Servidores Dell R670)",
                     "detected_quantity": int,
-                    "action_type": "install" | "migration" | "design" | "infra_vm",
+                    "action_type": "SWITCH" | "SERVER" | "STORAGE" | "VM" | "WIFI" | "FIREWALL" | "BACKUP" | "MIGRATION" | "CABLING" | "DESIGN" | "TRAINING" | "SOFTWARE" | "HARDWARE",
                     "summary_rational": "String",
-                    "context_note": "String (Inclua detalhes como site, modelo, etc)",
+                    "context_note": "String",
                     "visibility": "public",
-                    "explicit_total_hours": int (0 se não houver override),
+                    "explicit_total_hours": int,
                     "is_weekend": boolean
                 }}
             ],
@@ -410,23 +423,24 @@ class AIAgent:
             "confidence_score": float,
             "detected_hardware_list": [
                 {{
-                    "description": "String (Descrição do equipamento)",
+                    "description": "String",
                     "quantity": int,
                     "part_number": "String"
                 }}
             ]
         }}
 
-
-
-        Responda APENAS com o JSON puro.
+        Responda APENAS com o JSON puro. Seja direto e siga a estrutura à risca.
         """
         
-        raw_text = self.generate_content(prompt, temperature=0.1)
+        raw_text = self.generate_content(prompt, temperature=0.1, max_output_tokens=8192)
         
-        # Armazenar o texto bruto para debug externo (será salvo pelo main.py se --debug estiver ativo)
+        # Armazenar o texto bruto para debug externo
         self.last_raw_interpretation = raw_text
         
+        if len(raw_text) < 500:
+             print(f"⚠️ AVISO: Resposta da IA muito curta ({len(raw_text)} chars). Possível truncamento.")
+             
         clean_text = self._clean_json_text(raw_text)
         
         try:
@@ -559,7 +573,7 @@ class AIAgent:
         except Exception:
             # Fallback aprimorado para manter as novas regras mesmo em erro
             return {
-                "custom_objective_md": f"{intent.project_motivation}\n\nNossa proposta foca na modernização e segurança da infraestrutura para garantir a continuidade operacional conforme os requisitos apresentados.",
+                "custom_objective_md": f"{intent_summary}\n\nNossa proposta foca na modernização e segurança da infraestrutura para garantir a continuidade operacional conforme os requisitos apresentados.",
                 "custom_benefits_md": "### Confiabilidade e Segurança\n* Mitigação de riscos de parada.\n* Proteção de ativos críticos.",
                 "custom_vision_md": "1. Planejamento\n2. Execução de Infra\n3. Configuração Lógica\n4. Testes e Validação\n5. Handover",
                 "testing_protocol_md": "Protocolo de testes (SAT) a ser definido no kick-off focado em ambiente industrial.",

@@ -60,6 +60,7 @@ class LaborEngine:
         topic_team_size = {}
 
         vm_profiles = {
+            "VM": "VIRT_VM_INFRA",
             "infra_vm": "VIRT_VM_INFRA",
             "heavy_app_vm": "VIRT_VM_HEAVY",
             "db_vm": "VIRT_VM_DB",
@@ -98,8 +99,14 @@ class LaborEngine:
                     phase_groups[val_tpl.category].append({"template": val_tpl, "eff": eff})
             
             else:
-                # Lógica de Bundle para Hardware/Outros
-                bundle = self.db.get_scope_bundle(scope_item.name)
+                # Lógica de Bundle Determinística (v10.0)
+                # Tenta primeiro pelo action_type (Normalizado pela IA)
+                bundle = self.db.get_scope_bundle(scope_item.action_type)
+                
+                # Fallback para o nome do item se o action_type falhar ou não existir
+                if not bundle:
+                    bundle = self.db.get_scope_bundle(scope_item.name)
+
                 if not bundle or not bundle.required_activities:
                     # Tenta Pesquisa se não houver Bundle (v8.0)
                     if self.research:

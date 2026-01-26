@@ -62,7 +62,7 @@ class OpexEngine:
         for item in scope_items:
             qty = item.detected_quantity
             # VMs
-            if item.action_type in ["infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "migrate_p2v", "v2v_migration"]:
+            if item.action_type in ["VM", "MIGRATION"]:
                  counts["vms"] += qty
             # Outros (Ex: VDI pode ser workstation também, dependendo da interpretação, mas vamos segregar)
             

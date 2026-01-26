@@ -6,3 +6,5 @@ venv/
 output/
 .context/
 *.log
+benchmark_*.csv
+output/benchmarks/

@@ -143,6 +143,7 @@ def main():
     parser.add_argument("--use-docs", nargs="+", help="Explicit technical documents (PDF/TXT/MD) to load for context", metavar="FILE")
     parser.add_argument("--legacy-assembler", action="store_true", help="Use old non-Jinja assembler")
     parser.add_argument("--term", type=int, default=PRAZO_PADRAO_DIAS, help="Payment term in days (default: 30)")
+    parser.add_argument("--model", type=str, help="Specify Gemini Model (e.g., gemini-2.0-flash-lite)")
     
     args = parser.parse_args()
 
@@ -183,7 +184,7 @@ def main():
         print("[*] Documentos técnicos ignorados (Modo Instrução Soberana).")
     
     db = Database()
-    agent = AIAgent()
+    agent = AIAgent(model_name=args.model)
     
     # Engines
     research_engine = ResearchEngine(db, agent)
@@ -371,19 +372,23 @@ def main():
 
 
     # Assembly Context Augmentation (v12.3 - Deliverables)
+    # Filtro Crítico: Apenas chaves com conteúdo real sobrescrevem os padrões do template
     extra_context = {
-        "custom_objective_md": redaction.get("custom_objective_md", ""),
-        "custom_benefits_md": redaction.get("custom_benefits_md", ""),
-        "custom_vision_md": redaction.get("custom_vision_md", ""),
-        "custom_testing_protocol": redaction.get("testing_protocol_md", ""),
-        "custom_team_structure": redaction.get("team_structure_md", ""),
-        "custom_timeline": redaction.get("timeline_md", ""),
-        "custom_training_md": redaction.get("custom_training_md", ""),
-        "asset_table_md": redaction.get("asset_table_md", ""),
-        "custom_cabling_md": redaction.get("cabling_context_md", ""),
-        "custom_software_md": redaction.get("software_licensing_md", ""),
-        "custom_deliverables_md": redaction.get("deliverables_list_md", "")
+        "custom_objective_md": redaction.get("custom_objective_md"),
+        "custom_benefits_md": redaction.get("custom_benefits_md"),
+        "custom_vision_md": redaction.get("custom_vision_md"),
+        "custom_testing_protocol": redaction.get("testing_protocol_md"),
+        "custom_team_structure": redaction.get("team_structure_md"),
+        "custom_timeline": redaction.get("timeline_md"),
+        "custom_training_md": redaction.get("custom_training_md"),
+        "asset_table_md": redaction.get("asset_table_md"),
+        "custom_cabling_md": redaction.get("cabling_context_md"),
+        "custom_software_md": redaction.get("software_licensing_md"),
+        "custom_deliverables_md": redaction.get("deliverables_list_md")
     }
+    
+    # Remove chaves None ou "" para permitir o uso do filtro | default() do Jinja2
+    extra_context = {k: v for k, v in extra_context.items() if v}
 
     if isinstance(proposal_assembler, LibraryAssembler):
         proposal_outputs = proposal_assembler.assemble(

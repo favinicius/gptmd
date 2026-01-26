@@ -1211,6 +1211,88 @@
   ],
   "bundle_logic": [
     {
+      "trigger_keyword": "SWITCH",
+      "required_activities": [
+        "PHYS_SW_01",
+        "PHYS_SW_02",
+        "NET_CORE_01",
+        "VAL_001",
+        "VAL_002"
+      ]
+    },
+    {
+      "trigger_keyword": "SERVER",
+      "required_activities": [
+        "PHYS_SRV_01",
+        "PHYS_SRV_02",
+        "SO_INST_01",
+        "VAL_002"
+      ]
+    },
+    {
+      "trigger_keyword": "STORAGE",
+      "required_activities": [
+        "PHYS_SRV_01",
+        "PHYS_SRV_02",
+        "ENG_STO_01",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "VM",
+      "required_activities": [
+        "VIRT_003",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "WIFI",
+      "required_activities": [
+        "NET_WLAN_01",
+        "NET_WLAN_02",
+        "VAL_002"
+      ]
+    },
+    {
+      "trigger_keyword": "FIREWALL",
+      "required_activities": [
+        "FW_UTM_01",
+        "FW_UTM_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "BACKUP",
+      "required_activities": [
+        "BK_SERV_01",
+        "BK_JOB_01",
+        "BK_JOB_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "MIGRATION",
+      "required_activities": [
+        "MIG_VM_01",
+        "MIG_VM_02",
+        "VAL_001"
+      ]
+    },
+    {
+      "trigger_keyword": "CABLING",
+      "required_activities": [
+        "PHYS_SW_02",
+        "VAL_002"
+      ]
+    },
+    {
+      "trigger_keyword": "DESIGN",
+      "required_activities": [
+        "PLAN_001",
+        "PLAN_002"
+      ]
+    },
+    {
       "trigger_keyword": "Switch",
       "required_activities": [
         "PHYS_SW_01",

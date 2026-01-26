@@ -90,15 +90,20 @@ Após a conclusão da implantação inicial, inicia-se a execução contínua do
 *   **SLA:** Atendimento com tempos de resposta definidos conforme a severidade do incidente.
 *   **Franquia:** Inclusão de franquia mensal de horas para atendimentos técnicos remotos e presenciais.
 
-{% if asset_table_md or opex -%}
+{% if opex -%}
 ### 15.1. RELAÇÃO DE ATIVOS (CONSOLIDAÇÃO)
-{% if asset_table_md -%}
-{{ asset_table_md }}
-{%- elif opex -%}
 | Item Monitorado / Ativos | Quantidade |
 | :--- | :---: |
 {% for item in opex.items -%}
 | {{ item.item_name }} | {{ item.quantity }} |
 {% endfor %}
+
+{% if asset_table_md -%}
+*Detalhamento Adicional de Ativos:*
+{{ asset_table_md }}
 {%- endif %}
+
+{%- elif asset_table_md -%}
+### 15.1. RELAÇÃO DE ATIVOS (CONSOLIDAÇÃO)
+{{ asset_table_md }}
 {%- endif %}

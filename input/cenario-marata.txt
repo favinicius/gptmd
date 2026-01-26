@@ -1,0 +1,37 @@
+Cliente: JDE - Jacobs Douwe Egberts (Unidade Maratá)
+Contato: Jonathan Pereira / Engenharia JDE
+
+O projeto consiste no fornecimento Turnkey para o novo Datacenter Industrial e Rede OT da fábrica em Itaporanga da Ajuda (SE). O ambiente é crítico (manipulação de alimentos), exigindo cuidados sanitários rigorosos (sem madeira, tapumes plásticos). Precisamos descomissionar a rede antiga de medição e implementar uma nova infraestrutura seguindo o Modelo Purdue e normas ISA/IEC 62443. O foco é alta disponibilidade (N+1): já existem 2 servidores HPE e 1 Storage HPE que devem receber upgrade para suportar a carga de 26 VMs (92 vCPUs, 196GB RAM). Além disso, precisamos fornecer toda a estrutura de racks, core de rede, backup imutável e infraestrutura de campo.
+
+Relação de Itens:
+Datacenter e Backup:
+01 Rack de Servidor 44U (800x1200mm) com gerenciamento de cabos e ventilação.
+02 PDUs verticais 32A com 16 tomadas C13 (compatíveis com padrão IEC 60320).
+02 Switches Core Datacenter L3 (24 portas SFP28 10/25G + 4 portas 40/100G, Stackable).
+01 Servidor de Backup dedicado (Rack, Dual CPU, 64GB RAM, 4TB SSD útil em RAID 5).
+01 Storage NAS para Repositório Imutável (32TB de capacidade útil, Rede 10GbE).
+
+Rede Industrial (Campo):
+02 Switches Core OT L3 (24x RJ45 Giga + 8x SFP + 2x SFP+ 10G, Redundantes).
+02 Switches de Acesso Industrial (Mínimo 6x RJ45 + 2x SFP, Montagem em painel).
+02 Racks de Campo 12U IP65 (600mm profundidade) com ventilação e filtros.
+02 Nobreaks de 600VA (Torre, Senoidal) para os racks de campo.
+
+Upgrades e Licenciamento:
+01 Kit de Upgrade para os 2 Hosts HPE DL380 Gen10 Plus existentes (2º Processador, Memória RAM para N+1, Placas 10Gb SFP+).
+01 Kit de Upgrade para Storage HPE MSA 2060 existente (Expansão de discos se necessário após análise).
+Licenciamento Windows Server 2022 Datacenter e Standard.
+Software de Backup Veeam (implícito na descrição de funcionalidades).
+
+Serviços:
+Projeto Executivo Completo (Diagramas, Topologia, Databook, ART).
+Instalação Física (Cabeamento Cat6A blindado, Fibra Óptica, Elétrica dos Racks).
+Configuração Lógica (VLANs, Roteamento, Firewall Zones, Cluster HA, Backup Imutável).
+Migração de 26 VMs e Instalação de Aplicações Rockwell (ThinManager, HMI, AssetCentre).
+Treinamento operacional e Operação Assistida (10 dias úteis).
+
+Existente: 02 Servidores HPE ProLiant DL380 Gen10 Plus.
+Existente: 01 Storage HPE MSA 2060.
+Existente: Licenças de EDR (Symantec).
+
+Observação: Cotação deve ser completa (Hardware + Serviços + Licenças). Atenção às normas de segurança de alimentos (BPF) durante a execução. O cliente exige garantia on-site de 5 anos para todo o hardware novo.

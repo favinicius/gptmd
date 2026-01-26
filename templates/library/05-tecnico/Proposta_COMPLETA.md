@@ -140,15 +140,20 @@ Após a conclusão e aceite do projeto, inicia-se a nossa parceria de longo praz
 *   **Franquia:** Inclusão de uma franquia mínima de 80 horas anuais para atendimentos técnicos.
 *   **Governança:** Acesso a uma Central de Tickets, canais de atendimento emergenciais e a uma Plataforma de Monitoramento com visibilidade em tempo real para a {{ provider_short }}.
 
-{% if asset_table_md or opex -%}
+{% if opex -%}
 ### 15.1. RELAÇÃO DE ATIVOS (CONSOLIDAÇÃO)
-{% if asset_table_md -%}
-{{ asset_table_md }}
-{%- elif opex -%}
 | Item Monitorado / Ativos | Quantidade |
 | :--- | :---: |
 {% for item in opex.items -%}
 | {{ item.item_name }} | {{ item.quantity }} |
 {% endfor %}
+
+{% if asset_table_md -%}
+*Detalhamento Adicional de Ativos:*
+{{ asset_table_md }}
 {%- endif %}
+
+{%- elif asset_table_md -%}
+### 15.1. RELAÇÃO DE ATIVOS (CONSOLIDAÇÃO)
+{{ asset_table_md }}
 {%- endif %}

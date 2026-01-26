@@ -118,11 +118,13 @@ class LogisticsOverride(BaseModel):
     team_size: int = 1
     stay_duration_days: List[int] = Field(default_factory=list)
     
-    @field_validator('team_size', mode='before')
+    @field_validator('transport_provider', 'team_size', mode='before')
     @classmethod
-    def default_team_size(cls, v):
-        """Convert None to 1 for team_size from AI responses."""
-        return 1 if v is None else v
+    def default_logistics_values(cls, v, info):
+        if v is None:
+            if info.field_name == 'transport_provider': return 'provider'
+            if info.field_name == 'team_size': return 1
+        return v
 
 
 
@@ -134,16 +136,33 @@ class HardwareSpec(BaseModel):
     description: str
     quantity: int = 1
     part_number: Optional[str] = "N/A"
+    
+    @field_validator('quantity', mode='before')
+    @classmethod
+    def validate_qty(cls, v):
+        return 1 if v is None else v
 
 class ScopeItem(BaseModel):
     name: str
     detected_quantity: int = 1
-    action_type: Literal["install", "migration", "design", "infra_vm", "heavy_app_vm", "db_vm", "vdi_vm", "training", "consulting", "logistics", "other"] = "install"
-    summary_rational: Optional[str] = "" # Explicação simples (1-2 linhas) para o cliente
+    action_type: Literal[
+        "SWITCH", "SERVER", "STORAGE", "VM", "WIFI", "FIREWALL", "BACKUP", "MIGRATION", "CABLING", "DESIGN", "TRAINING", "CONSULTING", "SOFTWARE", "HARDWARE", "OTHER"
+    ] = "OTHER"
+    summary_rational: Optional[str] = "" 
     context_note: Optional[str] = ""
-    visibility: Literal["public", "internal"] = "public" # New field
-    explicit_total_hours: Optional[int] = 0 # New field for overrides, defaulting to 0 if None
-    is_weekend: Optional[bool] = False # New field for weekend work factor
+    visibility: Literal["public", "internal"] = "public"
+    explicit_total_hours: Optional[int] = 0
+    is_weekend: Optional[bool] = False
+    
+    @field_validator('detected_quantity', 'action_type', 'explicit_total_hours', 'is_weekend', mode='before')
+    @classmethod
+    def default_scope_values(cls, v, info):
+        if v is None:
+            if info.field_name == 'detected_quantity': return 1
+            if info.field_name == 'action_type': return 'OTHER'
+            if info.field_name == 'explicit_total_hours': return 0
+            if info.field_name == 'is_weekend': return False
+        return v
 
 class SizingMode(str, Enum):
     AGGRESSIVE = "aggressive"  # 0.85x
@@ -173,7 +192,7 @@ class Intent(BaseModel):
     logistics_override: Optional[LogisticsOverride] = None
     detailed_logistics: Optional[LogisticsPlan] = None
     estimated_duration_weeks: Optional[int] = 4
-    governance_level: Literal["standard", "intensive"] = "standard"
+    governance_level: Literal["standard", "intensive", "critical"] = "standard"
     work_on_weekends: Optional[bool] = False
     requires_training: Optional[bool] = False # Flag for training/course requirement
     

@@ -1,156 +1,131 @@
 
 import subprocess
 import time
-import re
 import os
 import csv
+import re
+import json
 from datetime import datetime
+from pathlib import Path
 
-# Configurações do teste
-INSTRUCTION = "input/cenario-metalmec.txt"
-
-# Lista de Modelos para Teste
-MODELS = [
-    os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite"),
-    "gemini-2.0-flash"
-]
-
-# Matriz de Validacao de Temperatura
+# --- CONFIGURAÇÃO DE CENÁRIOS ---
+INSTRUCTION_PATH = "input/cenario-metalmec.txt"
+MODELS = ["gemini-2.0-flash", "gemini-2.0-flash-lite"]
 SIZING_MODES = ["standard", "secure", "aggressive"]
 CONTINGENCY_LEVELS = ["standard", "high"]
 
-def run_calc(model, sizing, contingency):
-    # Busca o interpretador do venv conforme padrão do usuário
-    python_exe = os.path.join(os.path.dirname(os.getcwd()), "venvs", "gptmd", "bin", "python3")
-    if not os.path.exists(python_exe):
-        python_exe = "python3" # Fallback
-    
-    cmd = [
-        python_exe, "src/main.py",
-        "--instruction", INSTRUCTION,
-        "--sizing", sizing,
-        "--contingency", contingency,
-        "--debug"
-    ]
-    
-    env = os.environ.copy()
-    env["PYTHONPATH"] = "."
-    env["GEMINI_MODEL"] = model
-    
-    while True: # Retry Loop Infinito para Quota
-        start_time = time.time()
-        try:
-            # Executa capturando stdout e stderr
-            result = subprocess.run(cmd, capture_output=True, text=True, env=env)
-            duration = time.time() - start_time
-            
-            output = result.stdout + "\n" + result.stderr
-            
-            # Detecção de Erro de Quota - Gatilho para Espera
-            if "Quota Excedida" in output or "cooldown" in output.lower():
-                # Filtrar e mostrar quais chaves falharam
-                quota_errors = [line for line in output.splitlines() if "[!]" in line]
-                for err in quota_errors:
-                    print(f"   ↳ {err}")
-                
-                print(f"⏳ [QUOTA HIT] Aguardando 60s para liberar API do Google... ({model})")
-                time.sleep(60)
-                continue # Tenta novamente a mesma execução
-            
-            # Analisa Saída (Sucesso ou Erro Técnico)
-            price_match = re.search(r"Calculated Total: R\$ ([\d\.,]+)", result.stdout)
-            metrics_match = re.search(r"- (\d+) atividades.*?\(([\d\.]+)\s+horas\)", result.stdout)
-            
-            # 2. Métricas de IA (Capturadas do log [METRICS])
-            tokens_prompt = 0
-            tokens_output = 0
-            metrics_lines = re.findall(r"\[METRICS\].*?TOKENS_PROMPT=(\d+).*?TOKENS_OUTPUT=(\d+)", result.stdout)
-            for p, o in metrics_lines:
-                tokens_prompt += int(p)
-                tokens_output += int(o)
-                
-            error_msg = None
-            if result.returncode != 0:
-                error_msg = result.stderr.splitlines()[-1] if result.stderr else 'Unknown Error'
+# Interpretador (Respeitando a regra de Venv Externo: ../venvs/gptmd)
+PYTHON_EXE = os.path.abspath(os.path.join(os.path.dirname(os.getcwd()), "venvs", "gptmd", "bin", "python3"))
+if not os.path.exists(PYTHON_EXE):
+    PYTHON_EXE = "python3" # Fallback
 
-            return {
-                "price": price_match.group(1) if price_match else "N/A",
-                "activities": metrics_match.group(1) if metrics_match else "0",
-                "hours": metrics_match.group(2) if metrics_match else "0",
-                "duration": round(duration, 2),
-                "tokens_prompt": tokens_prompt,
-                "tokens_output": tokens_output,
-                "tokens_total": tokens_prompt + tokens_output,
-                "error": error_msg
-            }
-            
-        except Exception as e:
-            return {
-                "price": "Fail",
-                "activities": 0,
-                "hours": 0,
-                "duration": round(time.time() - start_time, 2),
-                "tokens_prompt": 0,
-                "tokens_output": 0,
-                "tokens_total": 0,
-                "error": str(e)
-            }
+def extract_metrics(output_msg):
+    """
+    Extrai métricas do stdout do main.py via Regex.
+    """
+    data = {
+        "price": "N/A",
+        "hours": "0",
+        "acts": "0",
+        "tokens": "0",
+        "out_dir": "N/A"
+    }
+    
+    # 1. Busca Price (Valor de Venda final)
+    price_match = re.search(r"Calculated Total: R\$ ([\d\.,]+)", output_msg)
+    if price_match: data["price"] = price_match.group(1)
+    
+    # 2. Busca Tokens Prompt ([METRICS])
+    token_match = re.search(r"TOKENS_PROMPT=(\d+)", output_msg)
+    if token_match: data["tokens"] = token_match.group(1)
+    
+    # 3. Busca Horas e Atividades
+    # Ex: "- 113 atividades planejadas (1470 horas)"
+    metrics_match = re.search(r"- (\d+) atividades.*?\((\d+\.?\d*) horas\)", output_msg)
+    if metrics_match:
+        data["acts"] = metrics_match.group(1)
+        data["hours"] = metrics_match.group(2)
+        
+    # 4. Busca Pasta de Saída
+    folder_match = re.search(r"saved to: (output/[0-9\-_]+)", output_msg)
+    if folder_match: data["out_dir"] = folder_match.group(1).strip()
+    
+    return data
 
 def main():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_dir = Path("output/benchmarks")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    report_file = out_dir / f"benchmark_matrix_{timestamp}.csv"
     
-    # Garantir pasta de output de benchmark (v7.1)
-    out_dir = os.path.join("output", "benchmarks")
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
+    print(f"\n🚀 GPT-Md ROBUST BENCHMARK (V3.1)")
+    print(f"📄 Arquivo de resultados: {report_file}")
+    print(f"🎯 Cenário: {INSTRUCTION_PATH}")
+    print(f"🐍 Python: {PYTHON_EXE}")
+    print("-" * 145)
+    
+    headers = ["Model", "Sizing", "Contingcy", "Price (R$)", "Hours", "Acts", "Tok(In)", "Time(s)", "Status", "Folder"]
+    print(f"{headers[0]:<22} | {headers[1]:<10} | {headers[2]:<10} | {headers[3]:<15} | {headers[4]:<6} | {headers[5]:<5} | {headers[6]:<8} | {headers[7]:<7} | {headers[8]:<6} | {headers[9]}")
+    print("-" * 145)
+    
+    with open(report_file, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f, delimiter=';')
+        writer.writerow(headers)
         
-    filename = os.path.join(out_dir, f"benchmark_matrix_{timestamp}.csv")
-    
-    print(f"\n🚀 Iniciando Matriz de Benchmark GPT-Md (Modelos x Temperaturas)")
-    print(f"📄 Arquivo de saída: {filename}")
-    print(f"🎯 Cenário: '{INSTRUCTION}'")
-    print("-" * 150)
-    
-    headers = ["Model", "Sizing", "Contingcy", "Acts", "Hours", "Cost (R$)", "M. Run(s)", "M. Tok (tot)", "Status"]
-    print(f"{headers[0]:<22} | {headers[1]:<10} | {headers[2]:<10} | {headers[3]:<5} | {headers[4]:<6} | {headers[5]:<15} | {headers[6]:<10} | {headers[7]:<12} | {headers[8]}")
-    print("-" * 150)
-    
-    with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-        fieldnames = ["Model", "Sizing", "Contingency", "Price", "Activities", "Total_Hours", "Duration_Seconds", "Tokens_Total", "Tokens_Input", "Tokens_Output", "Error"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-    
         for model in MODELS:
             for sz in SIZING_MODES:
                 for ct in CONTINGENCY_LEVELS:
                     
-                    data = run_calc(model, sz, ct)
+                    cmd = [
+                        PYTHON_EXE, "src/main.py",
+                        "--instruction", INSTRUCTION_PATH,
+                        "--sizing", sz,
+                        "--contingency", ct,
+                        "--debug"
+                    ]
                     
-                    is_error = bool(data["error"])
-                    status = "✅" if not is_error else "❌"
-                    if is_error and "404" in str(data["error"]): status = "🚫 (N/A)"
+                    env = os.environ.copy()
+                    env["PYTHONPATH"] = "."
+                    env["GEMINI_MODEL"] = model
                     
-                    print(f"{model:<22} | {sz:<10} | {ct:<10} | {data['activities']:<5} | {data['hours']:<6} | {data['price']:<15} | {data['duration']:<10} | {data['tokens_total']:<12} | {status}")
+                    start_time = time.time()
+                    try:
+                        # Execução isolada com timeout de 5 minutos
+                        proc = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=300)
+                        duration = time.time() - start_time
+                        
+                        # Combina stdout e stderr para análise
+                        full_output = proc.stdout + "\n" + proc.stderr
+                        metrics = extract_metrics(full_output)
+                        
+                        status = "✅" if proc.returncode == 0 else "❌"
+                        if "Quota Excedida" in full_output:
+                            status = "🚨 Q" # Quota
+                        
+                        row = [
+                            model, sz, ct, 
+                            metrics["price"], metrics["hours"], metrics["acts"], 
+                            metrics["tokens"], round(duration, 1), status, metrics["out_dir"]
+                        ]
+                        
+                        print(f"{row[0]:<22} | {row[1]:<10} | {row[2]:<10} | {row[3]:<15} | {row[4]:<6} | {row[5]:<5} | {row[6]:<8} | {row[7]:<7} | {row[8]:<6} | {row[9]}")
+                        writer.writerow(row)
+                        f.flush() # Salva imediatamente no disco
+                        
+                    except subprocess.TimeoutExpired:
+                        print(f"{model:<22} | {sz:<10} | {ct:<10} | {'TIMEOUT':<15} | {'-':<6} | {'-':<5} | {'-':<8} | {300:<7} | {'⏱️':<6} | -")
+                        writer.writerow([model, sz, ct, "TIMEOUT", 0, 0, 0, 300, "TIMEOUT", "N/A"])
+                        f.flush()
+                    except Exception as e:
+                        print(f"Erro Crítico em {model}/{sz}/{ct}: {str(e)[:50]}")
                     
-                    row = {
-                        "Model": model,
-                        "Sizing": sz,
-                        "Contingency": ct,
-                        "Price": data['price'],
-                        "Activities": data['activities'],
-                        "Total_Hours": data['hours'],
-                        "Duration_Seconds": data['duration'],
-                        "Tokens_Total": data['tokens_total'],
-                        "Tokens_Input": data['tokens_prompt'],
-                        "Tokens_Output": data['tokens_output'],
-                        "Error": data['error'] or ""
-                    }
+                    # Pausa de segurança entre execuções para ajudar a API a respirar
+                    time.sleep(2)
                     
-                    writer.writerow(row)
-                    
-            print("-" * 150) # Separador entre modelos
-        
-    print("🏁 Benchmark Cartesiano Concluído.")
+            print("-" * 145)
+            
+    print(f"\n🏁 Benchmark Concluído com Sucesso!")
+    print(f"📊 Resultados salvos em: {report_file}")
 
 if __name__ == "__main__":
     main()

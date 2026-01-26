@@ -9,16 +9,12 @@ from datetime import datetime
 # Configurações do teste
 INSTRUCTION = "Instalação de 1 Servidor e 1 Switch na OFI Ilhéus. Cliente fornece hardware."
 
-# Modelos para Teste (Conforme solicitação e disponibilidade conhecida)
+# Modelos para Teste (Sincronizado com API)
 MODELS = [
-    "gemini-2.0-flash-exp",   # Atual experimental
-    "gemini-1.5-flash",       # Baseline estável
-    "gemini-1.5-pro",
-    "gemini-2.5-flash",       # Solicitados (Verificar disponibilidade real)
-    "gemini-2.5-flash-lite",
-    "gemini-2.5-pro",
-    # "gemini-3-flash-preview", # Provavelmente não existem publicamente ainda, mas mantendo na lista
-    # "gemini-3-pro-preview"
+    "gemini-2.0-flash",        # Nova geração 2.0
+    "gemini-flash-latest",     # Alias estável para 1.5 Flash
+    "gemini-pro-latest",       # Alias robusto para 1.5 Pro
+    "gemini-2.5-flash"         # Próxima geração 2.5
 ]
 
 # Configuração Padrão para Benchmark e Comparação Justa
@@ -26,13 +22,15 @@ SIZING = "standard"
 CONTINGENCY = "standard"
 
 def run_calc(model):
-    python_exe = os.path.join(os.getcwd(), "venv", "bin", "python3")
+    # Ajustado para seguir a regra de Venv Externo: ../venvs/gptmd
+    python_exe = os.path.join(os.path.dirname(os.getcwd()), "venvs", "gptmd", "bin", "python")
     
     cmd = [
         python_exe, "src/main.py",
         "--instruction", INSTRUCTION,
         "--sizing", SIZING,
-        "--contingency", CONTINGENCY
+        "--contingency", CONTINGENCY,
+        "--debug"
     ]
     
     env = os.environ.copy()
@@ -48,24 +46,26 @@ def run_calc(model):
         # Analisa Saída
         output = result.stdout
         
-        # 1. Dados de Negócio
+        # 2. Métricas de Negócio (Atualizado para float)
         price_match = re.search(r"Calculated Total: R\$ ([\d\.,]+)", output)
-        metrics_match = re.search(r"- (\d+) atividades.*?\((\d+) horas\)", output)
+        metrics_match = re.search(r"- (\d+) atividades.*?\((\d+\.?\d*) horas\)", output)
         
-        # 2. Métricas de IA (Capturadas do log [METRICS])
-        # [METRICS] MODEL=... TOKENS_PROMPT=123 TOKENS_OUTPUT=456 TOTAL=579
-        # Pode haver múltiplas chamadas (Stage 1, Stage 2...), somaremos todas.
+        # 3. Métricas de IA (Capturadas do log [METRICS])
         tokens_prompt = 0
         tokens_output = 0
         
-        metrics_lines = re.findall(r"\[METRICS\].*?TOKENS_PROMPT=(\d+).*?TOKENS_OUTPUT=(\d+)", output)
-        for p, o in metrics_lines:
+        metrics_lines = re.findall(r"TOKENS_PROMPT=(\d+)", output)
+        for p in metrics_lines:
             tokens_prompt += int(p)
-            tokens_output += int(o)
             
         error_msg = None
         if result.returncode != 0:
-            error_msg = result.stderr.splitlines()[-1] if result.stderr else 'Unknown Error'
+            # Busca por "ERRO CRÍTICO" na saída para ser mais específico
+            critical_error = re.search(r"ERRO CRÍTICO.*?: (.*)", output)
+            if critical_error:
+                error_msg = critical_error.group(1).strip()[:50]
+            else:
+                error_msg = result.stderr.splitlines()[-1] if result.stderr else 'Process Error'
 
         return {
             "price": price_match.group(1) if price_match else "N/A",
