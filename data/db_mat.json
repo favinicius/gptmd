@@ -9,7 +9,7 @@
     "partnumber": "6GK5206-2BS00-2AC2",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5206-2BS00-2AC2",
     "cost_list": 12793.53,
-    "cost_net": 5700.00,
+    "cost_net": 5700.0,
     "ipi_rate": 0.0975
   },
   {
@@ -22,7 +22,7 @@
     "partnumber": "6GK5208-0BA00-2AC2",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5208-0BA00-2AC2",
     "cost_list": 10930.39,
-    "cost_net": 4850.00,
+    "cost_net": 4850.0,
     "ipi_rate": 0.0975
   },
   {
@@ -34,8 +34,8 @@
     "vendor": "Siemens",
     "partnumber": "6GK5208-0GA00-2AC2",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5208-0GA00-2AC2",
-    "cost_list": 16506.40,
-    "cost_net": 7300.00,
+    "cost_list": 16506.4,
+    "cost_net": 7300.0,
     "ipi_rate": 0.0975
   },
   {
@@ -48,7 +48,7 @@
     "partnumber": "6GK5216-4GS00-2AC2",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5216-4GS00-2AC2",
     "cost_list": 33554.72,
-    "cost_net": 14800.00,
+    "cost_net": 14800.0,
     "ipi_rate": 0.0975
   },
   {
@@ -61,7 +61,7 @@
     "partnumber": "6GK5224-4GS00-2AC2",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5224-4GS00-2AC2",
     "cost_list": 44801.42,
-    "cost_net": 19800.00,
+    "cost_net": 19800.0,
     "ipi_rate": 0.0975
   },
   {
@@ -74,7 +74,7 @@
     "partnumber": "6GK5526-8GR00-4AR2",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5526-8GR00-4AR2",
     "cost_list": 157396.95,
-    "cost_net": 70000.00,
+    "cost_net": 70000.0,
     "ipi_rate": 0.0975
   },
   {
@@ -87,7 +87,7 @@
     "partnumber": "2702666",
     "url": "https://www.phoenixcontact.com/product/2702666",
     "cost_list": 4009.32,
-    "cost_net": 3850.00,
+    "cost_net": 3850.0,
     "ipi_rate": 0.0975
   },
   {
@@ -203,8 +203,8 @@
     "vendor": "Siemens",
     "partnumber": "6GK5991-1AD00-8GA0",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5991-1AD00-8GA0",
-    "cost_list": 3646.60,
-    "cost_net": 1610.00,
+    "cost_list": 3646.6,
+    "cost_net": 1610.0,
     "ipi_rate": 0.15
   },
   {
@@ -217,7 +217,7 @@
     "partnumber": "6GK5992-1AG00-8AA0",
     "url": "https://sieportal.siemens.com/products-services/detail/6GK5992-1AG00-8AA0",
     "cost_list": 3614.56,
-    "cost_net": 1600.00,
+    "cost_net": 1600.0,
     "ipi_rate": 0.15
   },
   {
@@ -229,8 +229,8 @@
     "vendor": "Phoenix Contact",
     "partnumber": "1227560",
     "url": "https://www.phoenixcontact.com/product/1227560",
-    "cost_list": 70.10,
-    "cost_net": 55.40,
+    "cost_list": 70.1,
+    "cost_net": 55.4,
     "ipi_rate": 0.05
   },
   {
@@ -242,7 +242,7 @@
     "vendor": "Phoenix Contact",
     "partnumber": "1403927",
     "url": "https://www.phoenixcontact.com/product/1403927",
-    "cost_list": 70.10,
+    "cost_list": 70.1,
     "cost_net": 57.13,
     "ipi_rate": 0.05
   },
@@ -295,7 +295,7 @@
     "partnumber": "1149846",
     "url": "https://www.phoenixcontact.com/product/1149846",
     "cost_list": 222.75,
-    "cost_net": 195.00,
+    "cost_net": 195.0,
     "ipi_rate": 0.0975
   },
   {
@@ -308,7 +308,7 @@
     "partnumber": "1149847",
     "url": "https://www.phoenixcontact.com/product/1149847",
     "cost_list": 222.75,
-    "cost_net": 195.00,
+    "cost_net": 195.0,
     "ipi_rate": 0.0975
   },
   {
@@ -346,9 +346,9 @@
     "vendor": "Phoenix Contact",
     "partnumber": "1408535",
     "url": "https://www.phoenixcontact.com/product/1408535",
-    "cost_list": 53.00,
+    "cost_list": 53.0,
     "cost_net": null,
-    "ipi_rate": 0.10
+    "ipi_rate": 0.1
   },
   {
     "category": "Cable",
@@ -359,9 +359,9 @@
     "vendor": "Phoenix Contact",
     "partnumber": "1417359",
     "url": "https://www.phoenixcontact.com/product/1417359",
-    "cost_list": 51.00,
+    "cost_list": 51.0,
     "cost_net": null,
-    "ipi_rate": 0.10
+    "ipi_rate": 0.1
   },
   {
     "category": "Accessory",
@@ -372,9 +372,9 @@
     "vendor": "Genérico",
     "partnumber": "GEN-ORG-KIT",
     "url": "",
-    "cost_list": 350.00,
+    "cost_list": 350.0,
     "cost_net": null,
-    "ipi_rate": 0.00
+    "ipi_rate": 0.0
   },
   {
     "category": "Consumable",
@@ -385,9 +385,9 @@
     "vendor": "Genérico",
     "partnumber": "GEN-LIMP-KIT",
     "url": "",
-    "cost_list": 150.00,
+    "cost_list": 150.0,
     "cost_net": null,
-    "ipi_rate": 0.00
+    "ipi_rate": 0.0
   },
   {
     "category": "Rack",
@@ -400,7 +400,7 @@
     "url": "",
     "cost_list": 1718.99,
     "cost_net": null,
-    "ipi_rate": 0.10
+    "ipi_rate": 0.1
   },
   {
     "category": "Patch Panel",
@@ -411,9 +411,9 @@
     "vendor": "Furukawa",
     "partnumber": "35050000",
     "url": "https://www.furukawalatam.com/pt-br/produto/patch-panel-descarregado-blindado-24-posicoes",
-    "cost_list": 500.00,
+    "cost_list": 500.0,
     "cost_net": null,
-    "ipi_rate": 0.10
+    "ipi_rate": 0.1
   },
   {
     "category": "Fiber",
@@ -424,9 +424,9 @@
     "vendor": "Furukawa",
     "partnumber": "35260913",
     "url": "https://lightera.com/pt-br/p/extensao-monofibra-conectorizada-mm-50-0-om3-lc-upc-1-5m-com-adaptador-lszh-acqua-d0-9-pacote-c-02f/",
-    "cost_list": 150.00,
+    "cost_list": 150.0,
     "cost_net": null,
-    "ipi_rate": 0.10
+    "ipi_rate": 0.1
   },
   {
     "category": "Fiber",
@@ -437,9 +437,9 @@
     "vendor": "Furukawa",
     "partnumber": "35200919",
     "url": "https://shop.lightera.com/products/cordao-duplex-conectorizado-om4-lc-upc-lc-upc-1-5m-lszh-acqua-a-b",
-    "cost_list": 150.00,
+    "cost_list": 150.0,
     "cost_net": null,
-    "ipi_rate": 0.10
+    "ipi_rate": 0.1
   },
   {
     "category": "Server",
@@ -450,8 +450,8 @@
     "vendor": "HPE",
     "partnumber": "P52532-B21",
     "url": "",
-    "cost_list": 45000.00,
-    "cost_net": 35000.00,
+    "cost_list": 45000.0,
+    "cost_net": 35000.0,
     "ipi_rate": 0.15
   },
   {
@@ -463,9 +463,9 @@
     "vendor": "Genérico",
     "partnumber": "GEN-RACK-44U",
     "url": "",
-    "cost_list": 4500.00,
-    "cost_net": 3800.00,
-    "ipi_rate": 0.10
+    "cost_list": 4500.0,
+    "cost_net": 3800.0,
+    "ipi_rate": 0.1
   },
   {
     "category": "UPS",
@@ -476,8 +476,489 @@
     "vendor": "Genérico",
     "partnumber": "GEN-UPS-3KVA",
     "url": "",
-    "cost_list": 6500.00,
-    "cost_net": 5800.00,
-    "ipi_rate": 0.10
+    "cost_list": 6500.0,
+    "cost_net": 5800.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Storage",
+    "type": "HDD",
+    "description_base": "HDD SATA 8TB - NAS Edition",
+    "description_detail": "HDD SATA 8TB - NAS EDITION IRONWOLF PRO - ST8000NE001",
+    "option_code": "",
+    "vendor": "SEAGATE",
+    "partnumber": "ST8000NE001",
+    "url": "",
+    "cost_list": 1450.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Storage",
+    "type": "SSD",
+    "description_base": "SSD M.2 1TB NVMe",
+    "description_detail": "SSD M.2 2280 NV1 - NVME 1TB - PARA CACHE SNVS/1000G",
+    "option_code": "",
+    "vendor": "KINGSTON",
+    "partnumber": "SNVS/1000G",
+    "url": "",
+    "cost_list": 500.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Memory",
+    "type": "RAM",
+    "description_base": "Memória SODIMM DDR4 8GB",
+    "description_detail": "MEMÓRIA SODIMM DDR4 - 8 GB 2666 (QNAP) KVR26S19S8/8",
+    "option_code": "",
+    "vendor": "KINGSTON",
+    "partnumber": "KVR26S19S8/8",
+    "url": "",
+    "cost_list": 160.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Network",
+    "type": "NIC",
+    "description_base": "Placa de Rede 10Gb SFP+",
+    "description_detail": "PLACA REDE INTEL X710-DA2 02-PORT 10GB SFP+ (QLOGIC 10/25 SFP28) X710DA2",
+    "option_code": "",
+    "vendor": "INTEL",
+    "partnumber": "X710DA2",
+    "url": "",
+    "cost_list": 2565.9,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Cable",
+    "type": "Fiber Optic",
+    "description_base": "Cabo 10G SFP+ AOC 5M",
+    "description_detail": "CABO 10G SFP+ PARA SFP+ 5M, AOC ACTIVE OPTICAL CABLE OFNPMJ-SFP10G-AOC5M",
+    "option_code": "",
+    "vendor": "MILJET",
+    "partnumber": "OFNPMJ-SFP10G-AOC5M",
+    "url": "",
+    "cost_list": 290.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Rack",
+    "description_base": "Rack 19\" 44U para Datacenter",
+    "description_detail": "RACK 19\" 44U PARA DATACENTER COM PORTAS PERFURADAS, TRASEIRA BIPARTIDA E SUPORTE PARA PDU W38000116",
+    "option_code": "",
+    "vendor": "WOMER",
+    "partnumber": "W38000116",
+    "url": "",
+    "cost_list": 4457.72,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Fan System",
+    "description_base": "Sistema de Ventilação para Rack",
+    "description_detail": "SISTEMA DE VENTILACAO COM 2 VENTILADORES AC000008",
+    "option_code": "",
+    "vendor": "WOMER",
+    "partnumber": "AC000008",
+    "url": "",
+    "cost_list": 578.32,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Shelf",
+    "description_base": "Bandeja Fixa para Rack 19\"",
+    "description_detail": "BANDEJA FIXA PARA RACK 19\" 438 X 770 AC000009",
+    "option_code": "",
+    "vendor": "WOMER",
+    "partnumber": "AC000009",
+    "url": "",
+    "cost_list": 153.35,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Shelf",
+    "description_base": "Bandeja Frontal para Rack 19\"",
+    "description_detail": "BANDEJA FRONTAL PARA RACK 19\" AC000012",
+    "option_code": "",
+    "vendor": "WOMER",
+    "partnumber": "AC000012",
+    "url": "",
+    "cost_list": 71.58,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Cable Management",
+    "description_base": "Guia de Cabo 1U - Frontal",
+    "description_detail": "GUIA DE CABO 1U - FRONTAL FECHADO - PARA RACK 19\" AC000018",
+    "option_code": "",
+    "vendor": "WOMER",
+    "partnumber": "AC000018",
+    "url": "",
+    "cost_list": 34.36,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Blank Panel",
+    "description_base": "Tampa Cega 1U para Rack 19\"",
+    "description_detail": "TAMPA CEGA/LISA 1U - PARA RACK 19\" AC000005",
+    "option_code": "",
+    "vendor": "WOMER",
+    "partnumber": "AC000005",
+    "url": "",
+    "cost_list": 141.45,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Cage Nut Kit",
+    "description_base": "Kit Porca Gaiola e Parafuso",
+    "description_detail": "KIT PORCA GAIOLA E PARAFUSO C/ 25 UNIDADES AC000042",
+    "option_code": "",
+    "vendor": "WOMER",
+    "partnumber": "AC000042",
+    "url": "",
+    "cost_list": 19.27,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Switch",
+    "type": "Managed",
+    "description_base": "Switch Cluster",
+    "description_detail": "DELL EMC S5224F-ON (SWITCHES CLUSTER) S5224-F",
+    "option_code": "",
+    "vendor": "DELL",
+    "partnumber": "S5224-F",
+    "url": "",
+    "cost_list": 61450.26,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Server",
+    "type": "Upgrade Kit",
+    "description_base": "Kit de Upgrade de Processador",
+    "description_detail": "KIT DE UPGRADE DE PROCESSADOR (INTEL XEON SILVER 4314) PARA SERVIDOR HPE DL380 GEN10 PLUS P36922-B21",
+    "option_code": "",
+    "vendor": "INTEL",
+    "partnumber": "P36922-B21",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Server",
+    "type": "Processor",
+    "description_base": "Processador Intel Xeon Gold",
+    "description_detail": "KIT COM 02 PROCESSADORES INTEL XEON GOLD 6330 PARA SERVIDOR HPE DL380 GEN10 PLUS (OPCIONAL) P05172-B21",
+    "option_code": "",
+    "vendor": "INTEL",
+    "partnumber": "P05172-B21",
+    "url": "",
+    "cost_list": 20000.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Memory",
+    "type": "RAM",
+    "description_base": "Módulos de Memória RAM 32GB DDR4",
+    "description_detail": "MÓDULOS DE MEMÓRIA RAM 32GB DDR4 RDIMM (TOTAL 384 GB POR SERVIDOR) P21674-001",
+    "option_code": "",
+    "vendor": "HPE",
+    "partnumber": "P21674-001",
+    "url": "",
+    "cost_list": 2000.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Server",
+    "type": "Fan Kit",
+    "description_base": "Kit de Ventoinhas de Alta Performance",
+    "description_detail": "KIT DE VENTOINHAS DE ALTA PERFORMANCE (FAN KIT PERFORMANCE) PARA SERVIDOR HPE 875075-001",
+    "option_code": "",
+    "vendor": "HPE",
+    "partnumber": "875075-001",
+    "url": "",
+    "cost_list": 3000.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Network",
+    "type": "NIC",
+    "description_base": "Placa de Rede HPE Dual-Port 10/25GbE",
+    "description_detail": "PLACA DE REDE HPE DUAL-PORT 10/25GBE SFP28. 817749-B21",
+    "option_code": "",
+    "vendor": "HPE",
+    "partnumber": "817749-B21",
+    "url": "",
+    "cost_list": 6000.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Server",
+    "type": "Riser Card",
+    "description_base": "Kit Riser Card HPE",
+    "description_detail": "KIT RISER CARD HPE (P/N 870548-B21). 870548-B21",
+    "option_code": "",
+    "vendor": "HPE",
+    "partnumber": "870548-B21",
+    "url": "",
+    "cost_list": 1300.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Storage",
+    "type": "NAS",
+    "description_base": "Storage NAS TS-873AEU-RP",
+    "description_detail": "STORAGE NAS TS-873AEU-RP - 8 DISCOS SATA - RACK 2U - FONTES REDUNDATES E TRILHOSTS-873AeU-RP",
+    "option_code": "",
+    "vendor": "QNAP",
+    "partnumber": "TS-873AEU-RP",
+    "url": "",
+    "cost_list": 17811.9,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Rack",
+    "type": "Rail Kit",
+    "description_base": "Kit Trilho Telescópico para NAS 2U",
+    "description_detail": "KIT TRILHO TELESCOPICO PARA NAS 2U - QNAP RAIL-B02",
+    "option_code": "",
+    "vendor": "QNAP",
+    "partnumber": "RAIL-B02",
+    "url": "",
+    "cost_list": 1176.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.0
+  },
+  {
+    "category": "Keystone",
+    "type": "Reference",
+    "description_base": "Keystone Siemens",
+    "description_detail": "Keystone Siemens CUC-I-J1ZNI-S/R4IDC8 dimensional",
+    "option_code": "",
+    "vendor": "Siemens",
+    "partnumber": "CUC-I-J1ZNI-S/R4IDC8",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Rack",
+    "type": "Accessories",
+    "description_base": "DIO Industrial",
+    "description_detail": "DIO INDUSTRIAL TRILHO DIN PARA RACK IP65 WT-3144B",
+    "option_code": "",
+    "vendor": "Generic",
+    "partnumber": "WT-3144B",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Transceiver",
+    "type": "SFP+",
+    "description_base": "Transceiver SFP+ 10gb",
+    "description_detail": "TRANSCEIVERS SFP+ 10gb",
+    "option_code": "",
+    "vendor": "Siemens",
+    "partnumber": "6GK5993-1AT00-8AA0",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Patch Panel",
+    "type": "Physical",
+    "description_base": "Patch Panel Siemens",
+    "description_detail": "Patch Panel Siemens SCALANCE",
+    "option_code": "",
+    "vendor": "Siemens",
+    "partnumber": "6GK1901-0AM00-0AA0",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Rack",
+    "type": "Physical",
+    "description_base": "Mini Rack Outdoor 12U",
+    "description_detail": "MINI RACK OUTDOOR POSTE/PAREDE 12U",
+    "option_code": "",
+    "vendor": "Womer",
+    "partnumber": "W500000006",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Accessory",
+    "type": "Physical",
+    "description_base": "Bandeja Fixa",
+    "description_detail": "BANDEJA FIXA PARA RACK",
+    "option_code": "",
+    "vendor": "Womer",
+    "partnumber": "ACC000014",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "UPS",
+    "type": "Physical",
+    "description_base": "Nobreak APC 700VA",
+    "description_detail": "NOBREAK BACK-UPS APC, 700VA, TORRE, 115V",
+    "option_code": "",
+    "vendor": "APC",
+    "partnumber": "BVX700-BR",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Cable",
+    "type": "Physical",
+    "description_base": "Cabo C14-C13",
+    "description_detail": "CABO DE ENERGIA 10A 100V-230V - PLUGUE MACHO C14 - FÊMEA C13",
+    "option_code": "",
+    "vendor": "Plug Energy",
+    "partnumber": "C14",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Patch Cord",
+    "type": "Physical",
+    "description_base": "Patch Cord CAT6 F/UTP",
+    "description_detail": "PATCH CORD CAT6 F/UTP 5M - VERMELHO MODELO: BLINDADO F/UTP",
+    "option_code": "",
+    "vendor": "CPC Cabos",
+    "partnumber": "F/UTPCPC",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Accessory",
+    "type": "Physical",
+    "description_base": "Velcro Dupla Face",
+    "description_detail": "VELCRO DUPLA FACE SLIM 4YD (QWIK TIE) 3,6M PRETO",
+    "option_code": "",
+    "vendor": "Velcro",
+    "partnumber": "1489",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "PDU",
+    "type": "Physical",
+    "description_base": "PDU Bifásica 32 Tomadas",
+    "description_detail": "PDU BIFÁSICA 32 TOMADAS IEC320 C13 10A - COM DISJUNTOR",
+    "option_code": "",
+    "vendor": "Plug Energy",
+    "partnumber": "465",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "UPS",
+    "type": "Physical",
+    "description_base": "Nobreak APC 700VA",
+    "description_detail": "NOBREAK BACK-UPS APC, 700VA",
+    "option_code": "",
+    "vendor": "APC",
+    "partnumber": "VX700-BR",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.1
+  },
+  {
+    "category": "Server",
+    "vendor": "Dell",
+    "partnumber": "93818124",
+    "description_base": "Servidor PowerEdge R670 (Config. Orc-93818124)",
+    "description_detail": "Configuração Dell PowerEdge R670 conforme orçamento virtual base",
+    "type": "Reference",
+    "option_code": "",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.15
+  },
+  {
+    "category": "Server",
+    "vendor": "Dell",
+    "partnumber": "93818208",
+    "description_base": "Servidor PowerEdge R470 (Config. Orc-93818208)",
+    "description_detail": "Configuração Dell PowerEdge R470 conforme orçamento virtual base",
+    "type": "Reference",
+    "option_code": "",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.15
+  },
+  {
+    "category": "Switch",
+    "vendor": "Cisco",
+    "partnumber": "C9300-24T-MC9300",
+    "description_base": "Switch Cisco Catalyst 9300 24-port Data",
+    "description_detail": "Switch Cisco 9300 Meraki Managed; 24 ports data; 350W AC",
+    "type": "Reference",
+    "option_code": "",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.15
+  },
+  {
+    "category": "License",
+    "vendor": "Cisco",
+    "partnumber": "70LIC-C9300-24E-3Y",
+    "description_base": "Licença Meraki Enterprise 3 Anos (C9300)",
+    "description_detail": "Meraki Enterprise License for C9300-M 24-port; 3 years support",
+    "type": "Reference",
+    "option_code": "",
+    "url": "",
+    "cost_list": 0.0,
+    "cost_net": 0.0,
+    "ipi_rate": 0.15
   }
 ]

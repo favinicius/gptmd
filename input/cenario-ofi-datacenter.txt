@@ -1,5 +1,7 @@
 Cliente: OFI - OLAM Foods Ingredients S.A.
 Contato: Gilmar Corrêa
+ID Proposta: D25120400
+Título da proposta de projeto: "CONSULTORIA E IMPLANTAÇÃO DATACENTER INDUSTRIAL"
 
 Após a estabilização da rede, o foco do Gilmar é a centralização das aplicações críticas (AVEVA, Mercury e GSR Server) em um ambiente virtualizado de alta disponibilidade. Como continuação do projeto de rede, implantaremos o terceiro switch Cisco Meraki para completar a topologia planejada.
 

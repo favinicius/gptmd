@@ -10998,5 +10998,268 @@
             }
         ],
         "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-26T17:38:03.405718",
+        "trigger_term": "Veeam Data Platform (VUL)",
+        "context": "Licenciamento para 30 Workloads (assinatura de 5 anos).",
+        "suggested_wbs": [
+            {
+                "id": "VUL_001",
+                "category": "Planejamento",
+                "name": "Planejar a Infraestrutura e Capacidade",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Definir a arquitetura da solução Veeam, considerando os 30 workloads, requisitos de armazenamento, rede e backup. Elaborar o plano de implementação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_002",
+                "category": "Planejamento",
+                "name": "Orçar e Solicitar Licenças",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Gerar cotações, aprovar orçamento e solicitar a licença Veeam para 30 workloads (assinatura de 5 anos).",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_003",
+                "category": "Execução",
+                "name": "Preparar Servidores e Armazenamento",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Configurar os servidores (se necessário) e o armazenamento para o backup. Instalar e configurar os agentes de backup nos servidores.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_004",
+                "category": "Execução",
+                "name": "Instalar e Configurar Veeam Data Platform",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Instalar o Veeam Data Platform, configurar a conexão com o ambiente virtualizado e o armazenamento. Configurar as configurações iniciais.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_005",
+                "category": "Execução",
+                "name": "Configurar Rede e Acesso",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Configurar as regras de firewall e as configurações de rede necessárias para o acesso ao Veeam e ao armazenamento de backup.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_006",
+                "category": "Gerenciamento",
+                "name": "Configurar Jobs de Backup",
+                "role": "Analista",
+                "unit_hours": 3.0,
+                "description": "Criar e configurar os jobs de backup para os 30 workloads, definindo as políticas de retenção, agendamento e destino do backup.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_007",
+                "category": "Gerenciamento",
+                "name": "Testar e Validar Backups",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Realizar testes de backup e restauração para validar a integridade dos dados e garantir que o processo de backup esteja funcionando corretamente.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_008",
+                "category": "Gerenciamento",
+                "name": "Documentar a Configuração",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Documentar a configuração do Veeam, incluindo a arquitetura, os jobs de backup, as configurações de rede e os procedimentos de restauração.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_009",
+                "category": "Gerenciamento",
+                "name": "Treinamento e Transferência de Conhecimento",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Treinar a equipe sobre o uso do Veeam, incluindo a criação de backups, a restauração de dados e a solução de problemas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_010",
+                "category": "Gerenciamento",
+                "name": "Monitoramento e Otimização Contínua",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Monitorar o desempenho do Veeam, otimizar os jobs de backup e garantir que a solução continue atendendo às necessidades da empresa.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
+    },
+    {
+        "timestamp": "2026-01-26T12:04:40.642185",
+        "trigger_term": "Licenciamento Veeam Data Platform (VUL)",
+        "context": "Licenciamento para 30 Workloads (assinatura de 5 anos)",
+        "suggested_wbs": [
+            {
+                "id": "VUL_001",
+                "category": "Planejamento",
+                "name": "Levantamento de Requisitos e Planejamento Inicial",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Definir escopo exato (30 workloads, 5 anos). Verificar infraestrutura atual. Documentar requisitos e criar plano de implementação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_002",
+                "category": "Planejamento",
+                "name": "Criação de Documentação e Solicitação de Cotação",
+                "role": "Analista",
+                "unit_hours": 1.0,
+                "description": "Gerar documentação detalhada para cotação. Solicitar cotações aos fornecedores. Avaliar as propostas recebidas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_003",
+                "category": "Execução",
+                "name": "Configuração Inicial do Ambiente Veeam",
+                "role": "Técnico",
+                "unit_hours": 2.0,
+                "description": "Instalação e configuração inicial do Veeam Data Platform. Configuração de repositórios de backup. Validação da instalação.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_004",
+                "category": "Execução",
+                "name": "Configuração de Backup e Restauração (Workloads)",
+                "role": "Técnico",
+                "unit_hours": 3.0,
+                "description": "Configuração de jobs de backup para as 30 workloads. Teste de restauração para validação. Documentação dos procedimentos.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_005",
+                "category": "Execução",
+                "name": "Integração com a Rede e Testes de Conectividade",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Verificação da conectividade entre o Veeam e a rede. Configuração de firewalls (se necessário). Testes de acesso.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_006",
+                "category": "Gerenciamento",
+                "name": "Validação da Licença e Configuração de Alertas",
+                "role": "Técnico",
+                "unit_hours": 1.0,
+                "description": "Inserção da licença Veeam. Configuração de alertas para monitoramento do licenciamento e backups. Testes de alertas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_007",
+                "category": "Gerenciamento",
+                "name": "Documentação Final e Treinamento Básico",
+                "role": "Analista",
+                "unit_hours": 2.0,
+                "description": "Finalização da documentação do projeto. Criação de um guia de operação básico. Treinamento para a equipe.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_008",
+                "category": "Gerenciamento",
+                "name": "Monitoramento e Otimização Inicial",
+                "role": "Engenheiro",
+                "unit_hours": 2.0,
+                "description": "Monitoramento do desempenho do backup. Otimização dos jobs de backup. Análise de logs e resolução de problemas.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            },
+            {
+                "id": "VUL_009",
+                "category": "Gerenciamento",
+                "name": "Revisão e Aprovação Final",
+                "role": "Gestor",
+                "unit_hours": 1.0,
+                "description": "Revisão da documentação e validação da implementação. Aprovação final do projeto.",
+                "setup_hours": 0.0,
+                "tags": [
+                    "research",
+                    "ai-generated"
+                ]
+            }
+        ],
+        "status": "pending_review"
     }
 ]
