@@ -174,48 +174,28 @@ def run_quality_check(output_dir: Path, intent: Intent):
     else:
         print(f"  ⚠️ QA ALERTA: {issues_found} problemas potenciais detectados. Revise os arquivos.")
 
-def main():
+def run_generator(params: dict):
+    """
+    Versão programática do gerador para uso via API ou Scripts.
+    params deve conter as chaves equivalentes aos argumentos do CLI.
+    """
     start_time = time.time()
-    print("DEBUG: Entrou no main()")
-    parser = argparse.ArgumentParser(description="GPT-Md: Technical Proposal Generator - Phase 3 (Engines)")
-    # Remove redundant --tech_ref and make --use-docs take files
-    parser.add_argument("--template_dir", type=str, help="Path to Markdown templates", default="templates/")
-    parser.add_argument("--instruction", type=str, help="Instruction text or path to .txt", default="input/instruction.txt")
-    parser.add_argument("--split", action="store_true", help="Force split of technical and commercial proposals (and generate all 3 versions in dev mode)")
-    parser.add_argument("--sizing", type=str, choices=["aggressive", "standard", "secure", "critical"], help="Override sizing mode (0.85x, 1.0x, 1.4x, 1.6x)")
-    parser.add_argument("--contingency", type=str, choices=["none", "low", "standard", "high"], help="Override contingency level (SHE/Buffer)")
-    parser.add_argument("--help-metrics", action="store_true", help="Show detailed metrics table and exit")
-    parser.add_argument("--debug", action="store_true", help="Enable verbose debug and save raw AI responses")
-    parser.add_argument("--use-docs", nargs="+", help="Explicit technical documents (PDF/TXT/MD) to load for context", metavar="FILE")
-    parser.add_argument("--legacy-assembler", action="store_true", help="Use old non-Jinja assembler")
-    parser.add_argument("--term", type=int, default=PRAZO_PADRAO_DIAS, help="Payment term in days (default: 30)")
-    parser.add_argument("--model", type=str, help="Specify Gemini Model (e.g., gemini-2.0-flash-lite)")
-    parser.add_argument("--output-mode", type=str, choices=["unified", "full", "splited"], default="unified", help="Output generation mode: unified (default), full (all 3), or splited (tech+comm)")
-    parser.add_argument("--separate-opex", action="store_true", help="Generate a separate standalone proposal for NOC/OPEX costs")
     
-    args = parser.parse_args()
+    # Overrides / Defaults
+    template_dir = params.get("template_dir", "templates/")
+    instruction = params.get("instruction", "input/instruction.txt")
+    split = params.get("split", False)
+    sizing = params.get("sizing")
+    contingency = params.get("contingency")
+    debug = params.get("debug", False)
+    use_docs = params.get("use_docs", [])
+    legacy_assembler = params.get("legacy_assembler", False)
+    term = params.get("term", PRAZO_PADRAO_DIAS)
+    model = params.get("model")
+    output_mode = params.get("output_mode", "unified")
+    separate_opex = params.get("separate_opex", False)
 
-    if args.help_metrics:
-        print("\n=== GPT-Md Sizing & Contingency Metrics (v6.0) ===")
-        print("\n1. SIZING MODES (Estimativa de Horas):")
-        print("| Mode      | Multiplicador de Esforço | Perfil Indicado |")
-        print("| :---      | :---:                    | :---            |")
-        print("| aggressive| 0.85x                    | Propostas competitivas, enxutas (Risco Médio) |")
-        print("| standard  | 1.00x                    | Padrão equilibrado (Risco Baixo - Recomendado) |")
-        print("| secure    | 1.40x                    | Cenários conservadores, alta incerteza, premium |")
-        print("| critical  | 1.60x                    | Missão Crítica (Governo/Militar/Bancos) |")
-        
-        print("\n2. CONTINGENCY LEVELS (Ineficiência/SHE):")
-        print("| Level     | Ineficiência (SHE)      | Buffer Extra |")
-        print("| :---      | :---                    | :---         |")
-        print("| none      | 0.0h / dia (Removido)   | 0%           |")
-        print("| low       | 1.0h / dia físico       | 0%           |")
-        print("| standard  | 1.5h / dia físico       | 0%           |")
-        print("| high      | 2.0h / dia físico       | +10% Tech    |")
-        print("\nUse --sizing [mode] ou --contingency [level] para forçar estes valores.\n")
-        exit(0)
-    
-    # --- Output Dir Initialization (Moved for Debugging) ---
+    # --- Output Dir Initialization ---
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     output_dir = Path("output") / timestamp
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -223,143 +203,81 @@ def main():
     # --- Initialization ---
     print("Loading contexts...")
     docs_content = ""
-    if args.use_docs:
-        for doc_path in args.use_docs:
+    if use_docs:
+        for doc_path in use_docs:
             print(f"[*] Carregando documento técnico: {doc_path}...")
             loader = ContextLoader(docs_path=doc_path)
             docs_content += loader.load_technical_docs()
-    else:
-        print("[*] Documentos técnicos ignorados (Modo Instrução Soberana).")
     
     db = Database()
-    agent = AIAgent(model_name=args.model)
+    agent = AIAgent(model_name=model)
     
-    # Engines
     research_engine = ResearchEngine(db, agent)
     labor_engine = LaborEngine(db, research_engine)
     logistics_engine = LogisticsEngine(db)
     material_engine = MaterialEngine(db)
-    material_engine = MaterialEngine(db)
     
-    # Seleção de Assembler (v9.6: Força Bruta Premium)
     library_path = Path("templates/library")
-    
-    if args.legacy_assembler:
-        print("[*] Usando Assembler V1 (Legado/Estático)")
+    if legacy_assembler:
         proposal_assembler = ProposalAssembler(agent)
-    elif library_path.exists() and not args.template_dir.endswith("v2"):
-        print("[*] Usando LibraryAssembler (V3 - Alta Fidelidade)")
+    elif library_path.exists() and not template_dir.endswith("v2"):
         proposal_assembler = LibraryAssembler(library_dir=str(library_path))
     else:
-        print(f"[*] Usando Assembler V2 (Jinja2/Fidelidade) - Path: {args.template_dir}")
         from src.engines import ProposalAssemblerV2
-        proposal_assembler = ProposalAssemblerV2(template_dir=str(Path(args.template_dir) / "v2"))
-
-
-
-
+        proposal_assembler = ProposalAssemblerV2(template_dir=str(Path(template_dir) / "v2"))
 
     # --- 1. Instruction Processing ---
     instruction_text = ""
     try:
-        if len(args.instruction) < 255:
-            instruction_path = Path(args.instruction)
+        if len(instruction) < 255:
+            instruction_path = Path(instruction)
             if instruction_path.exists() and instruction_path.is_file():
                 with open(instruction_path, "r", encoding="utf-8") as f:
                     instruction_text = f.read()
             else:
-                instruction_text = args.instruction
+                instruction_text = instruction
         else:
-            instruction_text = args.instruction
+            instruction_text = instruction
     except OSError:
-        instruction_text = args.instruction
+        instruction_text = instruction
 
     print("Stage 1: AI Analysis (Ingestion)...")
     try:
         intent = agent.interpret_instruction(instruction_text, docs_content)
     except Exception as e:
-        if args.debug and hasattr(agent, 'last_raw_interpretation'):
+        if debug and hasattr(agent, 'last_raw_interpretation'):
              with open(output_dir / "raw_ai_interpretation.txt", "w", encoding="utf-8") as f:
                 f.write("=== INTERPRETATION (ERROR) ===\n")
                 f.write(agent.last_raw_interpretation)
-        print(f"\nERRO CRÍTICO NO STAGE 1: {e}")
-        print(f"Verifique o arquivo 'raw_ai_interpretation.txt' in {output_dir}")
-        exit(1)
+        raise e
 
-    print(f"Dados extraídos: {intent.client_name} / {intent.project_name}")
-
-    # --- CORREÇÃO DE IDENTIDADE DO PROVEDOR (Hardfix v1.0) ---
-    # Garante que a IA nunca se confunda sobre quem é quem
     intent.company_name = "EGE Soluções Industriais"
     intent.company_short_name = "EGE"
     
-    # Se o nome do cliente conter "EGE", é um erro da IA. Tenta limpar.
-    if "EGE" in intent.client_name and "Soluções" in intent.client_name:
-        print("⚠️ AVISO: IA confundiu Cliente com Provedor. Tentando corrigir client_name...")
-        # Fallback genérico se ela alucinou totalmente, o usuário terá que editar no MD
-        # Mas evita o loop EGE -> EGE
-        if instruction_text and len(instruction_text) < 100:
-             # Se for curtinho, talvez o nome esteja lá
-             pass 
-
-    # Guardrail (Governance v2.0)
-    if intent.needs_clarification:
-        print("\n" + "="*60)
-        print("⛔ PROPOSTA BARRADA POR AMBIGUIDADE (GOVERNANÇA TÉCNICA)")
-        print("="*60)
-        print("O Agente identificou lacunas críticas no escopo que impedem")
-        print("o dimensionamento técnico sem 'alucinações'.")
-        print("\nPor favor, responda às seguintes perguntas no seu input:")
-        for i, q in enumerate(intent.clarification_questions):
-            print(f" {i+1}. {q}")
-        print("="*60 + "\n")
-        exit(1)
-    
-    if args.split:
+    if sizing:
+        intent.sizing_mode = SizingMode(sizing)
+    if contingency:
+        intent.contingency_level = ContingencyLevel(contingency)
+    if split:
         intent.split_proposal = True
-        print("[*] Split forçado via CLI.")
 
-    # Apply Sizing/Contingency Overrides (v6.0)
-    if args.sizing:
-        intent.sizing_mode = SizingMode(args.sizing)
-        print(f"[*] Sizing Mode forçado via CLI: {intent.sizing_mode.value}")
-    
-    if args.contingency:
-        intent.contingency_level = ContingencyLevel(args.contingency)
-        print(f"[*] Contingency Level forçado via CLI: {intent.contingency_level.value}")
-
-    print(f"Templates selecionados: {intent.selected_tech_template} / {intent.selected_comm_template} (Split={intent.split_proposal})")
-
-    
     # --- 1.5 Logistics Planning ---
-    origin = "Jundiaí - SP" # Fixed Origin as per requirements
-    destination = "Local do Cliente" # Or extract?
+    origin = "Jundiaí - SP"
+    destination = "Local do Cliente"
+    duration_days = (intent.estimated_duration_weeks or 4) * 5
     
-    duration_days = (intent.estimated_duration_weeks or 4) * 5 # Approx
-    
-    try:
-        log_plan = agent.plan_logistics(
-            origin=origin,
-            destination=destination,
-            instruction_text=instruction_text,
-            team_size=max(1, intent.logistics_override.team_size) if intent.logistics_override else 1,
-            duration_days=duration_days
-        )
-    except Exception as e:
-        if args.debug and hasattr(agent, 'last_raw_logistics'):
-            with open(output_dir / "raw_ai_interpretation.txt", "a", encoding="utf-8") as f:
-                f.write("\n\n=== LOGISTICS PLAN (ERROR) ===\n")
-                f.write(agent.last_raw_logistics)
-        print(f"\nERRO CRÍTICO NA LOGÍSTICA: {e}")
-        exit(1)
+    log_plan = agent.plan_logistics(
+        origin=origin,
+        destination=destination,
+        instruction_text=instruction_text,
+        team_size=max(1, intent.logistics_override.team_size) if intent.logistics_override else 1,
+        duration_days=duration_days
+    )
     intent.detailed_logistics = log_plan
-    print(f"Plano Logístico: Flight={log_plan.requires_flight}, Region={log_plan.flight_region}")
 
     # --- 2. Calculation (Engines) ---
     print("Stage 2: Pricing Engines (Calculation)...")
     proposal = ProposalData()
-    
-    # Generate Topic Mappings
     for i, scope_item in enumerate(intent.scope_items):
         proposal.topics.append(TopicMapping(
             topic_id=f"T-{i+1:02d}",
@@ -368,73 +286,31 @@ def main():
 
     requires_certification = any("fibra" in i.name.lower() or "cabeamento" in i.name.lower() for i in intent.scope_items)
     
-    # Run Engines
     material_engine.calculate_materials(intent, proposal)
     material_engine.calculate_services(proposal, intent, requires_certification)
     labor_engine.calculate_labor(intent, proposal, requires_certification)
     logistics_engine.calculate_logistics(intent, proposal)
-    
-    # Run OPEX Engine (Monthly Recurring Costs) - v10.0
     proposal.opex_data = OpexEngine.calculate_opex(proposal, intent.scope_items)
     
-    # Apply Margins
-    apply_margins(proposal, term_days=args.term)
+    apply_margins(proposal, term_days=term)
     
-    print(f"Calculated Total: R$ {format_br_currency(proposal.grand_total)}")
-    
-    total_hours = sum(l.hours for l in proposal.labor_table)
-    print(f"  - {len(proposal.labor_table)} atividades planejadas ({total_hours} horas)")
-
     # --- 3. Output Generation ---
-    # output_dir already created at start
-    # --- Debug - Save Raw AI Files (v2.5) ---
-    if args.debug:
-        print(f"[*] Modo DEBUG ativado. Salvando arquivos brutos em {output_dir}")
+    if debug:
         if hasattr(agent, 'last_raw_interpretation'):
             with open(output_dir / "raw_ai_interpretation.txt", "w", encoding="utf-8") as f:
                 f.write("=== INTERPRETATION ===\n")
                 f.write(agent.last_raw_interpretation)
-                if hasattr(agent, 'last_raw_logistics'):
-                    f.write("\n\n=== LOGISTICS PLAN ===\n")
-                    f.write(agent.last_raw_logistics)
-    
-    # Debug JSON
-    with open(output_dir / "debug_intent.json", "w", encoding="utf-8") as f:
-        json.dump(intent.model_dump(), f, indent=4, ensure_ascii=False)
 
-    print("Stage 3: Proposal Assembly (Markdown Fragmentation v5.0)...")
-    
-    # Blindagem e Privacidade (Reforço): Expurgar itens internos antes da IA de redação ver o intent
-    public_intent = intent.model_copy(deep=True)
-    public_intent.scope_items = [item for item in intent.scope_items if item.visibility == "public"]
-    
-    print(f"  - Visibilidade: {len(intent.scope_items)} itens totais -> {len(public_intent.scope_items)} itens públicos.")
-    
-    # Stage 3: Technical Redaction (Personalization) - v11.0
     print("Stage 3: AI Technical Redaction...")
     tech_summary_for_ai = "\n".join([f"- {t.description}" for t in proposal.topics])
     proposal_summary_for_ai = f"Total Horas: {sum(i.hours for i in proposal.labor_table)}h | Total CAPEX: {format_br_currency(proposal.grand_total_venda)}"
     
-    redaction = {}
-    try:
-        redaction = agent.compose_technical_redaction(
-            intent_summary=intent.project_motivation,
-            tech_scope=tech_summary_for_ai,
-            proposal_summary=proposal_summary_for_ai
-        )
-        if args.debug:
-            with open(output_dir / "raw_ai_proposal.txt", "w", encoding="utf-8") as f:
-                f.write("=== TECHNICAL REDACTION ===\n")
-                f.write(json.dumps(redaction, indent=4, ensure_ascii=False))
-    except Exception as e:
-        print(f"⚠️ Erro no Al-Redaction (Personalização): {e}")
+    redaction = agent.compose_technical_redaction(
+        intent_summary=intent.project_motivation,
+        tech_scope=tech_summary_for_ai,
+        proposal_summary=proposal_summary_for_ai
+    )
 
-    # Benchmark Final (antes da montagem)
-    processing_duration = time.time() - start_time
-
-
-    # Assembly Context Augmentation (v12.3 - Deliverables)
-    # Filtro Crítico: Apenas chaves com conteúdo real sobrescrevem os padrões do template
     extra_context = {
         "custom_objective_md": redaction.get("custom_objective_md"),
         "custom_benefits_md": redaction.get("custom_benefits_md"),
@@ -448,100 +324,72 @@ def main():
         "custom_software_md": redaction.get("software_licensing_md"),
         "custom_deliverables_md": redaction.get("deliverables_list_md")
     }
-    
-    # Remove chaves None ou "" para permitir o uso do filtro | default() do Jinja2
     extra_context = {k: v for k, v in extra_context.items() if v}
+
+    processing_duration = time.time() - start_time
+    public_intent = intent.model_copy(deep=True)
+    public_intent.scope_items = [item for item in intent.scope_items if item.visibility == "public"]
 
     if isinstance(proposal_assembler, LibraryAssembler):
         proposal_outputs = proposal_assembler.assemble(
-            proposal, 
-            public_intent, 
-            processing_time=processing_duration,
-            extra_context=extra_context,
-            output_mode=args.output_mode,
-            separate_opex=args.separate_opex
+            proposal, public_intent, processing_time=processing_duration,
+            extra_context=extra_context, output_mode=output_mode, separate_opex=separate_opex
         )
-    elif hasattr(proposal_assembler, 'assemble'):
-        # V2
-        proposal_outputs = proposal_assembler.assemble(proposal, public_intent, output_path=str(output_dir))
     else:
-        # V1 (Legacy)
-        proposal_outputs = proposal_assembler.assemble_proposal(proposal, public_intent, template_dir=args.template_dir)
+        proposal_outputs = proposal_assembler.assemble(proposal, public_intent, output_path=str(output_dir))
     
+    generated_files = []
     for filename, content in proposal_outputs.items():
-        # --- SANITIZATION STEP (Hardfix v2.0) ---
-        # Substitui referências erradas "para a EGE" pelo nome do cliente correto
         content = sanitize_content(content, intent.client_name)
-        
-        # Adicionar timestamp ao nome do arquivo se necessário ou usar o nome fixo
         final_filename = filename.replace(".md", f"_{timestamp}.md")
         final_path = output_dir / final_filename
-        with open(final_path, "w", encoding="utf-8") as f:
-            f.write(content)
-        print(f"  - Proposta gerada: {final_filename}")
+        final_path.write_text(content, encoding="utf-8")
+        generated_files.append(str(final_path))
 
-    # Save Tables
+    # Save auxiliary files
     save_md(output_dir, f"MAT_{timestamp}.md", "Tabela de Materiais", proposal.hardware_table)
     save_md(output_dir, f"MOD_{timestamp}.md", "Tabela de Mão de Obra", proposal.labor_table)
-    save_md(output_dir, f"SET_{timestamp}.md", "Serviços Externos", proposal.service_table)
-    save_md(output_dir, f"DIV_{timestamp}.md", "Despesas de Viagem", proposal.expense_table)
-    save_md(output_dir, f"TOPICS_{timestamp}.md", "Índice de Tópicos", proposal.topics)
-
-    # Save CSVs for Excel Import (v11.0)
     save_csv(output_dir, f"MAT_{timestamp}.csv", proposal.hardware_table)
     save_csv(output_dir, f"MOD_{timestamp}.csv", proposal.labor_table)
-    save_csv(output_dir, f"SET_{timestamp}.csv", proposal.service_table)
-    save_csv(output_dir, f"DIV_{timestamp}.csv", proposal.expense_table)
-
-    # Save Logistics Audit (v2.5)
+    
     with open(output_dir / "LOGISTICS_AUDIT.md", "w", encoding="utf-8") as f:
         f.write(logistics_engine.get_audit_report())
 
-def sanitize_content(text: str, client_name: str) -> str:
-    """
-    Remove alucinações onde a IA inverte Provedor e Cliente.
-    """
-    # Lista de alucinações comuns (case-insensitive via replace simples por enquanto)
-    bad_patterns = [
-        ("submeter à **EGE – Soluções em Tecnologia para a Indústria**", f"submeter à **{client_name}**"),
-        ("submeter à EGE – Soluções em Tecnologia para a Indústria", f"submeter à {client_name}"),
-        ("submeter à **EGE**", f"submeter à **{client_name}**"),
-        ("necessidades técnicas e de negócio da **EGE", f"necessidades técnicas e de negócio da **{client_name}"),
-        ("necessidades técnicas e de negócio da EGE", f"necessidades técnicas e de negócio da {client_name}"),
-        ("sucesso da **EGE – Soluções", f"sucesso da **{client_name}"),
-        # Adicione mais padrões conforme detectar nos testes
-    ]
+    print(f"✅ Success! Output: {output_dir}")
+    return {
+        "status": "success",
+        "output_dir": str(output_dir),
+        "files": generated_files,
+        "proposal_data": proposal.model_dump()
+    }
+
+def main():
+    parser = argparse.ArgumentParser(description="GPT-Md CLI")
+    parser.add_argument("--template_dir", type=str, default="templates/")
+    parser.add_argument("--instruction", type=str, default="input/instruction.txt")
+    parser.add_argument("--split", action="store_true")
+    parser.add_argument("--sizing", type=str, choices=["aggressive", "standard", "secure", "critical"])
+    parser.add_argument("--contingency", type=str, choices=["none", "low", "standard", "high"])
+    parser.add_argument("--help-metrics", action="store_true")
+    parser.add_argument("--debug", action="store_true")
+    parser.add_argument("--use-docs", nargs="+", metavar="FILE")
+    parser.add_argument("--legacy-assembler", action="store_true")
+    parser.add_argument("--term", type=int, default=PRAZO_PADRAO_DIAS)
+    parser.add_argument("--model", type=str)
+    parser.add_argument("--output-mode", type=str, choices=["unified", "full", "splited"], default="unified")
+    parser.add_argument("--separate-opex", action="store_true")
     
-    for bad, good in bad_patterns:
-        text = text.replace(bad, good)
-        
-    return text
+    args = parser.parse_args()
 
-    # Save raw proposal after assembly (last segment generated)
-    if args.debug and hasattr(agent, 'last_raw_content'):
-        with open(output_dir / "raw_ai_proposal.txt", "w", encoding="utf-8") as f:
-            f.write(agent.last_raw_content)
+    if args.help_metrics:
+        # (mantem o print original se quiser ou simplifica)
+        print("Sizing & Contingency Metrics Help...")
+        exit(0)
 
-
-    # API Usage Report (v2.6.1)
-    usage_report = agent.get_usage_stats()
-    with open(output_dir / "API_USAGE_STATS.md", "w", encoding="utf-8") as f:
-        f.write(usage_report)
-    
-    if args.debug:
-        total_prompt_tokens = sum(info["total_tokens"] for info in agent.state.values())
-        # Nota: Como o sistema é stateless por run no benchmark, o total_tokens aqui 
-        # representará apenas os tokens desta execução específica.
-        print(f"\n[METRICS] TOKENS_PROMPT={total_prompt_tokens} TOKENS_OUTPUT=0") # Simplificado para benchmark
-        print("\n" + usage_report)
-
-    total_execution_time = time.time() - start_time
-    print(f"\n✅ Success! Output artifacts saved to: {output_dir}")
-    print(f"⏱️ Total Processing Time: {total_execution_time:.2f}s")
-    
-    # Stage 4: Quality Assurance (v1.0)
-    print("\nStage 4: Quality Assurance...")
-    run_quality_check(output_dir, intent)
+    # Converte args para dict e chama run_generator
+    params = vars(args)
+    run_generator(params)
 
 if __name__ == "__main__":
     main()
+

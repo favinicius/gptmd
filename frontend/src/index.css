@@ -1,9 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  body {
-    @apply bg-slate-50 text-slate-900;
-  }
+@theme {
+  --color-primary: #1152d4;
+  --color-action-emerald: #10b981;
+  --color-background-light: #f6f6f8;
+  --color-neutral-dark: #0d121b;
+  --color-neutral-gray: #4c669a;
+  --color-surface-light: #e7ebf3;
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* Material Symbols settings */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+body {
+  @apply bg-background-light text-neutral-dark font-sans;
 }

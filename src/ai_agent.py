@@ -12,57 +12,30 @@ from src.models import Intent, LogisticsPlan
 
 load_dotenv()
 
-# Usando o modelo mais recente conforme diretriz Section 5.
+from src.config import GENAI_PAID_KEY, GENAI_FREE_KEYS, GEMINI_MODEL_PREFERENCIAL, GEMINI_MODEL_SECUNDARIO
+
 # Configuração de Modelos (v3.0 - Resiliência)
-# Configuração de Modelos (v3.1 - Benchmark Optim-Lite)
-MODEL_PREFERENCIAL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
-MODEL_SECUNDARIO = os.getenv("GEMINI_MODEL_LIGHT", "gemini-2.0-flash") # Fallback para o modelo completo
+MODEL_PREFERENCIAL = GEMINI_MODEL_PREFERENCIAL
+MODEL_SECUNDARIO = GEMINI_MODEL_SECUNDARIO
 
 class AIAgent:
     def __init__(self, model_name: str = None):
         self.model_name = model_name or MODEL_PREFERENCIAL
-        self._load_keys_tiered() # Carrega separado Free vs Paid
+        
+        # Load keys from config
+        self.paid_key = GENAI_PAID_KEY
+        self.free_keys = GENAI_FREE_KEYS
         
         if not self.free_keys and not self.paid_key:
-            raise ValueError("Nenhuma API Key válida encontrada no .env.")
+            raise ValueError("CRÍTICO: Nenhuma API Key encontrada. Configure GENAI_PAID_KEY ou GEMINI_FREE_* no arquivo .env.")
             
-        # Compatibilidade: Lista combinada para loops antigos
+        # Compatibilidade: Lista combinada
         self.api_keys = self.free_keys + ([self.paid_key] if self.paid_key else [])
         
         self.state_file = Path("data/api_state.json")
         self._init_state()
         self._select_best_key()
         self._setup_client()
-
-    def _load_keys_tiered(self):
-        """Carrega chaves separando Tier Gratuito de Tier Pago."""
-        self.free_keys = []
-        self.paid_key = os.getenv("GEMINI_PAID_KEY")
-        
-        # Carrega todas as chaves padrão como Free Tier
-        raw_keys = []
-        
-        # 1. Chaves do Ambiente (GEMINI_FREE_* ou GEMINI_API_KEY*)
-        # Prioriza chaves explicitamente nomeadas como FREE
-        for var_name, value in os.environ.items():
-            if (var_name.startswith("GEMINI_FREE_") or var_name.startswith("GEMINI_API_KEY")) and value not in raw_keys:
-                # Evita carregar a GEMINI_PAID_KEY se ela estiver duplicada com outro nome
-                if value != self.paid_key:
-                    raw_keys.append(value)
-        
-        # 2. Arquivo .env (Parsing para pegar comentadas ou ocultas que não subiram pro env)
-        try:
-            if os.path.exists(".env"):
-                with open(".env", "r") as f:
-                    content = f.read()
-                    matches = re.findall(r"(?:#\s*)?(GEMINI_(?:FREE|API_KEY)[A-Za-z0-9_\-\d]*)\s*=\s*([A-Za-z0-9_\-]+)", content)
-                    for _, value in matches:
-                        if value not in raw_keys and value != self.paid_key:
-                            raw_keys.append(value)
-        except Exception:
-            pass
-            
-        self.free_keys = raw_keys
 
     def _init_state(self):
         """Inicializa ou carrega o estado das chaves de API."""
@@ -74,16 +47,19 @@ class AIAgent:
             except Exception:
                 self.state = {}
 
-        # Sincroniza chaves do .env com o estado
+        # Sincroniza chaves do config com o estado
         all_known_keys = self.free_keys + ([self.paid_key] if self.paid_key else [])
         updated = False
+        
+        # Remove chaves que não existem mais no config
+        # (Opcional, mas bom para limpeza)
         
         for key in all_known_keys:
             if key not in self.state:
                 self.state[key] = {
                     "last_used": None,
                     "cooldown_until": None,
-                    "status": "active", # active, invalid
+                    "status": "active",
                     "total_calls": 0,
                     "total_tokens": 0,
                     "tier": "paid" if key == self.paid_key else "free"
@@ -109,7 +85,7 @@ class AIAgent:
         now = datetime.now()
         
         # Filtra chaves inválidas permanentemente
-        valid_free = [k for k in self.free_keys if self.state[k].get("status") != "invalid"]
+        valid_free = [k for k in self.free_keys if k in self.state and self.state[k].get("status") != "invalid"]
         
         # 1. Candidatas Free Disponíveis
         available_free = []
@@ -123,11 +99,10 @@ class AIAgent:
         if available_free:
             # Seleciona a que descansou por mais tempo
             self.current_key = min(available_free, key=lambda k: self.state[k]["last_used"] or "0")
-            # print(f"[DEBUG] Usando chave FREE: {self.current_key[:8]}...")
             return
 
         # 2. Fallback para Paid Key
-        if self.paid_key and self.state[self.paid_key].get("status") != "invalid":
+        if self.paid_key and self.state.get(self.paid_key, {}).get("status") != "invalid":
             cooldown = self.state[self.paid_key].get("cooldown_until")
             is_ready = True
             if cooldown:
@@ -139,7 +114,7 @@ class AIAgent:
                 self.current_key = self.paid_key
                 return
 
-        # 3. Last Resort: Esperar pela chave que libera mais cedo (seja free ou paid)
+        # 3. Last Resort: Esperar pela chave que libera mais cedo
         all_valid = valid_free + ([self.paid_key] if self.paid_key else [])
         if not all_valid:
              raise ValueError("CRÍTICO: Todas as chaves foram marcadas como INVÁLIDAS.")
@@ -152,16 +127,15 @@ class AIAgent:
             if now < until_dt:
                 wait_time = min(int((until_dt - now).total_seconds()) + 1, 60)
                 if wait_time > 0:
-                    print(f"[!] AVISO: Todas as chaves (Free & Paid) em cooldown. Aguardando {wait_time}s até liberação...")
+                    print(f"[!] AVISO: Todas as chaves em cooldown. Aguardando {wait_time}s...")
                     time.sleep(wait_time)
         
         self.current_key = soonest_key
-        
+
     def _setup_client(self):
         """Inicializa o cliente com a chave selecionada."""
         key = self.current_key
-        masked_key = f"{key[:8]}...{key[-4:]}"
-        # Apenas log se for relevante
+        # masked_key = f"{key[:8]}...{key[-4:]}"
         # print(f"[*] AI Client pronto: {masked_key}")
         self.client = genai.Client(api_key=key)
 
@@ -182,7 +156,7 @@ class AIAgent:
         print(f"[!] Chave {key[:8]}... em cooldown até {until.split('T')[1][:8]}")
 
     def _clear_cooldown(self):
-        """Remove o cooldown da chave atual (auto-recuperação)."""
+        """Remove o cooldown da chave atual."""
         key = self.current_key
         if self.state[key].get("cooldown_until"):
             self.state[key]["cooldown_until"] = None
@@ -193,25 +167,24 @@ class AIAgent:
         Geração resiliente com:
         1. Rotação de Chaves (Free -> Paid)
         2. Rotação de Modelos (Preferencial -> Light)
-        3. Backoff Exponencial (Retentativas para 503)
+        3. Backoff Exponencial
         """
         if not hasattr(self, '_response_cache'): self._response_cache = {}
         cache_key = f"{prompt[:100]}_{len(prompt)}_{temperature}"
         if cache_key in self._response_cache:
             return self._response_cache[cache_key]
 
-        # Prioridade de Modelos (Dinâmico v3.1)
         models_to_try = [self.model_name]
         if self.model_name != MODEL_SECUNDARIO:
             models_to_try.append(MODEL_SECUNDARIO)
-        
-        while True: # Loop de Rotação de Chave (Select Best Key cuida da ordem)
+            
+        while True: # Retry loop for Key Rotation
             goto_next_key = False
-            for model_id in models_to_try:
-                max_retries = 4
+            for model_id in models_to_try: # Model Rotation
+                max_retries = 3
                 for attempt in range(max_retries):
                     try:
-                        print(f"[*] Tentando {model_id} (Attempt {attempt+1}/{max_retries}) | Model Tier: {'FREE' if self.state[self.current_key]['tier'] == 'free' else 'PAID'}")
+                        # print(f"[*] Tentando {model_id}...")
                         response = self.client.models.generate_content(
                             model=model_id,
                             contents=prompt,
