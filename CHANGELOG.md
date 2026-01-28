@@ -1,4 +1,34 @@
-# Changelog - GPT-Md v5.1
+# Changelog - GPT-Md v5.2
+ 
+ ## 🎯 Resumo das Implementações (27/01/2026)
+ 
+ ### ✅ Funcionalidades Implementadas
+ 
+ #### 1. Setup do Frontend Web (Vite + React + Tailwind)
+ - Inicialização do ambiente frontend em `/frontend`
+ - Configuração do Vite com suporte a React e Tailwind CSS
+ - Estrutura base de componentes e layout para interface moderna
+ 
+ #### 2. Refatoração Backend (Arquitetura de Pacotes)
+ - Organização do código `src/` em pacotes semânticos:
+   - `src/config/`: Gerenciamento de tokens e variáveis de ambiente
+   - `src/database/`: Camada de acesso a dados (JSON e SQLite)
+   - `src/routers/`: Definição de rotas para a API FastAPI
+ - Correção de imports relativos e resolução de dependências circulares
+ 
+ #### 3. Integração API-Core
+ - Preparação do `main.py` para atuar como servidor de API além de CLI
+ - Mockup de endpoints iniciais para integração com o frontend
+ 
+ ### 📊 Commits Relevantes
+ ```
+ c81a080 - refactor: reorganize database and config into packages and fix import issues
+ 7a29e88 - feat(web): frontend setup (vite+react+tailwind) and base layout
+ ```
+ 
+ ---
+ 
+ # Changelog - GPT-Md v5.1
 
 ## 🎯 Resumo das Implementações (26/01/2026)
 
