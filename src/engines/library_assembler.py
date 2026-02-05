@@ -72,7 +72,8 @@ class LibraryAssembler:
             "struct_network_industrial.md": {"block": "Proposta_REDE_OT", "name": "Rede Industrial e Conectividade OT"},
             "struct_server_migration.md": {"block": "Proposta_MIGRACAO", "name": "Consolidação e Migração de Servidores"},
             "struct_services_cabling.md": {"block": "Proposta_CABEAMENTO", "name": "Cabeamento e Infraestrutura de Dados"},
-            "noc_monitoring_support.md": {"block": "Proposta_NOC", "name": "Sustentação, Monitoramento e Suporte NOC"}
+            "noc_monitoring_support.md": {"block": "Proposta_NOC", "name": "Sustentação, Monitoramento e Suporte NOC"},
+            "struct_assessment.md": {"block": "Proposta_ASSESSMENT", "name": "Assessment e Diagnóstico de Infraestrutura"}
         }
         
         config = product_config.get(intent.selected_tech_template, {"block": "Proposta_COMPLETA", "name": "Solução Integrada de TI"})
@@ -85,7 +86,12 @@ class LibraryAssembler:
 
         # Commercial sections (Only if not split technical)
         if not intent.split_proposal:
-            sequence.append("07-comercial")
+            comm_block = "07-comercial"
+            if intent.is_assessment:
+                # Forçamos o uso do bloco comercial de Assessment se a flag estiver ativa
+                sequence.append((comm_block, "Proposta_ASSESSMENT_COM"))
+            else:
+                sequence.append(comm_block)
             
         sequence.extend([
             "08-premissas",       # Premissas e Exclusões
@@ -131,7 +137,7 @@ class LibraryAssembler:
             "ai_research_count": proposal.ai_research_count,
             "total_hours": sum(item.hours for item in proposal.labor_table),
             "payment_term": proposal.payment_term,
-            "opex": proposal.opex_data, # Novos dados calculados pelo OpexEngine
+            "opex": proposal.opex_data if not intent.is_assessment else None, # Suprime OPEX no Assessment
             "processing_time_bench": benchmark_str,
             "detected_hardware": intent.detected_hardware_list,
             "tech_template_name": intent.selected_tech_template,
@@ -247,7 +253,7 @@ class LibraryAssembler:
                 "is_client_supplied": intent.hardware_supply_by_client
             }
             for h in proposal.hardware_table if not h.is_misc
-        ]
+        ] if not intent.is_assessment else [] # Oculta tabela de hardware se for Assessment
 
         # 4. Final Assembly
         # A. UNIFIED Version

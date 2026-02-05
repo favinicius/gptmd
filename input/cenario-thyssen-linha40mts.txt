@@ -1,0 +1,28 @@
+Cliente: THYSSENKRUPP (CAMPO LIMPO PAULISTA)
+Contato: Fabio Rodrigues
+ID Oportunidade: D26010670
+Título Oportunidade: "ASSESSMENT DE REDE - LINHA 40MT"
+
+O Fabio apresentou a necessidade de um Assessment detalhado da infraestrutura de rede da "Linha 40 m". Trata-se de uma linha de produção antiga, que opera com um forno contínuo e diversos painéis elétricos distribuídos, onde a visibilidade atual sobre os ativos é quase nula. A motivação para o serviço surgiu após um incidente recente de rede; o objetivo agora é obter um inventário real dos equipamentos (físico e lógico) e verificar o estado de degradação do cabeamento, visto que a linha recebeu poucas atualizações ao longo dos anos.
+
+O cenário operacional impõe restrições severas de acesso: a fábrica opera em turno noturno durante a semana, inviabilizando janelas de manutenção nesses dias. Por isso, a execução do serviço é mandatória aos finais de semana (janelas de sexta a domingo), o que nos obriga a calcular a mão de obra considerando adicionais noturnos e horas extras de fim de semana para garantir a parada necessária para a inspeção do cabeamento.
+
+No momento, não há budget aprovado. Esta proposta técnica será utilizada pelo cliente para "vender a ideia" internamente e viabilizar a verba. A expectativa é iniciar a execução no final de fevereiro ou início de março. Estamos aguardando o layout da planta e a lista preliminar de painéis (prometidos para 29/01), mas o prazo final para entrega da nossa proposta é 05/02.
+
+Resumo de Escopo e Premissas:
+
+Objeto do Assessment:
+
+Ativo: Linha de produção com extensão de 40 metros.
+Volume Estimado: Aproximadamente 10 painéis elétricos contendo switches e dispositivos de rede (concentrados em sala específica e distribuídos na lateral da linha).
+Atividades Técnicas:
+
+Levantamento físico e lógico da rede industrial.
+Mapeamento completo da topologia atual.
+Análise de segmentação da rede.
+Verificação do estado físico do cabeamento (atividade crítica que exige parada de máquina).
+Premissas para Orçamento de Mão de Obra (Crítico):
+
+Janela de Atuação: Exclusivamente aos finais de semana (Sexta a Domingo).
+Cargas Horárias: Considerar Adicional Noturno e Hora Extra de Fim de Semana (devido à operação noturna da fábrica durante a semana).
+Logística: Considerar deslocamento e estadia para Campo Limpo Paulista, se aplicável.

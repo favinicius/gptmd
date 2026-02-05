@@ -184,6 +184,7 @@ class Intent(BaseModel):
     project_motivation: Optional[str] = ""
     company_short_name: Optional[str] = "" 
     scope_items: List[ScopeItem]
+    is_assessment: bool = False # Flag para distinguir Assessment de Implantação
     hardware_supply_by_client: Optional[bool] = False
     # Governance Fields (v2.0)
     needs_clarification: bool = False
@@ -277,6 +278,7 @@ class ProposalData(BaseModel):
     service_table: List[CalculatedService] = Field(default_factory=list)
     expense_table: List[CalculatedExpense] = Field(default_factory=list)
     topics: List[TopicMapping] = Field(default_factory=list)
+    is_assessment: bool = False # Flag propagada do intent (v1.1)
     
     total_hardware: float = 0.0
     total_labor: float = 0.0

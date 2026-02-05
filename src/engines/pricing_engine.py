@@ -82,10 +82,14 @@ class PricingEngine:
         
         # Grand total comercial (soma dos valores de venda)
         # MAT (Hardware) 
-        proposal_data.total_hardware_venda = PricingEngine.calculate_mat_selling_price(
-            proposal_data.total_hardware,
-            term_days
-        )
+        if hasattr(proposal_data, 'is_assessment') and proposal_data.is_assessment:
+            proposal_data.total_hardware_venda = 0.0
+            proposal_data.total_hardware = 0.0
+        else:
+            proposal_data.total_hardware_venda = PricingEngine.calculate_mat_selling_price(
+                proposal_data.total_hardware,
+                term_days
+            )
 
         proposal_data.grand_total_venda = (
             proposal_data.total_labor_venda + 

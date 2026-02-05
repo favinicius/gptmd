@@ -1,0 +1,127 @@
+Cliente: THYSSENKRUPP (CAMPO LIMPO PAULISTA)
+Contato: Fabio Rodrigues
+ID Oportunidade: D26010670
+Título Oportunidade: "ASSESSMENT DE REDE - LINHA 40MT"
+
+O Fabio apresentou a necessidade de um Assessment detalhado da infraestrutura de rede da "Linha 40 m". Trata-se de uma linha de produção antiga, que opera com um forno contínuo e diversos painéis elétricos distribuídos, onde a visibilidade atual sobre os ativos é quase nula. A motivação para o serviço surgiu após um incidente recente de rede; o objetivo agora é obter um inventário real dos equipamentos (físico e lógico) e verificar o estado de degradação do cabeamento, visto que a linha recebeu poucas atualizações ao longo dos anos.
+
+O cenário operacional impõe restrições severas de acesso: a fábrica opera em turno noturno durante a semana, inviabilizando janelas de manutenção nesses dias. Por isso, a execução do serviço é mandatória aos finais de semana (janelas de sexta a domingo), o que nos obriga a calcular a mão de obra considerando adicionais noturnos e horas extras de fim de semana para garantir a parada necessária para a inspeção do cabeamento.
+
+No momento, não há budget aprovado. Esta proposta técnica será utilizada pelo cliente para "vender a ideia" internamente e viabilizar a verba. A expectativa é iniciar a execução no final de fevereiro ou início de março. Estamos aguardando o layout da planta e a lista preliminar de painéis (prometidos para 29/01), mas o prazo final para entrega da nossa proposta é 05/02.
+
+Resumo de Escopo e Premissas:
+
+Objeto do Assessment:
+
+Ativo: Linha de produção com extensão de 40 metros.
+Volume Estimado: Aproximadamente 10 painéis elétricos contendo switches e dispositivos de rede (concentrados em sala específica e distribuídos na lateral da linha).
+Atividades Técnicas:
+
+Levantamento físico e lógico da rede industrial.
+Mapeamento completo da topologia atual.
+Análise de segmentação da rede.
+Verificação do estado físico do cabeamento (atividade crítica que exige parada de máquina).
+Premissas para Orçamento de Mão de Obra (Crítico):
+
+Janela de Atuação: Exclusivamente aos finais de semana (Sexta a Domingo).
+Cargas Horárias: Considerar Adicional Noturno e Hora Extra de Fim de Semana (devido à operação noturna da fábrica durante a semana).
+Logística: Considerar deslocamento e estadia para Campo Limpo Paulista, se aplicável.
+
+
+Com base na análise detalhada dos arquivos carregados (listas de ativos, layouts e topologias de rede do TIA Portal), o escopo do Assessment é significativamente maior e mais complexo do que a estimativa inicial de "10 painéis".
+
+Aqui está o resumo atualizado para o orçamentista técnico. O volume de ativos e a complexidade da segmentação de rede exigirão um aumento na estimativa de horas.
+
+RESUMO TÉCNICO ATUALIZADO – ASSESSMENT REDE THYSSENKRUPP (LINHA 40M)
+
+Cliente: Fabio Rodrigues (THYSSENKRUPP)
+Status: Documentação preliminar recebida (Layouts + Topologias TIA Portal + Inventário).
+
+1. Alteração Crítica de Escopo (Volume):
+A estimativa inicial de 10 painéis foi superada. A documentação revela uma linha composta por 11 subsistemas principais interconectados, totalizando aproximadamente 70+ dispositivos inteligentes em rede (não apenas 10).
+A rede abrange PLC, IHM, Inversores, Robôs e Remote I/Os.
+
+2. Subsistemas Identificados (Zonas da Linha):
+O levantamento deve cobrir as seguintes ilhas de automação (interligadas via Profinet/Couplers):
+
+Serra 40 MTH: (CPU 1511F, Drives SEW, G120C)
+Martelo 40 MTH: (CPU 1511F, ET200SP)
+Prensa KIM: (CPU 1511F, ET200MP)
+Forno Rotativo 40MTH: (CPU 1510SP F, Inversores, Soft Starters)
+Jato 40MTH: (S7-1200)
+Robô Laminadora: (S7-1200, Painel Robô KUKA)
+Prensa FKL 40MTH: (S7-1200, Robô KUKA, CLP SICK)
+Robô FKL 40MTH: (S7-1200)
+Abastecimento de Óleo: (S7-1200)
+Misturador de Grafite: (S7-1200)
+Sist. Transporte e Resfriamento ABB: (CPU S7-1500, Robôs ABB, ET200eco)
+3. Complexidade Técnica e Pontos de Atenção:
+
+Segurança (Safety): Presença massiva de CPUs Failsafe (1511F-1 PN) e comunicação ProfiSafe. A validação lógica deve garantir que o mapeamento não interfira na segurança.
+Robótica: Integração com Robôs KUKA (KRC4) e ABB, exigindo verificação das interfaces de comunicação (GSDML files/mapeamento de I/O).
+Segmentação de Rede (Crítico): Os diagramas mostram o uso de PN/PN Couplers para segregar redes.
+Rede de Controle Principal: Faixa 10.100.40.xxx
+Redes Locais/Máquina: Faixa 192.168.0.xxx (Ex: Sistema de Transporte ABB).
+O Assessment deve mapear o roteamento e as fronteiras dessas redes (NAT/Coupling).
+Switches: Identificado nos desenhos o modelo Scalance XB008.
+Risco: Trata-se de switch não gerenciável. Isso dificulta o mapeamento lógico automático (LLDP/SNMP). A verificação física (rastreamento de cabos porta-a-porta) será obrigatória e intensiva, reforçando a necessidade de horas de campo no fim de semana.
+4. Resumo de Hardware Principal para Inventário:
+
+PLCs: Siemens S7-1500 (Failsafe), S7-1200, ET200SP Open Controllers.
+IHMs: KTP400, KTP700, TP900, TP1500 Comfort.
+Drives: Siemens G120C, SEW Eurodrive, Soft Starters SIRIUS (3RW44/59).
+Rede: Switches Scalance XB008, PN/PN Couplers, Gateways SICK.
+Recomendação ao Orçamentista:
+Considerar aumento na carga horária de Levantamento Físico e Topologia. O ambiente possui uma densidade de equipamentos muito maior que a prevista e a presença de switches não gerenciáveis exigirá mais tempo de rastreamento manual de cabos dentro dos painéis e canaletas durante a janela de parada.
+
+
+
+
+Com base na análise consolidada da tabela mestra (PDF página 1), dos layouts de fábrica e das capturas de tela do TIA Portal, foram identificados **66 dispositivos únicos**, categorizados conforme abaixo.
+
+Para evitar duplicidade, os acopladores (Couplers) listados tanto nas máquinas individuais quanto no sistema de transporte ABB foram contados apenas uma vez.
+
+### Resumo Quantitativo por Categoria
+
+| Categoria | Quantidade | Observações Principais |
+| :--- | :---: | :--- |
+| **Controladores (CLPs)** | **12** | Modelos S7-1500 (diversos), S7-1200 e CPUs ET200SP. |
+| **Interfaces (IHMs)** | **11** | Modelos KTP400, KTP700, TP900 e TP1500. |
+| **Remotas e Módulos de I/O** | **12** | Modelos ET200MP, ET200SP, ET200eco e módulos IFM. |
+| **Acionamentos (Inversores/Soft-Starters)** | **20** | Inversores Siemens G120C, SEW e Soft-Starters 3RW. |
+| **Robôs e Controladores de Segurança** | **5** | Robô KUKA, 2x Robôs ABB e 2x Controladores SICK. |
+| **Dispositivos de Campo e Rede** | **6** | Encoders (Serra/Prensa) e Módulos Coupler (PN/PN). |
+| **TOTAL GERAL ÚNICO** | **66** | |
+
+---
+
+### Detalhamento por Categoria (Sem Repetições)
+
+**1. Controladores (CLPs):**
+*   Serra 40 MTH: 1x CPU 1511F-1.
+*   Martelo 40 MTH: 1x CPU 1511F-1 e 1x CPU 1214C.
+*   Prensa KIM: 1x CPU 1511-1F.
+*   Forno Rotativo: 1x CPU 1510SP.
+*   Máquinas Menores (Jato, Prensa FKL, Robô Laminadora, Robô FKL, Abastecimento, Misturador): 6x CPUs S7-1200 (1214C/1215C).
+*   Sist. Transporte ABB: 1x CPU 1513F-1.
+
+**2. Interfaces Homem-Máquina (IHMs):**
+*   Painéis de Operação: 7x KTP700 (Serra, Martelo, Prensa KIM, Prensa FKL, Misturador, etc.).
+*   Painéis de Processo: 1x TP1500 (Forno), 1x TP900 (ABB) e 2x KTP400 (Jato e Abastecimento).
+
+**3. Unidades Remotas (I/O):**
+*   Remotas de Painel/Púlpito: 7 unidades (Modelos IM 155-5 e 155-6).
+*   Remotas de Campo (IP67): 5 unidades (ET200eco e remota IFM no sistema ABB).
+
+**4. Acionamentos (Inversores de Frequência e Partida Suave):**
+*   Inversores Siemens (G120C/G120): 16 unidades distribuídas entre Serra, Forno, Jato e Transporte.
+*   Inversores SEW: 2 unidades (Painel Serra e Gatilho Forno).
+*   Soft-Starters: 2 unidades (Siemens 3RW na Prensa KIM).
+
+**5. Robótica e Segurança Especializada:**
+*   Robôs: 1x KUKA (Robô FKL) e 2x Robôs ABB (Sistema de Transporte).
+*   Segurança: 2x Controladores SICK (Robô Laminadora e Prensa FKL).
+
+**6. Outros Dispositivos (Sensores e Comunicação):**
+*   Encoders: 2 unidades (Dispositivo da Serra e Sincronismo da Prensa KIM).
+*   Acopladores (PN/PN Couplers): 4 unidades (responsáveis pela interligação entre a Linha ABB e as máquinas: Serra, Forno Rotativo, Forno Indução e Laminadora). *Nota: Estes foram consolidados para evitar a contagem duplicada entre a coluna ABB e as colunas das máquinas específicas.*

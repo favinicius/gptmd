@@ -14,7 +14,7 @@ class LaborEngine:
         self.item_counter = 1
 
     CONFIG_SIZING = {
-        "aggressive": 0.85,
+        "aggressive": 0.75,
         "standard": 1.00,
         "secure": 1.40,
         "critical": 1.60
@@ -57,6 +57,68 @@ class LaborEngine:
         complexity_multiplier = 1.5
         
         topic_tech_effort = collections.defaultdict(float)
+        
+        # --- Lógica de Carga de Trabalho Detalhada para Assessment (v12.0) ---
+        assessment_items = []
+        if intent.is_assessment:
+            # Prioriza detected_hardware_list, mas fallback para scope_items se necessário
+            if intent.detected_hardware_list:
+                assessment_items = [(h.description, h.quantity, getattr(h, 'part_number', 'N/A')) for h in intent.detected_hardware_list]
+            else:
+                # Filtra itens que parecem ativos (têm quantidade > 0 e não são transversais)
+                assessment_items = [
+                    (s.name, s.detected_quantity, "N/A") 
+                    for s in intent.scope_items 
+                    if s.detected_quantity > 0 and not any(kw in s.name.lower() for kw in ["documentação", "gerenciamento", "viagem"])
+                ]
+
+        if assessment_items:
+            for desc, qty, pn in assessment_items:
+                topic_id = "T-ASS"
+                # Esforço Base de Investigação (por unidade individual)
+                # Benchmark: 158 units -> ~191 total hours (incl. gov) -> Target per unit ~0.50h field
+                unit_audit_h = 0.50
+                lower_desc = desc.lower()
+                if any(k in lower_desc for k in ["plc", "clp", "controlador", "servidor", "server", "robô", "kuka", "abb"]):
+                    unit_audit_h = 0.75 # 1.5x o padrão para controladores/robótica
+                elif any(k in lower_desc for k in ["cabo", "conector", "misc"]):
+                    unit_audit_h = 0.20
+                
+                # 1. Auditoria e Investigação de Campo (Dupla: Analista + Técnico)
+                audit_label = f"Investigação de Campo: {desc} (Mapeamento Porta-a-Porta)"
+                self._add_labor_line_from_raw_generic(
+                    proposal, topic_id, "Analista", audit_label,
+                    qty, 2, # Squad de 2 pessoas
+                    unit_audit_h * sizing_factor, self.db.get_role_cost("Analista"), "Consultoria",
+                    source_ref="ASSESSMENT_FIELD"
+                )
+                self._add_labor_line_from_raw_generic(
+                    proposal, topic_id, "Técnico", audit_label,
+                    qty, 0, # Já contado na squad ou como suporte
+                    unit_audit_h * sizing_factor, self.db.get_role_cost("Técnico"), "Consultoria",
+                    source_ref="ASSESSMENT_FIELD_TECH"
+                )
+
+                # 2. Consolidação e Documentação (Analista Solo)
+                # Benchmark: Ajustado para 0.35 para refletir complexidade de 158 unidades
+                doc_effort = unit_audit_h * 0.35
+                self._add_labor_line_from_raw_generic(
+                    proposal, topic_id, "Analista", f"Consolidação e Documentação: {desc}",
+                    qty, 1,
+                    doc_effort * sizing_factor, self.db.get_role_cost("Analista"), "Consultoria",
+                    source_ref="ASSESSMENT_DOC"
+                )
+
+                # 3. Revisão Técnica (Engenheiro Sênior)
+                rev_effort = 0.05 # 3 min por item para revisão do Engenheiro
+                self._add_labor_line_from_raw_generic(
+                    proposal, topic_id, "Engenheiro", f"Revisão Técnica e Databook: {desc}",
+                    qty, 1,
+                    rev_effort, self.db.get_role_cost("Engenheiro"), "Consultoria",
+                    source_ref="ASSESSMENT_REVIEW"
+                )
+
+                topic_tech_effort[topic_id] += (unit_audit_h * 2 + doc_effort + rev_effort) * sizing_factor * qty
         topic_team_size = {}
 
         vm_profiles = {
@@ -68,6 +130,12 @@ class LaborEngine:
         }
 
         for i, scope_item in enumerate(intent.scope_items):
+            # --- Lógica de Supressão de Redundância em Assessment (v12.1) ---
+            # Em Assessment, os itens já são processados no T-ASS. Ignoramos o loop padrão
+            # exceto para itens que NÃO são ativos (ex: consultoria especial, treinamento específico se houver)
+            if intent.is_assessment:
+                continue 
+
             topic_id = f"T-{i+1:02d}"
             team_size = max(1, intent.logistics_override.team_size) if intent.logistics_override else 1
             is_complex = any(kw in scope_item.name.lower() or (scope_item.context_note or "").lower() 
@@ -136,6 +204,17 @@ class LaborEngine:
                             topic_team_size[topic_id] = team_size
                             continue
 
+                    # Se for Assessment e não houver bundle, usamos uma estimativa de consultoria pura
+                    if intent.is_assessment:
+                        self._add_labor_line_from_raw_generic(
+                            proposal, topic_id, "Engenheiro", f"Diagnóstico e Levantamento: {scope_item.name}", 
+                            1, team_size, 8.0 * sizing_factor, self.db.get_role_cost("Engenheiro"), "Consultoria",
+                            source_ref="ASSESSMENT_FALLBACK"
+                        )
+                        topic_tech_effort[topic_id] += 8.0 * sizing_factor
+                        topic_team_size[topic_id] = team_size
+                        continue
+
                     self._create_fallback_with_coalescence(topic_id, scope_item, proposal, team_size, sizing_factor)
                     continue
 
@@ -160,6 +239,14 @@ class LaborEngine:
                     if any(m in measure for m in ["projeto", "site", "evento", "job"]):
                         scale_qty = 1
                     
+                    # --- Lógica de Assessment (v10.1) ---
+                    # Em modo Assessment, ignoramos atividades de CATEGORIA FÍSICA ou INSTALAÇÃO
+                    if intent.is_assessment:
+                        physical_categories = ["PHASE_2 (Phys)", "PHASE_4 (Install)", "CABLING", "Execução", "Governança", "Planejamento"]
+                        # Em Assessment, ignoramos quase tudo que não seja consultoria ou as novas linhas detalhadas
+                        if template.category in physical_categories or any(t in ["install", "cabling", "hardware"] for t in template.tags):
+                            continue
+
                     phase_groups[template.category].append({
                         "template": template, 
                         "eff": eff,
@@ -286,8 +373,15 @@ class LaborEngine:
         c_arq = self.db.get_role_cost("Arquiteto")
         
         # Scaling rule: base + 5% of tech hours for management, base + 8% for architecture/design
-        gestao_h = max(12.0, total_tech_h * 0.08) * sizing_factor
-        design_h = max(20.0, total_tech_h * 0.12) * sizing_factor
+        if intent.is_assessment:
+            # Em Assessment, a gestão é proporcional. Se tech_hours < 80h, o mínimo cai para 4h.
+            min_gest = 4.0 if total_tech_h < 80 else 8.0
+            min_arq = 8.0 if total_tech_h < 80 else 12.0
+            gestao_h = max(min_gest, total_tech_h * 0.05) * sizing_factor
+            design_h = max(min_arq, total_tech_h * 0.10) * sizing_factor
+        else:
+            gestao_h = max(12.0, total_tech_h * 0.08) * sizing_factor
+            design_h = max(20.0, total_tech_h * 0.12) * sizing_factor
         
         gov_checklist = "Checklist: Kick-off, Gestão de Cronograma, Alinhamento de Stakeholders, Reporte de Status e Gestão de Riscos."
         plan_checklist = "Checklist: Design LLD, Topologia Lógica/Física, Plano de Endereçamento IP/VLANs e Validação de Pré-requisitos."
@@ -296,7 +390,8 @@ class LaborEngine:
         self._add_labor_line_from_raw_generic(proposal, "T-00", "Arquiteto", "Planejamento Técnico e Design LLD", 1, 1, design_h, c_arq, "Planejamento", sizing_factor=sizing_factor, technical_detail=plan_checklist)
 
     def _calculate_transversals(self, intent: Intent, proposal: ProposalData, global_complexity: bool, sizing_factor: float = 1.0):
-        if global_complexity:
+        # Em Assessment, a Consultoria de Acompanhamento é redundante pois já temos a Revisão do Engenheiro per-item.
+        if global_complexity and not intent.is_assessment:
              c_eng = self.db.get_role_cost("Engenheiro")
              self._add_labor_line_from_raw_generic(proposal, "T-00", "Engenheiro", "Consultoria Técnica (Acompanhamento)", 1, 1, 16.0 * sizing_factor, c_eng, "Consultoria", sizing_factor=sizing_factor)
 

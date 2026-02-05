@@ -1,0 +1,36 @@
+RESUMO PARA ORÇAMENTO TÉCNICO – ASSESSMENT THYSSENKRUPP (LINHA 40M)
+
+Cliente: THYSSENKRUPP (Campo Limpo Paulista)
+Contato: Fabio Rodrigues
+ID Oportunidade: D26010670
+Prazo da Proposta: 05/02 (Improrrogável)
+
+1. Contexto e Objetivo
+O cliente necessita de um Assessment completo (físico e lógico) da "Linha 40m", uma linha de produção antiga e crítica que sofreu incidentes recentes de rede. O objetivo é criar um inventário detalhado e validar a integridade do cabeamento.
+Status Comercial: Não há budget definido. A proposta técnica deve ser robusta para ajudar o contato a viabilizar a verba internamente.
+
+2. Alteração Crítica de Escopo (Atenção Orçamentista)
+A estimativa inicial de "10 painéis" está obsoleta. A análise da documentação recebida revelou um cenário muito mais complexo:
+
+Volume Real: De 10 para 70+ dispositivos inteligentes em rede.
+Estrutura: A linha é composta por 11 subsistemas/ilhas de automação interconectados (Serra, Martelo, Prensas, Forno, Jato, Robôs, etc.).
+Diversidade: O parque inclui PLCs (S7-1500F/1200), Robôs (KUKA/ABB), Inversores (SEW/Siemens) e Remote I/Os.
+3. Desafios Técnicos e Impacto em Horas
+O aumento de horas técnicas deve considerar três fatores principais:
+
+Switches Não Gerenciáveis (Fator de Maior Esforço): A rede utiliza switches Scalance XB008 (unmanaged). Ferramentas de scan automático (LLDP/SNMP) não mapearão a topologia física completa. Será necessário rastreamento manual de cabos ("bater fio") porta-a-porta, aumentando drasticamente o tempo de campo.
+Segmentação de Rede: Existem fronteiras de rede utilizando PN/PN Couplers separando a rede de controle (10.100.40.x) das redes locais de máquinas (192.168.0.x). O assessment precisa mapear essas rotas.
+Safety e Robótica: Presença massiva de CPUs Failsafe e Robôs. O levantamento lógico deve ser cuidadoso para não "tripular" a segurança da máquina.
+4. Premissas Mandatórias de Execução (Logística e RH)
+Devido à operação noturna da fábrica durante a semana, as janelas de manutenção são restritas:
+
+Janela de Trabalho: Exclusivamente Sexta, Sábado e Domingo.
+Mão de Obra: Calcular com Adicional Noturno e Horas Extras de Fim de Semana.
+Local: Campo Limpo Paulista (considerar deslocamento/estadia).
+5. Resumo de Hardware para Inventário:
+
+Controladores: Siemens S7-1500 (Safety), S7-1200, ET200SP.
+Ativos de Rede: Switches Scalance XB008 (Não gerenciáveis), PN/PN Couplers.
+Periféricos: Robôs KUKA e ABB, Drives G120C/SEW, Soft Starters, IHMs TP/KTP.
+Recomendação Final:
+Abandonar a estimativa baseada em 10 painéis. Orçar horas suficientes para um levantamento físico intensivo e manual (devido aos switches burros) em 11 ilhas de automação, considerando o alto custo da hora técnica em regime de fim de semana/noturno.

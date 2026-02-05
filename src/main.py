@@ -359,6 +359,9 @@ def main():
     print("Stage 2: Pricing Engines (Calculation)...")
     proposal = ProposalData()
     
+    # Propaga flag de Assessment para motores (v1.1)
+    proposal.is_assessment = intent.is_assessment
+    
     # Generate Topic Mappings
     for i, scope_item in enumerate(intent.scope_items):
         proposal.topics.append(TopicMapping(
@@ -420,7 +423,8 @@ def main():
         redaction = agent.compose_technical_redaction(
             intent_summary=intent.project_motivation,
             tech_scope=tech_summary_for_ai,
-            proposal_summary=proposal_summary_for_ai
+            proposal_summary=proposal_summary_for_ai,
+            is_assessment=proposal.is_assessment
         )
         if args.debug:
             with open(output_dir / "raw_ai_proposal.txt", "w", encoding="utf-8") as f:

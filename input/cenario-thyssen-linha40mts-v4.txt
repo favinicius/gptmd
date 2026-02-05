@@ -1,0 +1,47 @@
+Descritivo de Cenário: Assessment de Rede Industrial – Área FM80
+
+Cliente: THYSSENKRUPP (CAMPO LIMPO PAULISTA)
+Apresentado a: Cyro Romazini
+Objeto: Levantamento Técnico e Diagnóstico de Infraestrutura – Área FM80
+
+1. Resumo do Inventário de Rede (FM80)
+O Assessment cobrirá um ecossistema complexo de manufatura composto por 19 áreas produtivas interconectadas. Diferente de estimativas preliminares, o diagnóstico "As-Built" revela uma infraestrutura de grande porte com 158 dispositivos inteligentes únicos em rede, abrangendo tecnologias que variam de sistemas legados seriais a arquiteturas modernas em Profinet.
+
+Quantitativo por Categoria de Ativo:
+
+Categoria de Equipamento	Quantidade	Principais Fabricantes / Modelos
+Controladores (CLPs)	31	Siemens (S7-1500, S7-1200, S7-300) e Mitsubishi (Série Q, FX).
+Interfaces Homem-Máquina (IHMs)	36	Siemens (KTP, TP), Mitsubishi (GOT, GS) e Unitronics (V350).
+Acionamentos (Inversores/Servos)	45	Siemens (Sinamics G120, V90), Mitsubishi (E800, F800) e WEG.
+Switches Industriais	23	Siemens Scalance (XB005, XB008), Murr GTX e Balluff.
+Dispositivos de Segurança	14	Controladores SICK Flexi Soft e Relés Schmersal/SIRIUS.
+Rede e Conectividade	09	Gateways (Secomea, ADAM), Roteadores e Access Points.
+TOTAL DE DISPOSITIVOS ÚNICOS	158	
+
+2. Detalhamento da Abrangência (Zonas de Automação)
+O levantamento físico e lógico abrange 19 áreas, com destaque para:
+
+Núcleo de Alta Densidade (Profinet): Áreas como Jato DISA (Área 08) e Jato Linha L34 (Área 19), que concentram o maior volume de tráfego de dados e ativos Siemens modernos.
+
+Parque Tecnológico Híbrido (Mitsubishi): Diversas zonas operando com a Série Q e Série FX, muitas vezes em regime de "ilhas isoladas" via comunicação serial/MPI, dificultando a coleta centralizada.
+
+Sistemas de Contagem Compactos: Uso extensivo de controladores Unitronics V350 em esteiras (L100, L105, L02, L03, L35), classificados como sistemas sem interface Ethernet nativa, exigindo plano de retrofit.
+
+3. Diagnóstico Crítico e Desafios de Engenharia
+A orçamentação deve considerar os seguintes pontos críticos detectados no ambiente:
+
+Degradação Física Sistêmica: Histórico de 100% de reprovação em testes Fluke em áreas críticas (como Forno Fengdong e Jato 3210). O orçamento deve prever tempo para diagnóstico detalhado de Return Loss e NEXT em cabeamentos expostos a pó condutivo e vibração.
+
+Riscos de Shadow IT: Presença de roteadores domésticos (Cisco Linksys/TP-Link) dentro de painéis industriais com credenciais padrão, exigindo mapeamento de vulnerabilidades e plano de migração para switches gerenciáveis.
+
+Saturação e Latência: Identificada a saturação de portas em switches, forçando conexões em cascata (daisy-chain) que geram erros de Watchdog e timeouts em protocolos determinísticos (Profinet).
+
+Mapeamento Manual Obrigatório: Devido ao uso predominante de switches não gerenciáveis, o rastreamento lógico automático é impossibilitado, exigindo horas intensivas de campo para o mapeamento físico "porta-a-porta" e identificação de cabos em canaletas.
+
+4. Premissas Operacionais (Janela de Parada)
+
+Execução: Obrigatoriamente aos finais de semana (Sexta a Domingo) para garantir a janela de parada total necessária para a desconexão e certificação instrumentada de 100% dos links.
+
+Logística: Equipe técnica especializada mobilizada para Campo Limpo Paulista, equipada com certificadores de rede (Padrão TIA/ISO) e ferramentas de varredura lógica.
+
+Conclusão para Orçamentação: O volume absoluto de 158 ativos em 19 zonas produtivas classifica este Assessment como um projeto de alta complexidade. A precisão deste diagnóstico é o único meio de viabilizar a futura integração vertical (MES/Indústria 4.0) pretendida, eliminando os pontos cegos que hoje causam paradas não programadas na FM80.

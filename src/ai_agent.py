@@ -356,9 +356,10 @@ class AIAgent:
         
         ## SELEÇÃO DE TEMPLATE TÉCNICO
         Escolha o template que melhor se adapta ao escopo principal:
+        - `struct_assessment.md`: Foco estritamente CONSULTIVO de diagnóstico, inventário e auditoria (Assessment).
         - `iodc_full_structured.md`: Projetos completos (Infraestrutura + Rede + Backup).
         - `iodc_no_net.md`: Foco em Datacenter/Servidores (sem escopo de rede industrial).
-        - `struct_network_industrial.md`: Foco exclusivo em Redes OT (Switches, Fibra, Firewalls).
+        - `struct_network_industrial.md`: Projetos de Implantação de Redes OT (Switches, Fibra, Firewalls).
         - `struct_server_migration.md`: Foco em Virtualização e Migração de sistemas.
         - `struct_services_cabling.md`: Foco em Cabeamento e Infraestrutura Física.
         - `noc_monitoring_support.md`: Contratos de Sustentação, Monitoramento e Suporte NOC (quando a infra já existe).
@@ -399,8 +400,9 @@ class AIAgent:
             "governance_level": "standard" | "intensive" | "critical",
             "work_on_weekends": boolean,
             "requires_training": boolean,
-            "selected_tech_template": "iodc_full_structured.md" | "iodc_no_net.md" | "struct_network_industrial.md" | "struct_server_migration.md" | "struct_services_cabling.md" | "noc_monitoring_support.md",
+            "selected_tech_template": "struct_assessment.md" | "iodc_full_structured.md" | "iodc_no_net.md" | "struct_network_industrial.md" | "struct_server_migration.md" | "struct_services_cabling.md" | "noc_monitoring_support.md",
             "selected_comm_template": "hybrid_capex_opex.md",
+            "is_assessment": boolean, // Define se é um trabalho puramente consultivo
             "split_proposal": boolean,
             "sizing_mode": "aggressive" | "standard" | "secure" | "critical",
             "contingency_level": "none" | "low" | "standard" | "high",
@@ -507,67 +509,101 @@ class AIAgent:
             print(f"CRÍTICO: Erro de Parsing na Logística. Verifique raw_ai_interpretation.txt. Erro: {e}")
             raise e
 
-    def compose_technical_redaction(self, intent_summary: str, tech_scope: str, proposal_summary: str) -> Dict[str, str]:
+    def compose_technical_redaction(self, intent_summary: str, tech_scope: str, proposal_summary: str, is_assessment: bool = False) -> Dict[str, str]:
         """
         Stage 3: Technical Redaction (V1.3 - Deep Personalization).
         Gera blocos dinâmicos para contornar textos hardcoded e elevar a qualidade técnica.
         """
-        # Criar prompt sob medida (v1.3 - Alta Fidelidade)
-        prompt = f"""
-        # ATUE COMO ENGENHEIRO DE SISTEMAS SÊNIOR E REDATOR TÉCNICO (V1.4 - ALTA FIDELIDADE)
-        
-        Sua tarefa é gerar 6 blocos de texto personalizados e RÍGIDOS em Markdown para uma proposta técnica industrial. 
-        O objetivo é eliminar qualquer tom genérico. Se o texto parecer "boilerplate", ele falhou.
-        
-        ## INPUTS DO PROJETO
-        - RESUMO DO INTENT: {intent_summary}
-        - ESCOPO TÉCNICO DETALHADO: {tech_scope}
-        - RESUMO DA PROPOSTA (VALORES/HORAS): {proposal_summary}
-        
-        ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES)
-        1. **Seção: Objetivo Geral**: Escreva obrigatoriamente 2 parágrafos. 
-           - Parágrafo 1: Contextualize a dor/necessidade do cliente (Cenário atual explicado).
-           - Parágrafo 2: Resuma nossa sugestão/estratégia de solução de forma objetiva.
-        2. **Seção: Benefícios (Extensivo)**:
-           - Gere no mínimo de 2 a 3 categorias usando títulos ###.
-           - Em cada categoria, adicione 2 a 3 bullet points detalhados.
-           - O texto deve explicar o ganho real para este escopo. Ex: "Eliminação de loops de rede através de protocolos RSTP/STP", "Redução de inatividade por falhas de infraestrutura física".
-        3. **Seção: Visão Geral da Solução (O Coração da Proposta)**:
-           - Descreva a solução em 4 a 5 passos numerados de 1 a 5.
-           - Cada passo deve ter um título em negrito e uma explicação técnica de 2 linhas.
-           - Adapte ao escopo: Se for rede, os passos são Design, Greenfield/Brownfield, Backbone, Acesso, Segurança e SAT. Se for migração, foque em Inventário, Staging, Cutover e Validação.
-           - **EVITE REPETIÇÃO**: Garanta que o passo de "Infraestrutura Física" (se houver) não repita o conteúdo de "Design/Planejamento".
-        4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT). Explique a metodologia de testes em ambientes de manufatura/operação.
-        5. **Seção: Estrutura da Equipe**: Cargos e responsabilidades (Gestor, Engenheiro, Especialista em Automação, Técnicos de Campo).
-        6. **Seção: Cronograma**: 
-           - **PROIBIDO**: Mencionar quantidade exata de horas ou dias (Ex: NÃO diga "185 horas" ou "20 dias").
-           - **OESTRUTURA**: Comece obrigatoriamente com o marco "**Entrevista de Expectativa**" seguido de Kick-off, Mobilização, Execução, SAT e Handover.
-           - **ESTRUTURA**: Um parágrafo dissertativo sobre o fluxo do projeto seguido por uma lista sucinta de "Marcos do Plano".
-        7. **Seção: Treinamento**: Foco em transferência de conhecimento. NÃO mencione "quadros elétricos" a menos que seja instalação elétrica. Use termos genéricos: "Apresentação dos equipamentos, organização e identificação dos ativos".
-        8. **Seção: Tabela de Ativos (OPEX)**: Crie uma tabela Markdown consolidando os ativos que serão suportados/monitorados (para o bloco de Sustentação).
+        if is_assessment:
+            # --- PROMPT EXCLUSIVO PARA ASSESSMENT (v2.0 - Pureza Consultiva) ---
+            prompt = f"""
+            # ATUE COMO CONSULTOR SÊNIOR DE INFRAESTRUTURA INDUSTRIAL
+            
+            Sua tarefa é redigir uma Proposta Técnica de ASSESSMENT (Diagnóstico e Auditoria).
+            
+            ## REGRAS CRÍTICAS DE NEGÓCIO (PUREZA CONSULTIVA):
+            1. **FOCO TOTAL EM INVESTIGAÇÃO**: O trabalho é descobrir o estado atual (As-Is).
+            2. **PROIBIDO**: Não mencione fornecimento de equipamentos, instalação física (passagem de cabos), configuração de novos sistemas, treinamento de operadores ou serviços de monitoramento/sustentação.
+            3. **DETALHAMENTO DE CAMPO**: Descreva atividades como "desconexão de cabos para teste", "mapeamento porta-a-porta", "auditoria de painéis" e "validação de running configs".
+            
+            ## INPUTS DO PROJETO:
+            - MOTIVAÇÃO: {intent_summary}
+            - ITENS SOB ANÁLISE: {tech_scope}
+            
+            ## SEÇÕES REQUERIDAS (JSON):
+            - custom_objective_md: 2 parágrafos sobre a dor e a estratégia de investigação.
+            - custom_benefits_md: Benefícios da documentação e visibilidade (As-Is).
+            - custom_vision_md: Metodologia em 4-5 passos (ex: Auditoria Física, Auditoria Lógica, Running Configs, Relatório).
+            - testing_protocol_md: Como as conexões serão validadas (testes passivos e de continuidade).
+            - team_structure_md: Papéis (Consultor, Especialista em Automação, Técnico de Redes).
+            - timeline_md: Marcos (Entrevista de Alinhamento, Diagnóstico de Campo, Consolidação, Entrega Final).
+            - deliverables_list_md: Lista de documentos entregues (Relatório, Inventário PN, Diagramas As-Is).
+            
+            ## SEÇÕES PROIBIDAS (DEIXE VAZIAS):
+            - custom_training_md: ""
+            - asset_table_md: "" (Será listado em outro bloco)
+            - cabling_context_md: ""
+            - software_licensing_md: ""
+            
+            Responda APENAS o JSON.
+            """
+        else:
+            # --- PROMPT PADRÃO PARA IMPLANTAÇÃO (v1.4) ---
+            prompt = f"""
+            # ATUE COMO ENGENHEIRO DE SISTEMAS SÊNIOR E REDATOR TÉCNICO (V1.4 - ALTA FIDELIDADE)
+            
+            Sua tarefa é gerar 6 blocos de texto personalizados e RÍGIDOS em Markdown para uma proposta técnica industrial. 
+            O objetivo é eliminar qualquer tom genérico. Se o texto parecer "boilerplate", ele falhou.
+            
+            ## INPUTS DO PROJETO
+            - RESUMO DO INTENT: {intent_summary}
+            - ESCOPO TÉCNICO DETALHADO: {tech_scope}
+            - RESUMO DA PROPOSTA (VALORES/HORAS): {proposal_summary}
+            
+            ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES)
+            1. **Seção: Objetivo Geral**: Escreva obrigatoriamente 2 parágrafos. 
+               - Parágrafo 1: Contextualize a dor/necessidade do cliente (Cenário atual explicado).
+               - Parágrafo 2: Resuma nossa sugestão/estratégia de solução de forma objetiva.
+            2. **Seção: Benefícios (Extensivo)**:
+               - Gere no mínimo de 2 a 3 categorias usando títulos ###.
+               - Em cada categoria, adicione 2 a 3 bullet points detalhados.
+               - O texto deve explicar o ganho real para este escopo. Ex: "Eliminação de loops de rede através de protocolos RSTP/STP", "Redução de inatividade por falhas de infraestrutura física".
+            3. **Seção: Visão Geral da Solução (O Coração da Proposta)**:
+               - Descreva a solução em 4 a 5 passos numerados de 1 a 5.
+               - Cada passo deve ter um título em negrito e uma explicação técnica de 2 linhas.
+               - Adapte ao escopo: Se for rede, os passos são Design, Greenfield/Brownfield, Backbone, Acesso, Segurança e SAT. Se for migração, foque em Inventário, Staging, Cutover e Validação.
+               - **EVITE REPETIÇÃO**: Garanta que o passo de "Infraestrutura Física" (se houver) não repita o conteúdo de "Design/Planejamento".
+            4. **Seção: Protocolo de Testes**: Foco em validação de aceitação (SAT). Explique a metodologia de testes em ambientes de manufatura/operação.
+            5. **Seção: Estrutura da Equipe**: Cargos e responsabilidades (Gestor, Engenheiro, Especialista em Automação, Técnicos de Campo).
+            6. **Seção: Cronograma**: 
+               - **PROIBIDO**: Mencionar quantidade exata de horas ou dias (Ex: NÃO diga "185 horas" ou "20 dias").
+               - **OESTRUTURA**: Comece obrigatoriamente com o marco "**Entrevista de Expectativa**" seguido de Kick-off, Mobilização, Execução, SAT e Handover.
+               - **ESTRUTURA**: Um parágrafo dissertativo sobre o fluxo do projeto seguido por uma lista sucinta de "Marcos do Plano".
+            7. **Seção: Treinamento**: Foco em transferência de conhecimento. NÃO mencione "quadros elétricos" a menos que seja instalação elétrica. Use termos genéricos: "Apresentação dos equipamentos, organização e identificação dos ativos".
+            8. **Seção: Tabela de Ativos (OPEX)**: Crie uma tabela Markdown consolidando os ativos que serão suportados/monitorados (para o bloco de Sustentação).
 
-        ## REGRAS DE OURO
-        - **PROIBIDO**: Termos genéricos corporativos ("value-add", "best-in-class").
-        - **BRANDING**: Use nomes genéricos técnicos ou descritivos da operação ("Área de Envasado", "Rede de Automação da Moega", "Cluster de Virtualização Industrial").
-        - **SOBERANIA INDUSTRIAL**: Lembre-se que o usuário muitas vezes trabalha com MÁQUINAS e OPERAÇÕES, não apenas servidores em racks de escritório.
-        
-        ## FORMATO DA RESPOSTA (JSON ESTRITO)
-        {{
-            "custom_objective_md": "Markdown aqui",
-            "custom_benefits_md": "Markdown aqui (com títulos ### e bullets)",
-            "custom_vision_md": "Markdown aqui (pontos numerados 1 a 5)",
-            "testing_protocol_md": "Markdown aqui (Protocolo de Testes Industrial)",
-            "team_structure_md": "Markdown aqui (Equipe e Responsabilidades)",
-            "timeline_md": "Markdown aqui (Fluxo do projeto e Marcos)",
-            "custom_training_md": "Markdown aqui (Transferência de conhecimento)",
-            "asset_table_md": "Tabela Markdown com os ativos monitorados",
-            "cabling_context_md": "Texto CONCISO sobre conectividade, cabos e acessórios industriais",
-            "software_licensing_md": "Texto CONCISO sobre licenciamento de automação e sistemas operacionais",
-            "deliverables_list_md": "Lista em bullets dos entregáveis REAIS (ex: Databook, SAT, Treinamento, Relatório de Certificação de Rede)."
-        }}
-        
-        Responda APENAS o JSON. Seja conciso mas técnico.
-        """
+            ## REGRAS DE OURO
+            - **PROIBIDO**: Termos genéricos corporativos ("value-add", "best-in-class").
+            - **BRANDING**: Use nomes genéricos técnicos ou descritivos da operação ("Área de Envasado", "Rede de Automação da Moega", "Cluster de Virtualização Industrial").
+            - **SOBERANIA INDUSTRIAL**: Lembre-se que o usuário muitas vezes trabalha com MÁQUINAS e OPERAÇÕES, não apenas servidores em racks de escritório.
+            
+            ## FORMATO DA RESPOSTA (JSON ESTRITO)
+            {{
+                "custom_objective_md": "Markdown aqui",
+                "custom_benefits_md": "Markdown aqui (com títulos ### e bullets)",
+                "custom_vision_md": "Markdown aqui (pontos numerados 1 a 5)",
+                "testing_protocol_md": "Markdown aqui (Protocolo de Testes Industrial)",
+                "team_structure_md": "Markdown aqui (Equipe e Responsabilidades)",
+                "timeline_md": "Markdown aqui (Fluxo do projeto e Marcos)",
+                "custom_training_md": "Markdown aqui (Transferência de conhecimento)",
+                "asset_table_md": "Tabela Markdown com os ativos monitorados",
+                "cabling_context_md": "Texto CONCISO sobre conectividade, cabos e acessórios industriais",
+                "software_licensing_md": "Texto CONCISO sobre licenciamento de automação e sistemas operacionais",
+                "deliverables_list_md": "Lista em bullets dos entregáveis REAIS (ex: Databook, SAT, Treinamento, Relatório de Certificação de Rede)."
+            }}
+            
+            Responda APENAS o JSON. Seja conciso mas técnico.
+            """
 
         raw_text = self.generate_content(prompt, temperature=0.3, max_output_tokens=16384)
         clean_text = self._clean_json_text(raw_text)
@@ -576,6 +612,17 @@ class AIAgent:
             return json.loads(clean_text)
         except Exception:
             # Fallback aprimorado para manter as novas regras mesmo em erro
+            if is_assessment:
+                return {
+                    "custom_objective_md": "O assessment foca na investigação técnica e diagnóstico da infraestrutura atual.",
+                    "custom_benefits_md": "### Visibilidade e Diagnóstico\n* Documentação As-Is completa.\n* Identificação de gargalos.",
+                    "custom_vision_md": "1. Investigação de Campo\n2. Auditoria Lógica\n3. Consolidação de Dados\n4. Relatório Final",
+                    "testing_protocol_md": "Validação de conectividade baseada em testes físicos porta-a-porta.",
+                    "team_structure_md": "Equipe especializada em diagnóstico de redes e automação industrial.",
+                    "timeline_md": "* **Entrevista de Expectativa**\n* Coleta de Dados\n* Auditoria de Campo\n* Entrega de Relatórios",
+                    "custom_training_md": "",
+                    "asset_table_md": ""
+                }
             return {
                 "custom_objective_md": f"{intent_summary}\n\nNossa proposta foca na modernização e segurança da infraestrutura para garantir a continuidade operacional conforme os requisitos apresentados.",
                 "custom_benefits_md": "### Confiabilidade e Segurança\n* Mitigação de riscos de parada.\n* Proteção de ativos críticos.",
