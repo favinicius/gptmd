@@ -78,5 +78,77 @@
         "total_calls": 0,
         "total_tokens": 0,
         "tier": "free"
+    },
+    "AIzaSyCXxIw2ZvDZnHr-h6CtVE8RgvXWn2QvX6I": {
+        "last_used": null,
+        "cooldown_until": "2026-02-05T18:16:36.764612",
+        "status": "active",
+        "total_calls": 0,
+        "total_tokens": 0,
+        "tier": "free"
+    },
+    "AIzaSyCdMFA5TQapm1xyZbAnk6zt1PzRl3gX7hg": {
+        "last_used": null,
+        "cooldown_until": "2026-02-05T18:16:37.389463",
+        "status": "active",
+        "total_calls": 0,
+        "total_tokens": 0,
+        "tier": "free"
+    },
+    "AIzaSyD0torbr-38DAviRQrz1NFY5OLuwjHwPfU": {
+        "last_used": null,
+        "cooldown_until": "2026-02-05T18:16:37.811135",
+        "status": "active",
+        "total_calls": 0,
+        "total_tokens": 0,
+        "tier": "free"
+    },
+    "AIzaSyDL9OfkZM8dgyeJvnVUQh8Z1At-3RAiDGA": {
+        "last_used": null,
+        "cooldown_until": "2026-02-05T18:16:38.166966",
+        "status": "active",
+        "total_calls": 0,
+        "total_tokens": 0,
+        "tier": "free"
+    },
+    "AIzaSyDcF05ol1WPRLbHA02F0vQkGmwKhTiUuEw": {
+        "last_used": "2026-02-05T18:02:05.343477",
+        "cooldown_until": null,
+        "status": "active",
+        "total_calls": 50,
+        "total_tokens": 144775,
+        "tier": "free"
+    },
+    "AIzaSyCnNrgl8HW5YqtgQcg49Spxiw6gGO3ZlU8": {
+        "last_used": null,
+        "cooldown_until": "2026-02-05T18:16:38.574219",
+        "status": "active",
+        "total_calls": 0,
+        "total_tokens": 0,
+        "tier": "free"
+    },
+    "AIzaSyBX0WydYwc33EAzsMy9Jn1C0ilD2O7FkiA": {
+        "last_used": null,
+        "cooldown_until": "2026-02-05T18:16:38.945120",
+        "status": "active",
+        "total_calls": 0,
+        "total_tokens": 0,
+        "tier": "free"
+    },
+    "AIzaSyCEl8PpQcUcYSNVeY40DOLB-jwkiJDBS9k": {
+        "last_used": null,
+        "cooldown_until": "2026-02-05T18:16:39.391152",
+        "status": "active",
+        "total_calls": 0,
+        "total_tokens": 0,
+        "tier": "free"
+    },
+    "AIzaSyBt_6hRBk8JMHmaofXSg_TvBOsTsVpeA98": {
+        "last_used": "2026-02-05T14:52:42.672062",
+        "cooldown_until": null,
+        "status": "active",
+        "total_calls": 66,
+        "total_tokens": 207936,
+        "tier": "paid"
     }
 }
