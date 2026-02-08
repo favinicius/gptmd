@@ -18,9 +18,9 @@ Abaixo, apresentamos o resumo dos investimentos necessários para a execução d
 {%- endif %}
 | **TOTAL CAPEX** | **Investimento Único** | **{{ grand_total }}** |
 
+{% if opex and not exclude_opex %}
 ### 17.2. INVESTIMENTO OPEX (SUSTENTAÇÃO)
 
-{% if opex %}
 | ITEM | DESCRIÇÃO | VALOR MENSAL (R$) |
 | :--- | :--- | :--- |
 | Monitoramento e NOC | Serviços de Monitoramento Proativo e Suporte Técnico | R$ {{ opex.grand_total_monthly | brl }} |
@@ -28,11 +28,6 @@ Abaixo, apresentamos o resumo dos investimentos necessários para a execução d
 
 > [!TIP]
 > **Franquia de Horas:** O contrato inclui uma franquia mensal de **{{ opex.support_hours_f2 }} horas (F2)** para atendimentos remotos.
-{% else %}
-| ITEM | DESCRIÇÃO | VALOR MENSAL (R$) |
-| :--- | :--- | :--- |
-| Monitoramento | Serviços de Sustentação 24x7 e Monitoramento Proativo | {{ total_services }} |
-| **TOTAL OPEX** | **Mensalidade (Contrato 60 meses)** | **{{ total_services }}** |
 {% endif %}
 
 ### 17.3. RESUMO GERAL DE INVESTIMENTOS
@@ -40,11 +35,9 @@ Abaixo, apresentamos o resumo dos investimentos necessários para a execução d
 | CATEGORIA | DESCRIÇÃO | INVESTIMENTO |
 | :--- | :--- | :---: |
 | **CAPEX** | Total para Implantação do Projeto (Investimento Único) | **{{ grand_total }}** |
-{% if opex -%}
+{% if opex and not exclude_opex -%}
 | **OPEX** | Mensalidade de Serviços Recorrentes e Monitoramento | **R$ {{ opex.grand_total_monthly | brl }}** |
 | **CONTRATO** | Valor Total Projetado (Fidelidade {{ opex.contract_duration_months }} meses) | **R$ {{ opex.contract_total_value | brl }}** |
-{% else -%}
-| **OPEX** | Mensalidade de Serviços Recorrentes | **{{ total_services }}** |
 {%- endif %}
 
 
@@ -78,8 +71,9 @@ As refeições da equipe de campo durante a execução do projeto estão inclusa
 A **{{ provider_short }}** fornecerá todos os EPIs e EPCs necessários para a segurança de seus profissionais. Materiais adicionais de consumo não previstos no projeto executivo serão orçados separadamente mediante aprovação prévia.
 
 ### 17.12. ATRASOS DE PAGAMENTO
-Atrasos no pagamento dos marcos ou mensalidades OPEX acarretarão multa de 2% e juros de 1% ao mês *pro rata die*.
+Atrasos no pagamento dos marcos {%- if opex and not exclude_opex %} ou mensalidades OPEX{%- endif %} acarretarão multa de 2% e juros de 1% ao mês *pro rata die*.
 
+{% if opex and not exclude_opex %}
 ## 18. REAJUSTES E RESCISÃO - CONTRATO OPEX
 
 ### 18.1. REAJUSTES
@@ -87,3 +81,4 @@ O valor das mensalidades de sustentação (OPEX) será reajustado anualmente pel
 
 ### 18.2. RESCISÃO CONTRATUAL
 Qualquer parte poderá rescindir o contrato de sustentação mediante aviso prévio de 90 (noventa) dias. Em caso de rescisao antecipada por iniciativa da **{{ client_company }}** antes do término do período de 60 meses, será devida multa compensatória equivalente a 30% das parcelas vincendas.
+{% endif %}

@@ -176,6 +176,10 @@ class ContingencyLevel(str, Enum):
     STANDARD = "standard"      # 1.5h/dia
     HIGH = "high"             # 2.0h/dia + 10% buff
 
+class ProjectNature(str, Enum):
+    GREENFIELD = "greenfield"  # Nova implantação
+    BROWNFIELD = "brownfield"  # Migração, adequação, remanejamento
+
 class Intent(BaseModel):
     client_name: str
     company_name: str
@@ -201,10 +205,12 @@ class Intent(BaseModel):
     selected_tech_template: str = "iodc_full.md"
     selected_comm_template: str = "capex_only.md"
     split_proposal: bool = False # If True, generate separate files
+    exclude_opex: bool = False   # New flag to force CAPEX-only output
 
     # --- Sizing Thermometers (v6.0) ---
     sizing_mode: SizingMode = SizingMode.STANDARD
     contingency_level: ContingencyLevel = ContingencyLevel.STANDARD
+    project_nature: ProjectNature = ProjectNature.GREENFIELD # Default
     
     # --- Context-Aware Extractions (v7.0) ---
     detected_hardware_list: List[HardwareSpec] = Field(default_factory=list)

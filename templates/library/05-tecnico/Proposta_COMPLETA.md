@@ -1,17 +1,52 @@
+```
 ## 6. OBJETIVO GERAL
 {% if custom_objective_md %}
 {{ custom_objective_md }}
 {% elif project_motivation %}
 {{ project_motivation }}
 {% else %}
-Este informativo tem como objetivo apresentar a solução técnica para a modernização da infraestrutura de TI Industrial da planta {{ client_company }}. O foco é garantir máxima disponibilidade, performance e segurança para as operações críticas, criando uma base escalável para as demandas da Indústria 4.0.
+Este informativo tem como objetivo apresentar a solução **Solução Integrada de TI** para a modernização da infraestrutura de TI Industrial da planta **{{ client_company }}** em {{ city }} - {{ state }}. O objetivo é implantar uma INFRASTRUTURA FÍSICA e uma nova REDE DE AUTOMAÇÃO segura e resiliente, garantindo máxima disponibilidade, performance e segurança para as operações críticas de manufatura, ao mesmo tempo em que se cria uma base escalável para as demandas da Indústria 4.0.
 {% endif %}
 
 ## 7. BENEFÍCIOS
-{{ custom_benefits_md | default("A implementação da nossa solução trará para a **" ~ company_short_name ~ "** ganhos significativos em resiliência e eficiência:\n\n### CONFIABILIDADE\n*   **Continuidade de Negócio:** Arquitetura projetada para alta disponibilidade e mitigação de falhas.\n*   **Segurança Industrial:** Alinhamento com padrões de mercado para proteção de ativos críticos.\n\n### OPERACIONAIS\n*   **Manutenção Simplificada:** Infraestrutura organizada para facilitar diagnósticos e futuras expansões.") }}
+{% if custom_benefits_md %}
+{{ custom_benefits_md }}
+{% else %}
+A implementação da nossa solução integrada trará para a {{ company_short_name }} uma transformação completa em sua capacidade operacional de TI/TA, gerando valor tangível em todas as frentes do negócio:
+
+### CONFIABILIDADE
+*   **Base Física Segura e Normalizada:** Mitigação de riscos de paradas por falhas elétricas ou de cabeamento, com uma infraestrutura projetada e executada em estrita conformidade com as normas técnicas (NBR 5410, NR10).
+*   **Máxima Continuity de Negócio:** A arquitetura de cluster (N+1) e a rede em anel com recuperação rápida eliminam pontos únicos de falha, garantindo que a produção não seja interrompida por incidentes de infraestrutura.
+*   **Segurança Industrial de Ponta a Ponta:** A segmentação da rede baseada no Modelo Purdue e a gestão centralizada de segurança (EDR, WSUS) reduzem drasticamente a superfície de ataque e alinham a planta aos padrões globais de cibersegurança (ISA/IEC 62443).
+
+### OPERACIONAIS
+*   **Facilidade de Manutenção e Expansão Futura:** Infraestrutura organizada e documentada, com caminhos de cabos e quadros elétricos que facilitam futuras manutenções e ampliações.
+*   **Gestão Simplificada e Diagnóstico Rápido:** A centralização da infraestrutura em um ambiente virtualizado e uma rede totalmente gerenciável permite visibilidade total, otimizando a operação e reduzindo o tempo de resolução de incidentes (MTTR).
+
+### FINANCEIROS
+*   **Redução de Perdas por Paradas:** A alta disponibilidade da infraestrutura mitiga o risco de paradas de produção causadas por falhas, protegendo diretamente a receita e a eficiência da planta.
+*   **Proteção do Investimento (ROI):** A solução maximiza o retorno sobre os ativos existentes (servidores e storage HPE) ao integrá-los em uma arquitetura moderna, evitando custos de substituição completa.
+*   **Previsibilidade de Custos:** A consolidação do projeto e do suporte em um único parceiro, com um contrato de sustentação de 5 anos, transforma custos reativos e variáveis em um investimento fixo e previsível.
+
+### ESTRATÉGICOS
+*   **Plataforma à Prova de Futuro:** O dimensionamento da infraestrutura já contempla a projeção de crescimento de 50%, fornecendo uma base sólida, padronizada e escalável que suportará as necessidades da {{ company_short_name }} pelos próximos 5 anos.
+*   **Liberação da Equipe Interna:** Nossa abordagem completa, do hardware à sustentação, permite que os valiosos especialistas da {{ company_short_name }} se dediquem a projetos de engenharia, melhoria de processos e inovação, em vez de tarefas operacionais de infraestrutura.
+*   **Responsabilidade Técnica Assegurada:** Projeto assinado por engenheiro responsável, garantindo conformidade e segurança legal.
+{%- endif %}
 
 ## 8. VISÃO GERAL DA SOLUÇÃO PROPOSTA
-{{ custom_vision_md | default("Nossa abordagem consiste em um projeto integrado fundamentado em pilares estratégicos que garantem a entrega de uma solução robusta, escalável e de fácil gestão para a **" ~ company_short_name ~ "**.") }}
+{% if custom_vision_md %}
+## 8. METODOLOGIA E VISÃO DE PROJETO
+{{ custom_vision_md }}
+{% else %}
+Nossa abordagem consiste em um projeto integrado de ponta a ponta, fundamentado em cinco pilares que se constroem sequencialmente para entregar uma solução robusta e sem preocupações para a {{ company_short_name }}:
+
+1.  **Engenharia e Fundação Física:** Projeto, fornecimento e implantação da infraestrutura física de base, incluindo as instalações elétricas e de dados que servirão como alicerce para todos os novos ativos de TI.
+2.  **Hardware e Conectividade:** Fornecimento, instalação e comissionamento de todo o hardware necessário, desde os componentes de upgrade dos servidores até a nova e resiliente infraestrutura de rede industrial.
+3.  **Plataforma de Computação Centralizada:** Transformação dos servidores existentes em um cluster de virtualização de alta disponibilidade (N+1), com uma solução moderna de proteção de dados, formando o coração do novo Datacenter Industrial.
+4.  **Ecossistema de Aplicações e Serviços:** Implementação completa da camada de software, incluindo os serviços essenciais de infraestrutura (AD, DNS, etc.) e a instalação e configuração de todo o conjunto de aplicações de automação da Rockwell.
+5.  **Parceria e Sustentação de Longo Prazo:** Após a entrega do projeto, iniciamos uma parceria de 5 anos através de um serviço de monitoramento proativo e suporte técnico especializado 24x7.
+{% endif %}
 
 ## 9. RELAÇÃO DE EQUIPAMENTOS E SOFTWARES ESPECIFICADOS
 Esta seção consolida os ativos de hardware, software e acessórios que fazem parte da solução proposta.
@@ -88,15 +123,16 @@ A observabilidade avançada entrega o valor analítico do monitoramento. Dashboa
 {% endfor %}
 
 ## 11. TESTES, VALIDAÇÕES E COMISSIONAMENTO
-{% if custom_testing_protocol -%}
+{% if custom_testing_protocol %}
 {{ custom_testing_protocol }}
-{%- else -%}
-Nosso compromisso com a qualidade é garantido por um protocolo de testes integrado que valida cada camada da solução:
+{% else %}
+Nosso compromisso com a qualidade é garantido por um protocolo de testes integrado que valida cada camada da solução.
 *   **Validação da Infraestrutura Física:** Testes elétricos e validação de 100% dos pontos de rede e fibra com scanner.
 *   **Validação de Hardware e Conectividade:** Testes de resiliência do anel de rede e validação de comunicação com as interfaces de gerenciamento.
-*   **Validação da Infraestrutura:** Teste de failover do cluster de virtualização e execução de ciclos de backup/restauração.
-*   **Teste de Aceitação em Campo (SAT):** Execução de roteiro consolidado com a equipe da {{ client_company }} para aceite formal.
-{%- endif %}
+*   **Validação da Infraestrutura:** Teste de failover do cluster de virtualização, simulando a falha de um host, e execução de um ciclo completo de backup e restauração de VMs críticas.
+*   **Validação Funcional das Aplicações:** Testes de login, conectividade ponta-a-ponta entre servidores e dispositivos de campo, e verificação da redundância das aplicações Rockwell.
+*   **Teste de Aceitação em Campo (SAT):** Execução de um roteiro consolidado de testes junto à equipe da {{ client_company }} para o aceite formal da solução completa.
+{% endif %}
 
 ## 12. EQUIPE CHAVE E RESPONSABILIDADES
 {% if custom_team_structure -%}

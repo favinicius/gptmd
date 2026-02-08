@@ -47,7 +47,12 @@ class MaterialEngine:
             # Estratégia de busca hierárquica (Determinismo)
             # A. Busca Exata por Part Number ou Option Code (Soberania)
             for item in self.db.hardware:
-                if item.partnumber.lower() in context or item.option_code.lower() in context:
+                # Part Number match (case insensitive)
+                if item.partnumber and item.partnumber.lower() in context:
+                    hw_match = item
+                    break
+                # Option Code match (Apenas se tiver conteúdo real, evita match por string vazia)
+                if item.option_code and len(item.option_code) > 2 and item.option_code.lower() in context:
                     hw_match = item
                     break
             

@@ -107,6 +107,34 @@ class LibraryAssembler:
         # Format processing time (e.g. 1.2s)
         benchmark_str = f"{processing_time:.1f}s"
 
+        # Fallback de Hardware para Assessment (v12.5 - Filtros Rígidos)
+        detected_hardware = intent.detected_hardware_list
+        if not detected_hardware and intent.is_assessment:
+            from src.models import HardwareSpec
+            exclude_keywords = [
+                "gerenciamento", "viagem", "mobilização", "hospedagem", 
+                "assessment", "diagnóstico", "levantamento", "projeto",
+                "rastreamento", "documentação", "segregação", "consultoria",
+                "logística", "alimentação", "transporte"
+            ]
+            
+            detected_hardware = []
+            for s in intent.scope_items:
+                desc_lower = s.name.lower()
+                # Só incluímos se tiver quantidade > 0 e não for uma keyword de serviço/logística/projeto
+                if s.detected_quantity > 0 and not any(kw in desc_lower for kw in exclude_keywords):
+                    # Se for o próprio nome do projeto ou nomes genéricos de fase, ignora
+                    if desc_lower in intent.project_name.lower() or intent.project_name.lower() in desc_lower:
+                        continue
+                    if any(kw in desc_lower for kw in ["rastreamento", "segregação", "mapeamento"]):
+                        continue
+                        
+                    detected_hardware.append(HardwareSpec(
+                        description=s.name, 
+                        quantity=s.detected_quantity, 
+                        part_number="N/A"
+                    ))
+
         context = {
             "proposal_id": base_id,
             "project_name": project_cleaned,
@@ -139,7 +167,7 @@ class LibraryAssembler:
             "payment_term": proposal.payment_term,
             "opex": proposal.opex_data if not intent.is_assessment else None, # Suprime OPEX no Assessment
             "processing_time_bench": benchmark_str,
-            "detected_hardware": intent.detected_hardware_list,
+            "detected_hardware": detected_hardware,
             "tech_template_name": intent.selected_tech_template,
             "comm_template_name": intent.selected_comm_template,
         }
@@ -150,8 +178,9 @@ class LibraryAssembler:
 
 
         
-        # Helper: Hierarchical Technical Scope (9 Pillars)
+        # Helper: Hierarchical Technical Scope (10 Pillars)
         technical_hierarchy = [
+            {"id": 0, "title": "Assessment e Diagnóstico", "keywords": ["Assessment", "Diagnóstico", "Levantamento", "Inventário", "Auditoria", "T-ASS"]},
             {"id": 1, "title": "Design de Arquitetura", "keywords": ["LLD", "Design de Arquitetura", "Aprovações", "Design", "Projeto", "Desenho", "Planejamento"]},
             {"id": 2, "title": "Instalação Física", "keywords": ["Instalação Física", "Rack", "PDU", "Cabeamento", "Fisica", "Infraestrutura Física", "Montagem"]},
             {"id": 3, "title": "Implantação de Switches Core", "keywords": ["Switch Core", "Core Switch", "L3"]},
@@ -183,6 +212,16 @@ class LibraryAssembler:
                         
                         clean_title = topic.description.split('(')[0].strip()
                         
+                        # --- Lógica de Consolidação para Assessment (v12.6) ---
+                        if intent.is_assessment and pillar["id"] == 0:
+                            consolidated_acts = []
+                            prefixes = ["Investigação de Campo", "Consolidação e Documentação", "Revisão Técnica"]
+                            for pref in prefixes:
+                                if any(pref.lower() in a.lower() for a in unique_acts):
+                                    consolidated_acts.append(f"Execução de {pref.lower()} para todos os ativos listados no inventário.")
+                            if consolidated_acts:
+                                unique_acts = consolidated_acts
+
                         # Tenta encontrar a justificativa original no Intent
                         summary = ""
                         for item in intent.scope_items:
@@ -230,10 +269,25 @@ class LibraryAssembler:
                     })
         
         if others:
+            # Em Assessment, se houver muitas atividades repetitivas, fazemos uma limpeza (v12.5)
+            clean_others = others
+            if intent.is_assessment:
+                # Agrupa por prefixo (Investigação, Consolidação, Revisão) para não repetir p/ cada item
+                assessment_summary = []
+                prefixes = ["Investigação de Campo", "Consolidação e Documentação", "Revisão Técnica"]
+                for pref in prefixes:
+                    if any(pref.lower() in str(o).lower() for o in others):
+                         assessment_summary.append({
+                             "title": pref,
+                             "activities": [f"Execução de {pref.lower()} para todos os ativos listados no inventário."]
+                         })
+                if assessment_summary:
+                    clean_others = assessment_summary
+
             structured_technical_scope.append({
                 "id": 10,
-                "title": "Atividades Complementares de Engenharia",
-                "sub_topics": others
+                "title": "Escopo de Engenharia e Diagnóstico",
+                "sub_topics": clean_others
             })
 
         context["structured_technical_scope"] = structured_technical_scope

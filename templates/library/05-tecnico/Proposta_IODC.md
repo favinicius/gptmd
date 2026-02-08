@@ -1,13 +1,18 @@
 ## 6. OBJETIVO GERAL
 {% if custom_objective_md %}
 {{ custom_objective_md }}
-{% elif project_motivation %}
-{{ project_motivation }}
 {% else %}
-Este informativo tem como objetivo apresentar a solução **IODC** para a modernização da infraestrutura de TI Industrial da planta **{{ client_company }}** em {{ city }} - {{ state }}. O objetivo é modernizar o DATACENTER OT, implantar uma INFRASTRUTURA FÍSICA e uma nova REDE DE AUTOMAÇÃO segura e resiliente, e um CONJUNTO DE APLICAÇÕES robusto, garantindo máxima disponibilidade (N+1), performance e segurança para as operações críticas de manufatura, ao mesmo tempo em que se cria uma base escalável para o crescimento futuro e as demandas da Indústria 4.0.
+{% if project_motivation %}
+{{ project_motivation }}
+{% endif %}
+
+Este informativo tem como objetivo apresentar a solução de **Modernização de Datacenter Industrial (IODC)** para a planta **{{ client_company }}** em {{ city }} - {{ state }}. O foco é implantar uma INFRAESTRUTURA FÍSICA e uma nova REDE DE AUTOMAÇÃO segura e resiliente em áreas produtivas, máquinas ou operações industriais, garantindo máxima disponibilidade, performance e segurança para as operações críticas de manufatura, ao mesmo tempo em que se cria uma base escalável para as demandas da Indústria 4.0.
 {% endif %}
 
 ## 7. BENEFÍCIOS
+{% if custom_benefits_md %}
+{{ custom_benefits_md }}
+{% else %}
 A implementação da nossa solução integrada trará para a {{ company_short_name }} uma transformação completa em sua capacidade operacional de TI/TA, gerando valor tangível em todas as frentes do negócio:
 
 ### CONFIABILIDADE
@@ -28,6 +33,7 @@ A implementação da nossa solução integrada trará para a {{ company_short_na
 *   **Plataforma à Prova de Futuro:** O dimensionamento da infraestrutura já contempla a projeção de crescimento de 50%, fornecendo uma base sólida, padronizada e escalável que suportará as necessidades da {{ company_short_name }} pelos próximos 5 anos.
 *   **Liberação da Equipe Interna:** Nossa abordagem completa, do hardware à sustentação, permite que os valiosos especialistas da {{ company_short_name }} se dediquem a projetos de engenharia, melhoria de processos e inovação, em vez de tarefas operacionais de infraestrutura.
 *   **Responsabilidade Técnica Assegurada:** Projeto assinado por engenheiro responsável, garantindo conformidade e segurança legal.
+{%- endif %}
 
 ## 8. VISÃO GERAL DA SOLUÇÃO PROPOSTA
 {% if custom_vision_md -%}
@@ -37,9 +43,9 @@ Nossa abordagem consiste em um projeto integrado de ponta a ponta, fundamentado 
 
 1.  **Engenharia e Fundação Física:** Projeto, fornecimento e implantação da infraestrutura física de base, incluindo as instalações elétricas e de dados que servirão como alicerce para todos os novos ativos de TI.
 2.  **Hardware e Conectividade:** Fornecimento, instalação e comissionamento de todo o hardware necessário, desde os componentes de upgrade dos servidores até a nova e resiliente infraestrutura de rede industrial.
-3.  **Plataforma de Computação Centralizada:** Transformação dos servidores existentes em um pool de recursos redundante, onde os sistemas operam com alta disponibilidade, formando o coração do novo Datacenter Industrial.
-4.  **Ecossistema de Aplicações e Serviços:** Implementação completa da camada de software, incluindo os serviços essenciais de infraestrutura (AD, DNS, etc.) e a instalação e configuração de todo o conjunto de aplicações de automação.
-5.  **Parceria e Sustentação de Longo Prazo:** Após a entrega do projeto, iniciamos uma parceria de longo prazo através de um serviço de monitoramento proativo e suporte técnico especializado 24x7.
+3.  **Platforma de Computação Centralizada:** Transformação dos servidores existentes em um cluster de virtualização de alta disponibilidade (N+1), com uma solução moderna de proteção de dados, formando o coração do novo Datacenter Industrial.
+4.  **Ecossistema de Aplicações e Serviços:** Implementação completa da camada de software, incluindo os serviços essenciais de infraestrutura (AD, DNS, etc.) e a instalação e configuração de todo o conjunto de aplicações de automação da Rockwell.
+5.  **Parceria e Sustentação de Longo Prazo:** Após a entrega do projeto, iniciamos uma parceria de 5 anos através de um serviço de monitoramento proativo e suporte técnico especializado 24x7.
 {%- endif %}
 
 ## 9. RELAÇÃO DE EQUIPAMENTOS E SOFTWARES ESPECIFICADOS
@@ -109,12 +115,16 @@ A observabilidade avançada entrega o valor analítico do monitoramento. Dashboa
 {% endfor %}
 
 ## 11. TESTES, VALIDAÇÕES E COMISSIONAMENTO
+{% if custom_testing_protocol %}
+{{ custom_testing_protocol }}
+{% else %}
 Nosso compromisso com a qualidade é garantido por um protocolo de testes integrado que valida cada camada da solução.
 *   **Validação da Infraestrutura Física:** Testes elétricos e validação de 100% dos pontos de rede e fibra com scanner.
 *   **Validação de Hardware e Conectividade:** Testes de resiliência do anel de rede e validação de comunicação com as interfaces de gerenciamento.
 *   **Validação da Infraestrutura:** Teste de failover do cluster de virtualização, simulando a falha de um host, e execução de um ciclo completo de backup e restauração de VMs críticas.
 *   **Validação Funcional das Aplicações:** Testes de login, conectividade ponta-a-ponta entre servidores e dispositivos de campo, e verificação da redundância das aplicações Rockwell.
 *   **Teste de Aceitação em Campo (SAT):** Execução de um roteiro consolidado de testes junto à equipe da {{ client_company }} para o aceite formal da solução completa.
+{% endif %}
 
 ## 12. EQUIPE CHAVE E RESPONSABILIDADES
 Alocaremos uma equipe de projeto unificada e multidisciplinar para garantir uma execução coesa e eficiente, liderada por:

@@ -2,7 +2,7 @@ import math
 import collections
 from typing import List, Dict, Optional
 from src.models import (
-    Intent, ProposalData, CalculatedLabor, format_excel_number, ScopeItem
+    Intent, ProposalData, CalculatedLabor, format_excel_number, ScopeItem, TopicMapping
 )
 from src.database import Database
 from src.engines.research_engine import ResearchEngine
@@ -73,6 +73,13 @@ class LaborEngine:
                 ]
 
         if assessment_items:
+            # Garante que o tópico T-ASS existe no mapeamento da proposta
+            if not any(t.topic_id == "T-ASS" for t in proposal.topics):
+                proposal.topics.append(TopicMapping(
+                    topic_id="T-ASS",
+                    description="Levantamento e Diagnóstico de Ativos em Campo"
+                ))
+
             for desc, qty, pn in assessment_items:
                 topic_id = "T-ASS"
                 # Esforço Base de Investigação (por unidade individual)

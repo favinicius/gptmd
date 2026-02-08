@@ -1,47 +1,51 @@
-Descritivo de Cenário: Assessment de Rede Industrial – Área FM80
+Descritivo de Cenário: Assessment de Rede Industrial – Linha 40MT
 
 Cliente: THYSSENKRUPP (CAMPO LIMPO PAULISTA)
-Apresentado a: Cyro Romazini
-Objeto: Levantamento Técnico e Diagnóstico de Infraestrutura – Área FM80
+Contato: Fabio Rodrigues
+ID Oportunidade: D26010670
+Objeto: Levantamento Técnico e Diagnóstico de Infraestrutura – Linha 40 Metros
 
-1. Resumo do Inventário de Rede (FM80)
-O Assessment cobrirá um ecossistema complexo de manufatura composto por 19 áreas produtivas interconectadas. Diferente de estimativas preliminares, o diagnóstico "As-Built" revela uma infraestrutura de grande porte com 158 dispositivos inteligentes únicos em rede, abrangendo tecnologias que variam de sistemas legados seriais a arquiteturas modernas em Profinet.
+1. Justificativa Estratégica e Contexto
 
-Quantitativo por Categoria de Ativo:
+A "Linha 40m" é um ativo de operação contínua cuja infraestrutura de rede industrial apresenta "visibilidade zero" para as equipes de manutenção e engenharia. Após incidentes recentes de instabilidade, tornou-se crítico realizar um inventário real ("As-Built") e um diagnóstico de saúde do cabeamento.
 
-Categoria de Equipamento	Quantidade	Principais Fabricantes / Modelos
-Controladores (CLPs)	31	Siemens (S7-1500, S7-1200, S7-300) e Mitsubishi (Série Q, FX).
-Interfaces Homem-Máquina (IHMs)	36	Siemens (KTP, TP), Mitsubishi (GOT, GS) e Unitronics (V350).
-Acionamentos (Inversores/Servos)	45	Siemens (Sinamics G120, V90), Mitsubishi (E800, F800) e WEG.
-Switches Industriais	23	Siemens Scalance (XB005, XB008), Murr GTX e Balluff.
-Dispositivos de Segurança	14	Controladores SICK Flexi Soft e Relés Schmersal/SIRIUS.
-Rede e Conectividade	09	Gateways (Secomea, ADAM), Roteadores e Access Points.
-TOTAL DE DISPOSITIVOS ÚNICOS	158	
+Diferente de estimativas preliminares que previam cerca de 10 painéis, a análise técnica da documentação (TIA Portal e Layouts) revelou uma arquitetura complexa de 11 subsistemas interconectados, exigindo um nível de detalhamento superior para viabilizar a futura coleta de dados (MES/Indústria 4.0).
 
-2. Detalhamento da Abrangência (Zonas de Automação)
-O levantamento físico e lógico abrange 19 áreas, com destaque para:
+2. Resumo Quantitativo de Ativos (Base para Orçamento)
 
-Núcleo de Alta Densidade (Profinet): Áreas como Jato DISA (Área 08) e Jato Linha L34 (Área 19), que concentram o maior volume de tráfego de dados e ativos Siemens modernos.
+O levantamento cobrirá 66 dispositivos inteligentes únicos em rede. O volume de ativos e a predominância de equipamentos não gerenciáveis são os principais drivers para o cálculo da carga horária de campo.
 
-Parque Tecnológico Híbrido (Mitsubishi): Diversas zonas operando com a Série Q e Série FX, muitas vezes em regime de "ilhas isoladas" via comunicação serial/MPI, dificultando a coleta centralizada.
+Categoria de Equipamento	Quantidade	Observações Técnicas
+Controladores (CLPs)	12	Modelos Siemens S7-1500 (Failsafe), S7-1200 e CPUs ET200SP.
+Interfaces (IHMs)	11	Painéis Siemens KTP400, KTP700, TP900 e TP1500 Comfort.
+Acionamentos (Drives)	20	Inversores Siemens G120C, Drives SEW e Soft-Starters 3RW.
+Unidades de I/O Remotas	12	Módulos ET200MP, ET200SP, ET200eco e Remotas IFM.
+Robótica e Segurança	05	Robôs KUKA (KRC4), Robôs ABB e Controladores de Segurança SICK.
+Campo e Comunicação	06	Encoders Profinet e Módulos de Segregação PN/PN Coupler.
+TOTAL ÚNICO DE ATIVOS	66	
 
-Sistemas de Contagem Compactos: Uso extensivo de controladores Unitronics V350 em esteiras (L100, L105, L02, L03, L35), classificados como sistemas sem interface Ethernet nativa, exigindo plano de retrofit.
+3. Abrangência e Zonas de Automação
 
-3. Diagnóstico Crítico e Desafios de Engenharia
-A orçamentação deve considerar os seguintes pontos críticos detectados no ambiente:
+O Assessment deverá mapear as seguintes ilhas de automação que operam de forma coordenada ao longo dos 40 metros de linha:
 
-Degradação Física Sistêmica: Histórico de 100% de reprovação em testes Fluke em áreas críticas (como Forno Fengdong e Jato 3210). O orçamento deve prever tempo para diagnóstico detalhado de Return Loss e NEXT em cabeamentos expostos a pó condutivo e vibração.
+Zona de Corte e Forja: Serra, Martelo e Prensa KIM.
+Zona de Aquecimento: Forno Rotativo (Controle de Temperatura e Inversores).
+Zona de Acabamento e Apoio: Jato, Misturador de Grafite e Sistema de Óleo.
+Células Robotizadas: Robô Laminadora, Prensa FKL e Robô FKL (Sincronismo KUKA/SICK).
+Linha de Saída: Sistema de Transporte e Resfriamento ABB (Robótica e IO-Link).
 
-Riscos de Shadow IT: Presença de roteadores domésticos (Cisco Linksys/TP-Link) dentro de painéis industriais com credenciais padrão, exigindo mapeamento de vulnerabilidades e plano de migração para switches gerenciáveis.
+4. Complexidade Técnica e Pontos de Atenção
 
-Saturação e Latência: Identificada a saturação de portas em switches, forçando conexões em cascata (daisy-chain) que geram erros de Watchdog e timeouts em protocolos determinísticos (Profinet).
+Rastreamento Manual (Porta-a-Porta): A rede utiliza switches Scalance XB008 (Não Gerenciáveis). Como estes dispositivos não suportam protocolos de mapeamento automático (SNMP/LLDP), o orçamento deve prever horas intensivas para o rastreamento físico de cabos dentro de canaletas e painéis.
 
-Mapeamento Manual Obrigatório: Devido ao uso predominante de switches não gerenciáveis, o rastreamento lógico automático é impossibilitado, exigindo horas intensivas de campo para o mapeamento físico "porta-a-porta" e identificação de cabos em canaletas.
+Segregação Lógica via Couplers: Identificou-se o uso de PN/PN Couplers para isolar a rede de controle (Faixa 10.100.40.xxx) das redes locais/máquina (Faixa 192.168.0.xxx). O Assessment deve documentar exatamente essas fronteiras de comunicação.
 
-4. Premissas Operacionais (Janela de Parada)
+Tráfego Crítico (Safety): A linha possui alta densidade de CPUs Failsafe e tráfego ProfiSafe. Instabilidades no cabeamento degradado impactam diretamente na segurança da linha, causando paradas de emergência intermitentes.
 
-Execução: Obrigatoriamente aos finais de semana (Sexta a Domingo) para garantir a janela de parada total necessária para a desconexão e certificação instrumentada de 100% dos links.
+5. Premissas Operacionais e Logística
 
-Logística: Equipe técnica especializada mobilizada para Campo Limpo Paulista, equipada com certificadores de rede (Padrão TIA/ISO) e ferramentas de varredura lógica.
+Janela de Execução: Mandatória aos finais de semana (Sexta a Domingo). O regime noturno da fábrica durante a semana impede janelas de manutenção e acesso aos painéis.
+Parada de Produção: A certificação instrumentada (Padrão TIA/ISO) exige a desconexão dos cabos para teste com Fluke DSX, requerendo que a linha esteja 100% disponível para a equipe técnica.
+Localidade: Unidade Thyssenkrupp Campo Limpo Paulista.
 
-Conclusão para Orçamentação: O volume absoluto de 158 ativos em 19 zonas produtivas classifica este Assessment como um projeto de alta complexidade. A precisão deste diagnóstico é o único meio de viabilizar a futura integração vertical (MES/Indústria 4.0) pretendida, eliminando os pontos cegos que hoje causam paradas não programadas na FM80.
+Consideração Final para Orçamentação: O aumento de escopo identificado (de 10 painéis estimados para 66 ativos inteligentes em 11 zonas) exige uma revisão na estimativa de horas de campo e de engenharia para elaboração da documentação final. Qualquer omissão nestes subsistemas resultará em falhas de conectividade no projeto MES posterior.

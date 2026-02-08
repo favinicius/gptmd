@@ -1,11 +1,18 @@
 ## 6. OBJETIVO GERAL
+{% if custom_objective_md %}
+{{ custom_objective_md }}
+{% else %}
 {% if project_motivation %}
 {{ project_motivation }}
 {% endif %}
 
 Este informativo tem como objetivo apresentar a solução de **Migração de Servidores e Datacenter** para a planta **{{ client_company }}** em {{ city }} - {{ state }}. O foco é realizar a MIGRAÇÃO segura e otimizada dos servidores e aplicações existentes para uma nova infraestrutura, garantindo a integridade dos dados, mínima inatividade e atualização tecnológica do ambiente operacional, ao mesmo tempo em que se cria uma base escalável para o crescimento futuro e as demandas da Indústria 4.0.
+{% endif %}
 
 ## 7. BENEFÍCIOS
+{% if custom_benefits_md %}
+{{ custom_benefits_md }}
+{% else %}
 A implementação da nossa solução integrada trará para a {{ company_short_name }} uma transformação completa em sua capacidade operacional de TI/TA, gerando valor tangível em todas as frentes do negócio:
 
 ### CONFIABILIDADE
@@ -26,7 +33,11 @@ A implementação da nossa solução integrada trará para a {{ company_short_na
 *   **Plataforma à Prova de Futuro:** O dimensionamento da infraestrutura já contempla a projeção de crescimento de 50%, fornecendo uma base sólida, padronizada e escalável que suportará as necessidades da {{ company_short_name }} pelos próximos 5 anos.
 *   **Liberação da Equipe Interna:** Nossa abordagem completa, do hardware à sustentação, permite que os valiosos especialistas da {{ company_short_name }} se dediquem a projetos de engenharia, melhoria de processos e inovação, em vez de tarefas operacionais de infraestrutura.
 *   **Responsabilidade Técnica Assegurada:** Projeto assinado por engenheiro responsável, garantindo conformidade e segurança legal.
-
+{%- endif %}
+{% if custom_vision_md %}
+## 8. METODOLOGIA E VISÃO DE PROJETO
+{{ custom_vision_md }}
+{% else %}
 Nossa abordagem consiste em um projeto integrado de ponta a ponta, fundamentado em cinco pilares que se constroem sequencialmente para entregar uma solução robusta e sem preocupações para a {{ company_short_name }}:
 
 1.  **Engenharia e Fundação Física:** Projeto, fornecimento e implantação da infraestrutura física de base, incluindo as instalações elétricas e de dados que servirão como alicerce para todos os novos ativos de TI.
@@ -34,6 +45,7 @@ Nossa abordagem consiste em um projeto integrado de ponta a ponta, fundamentado 
 3.  **Plataforma de Computação Centralizada:** Transformação dos servidores existentes em um cluster de virtualização de alta disponibilidade (N+1), com uma solução moderna de proteção de dados, formando o coração do novo Datacenter Industrial.
 4.  **Ecossistema de Aplicações e Serviços:** Implementação completa da camada de software, incluindo os serviços essenciais de infraestrutura (AD, DNS, etc.) e a instalação e configuração de todo o conjunto de aplicações de automação da Rockwell.
 5.  **Parceria e Sustentação de Longo Prazo:** Após a entrega do projeto, iniciamos uma parceria de 5 anos através de um serviço de monitoramento proativo e suporte técnico especializado 24x7.
+{% endif %}
 
 ## 9. RELAÇÃO DE EQUIPAMENTOS E SOFTWARES ESPECIFICADOS
 Esta seção consolida todos os ativos de hardware, software e acessórios que fazem parte desta solução. 
@@ -102,12 +114,16 @@ A observabilidade avançada entrega o valor analítico do monitoramento. Dashboa
 {% endfor %}
 
 ## 11. TESTES, VALIDAÇÕES E COMISSIONAMENTO
+{% if custom_testing_protocol %}
+{{ custom_testing_protocol }}
+{% else %}
 Nosso compromisso com a qualidade é garantido por um protocolo de testes integrado que valida cada camada da solução.
 *   **Validação da Infraestrutura Física:** Testes elétricos e validação de 100% dos pontos de rede e fibra com scanner.
 *   **Validação de Hardware e Conectividade:** Testes de resiliência do anel de rede e validação de comunicação com as interfaces de gerenciamento.
 *   **Validação da Infraestrutura:** Teste de failover do cluster de virtualização, simulando a falha de um host, e execução de um ciclo completo de backup e restauração de VMs críticas.
 *   **Validação Funcional das Aplicações:** Testes de login, conectividade ponta-a-ponta entre servidores e dispositivos de campo, e verificação da redundância das aplicações Rockwell.
 *   **Teste de Aceitação em Campo (SAT):** Execução de um roteiro consolidado de testes junto à equipe da {{ client_company }} para o aceite formal da solução completa.
+{% endif %}
 
 ## 12. EQUIPE CHAVE E RESPONSABILIDADES
 Alocaremos uma equipe de projeto unificada e multidisciplinar para garantir uma execução coesa e eficiente, liderada por:

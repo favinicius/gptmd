@@ -1,0 +1,73 @@
+--- BEGIN OF FILE ---
+Cliente: COPERSUCAR (SANTOS)
+Contato: Rafael Costa
+Referência: TAC-SPOTMD288 - Migração e Adequação de Infraestrutura de Automação
+
+Contexto Estratégico:
+O projeto visa a migração segura e planejada de infraestrutura física da rede industrial Copersucar. O objetivo central é a movimentação controlada de ativos de rede e servidores de um rack legado para novo rack disponível e livre, na mesma sala. 
+
+Um fator crítico é a movimentação de fibras ópticas que consistirá em cortar conectorização existente, realizar 48 fusões de continuidade para o novo segmento de fibra até o novo rack e as 48 fusões de conectores dos DIOs no rack novo.
+
+No primeiro evento presencial, o trabalho consistirá em preparar a infraestrutura, pré-migração com a instalação dos novos DIOs e lançamento do cabeamento até o novo painel elétrico, que será instalado.
+
+No segundo evento de atividades presenciais, o trabalho será a migração de equipamentos não críticos e fusão de cabeamentos relacionados. No terceiro e último evento de atividades presenciais, o trabalho de migração e fusão será concluído. 
+
+Importante: Antes do rompimento de quaisquer fusão, testes de OTDR devem ser realizados e registrados para referência de qualidade de instalação existente.  
+
+A execução deve seguir rigorosamente as normas de cabeamento estruturado (ABNT NBR 14565) e segurança em instalações elétricas (NBR 5410 / NR-10), com foco em manter a alta disponibilidade do anel óptico de redundância (Protocolo MRP).
+
+Este trabalho precisa ser executado em 3 diárias presenciais, não consecutivas.
+
+Viagem 1: Instalação de painel elétrico e cabeamento de fibra para o rack novo
+Viagem 2: Migração parcial de equipamentos e fusão de pares necessários.
+Viagem 3: Conclusão de migração de equipamentos e fusão de pares finais. 
+
+Relação de Itens:
+
+Infraestrutura e Conectividade (Lado Rack):
+
+[03] UNID Distribuidor Interno Óptico (DIO) padrão 19", modular para até 24 fibras, carregado com acopladores SC Duplex Multimodo (FURUKAWA).
+[02] UNID Bandeja Telescópica Deslizante (Carga 25kg) para rack 19".
+[01] UNID Bandeja Fixa perfurada para rack 19".
+[04] UNID Organizador de cabos horizontal (1U) com tampa removível.
+[03] UNID Régua de Tomadas (PDU) 19" (ABNT NBR 14136) com 30% de reserva técnica.
+Infraestrutura de Campo (Lado Parede):
+
+[01] UNID Caixa de Junção Óptica Hermética (400x400x200mm, IP65) em aço carbono ou policarbonato.
+[04] UNID Conjunto de Emenda Óptica (Terminador de Parede) para 12 a 24 fibras.
+Cabeamento e Insumos:
+
+[60m] Cabo Óptico CFOT MM 62,5µm (12 fibras), anti-roedor, LSZH (FURUKAWA).
+[12] UNID Patch Cord UTP Cat.6 (2,5m), cor Verde.
+[A validar] Patch Cords Ópticos Duplex (SC-UPC / SC-UPC), Multimodo OM1.
+[A validar] Pigtails Ópticos Simplex (SC-UPC) para fusão.
+[02] Rolos Abraçadeira tipo Velcro (Hook and Loop).
+Software e Licenciamento:
+
+[N/A] O escopo limita-se à camada física e lógica (L1/L2). Licenças de software e programação avançada estão fora do escopo desta contratação.
+Serviços e Execução:
+
+Fase 1: Preparação (Pré-Parada):
+
+Montagem mecânica e elétrica do novo rack (Energização, Aterramento BEP e Identificação).
+Lançamento de cabo óptico (backbone) entre Rack e Caixa de Junção.
+Execução de 100% das fusões ópticas no lado do Rack (Lado A).
+Pré-Patching: Organização, teste e etiquetagem (DE/PARA) de todos os patch cords.
+Testes físicos: Certificação OTDR e validação VFL.
+Fase 2: Parada Operacional (Dia D):
+
+Fusão final na Caixa de Junção (Conexão do legado ao novo backbone).
+Migração de Ativos: Shutdown seguro, remanejamento físico e religamento (Switch, Roteador, Firewall, Workstation, Servidor e Nobreak).
+Validação de Redundância: Acompanhamento da convergência do anel óptico (MRP/RSTP).
+Comissionamento: Entrega de Data Book com relatórios de certificação e diagrama unifilar (As-Built).
+Existente:
+
+Ativos de rede (Switches, Roteadores, Firewalls) e Servidores/Workstations que serão migrados do rack atual (conforme Figura 1 do anexo).
+Rede de fibra óptica legada a ser integrada via Caixa de Junção.
+Observação:
+
+Responsabilidade de Compra: Todos os materiais e ferramentas (incluindo Máquina de Fusão e OTDR aferidos) são de responsabilidade da CONTRATADA.
+Janela de Execução: A migração efetiva (Fase 2) ocorrerá em janela única (Domingo/Feriado).
+Segurança: Obrigatória a apresentação de ART (Análise de Risco do Trabalho) e uso de EPIs/EPCs conforme normas vigentes.
+Restrição: Proibido o uso de abraçadeiras plásticas (Ty-Rap) em cabos de dados.
+--- END OF FILE ---

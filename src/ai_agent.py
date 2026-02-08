@@ -271,11 +271,29 @@ class AIAgent:
 
     def _clean_json_text(self, text: str) -> str:
         """Remove blocos de Markdown e tenta reparar JSON truncado."""
-        # 1. Limpeza de Markdown
+        # 1. Limpeza de Markdown e ruído extra
         text = text.strip()
-        if text.startswith("```"):
-            text = re.sub(r"^```(?:json)?\n", "", text)
-            text = re.sub(r"\n```$", "", text)
+        
+        # Busca o primeiro '{' ou '[' e o último '}' ou ']'
+        start_brace = text.find('{')
+        start_bracket = text.find('[')
+        
+        # Define o início do JSON
+        start_idx = -1
+        if start_brace != -1 and start_bracket != -1:
+            start_idx = min(start_brace, start_bracket)
+        elif start_brace != -1:
+            start_idx = start_brace
+        elif start_bracket != -1:
+            start_idx = start_bracket
+            
+        # Define o fim do JSON
+        end_brace = text.rfind('}')
+        end_bracket = text.rfind(']')
+        end_idx = max(end_brace, end_bracket)
+        
+        if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+            text = text[start_idx:end_idx+1]
         
         # 2. Reparo Emergencial (Truncamento)
         # Se o texto parece incompleto (faltam fechamentos)
@@ -315,10 +333,6 @@ class AIAgent:
         # Fecha as estruturas na ordem inversa
         while stack:
             text += stack.pop()
-            
-        # Se após toda a limpeza o texto não contiver as chaves mínimas de um JSON, retorna vazio para disparar erro de parsing
-        if '{' not in text and '[' not in text:
-            return ""
             
         return text
 
@@ -384,8 +398,13 @@ class AIAgent:
         4. **CLIENTE VS PROVEDOR (CRÍTICO)**:
            - O **PROVEDOR** (Sua empresa) é SEMPRE "EGE Soluções Industriais" (ou "EGE").
            - O **CLIENTE** é a empresa para quem a proposta está sendo enviada (ex: OFI, Bionovis, Maratá).
-           - **NUNCA** preencha `client_name` com "EGE".
-           - **NUNCA** preencha `company_name` com "EGE". `company_name` deve ser o nome completo do CLIENTE.
+            - **NUNCA** preencha `client_name` com "EGE".
+            - **NUNCA** preencha `company_name` com "EGE". `company_name` deve ser o nome completo do CLIENTE.
+         5. **NATUREZA DO PROJETO (PROJECT_NATURE)**:
+            - `brownfield`: Se o objetivo principal envolver termos como "migração", "remanejamento", "retrofit", "mudança", "limpeza", "adequação", "ajuste" ou "reorganização" de itens existentes.
+            - `greenfield`: Se o projeto focar em "nova planta", "expansão", "novas capacidades", "implantação do zero" ou "novas redes".
+         6. **OPEX E RECORRÊNCIA (EXCLUDE_OPEX)**:
+            - Set `exclude_opex: true` se a instrução explicitamente disser termos como "Apenas CAPEX", "Sem OPEX", "Não incluir sustentação", "Sem serviços recorrentes" ou "Apenas projeto/implantação".
 
         ## FORMATO DE SAÍDA (JSON ESTRITO)
         {{
@@ -402,10 +421,12 @@ class AIAgent:
             "requires_training": boolean,
             "selected_tech_template": "struct_assessment.md" | "iodc_full_structured.md" | "iodc_no_net.md" | "struct_network_industrial.md" | "struct_server_migration.md" | "struct_services_cabling.md" | "noc_monitoring_support.md",
             "selected_comm_template": "hybrid_capex_opex.md",
+            "exclude_opex": boolean,
             "is_assessment": boolean, // Define se é um trabalho puramente consultivo
             "split_proposal": boolean,
             "sizing_mode": "aggressive" | "standard" | "secure" | "critical",
             "contingency_level": "none" | "low" | "standard" | "high",
+            "project_nature": "greenfield" | "brownfield",
             "scope_items": [
                 {{
                     "name": "String (Ex: Implantação de Servidores Dell R670)",
@@ -470,15 +491,17 @@ class AIAgent:
         - Equipe: {team_size} pessoas
         - Duração: {duration_days} dias
         
-        ## DEFINIÇÕES DE RECURSOS
-        1. **requires_flight**: True se a distância > 400km ou se for interestadual. No caso de Ilhéus, saindo de Jundiaí/SP, é OBRIGATÓRIO.
-        2. **flight_region**: "flight_ne" (Nordeste).
+        ## DEFINIÇÕES DE RECURSOS (V1.3 - REGRAS GEOGRÁFICAS)
+        1. **requires_flight**: 
+           - **SANTOS / CAPITAL / INTERIOR SP**: Se a origem é Jundiaí e o destino é Santos, Capital ou Interior de SP, **Sempre FALSE** (Use carro).
+           - **NORDESTE / SUL / NORTE**: Se for interestadual de longa distância (> 400km), **True**.
+        2. **flight_region**: "flight_ne" para Nordeste, "flight_s_se" para Sul/Sudeste longo.
         3. **requires_car_rental**: True.
         4. **estimated_daily_km**: Média de deslocamento local. Default: 60km (Hotel <-> Fábrica).
         5. **requires_freight**: True apenas se houver escopo de equipamentos pesados (racks, servidores) novos a serem enviados.
-        6. **hotel_tier**: "hotel_tier_interior" (Ilhéus).
-        7. **origin_mobilization_km**: 65.0 (Jundiaí -> Aeroporto).
-        8. **flight_cost_override**: Nulo (null), a menos que o usuário dê um valor explícito na instrução. **NÃO INVENTE VALORES**.
+        6. **hotel_tier**: "hotel_tier_interior" para cidades fora de capitais, "hotel_tier_capital" para capitais.
+        7. **origin_mobilization_km**: 65.0 (Jundiaí -> Aeroporto) se houver voo. Se não houver voo (Carro), pode ser 0 ou a distância real.
+        8. **flight_cost_override**: Nulo (null), a menos que o usuário dê um valor explícito.
 
         ## OUTPUT JSON FORMAT
         {{
@@ -509,17 +532,15 @@ class AIAgent:
             print(f"CRÍTICO: Erro de Parsing na Logística. Verifique raw_ai_interpretation.txt. Erro: {e}")
             raise e
 
-    def compose_technical_redaction(self, intent_summary: str, tech_scope: str, proposal_summary: str, is_assessment: bool = False) -> Dict[str, str]:
-        """
-        Stage 3: Technical Redaction (V1.3 - Deep Personalization).
-        Gera blocos dinâmicos para contornar textos hardcoded e elevar a qualidade técnica.
-        """
+    def compose_technical_redaction(self, intent_summary: str, tech_scope: str, proposal_summary: str, is_assessment: bool = False, project_nature: str = "greenfield") -> Dict[str, Any]:
+        """Gera o corpo técnico da proposta usando IA para personalização."""
         if is_assessment:
             # --- PROMPT EXCLUSIVO PARA ASSESSMENT (v2.0 - Pureza Consultiva) ---
             prompt = f"""
             # ATUE COMO CONSULTOR SÊNIOR DE INFRAESTRUTURA INDUSTRIAL
             
             Sua tarefa é redigir uma Proposta Técnica de ASSESSMENT (Diagnóstico e Auditoria).
+            NATUREZA DO PROJETO: {project_nature.upper()}
             
             ## REGRAS CRÍTICAS DE NEGÓCIO (PUREZA CONSULTIVA):
             1. **FOCO TOTAL EM INVESTIGAÇÃO**: O trabalho é descobrir o estado atual (As-Is).
@@ -556,8 +577,18 @@ class AIAgent:
             O objetivo é eliminar qualquer tom genérico. Se o texto parecer "boilerplate", ele falhou.
             
             ## INPUTS DO PROJETO
+            - NATUREZA: {project_nature.upper()}
             - RESUMO DO INTENT: {intent_summary}
             - ESCOPO TÉCNICO DETALHADO: {tech_scope}
+            
+            ## DIRETRIZES DE TOM (V1.5 - REALISMO TÉCNICO)
+            Se {project_nature.upper()} == "BROWNFIELD":
+                - Foco: Mitigação de riscos, continuidade operacional, organização (limpeza técnica), segurança e conformidade normativa.
+                - Proibido: Usar "Nova rede", "Transformação completa", "Modernização estratégica".
+                - Termos Preferenciais: "Adequação", "Continuidade", "Remanejamento seguro", "Normalização física".
+            Se {project_nature.upper()} == "GREENFIELD":
+                - Foco: Inovação, robustez, escalabilidade, nova infraestrutura.
+                - Termos Preferenciais: "Nova rede de automação", "Implantação estratégica", "Evolução".
             - RESUMO DA PROPOSTA (VALORES/HORAS): {proposal_summary}
             
             ## INSTRUÇÕES DE REDAÇÃO (DIRETRIZES)

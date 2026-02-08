@@ -67,9 +67,19 @@ class Database:
     def get_hardware(self, query: str) -> Optional[HardwareItem]:
         # Simple lookup logic - can be enhanced with fuzzy match later if needed
         # For now, searching by description or partnumber
-        query = query.lower()
+        query = query.lower().strip()
+        if not query:
+            return None
+            
         for item in self.hardware:
-            if query in item.description_base.lower() or query in item.partnumber.lower() or query in item.option_code.lower():
+            # Match exato por Part Number (Prioridade 1)
+            if query == item.partnumber.lower():
+                return item
+            # Match por Option Code (Apenas se não for vazio)
+            if item.option_code and query == item.option_code.lower():
+                return item
+            # Match parcial na descrição (Apenas se a query for longa o suficiente para evitar lixo)
+            if len(query) > 3 and (query in item.description_base.lower() or query in item.description_detail.lower()):
                 return item
         return None
 

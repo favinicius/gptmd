@@ -288,10 +288,16 @@ def main():
 
     print(f"Dados extraídos: {intent.client_name} / {intent.project_name}")
 
-    # --- CORREÇÃO DE IDENTIDADE DO PROVEDOR (Hardfix v1.0) ---
-    # Garante que a IA nunca se confunda sobre quem é quem
-    intent.company_name = "EGE Soluções Industriais"
-    intent.company_short_name = "EGE"
+    # --- GOVERNANÇA DE IDENTIDADE (v2.1) ---
+    # O AIAgent já tenta extrair o cliente corretamente. 
+    # Aqui apenas garantimos que se o client_name for vazio, usamos um fallback.
+    if not intent.client_name or intent.client_name.strip() == "":
+        intent.client_name = "Prezado Cliente"
+    
+    # Se o nome do cliente contiver "EGE", é um erro de extração da IA.
+    if "EGE Soluções" in intent.client_name or intent.client_name == "EGE":
+        print("⚠️ AVISO: IA confundiu Cliente com Provedor. Ajustando client_name...")
+        intent.client_name = "Cliente (A revisar)"
     
     # Se o nome do cliente conter "EGE", é um erro da IA. Tenta limpar.
     if "EGE" in intent.client_name and "Soluções" in intent.client_name:
@@ -378,7 +384,10 @@ def main():
     logistics_engine.calculate_logistics(intent, proposal)
     
     # Run OPEX Engine (Monthly Recurring Costs) - v10.0
-    proposal.opex_data = OpexEngine.calculate_opex(proposal, intent.scope_items)
+    if not intent.exclude_opex:
+        proposal.opex_data = OpexEngine.calculate_opex(proposal, intent.scope_items)
+    else:
+        proposal.opex_data = None
     
     # Apply Margins
     apply_margins(proposal, term_days=args.term)
@@ -424,7 +433,8 @@ def main():
             intent_summary=intent.project_motivation,
             tech_scope=tech_summary_for_ai,
             proposal_summary=proposal_summary_for_ai,
-            is_assessment=proposal.is_assessment
+            is_assessment=proposal.is_assessment,
+            project_nature=intent.project_nature
         )
         if args.debug:
             with open(output_dir / "raw_ai_proposal.txt", "w", encoding="utf-8") as f:
@@ -450,7 +460,8 @@ def main():
         "asset_table_md": redaction.get("asset_table_md"),
         "custom_cabling_md": redaction.get("cabling_context_md"),
         "custom_software_md": redaction.get("software_licensing_md"),
-        "custom_deliverables_md": redaction.get("deliverables_list_md")
+        "custom_deliverables_md": redaction.get("deliverables_list_md"),
+        "exclude_opex": intent.exclude_opex
     }
     
     # Remove chaves None ou "" para permitir o uso do filtro | default() do Jinja2
